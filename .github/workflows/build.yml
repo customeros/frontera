@@ -3,13 +3,7 @@ name: frontera
 on:
   push:
     branches: ['main', 'dev']
-    paths:
-      - '/'
-      - '.github/workflows/build.yml'
   pull_request:
-    paths:
-      - '/'
-      - '.github/workflows/build.yml'
   release:
     types: [created, edited]
 
@@ -62,7 +56,6 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v6.13.0
         with:
-          context: /
           push: ${{ github.ref_name == 'main' || github.event_name == 'release' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -118,7 +111,6 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v6.13.0
         with:
-          context: /
           push: ${{ github.ref_name == 'main' || github.event_name == 'release' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
