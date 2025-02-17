@@ -1,0 +1,8 @@
+mutation importOrganization($globalOrganizationId: Int64!, $input: OrganizationSaveInputFromGlobalOrg) {
+  organization_SaveByGlobalOrganization(
+    globalOrganizationId: $globalOrganizationId
+    input: $input
+  ) {
+    id
+  }
+}

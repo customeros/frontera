@@ -1,0 +1,7 @@
+mutation UpdateTag($input: TagUpdateInput!) {
+  tag_Update(input: $input) {
+    metadata {
+      id
+    }
+  }
+}

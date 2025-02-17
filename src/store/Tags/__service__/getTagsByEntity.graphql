@@ -1,0 +1,10 @@
+query getTagsByEntityType($entityType: EntityType!) {
+  tags_ByEntityType(entityType: $entityType) {
+    name
+    entityType
+    colorCode
+    metadata {
+      id
+    }
+  }
+}
