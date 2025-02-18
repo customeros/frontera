@@ -1,14 +1,11 @@
 # syntax=docker/dockerfile:1.4
-FROM node:18-alpine@sha256:4837c2ac8998cf172f5892fb45f229c328e4824c43c8506f8ba9c7996d702430 as base
+FROM node:20-alpine as base
 
 # Set common build arguments
 ARG VITE_MIDDLEWARE_API_URL
 ARG VITE_CLIENT_APP_URL
 ARG VITE_REALTIME_WS_PATH
 ARG VITE_REALTIME_WS_API_KEY
-ARG VITE_NOTIFICATION_TEST_APP_IDENTIFIER
-ARG VITE_NOTIFICATION_PROD_APP_IDENTIFIER
-ARG VITE_NOTIFICATION_URL
 ARG VITE_STRIPE_PUBLIC_KEY
 
 FROM base as deps
@@ -21,7 +18,7 @@ COPY .npmrc ./
 
 # Install dependencies with specific optimizations
 RUN --mount=type=cache,target=/root/.npm \
-    npm ci --ignore-scripts --prefer-offline --no-audit
+  npm ci --ignore-scripts --prefer-offline --no-audit
 
 FROM deps as builder
 WORKDIR /app
@@ -40,8 +37,8 @@ RUN touch .env.production && printenv > .env.production
 
 # Build with cache mount for node_modules
 RUN --mount=type=cache,target=/root/.npm \
-    --mount=type=cache,target=/app/node_modules,from=deps,source=/app/node_modules \
-    npm run build
+  --mount=type=cache,target=/app/node_modules,from=deps,source=/app/node_modules \
+  npm run build
 
 # Production stage
 FROM nginx:alpine as prod
