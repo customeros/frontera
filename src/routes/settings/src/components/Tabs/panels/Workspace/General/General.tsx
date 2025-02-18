@@ -90,15 +90,15 @@ export const General = () => {
 
           <FileDropUploader
             onChange={setFile}
+            apiBaseUrl='/files'
             onError={handleError}
             onLoadStart={handelLoad}
             onLoadEnd={handleLoadEnd}
-            apiBaseUrl='/internal/files'
             onDragOverChange={setIsDragging}
             onSuccess={handleTenantLogoUpdate}
             endpointOptions={{
               fileKeyName: 'file',
-              uploadUrl: '/files',
+              uploadUrl: '',
             }}
           >
             {isDragging ? (
@@ -117,8 +117,8 @@ export const General = () => {
                     label='Upload a square logo no bigger than 1MB'
                   >
                     <FileUploadTrigger
-                      apiBaseUrl='/fs'
                       onChange={setFile}
+                      apiBaseUrl='/files'
                       name='logoUploader'
                       onError={handleError}
                       onLoadStart={handelLoad}
@@ -126,7 +126,7 @@ export const General = () => {
                       onSuccess={handleTenantLogoUpdate}
                       endpointOptions={{
                         fileKeyName: 'file',
-                        uploadUrl: '/files',
+                        uploadUrl: '',
                       }}
                       className={cn(
                         outlineButton({ colorScheme: 'gray' }),

@@ -71,8 +71,8 @@ export const LogoUploader = observer(() => {
         </p>
 
         <FileUploadTrigger
-          apiBaseUrl='/fs'
           onChange={setFile}
+          apiBaseUrl='/files'
           name='logoUploader'
           onError={handleError}
           onLoadStart={handelLoad}
@@ -80,7 +80,7 @@ export const LogoUploader = observer(() => {
           onSuccess={handleTenantLogoUpdate}
           endpointOptions={{
             fileKeyName: 'file',
-            uploadUrl: '/files',
+            uploadUrl: '',
           }}
           className={cn(
             ghostButton({ colorScheme: 'gray' }),
@@ -93,8 +93,8 @@ export const LogoUploader = observer(() => {
       </div>
 
       <FileDropUploader
-        apiBaseUrl='/fs'
         onChange={setFile}
+        apiBaseUrl='/files'
         onError={handleError}
         onLoadStart={handelLoad}
         onLoadEnd={handleLoadEnd}
@@ -102,7 +102,7 @@ export const LogoUploader = observer(() => {
         onSuccess={handleTenantLogoUpdate}
         endpointOptions={{
           fileKeyName: 'file',
-          uploadUrl: '/files',
+          uploadUrl: '',
         }}
       >
         {isDragging ? (

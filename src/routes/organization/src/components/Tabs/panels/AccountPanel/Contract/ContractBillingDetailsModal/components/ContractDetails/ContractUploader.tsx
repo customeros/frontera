@@ -80,7 +80,7 @@ export const ContractUploader = observer(
             label='Upload a document'
           >
             <FileUploadTrigger
-              apiBaseUrl='/fs'
+              apiBaseUrl='/files'
               name='contractUpload'
               onError={handleError}
               onLoadStart={handelLoad}
@@ -88,7 +88,7 @@ export const ContractUploader = observer(
               onSuccess={handleAddAttachment}
               endpointOptions={{
                 fileKeyName: 'file',
-                uploadUrl: '/files',
+                uploadUrl: '',
               }}
               onChange={(file, refId) => {
                 setFiles((prev) => [...prev, { file, refId }]);
@@ -105,18 +105,18 @@ export const ContractUploader = observer(
         </div>
 
         <FileDropUploader
+          apiBaseUrl='/files'
           onError={handleError}
           onLoadStart={handelLoad}
           onLoadEnd={handleLoadEnd}
-          apiBaseUrl='/internal/files'
           onSuccess={handleAddAttachment}
           onDragOverChange={setIsDragging}
-          onChange={(file, refId) => {
-            setFiles((prev) => [...prev, { file, refId }]);
-          }}
           endpointOptions={{
             fileKeyName: 'file',
-            uploadUrl: '/internal/files',
+            uploadUrl: '',
+          }}
+          onChange={(file, refId) => {
+            setFiles((prev) => [...prev, { file, refId }]);
           }}
         >
           <div className='min-h-5 gap-2'>
@@ -132,8 +132,8 @@ export const ContractUploader = observer(
                 id={id}
                 key={id}
                 fileName={fileName}
+                href={`/files/${id}/download`}
                 onRemove={handleRemoveAttachment}
-                href={`/internal/files/${id}/download`}
               />
             ))}
 
