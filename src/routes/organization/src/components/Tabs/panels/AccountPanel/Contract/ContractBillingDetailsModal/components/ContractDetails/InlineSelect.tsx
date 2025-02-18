@@ -1,27 +1,27 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { cn } from '@ui/utils/cn.ts';
 import { Combobox } from '@ui/form/Combobox';
 import { SelectOption } from '@shared/types/SelectOptions.ts';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 
-interface InlineSelectProps {
+interface InlineSelectProps<T> {
   id: string;
   name: string;
   label: string;
+  value?: T | null;
   placeholder: string;
-  value?: string | null;
-  options: SelectOption[];
-  onChange: (value: SelectOption) => void;
+  options: SelectOption<T>[];
+  onChange: (value: SelectOption<T>) => void;
 }
 
-export const InlineSelect: FC<InlineSelectProps> = ({
+export const InlineSelect = <T,>({
   label,
   placeholder,
   options,
   onChange,
   value,
-}) => {
+}: InlineSelectProps<T>): JSX.Element => {
   const [inputValue, setInputValue] = useState('');
 
   const selectedOption = options?.find((option) => option.value === value);
@@ -40,7 +40,9 @@ export const InlineSelect: FC<InlineSelectProps> = ({
               },
             )}
           >
-            {value || placeholder}
+            {(value !== null && value !== undefined
+              ? options.find((opt) => opt.value === value)?.label
+              : placeholder) || placeholder}
           </span>
         </PopoverTrigger>
         <PopoverContent align='start' className='min-w-[80px] z-[99999]'>

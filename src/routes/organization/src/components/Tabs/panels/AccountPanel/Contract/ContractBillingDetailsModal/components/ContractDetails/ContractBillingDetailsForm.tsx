@@ -156,7 +156,7 @@ export const ContractBillingDetailsForm = observer(
             <div className='flex items-baseline'>
               <span className='whitespace-nowrap'>Contracting in</span>
               <div className='z-30'>
-                <InlineSelect
+                <InlineSelect<Currency>
                   label='Currency'
                   value={currency}
                   id='contract-currency'
@@ -214,8 +214,7 @@ export const ContractBillingDetailsForm = observer(
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap'>Invoices are sent</span>
                   <span className='z-20'>
-                    <InlineSelect
-                      size='xs'
+                    <InlineSelect<number>
                       label='billing period'
                       id='contract-billingCycle'
                       placeholder='billing period'
@@ -245,8 +244,7 @@ export const ContractBillingDetailsForm = observer(
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>Customer has</span>
                   <div className='inline z-10'>
-                    <InlineSelect
-                      size='xs'
+                    <InlineSelect<number>
                       id='dueDays'
                       name='dueDays'
                       label='Payment due'
