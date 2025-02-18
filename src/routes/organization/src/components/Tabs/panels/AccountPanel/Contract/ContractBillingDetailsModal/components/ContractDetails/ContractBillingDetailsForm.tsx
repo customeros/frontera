@@ -157,7 +157,6 @@ export const ContractBillingDetailsForm = observer(
               <span className='whitespace-nowrap'>Contracting in</span>
               <div className='z-30'>
                 <InlineSelect
-                  size='xs'
                   label='Currency'
                   value={currency}
                   id='contract-currency'
