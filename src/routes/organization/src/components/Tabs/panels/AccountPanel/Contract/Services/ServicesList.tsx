@@ -113,7 +113,7 @@ export const ServicesList = observer(
               className='font-semibold text-sm mb-1'
               data-test='account-panel-contract-subscription'
             >
-              Subscriptions
+              Current subscriptions
             </h1>
             {groupedServicesByParentId?.subscription
               ?.sort((a, b) => {
@@ -150,30 +150,25 @@ export const ServicesList = observer(
               className='font-semibold text-sm mb-1'
               data-test='account-panel-contract-one-time'
             >
-              One-time
+              One-times for next invoice
             </h1>
             {groupedServicesByParentId?.once
               ?.sort((a, b) => {
-                const aDate = new Date(a.currentLineItem?.serviceStarted || 0);
-                const bDate = new Date(b.currentLineItem?.serviceStarted || 0);
+                const aDate = new Date(a?.serviceStarted || 0);
+                const bDate = new Date(b?.serviceStarted || 0);
 
                 if (aDate.getTime() !== bDate.getTime()) {
                   return bDate.getTime() - aDate.getTime();
                 }
 
-                return (
-                  (b.currentLineItem?.price || 0) -
-                  (a.currentLineItem?.price || 0)
-                );
+                return (b?.price || 0) - (a?.price || 0);
               })
               .map((service) => (
-                <Fragment
-                  key={`service-item-${service?.currentLineItem?.metadata?.id}`}
-                >
+                <Fragment key={`service-item-${service?.metadata?.id}`}>
                   <ServiceItem
                     currency={currency}
                     onOpen={onModalOpen}
-                    id={service?.currentLineItem?.metadata?.id}
+                    id={service?.metadata?.id}
                   />
                 </Fragment>
               ))}

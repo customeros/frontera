@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem.store.ts';
 
 import { DateTimeUtils } from '@utils/date.ts';
-import { ContractStatus } from '@graphql/types';
+import { ContractStatus, ServiceInvoicingStatus } from '@graphql/types';
 
 import { ProductItemEdit } from './ProductItemEdit.tsx';
 import { ProductItemPreview } from './ProductItemPreview.tsx';
@@ -48,9 +48,13 @@ export const ProductItem: FC<ServiceItemProps> = observer(
       (!service?.tempValue?.closed &&
         service?.tempValue?.metadata?.id?.includes('new'));
 
+    const isOneTimeHistory =
+      service.value.invoicingStatus !== ServiceInvoicingStatus.Ready &&
+      type === 'one-time';
+
     return (
       <>
-        {showEditView ? (
+        {showEditView && !isOneTimeHistory ? (
           <ProductItemEdit
             type={type}
             service={service}
@@ -66,6 +70,7 @@ export const ProductItem: FC<ServiceItemProps> = observer(
             isEnded={isEnded}
             currency={currency}
             contractStatus={contractStatus}
+            badge={service.tempValue.invoicingStatus}
             allowIndividualRestore={allowIndividualRestore}
           />
         )}

@@ -91,15 +91,15 @@ export type Agent = {
   capabilities: Array<Capability>;
   color: Scalars['String']['output'];
   createdAt: Scalars['Time']['output'];
+  description: Scalars['String']['output'];
   error?: Maybe<Scalars['String']['output']>;
-  flowId?: Maybe<Scalars['ID']['output']>;
   goal: Scalars['String']['output'];
-  goalType: Scalars['String']['output'];
   icon: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isActive: Scalars['Boolean']['output'];
   isConfigured: Scalars['Boolean']['output'];
   listeners: Array<AgentListener>;
+  metric: Scalars['String']['output'];
   name: Scalars['String']['output'];
   scope: AgentScope;
   type: AgentType;
@@ -156,8 +156,6 @@ export type AgentListenerSaveInput = {
 export type AgentSaveInput = {
   capabilities?: InputMaybe<Array<CapabilitySaveInput>>;
   color?: InputMaybe<Scalars['String']['input']>;
-  flowId?: InputMaybe<Scalars['ID']['input']>;
-  goal?: InputMaybe<Scalars['String']['input']>;
   icon?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
@@ -438,6 +436,7 @@ export enum CapabilityType {
   SendInvoiceViaEmail = 'SEND_INVOICE_VIA_EMAIL',
   SendInvoiceVoidedNotification = 'SEND_INVOICE_VOIDED_NOTIFICATION',
   SendPaidNotification = 'SEND_PAID_NOTIFICATION',
+  SendPastDueNotification = 'SEND_PAST_DUE_NOTIFICATION',
   SendSlackNotification = 'SEND_SLACK_NOTIFICATION',
   SummarizeMessage = 'SUMMARIZE_MESSAGE',
   SummarizeThread = 'SUMMARIZE_THREAD',
@@ -4710,6 +4709,12 @@ export enum Role {
   User = 'USER',
 }
 
+export enum ServiceInvoicingStatus {
+  Invoiced = 'INVOICED',
+  Ready = 'READY',
+  Void = 'VOID',
+}
+
 export type ServiceLineItem = MetadataInterface & {
   __typename?: 'ServiceLineItem';
   billingCycle: BilledType;
@@ -4719,6 +4724,7 @@ export type ServiceLineItem = MetadataInterface & {
   /** @deprecated use skuId */
   description: Scalars['String']['output'];
   externalLinks: Array<ExternalSystem>;
+  invoicingStatus?: Maybe<ServiceInvoicingStatus>;
   metadata: Metadata;
   parentId: Scalars['ID']['output'];
   paused: Scalars['Boolean']['output'];

@@ -1,6 +1,7 @@
 import {
   BilledType,
   ServiceLineItem,
+  ServiceInvoicingStatus,
 } from '@shared/types/__generated__/graphql.types';
 
 export const groupServicesByParentId = (services: ServiceLineItem[]) => {
@@ -113,6 +114,10 @@ export const groupServicesByParentId = (services: ServiceLineItem[]) => {
 
   return {
     subscription: processGroups(subscription),
-    once: processGroups(once),
+    once: once.filter(
+      (service) =>
+        service.closed &&
+        service.invoicingStatus === ServiceInvoicingStatus.Ready,
+    ),
   };
 };

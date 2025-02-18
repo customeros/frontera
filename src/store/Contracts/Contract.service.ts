@@ -231,6 +231,8 @@ const CONTRACTS_QUERY = gql`
           serviceEnded
           parentId
           serviceStarted
+          invoicingStatus
+          closed
           tax {
             salesTax
             vat

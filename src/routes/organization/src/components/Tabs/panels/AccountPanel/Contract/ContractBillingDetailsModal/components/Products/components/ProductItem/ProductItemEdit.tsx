@@ -8,6 +8,7 @@ import { DateTimeUtils } from '@utils/date';
 import { ContractStatus } from '@graphql/types';
 import { Delete } from '@ui/media/icons/Delete';
 import { toastError } from '@ui/presentation/Toast';
+import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { IconButton } from '@ui/form/IconButton/IconButton';
 import { PauseCircle } from '@ui/media/icons/PauseCircle.tsx';
@@ -296,7 +297,17 @@ export const ProductItemEdit = observer(
 
           <span className='whitespace-nowrap  mx-1 text-gray-700'>% VAT</span>
         </div>
-        <div className='flex items-center'>
+
+        <div className='flex items-center gap-2'>
+          {type === 'one-time' &&
+            !service.tempValue.metadata.id.includes('new') && (
+              <div className='flex items-center'>
+                <Tag size='sm' variant={'subtle'} colorScheme='primary'>
+                  <TagLabel>Ready to invoice</TagLabel>
+                </Tag>
+              </div>
+            )}
+
           <Tooltip label='Service start date'>
             <div>
               <DatePickerUnderline

@@ -11,9 +11,10 @@ import { ContractLineItemService } from '@store/ContractLineItems/ContractLineIt
 
 import { DateTimeUtils } from '@utils/date.ts';
 import {
-  DataSource,
   BilledType,
+  DataSource,
   ServiceLineItem,
+  ServiceInvoicingStatus,
   ServiceLineItemUpdateInput,
 } from '@graphql/types';
 
@@ -151,7 +152,7 @@ const defaultValue: ServiceLineItem = {
     sourceOfTruth: DataSource.Openline,
   },
   description: '',
-
+  invoicingStatus: ServiceInvoicingStatus.Ready,
   billingCycle: BilledType.Monthly,
   price: 0,
   quantity: 0,
@@ -196,6 +197,8 @@ const CONTRACT_LINE_ITEM_QUERY = gql`
       serviceEnded
       parentId
       serviceStarted
+      invoicingStatus
+      closed
       paused
       tax {
         salesTax
