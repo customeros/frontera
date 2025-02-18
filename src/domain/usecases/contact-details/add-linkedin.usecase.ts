@@ -75,7 +75,7 @@ export class LinkedIn {
     } else {
       this.emptyLinkedInUrl = false;
 
-      const linkedInUrlPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/;
+      const linkedInUrlPattern = /linkedin\.com\/in\/[^/]+\/?$/;
 
       if (!linkedInUrlPattern.test(url)) {
         this.invalidLinkedInUrl = true;

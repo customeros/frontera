@@ -172,7 +172,7 @@ export const AddSingleContact = observer(() => {
             : usecase.currentError.message
             ? usecase.currentError.message
             : usecase.currentError.isInvalid
-            ? `Invalid ${usecase.type} format`
+            ? `This ${usecase.type} seems to be incorrect`
             : ''}
         </p>
 
