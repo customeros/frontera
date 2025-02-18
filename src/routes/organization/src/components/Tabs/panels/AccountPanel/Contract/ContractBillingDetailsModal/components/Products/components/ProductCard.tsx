@@ -140,18 +140,15 @@ export const ProductCard = observer(
                   className='p-1  max-h-5 hover:bg-gray-100 rounded translate-x-1'
                 />
               </>
-            ) : (
+            ) : type === 'subscription' ? (
               <ProductItemMenu
                 contractId={contractId}
                 handleCloseService={handleCloseChange}
                 handlePauseService={handlePauseChange}
                 closed={thisGroupLineItems?.[0]?.tempValue?.closed}
                 paused={thisGroupLineItems?.[0]?.tempValue?.paused}
-                allowPausing={
-                  type !== 'one-time' && contractStatus === ContractStatus.Live
-                }
+                allowPausing={contractStatus === ContractStatus.Live}
                 allowAddModification={
-                  type !== 'one-time' &&
                   !!thisGroupLineItems?.[0]?.tempValue?.parentId
                 }
                 id={
@@ -160,7 +157,7 @@ export const ProductCard = observer(
                   ''
                 }
               />
-            )}
+            ) : null}
           </div>
         </CardHeader>
         <CardContent className='text-sm p-0 gap-y-0.25 flex flex-col'>

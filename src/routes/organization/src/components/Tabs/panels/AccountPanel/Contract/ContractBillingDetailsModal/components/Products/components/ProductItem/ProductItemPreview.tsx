@@ -6,12 +6,17 @@ import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem
 
 import { cn } from '@ui/utils/cn.ts';
 import { DateTimeUtils } from '@utils/date.ts';
+import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip.tsx';
-import { BilledType, ContractStatus } from '@graphql/types';
 import { PauseCircle } from '@ui/media/icons/PauseCircle.tsx';
 import { FlipBackward } from '@ui/media/icons/FlipBackward.tsx';
 import { IconButton } from '@ui/form/IconButton/IconButton.tsx';
 import { currencySymbol } from '@shared/util/currencyOptions.ts';
+import {
+  BilledType,
+  ContractStatus,
+  ServiceInvoicingStatus,
+} from '@graphql/types';
 
 interface ProductItemProps {
   isEnded?: boolean;
@@ -19,8 +24,27 @@ interface ProductItemProps {
   service: ContractLineItemStore;
   allowIndividualRestore?: boolean;
   type: 'subscription' | 'one-time';
+  badge?: ServiceInvoicingStatus | null;
   contractStatus?: ContractStatus | null;
 }
+
+const badgeMap: Record<
+  ServiceInvoicingStatus,
+  { label: string; color: 'grayModern' | 'error' | 'primary' }
+> = {
+  [ServiceInvoicingStatus.Invoiced]: {
+    label: 'Invoiced',
+    color: 'grayModern',
+  },
+  [ServiceInvoicingStatus.Void]: {
+    label: 'Invoice voided',
+    color: 'error',
+  },
+  [ServiceInvoicingStatus.Ready]: {
+    label: 'Ready to invoice',
+    color: 'primary',
+  },
+};
 
 const billedTypeLabel: Record<
   Exclude<BilledType, BilledType.None | BilledType.Usage | BilledType.Once>,
@@ -42,6 +66,7 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
     type,
     contractStatus,
     allowIndividualRestore,
+    badge,
   }) => {
     const sliCurrencySymbol = currency ? currencySymbol?.[currency] : '$';
 
@@ -98,8 +123,20 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
             </span>
           </div>
           <div className='flex items-center'>
+            {type === 'one-time' && badge && (
+              <div className=''>
+                <Tag
+                  size='sm'
+                  variant={'subtle'}
+                  colorScheme={badgeMap[badge].color}
+                >
+                  <TagLabel>{badgeMap[badge].label}</TagLabel>
+                </Tag>
+              </div>
+            )}
+
             <div className='ml-1 text-inherit'>
-              {isCurrentVersion && 'Current since '}
+              {isCurrentVersion && type !== 'one-time' && 'Current since '}
 
               {service?.tempValue?.serviceStarted &&
                 DateTimeUtils.format(
@@ -110,6 +147,7 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
                   DateTimeUtils.dateWithShortYear,
                 )}
             </div>
+
             {allowIndividualRestore &&
               (!service?.tempValue?.metadata.id ||
                 isDraft ||

@@ -24,6 +24,11 @@ export const ProductsList = observer(
 
     const serviceLineItems =
       ids
+        ?.filter(
+          (id) =>
+            (store.contractLineItems?.value.get(id) as ContractLineItemStore)
+              ?.value.closed === false,
+        )
         ?.map(
           (id) =>
             (store.contractLineItems?.value.get(id) as ContractLineItemStore)
@@ -74,16 +79,13 @@ export const ProductsList = observer(
           ),
         );
 
-        // Filtering groups to exclude those where all items have 'serviceEnded' as null
-        const filtered = sortedGroups.filter((group) =>
-          group.some((service) => service?.serviceEnded === null),
-        );
-
-        return filtered;
+        return sortedGroups;
       };
 
       return {
-        subscription: getGroupedServices(subscription),
+        subscription: getGroupedServices(subscription).filter((group) =>
+          group.some((service) => service?.serviceEnded === null),
+        ),
         once: getGroupedServices(once),
       };
     };
