@@ -81,7 +81,7 @@ export class SettingsStore {
   async getTenantApiKey() {
     try {
       const tenantApiKeyResult = await this.transport.http.get(
-        '/internal/v1/settings/tenant/settings/apiKey',
+        '/internal/settings/tenant/settings/apiKey',
       );
 
       this.tenantApiKey = tenantApiKeyResult.data;
@@ -115,7 +115,7 @@ export class SettingsStore {
       this.isLoading = true;
 
       const res = await this.transport.http.post(
-        '/internal/v1/settings/slack/revoke',
+        '/internal/settings/slack/revoke',
         payload,
       );
 

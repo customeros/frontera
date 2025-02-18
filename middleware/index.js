@@ -183,7 +183,7 @@ async function createServer() {
   const customerOsApiGqlProxy = createProxyMiddleware({
     pathFilter: '/customer-os-api',
     pathRewrite: { '^/customer-os-api': '' },
-    target: process.env.INTERNAL_API_PATH + '/query',
+    target: process.env.CUSTOMER_OS_API_PATH + '/query',
     changeOrigin: true,
     headers: {
       'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
@@ -196,7 +196,7 @@ async function createServer() {
   const customerOsApiRestProxy = createProxyMiddleware({
     pathFilter: '/cos',
     pathRewrite: { '^/cos': '' },
-    target: process.env.INTERNAL_API_PATH,
+    target: process.env.CUSTOMER_OS_API_PATH,
     changeOrigin: true,
     headers: {
       'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
@@ -209,7 +209,7 @@ async function createServer() {
   const customerOsApiRestProxyForTenant = createProxyMiddleware({
     pathFilter: '/tenant-cos-api',
     pathRewrite: { '^/tenant-cos-api': '' },
-    target: process.env.INTERNAL_API_PATH,
+    target: process.env.CUSTOMER_OS_API_PATH,
     changeOrigin: true,
     logger: console,
     preserveHeaderKeyCase: true,
@@ -219,7 +219,7 @@ async function createServer() {
   const internalApiProxy = createProxyMiddleware({
     pathFilter: '/internal',
     pathRewrite: { '^/internal': '' },
-    target: process.env.INTERNAL_API_PATH + '/internal',
+    target: process.env.INTERNAL_API_PATH,
     changeOrigin: true,
     headers: {
       'X-Openline-API-KEY': process.env.INTERNAL_API_KEY,
