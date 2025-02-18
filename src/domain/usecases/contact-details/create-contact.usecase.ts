@@ -168,7 +168,7 @@ export class CreateContactUsecase {
     this.inputValue = '';
     this.isLoading = false;
     this.type = 'linkedin';
-    this.root.ui.commandMenu.toggle('AddSingleContact');
+    this.root.ui.commandMenu.setOpen(false);
     this.root.ui.commandMenu.clearContext();
   }
 
