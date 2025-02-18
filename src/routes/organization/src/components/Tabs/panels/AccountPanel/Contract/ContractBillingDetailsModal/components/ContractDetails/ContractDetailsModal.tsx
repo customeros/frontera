@@ -15,6 +15,7 @@ import { ModalFooter, ModalHeader } from '@ui/overlay/Modal/Modal';
 import { calculateMaxArr } from '@organization/components/Tabs/panels/AccountPanel/utils.ts';
 import {
   Contract,
+  AgentType,
   ContractStatus,
   ServiceLineItem,
   TenantBillingProfile,
@@ -81,7 +82,10 @@ export const ContractDetailsModal = observer(
     const [isSaving, setIsSaving] = useState(false);
 
     const bankAccounts = store.settings.bankAccounts.toArray();
-    const tenantSettings = store.settings.tenant.value;
+    const cashflowGuardianAgent = store.agents.getFirstAgentByType(
+      AgentType.CashflowGuardian,
+    );
+
     const tenantBillingProfiles =
       store.settings.tenantBillingProfiles.toArray();
     const contractLineItemsStore = store.contractLineItems;
@@ -338,7 +342,7 @@ export const ContractDetailsModal = observer(
           <ContractBillingDetailsForm
             contractId={contractId}
             bankAccounts={bankAccounts}
-            billingEnabled={tenantSettings?.billingEnabled}
+            billingEnabled={cashflowGuardianAgent?.value?.isActive}
             contractStatus={contractStore?.tempValue?.contractStatus}
             openAddressModal={() =>
               onChangeModalMode(EditModalMode.BillingDetails)

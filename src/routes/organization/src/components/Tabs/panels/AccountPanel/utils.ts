@@ -5,7 +5,6 @@ import {
   Contract,
   BilledType,
   ServiceLineItem,
-  ContractBillingCycle,
   ContractRenewalCycle,
   OpportunityRenewalLikelihood,
 } from '@graphql/types';
@@ -51,11 +50,7 @@ export const contractRenewalCycle: SelectOption<
   { label: 'Annual', value: ContractRenewalCycle.AnnualRenewal },
   { label: 'Multi-year', value: 'MULTI_YEAR' },
 ];
-export const billingFrequencyOptions: SelectOption<ContractBillingCycle>[] = [
-  { label: 'Monthly', value: ContractBillingCycle.MonthlyBilling },
-  { label: 'Quarterly', value: ContractBillingCycle.QuarterlyBilling },
-  { label: 'Annual', value: ContractBillingCycle.AnnualBilling },
-];
+
 export const contractBillingCycleOptions: SelectOption<number>[] = [
   { label: 'monthly', value: 1 },
   { label: 'quarterly', value: 3 },
