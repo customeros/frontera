@@ -19,6 +19,9 @@ export interface Integration {
   isFromIntegrationApp?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 export class IntegrationsStore {
   value: Record<string, Integration> = {};
   isMutating = false;
@@ -47,7 +50,9 @@ export class IntegrationsStore {
         this.isBootstrapping = true;
       });
 
-      const { data } = await this.transport.http.get('/sa/integrations');
+      const { data } = await this.transport.http.get(
+        '/internal/v1/settings/integrations',
+      );
 
       runInAction(() => {
         this.value = data;
@@ -71,7 +76,7 @@ export class IntegrationsStore {
 
     try {
       this.isMutating = true;
-      this.transport.http.post('/sa/integrations', {
+      this.transport.http.post('/internal/v1/settings/integrations', {
         [identifier]: payload,
       });
       this.root.ui.toastSuccess(
@@ -99,7 +104,9 @@ export class IntegrationsStore {
 
     try {
       this.isMutating = true;
-      this.transport.http.delete(`/sa/integrations/${identifier}`);
+      this.transport.http.delete(
+        `/internal/v1/setting/integrations/${identifier}`,
+      );
       this.root.ui.toastSuccess(
         'Settings updated successfully!',
         'integration-settings-delete',

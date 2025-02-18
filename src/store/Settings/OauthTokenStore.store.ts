@@ -30,7 +30,7 @@ export class OauthTokenStore {
       this.isLoading = true;
 
       const { data } = await this.transport.http.get<OauthToken[]>(
-        `/sa/user/settings/oauth/${this.root.session.value.tenant}`,
+        `/internal/v1/settings/user/settings/oauth/${this.root.session.value.tenant}`,
       );
 
       runInAction(() => {

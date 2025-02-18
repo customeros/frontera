@@ -183,7 +183,7 @@ async function createServer() {
   const customerOsApiGqlProxy = createProxyMiddleware({
     pathFilter: '/customer-os-api',
     pathRewrite: { '^/customer-os-api': '' },
-    target: process.env.CUSTOMER_OS_API_PATH + '/query',
+    target: process.env.INTERNAL_API_PATH + '/query',
     changeOrigin: true,
     headers: {
       'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
@@ -196,7 +196,7 @@ async function createServer() {
   const customerOsApiRestProxy = createProxyMiddleware({
     pathFilter: '/cos',
     pathRewrite: { '^/cos': '' },
-    target: process.env.CUSTOMER_OS_API_PATH,
+    target: process.env.INTERNAL_API_PATH,
     changeOrigin: true,
     headers: {
       'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
@@ -209,7 +209,7 @@ async function createServer() {
   const customerOsApiRestProxyForTenant = createProxyMiddleware({
     pathFilter: '/tenant-cos-api',
     pathRewrite: { '^/tenant-cos-api': '' },
-    target: process.env.CUSTOMER_OS_API_PATH,
+    target: process.env.INTERNAL_API_PATH,
     changeOrigin: true,
     logger: console,
     preserveHeaderKeyCase: true,
@@ -219,49 +219,7 @@ async function createServer() {
   const internalApiProxy = createProxyMiddleware({
     pathFilter: '/internal',
     pathRewrite: { '^/internal': '' },
-    target: process.env.INTERNAL_API_PATH,
-    changeOrigin: true,
-    headers: {
-      'X-Openline-API-KEY': process.env.INTERNAL_API_KEY,
-    },
-    logger: console,
-    preserveHeaderKeyCase: true,
-    followRedirects: true,
-  });
-
-  // deprecated
-  const settingsApiProxy = createProxyMiddleware({
-    pathFilter: '/sa',
-    pathRewrite: { '^/sa': '' },
-    target: process.env.SETTINGS_API_PATH,
-    changeOrigin: true,
-    headers: {
-      'X-Openline-API-KEY': process.env.INTERNAL_API_KEY,
-    },
-    logger: console,
-    preserveHeaderKeyCase: true,
-    followRedirects: true,
-  });
-
-  // deprecated
-  const userAdminApiProxy = createProxyMiddleware({
-    pathFilter: '/ua',
-    pathRewrite: { '^/ua': '' },
-    target: process.env.USER_ADMIN_API_URL,
-    changeOrigin: true,
-    headers: {
-      'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
-    },
-    logger: console,
-    preserveHeaderKeyCase: true,
-    followRedirects: true,
-  });
-
-  // deprecated
-  const fileStorageApiProxy = createProxyMiddleware({
-    pathFilter: '/fs',
-    pathRewrite: { '^/fs': '' },
-    target: process.env.FILE_STORAGE_API_PATH,
+    target: process.env.INTERNAL_API_PATH + '/internal',
     changeOrigin: true,
     headers: {
       'X-Openline-API-KEY': process.env.INTERNAL_API_KEY,
@@ -285,9 +243,6 @@ async function createServer() {
   app.use(customerOsApiRestProxy);
   app.use(customerOsApiRestProxyForTenant);
   app.use(internalApiProxy);
-  app.use(settingsApiProxy);
-  app.use(userAdminApiProxy);
-  app.use(fileStorageApiProxy);
   app.use(basConfigProxy);
 
   //login button

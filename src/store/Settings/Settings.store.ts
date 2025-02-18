@@ -53,8 +53,7 @@ export class SettingsStore {
       this.tenant.isLoading ||
       this.features.isLoading ||
       this.bankAccounts.isLoading ||
-      this.tenantBillingProfiles.isLoading ||
-      this.integrations.isLoading
+      this.tenantBillingProfiles.isLoading
     );
   }
 
@@ -64,8 +63,7 @@ export class SettingsStore {
       this.oauthToken.error ||
       this.tenant.error ||
       this.features.error ||
-      this.tenantBillingProfiles.error ||
-      this.integrations.error
+      this.tenantBillingProfiles.error
     );
   }
 
@@ -76,15 +74,14 @@ export class SettingsStore {
       this.tenant.isBootstrapped &&
       this.features.isBootstrapped &&
       this.bankAccounts.isBootstrapped &&
-      this.tenantBillingProfiles.isBootstrapped &&
-      this.integrations.isBootstrapped
+      this.tenantBillingProfiles.isBootstrapped
     );
   }
 
   async getTenantApiKey() {
     try {
       const tenantApiKeyResult = await this.transport.http.get(
-        '/sa/tenant/settings/apiKey',
+        '/internal/v1/settings/tenant/settings/apiKey',
       );
 
       this.tenantApiKey = tenantApiKeyResult.data;
@@ -104,7 +101,6 @@ export class SettingsStore {
       await this.features.load(),
       await this.bankAccounts.bootstrap(),
       await this.tenantBillingProfiles.bootstrap(),
-      await this.integrations.load(),
     ]);
   }
 
@@ -118,7 +114,10 @@ export class SettingsStore {
     try {
       this.isLoading = true;
 
-      const res = await this.transport.http.post('/sa/slack/revoke', payload);
+      const res = await this.transport.http.post(
+        '/internal/v1/settings/slack/revoke',
+        payload,
+      );
 
       if (res) {
         options?.onSuccess?.(res);
