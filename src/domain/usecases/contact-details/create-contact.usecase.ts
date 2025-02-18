@@ -34,7 +34,7 @@ export class CreateContactUsecase {
   @observable static accessor isBrowserExtensionEnabled: boolean = true;
 
   private readonly PATTERNS = {
-    linkedin: /linkedin\.com\/in\/[^/]+$/,
+    linkedin: /linkedin\.com\/in\/[^/]+\/?$/,
     email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   };
 
@@ -168,6 +168,8 @@ export class CreateContactUsecase {
     this.inputValue = '';
     this.isLoading = false;
     this.type = 'linkedin';
+    this.root.ui.commandMenu.toggle('AddSingleContact');
+    this.root.ui.commandMenu.clearContext();
   }
 
   @action
