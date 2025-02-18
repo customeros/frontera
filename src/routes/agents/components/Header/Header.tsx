@@ -8,7 +8,7 @@ export const Header = observer(() => {
   const store = useStore();
 
   return (
-    <div className='w-full border-b border-b-gray-200 px-3 py-[8px] flex justify-between items-center'>
+    <div className='w-full border-b border-b-gray-200 px-3 py-[5px] flex justify-between items-center'>
       <p className='text-md font-medium'>Agents</p>
 
       <Button
