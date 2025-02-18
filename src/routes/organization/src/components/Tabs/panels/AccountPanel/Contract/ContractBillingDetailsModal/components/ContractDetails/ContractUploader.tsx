@@ -111,12 +111,12 @@ export const ContractUploader = observer(
           onLoadEnd={handleLoadEnd}
           onSuccess={handleAddAttachment}
           onDragOverChange={setIsDragging}
-          endpointOptions={{
-            fileKeyName: 'file',
-            uploadUrl: '/files',
-          }}
           onChange={(file, refId) => {
             setFiles((prev) => [...prev, { file, refId }]);
+          }}
+          endpointOptions={{
+            fileKeyName: 'file',
+            uploadUrl: '/internal/v1/files',
           }}
         >
           <div className='min-h-5 gap-2'>

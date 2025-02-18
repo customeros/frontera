@@ -29,7 +29,7 @@ export class Slack {
       this.isLoading = true;
 
       const { data } = await this.transportLayer.http.get(
-        '/sa/user/settings/slack',
+        '/internal/v1/settings/user/settings/slack',
       );
       const { slack_Channels } = await this.service.getSlackChannels({
         pagination: { page: 0, limit: 1000 },
@@ -56,7 +56,7 @@ export class Slack {
     try {
       this.isLoading = true;
       await this.transportLayer.http.post(
-        `/sa/slack/oauth/callback?code=${code}&redirect_url=${redirect_uri}`,
+        `/internal/v1/settings/slack/oauth/callback?code=${code}&redirect_url=${redirect_uri}`,
       );
       this.load();
       this.root.common.fetchSlackChannels();
@@ -80,7 +80,7 @@ export class Slack {
       const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
 
       const { data } = await this.transportLayer.http.get(
-        `/sa/slack/requestAccess?redirect_url=${redirectUri}&state=${state}`,
+        `/internal/v1/settings/slack/requestAccess?redirect_url=${redirectUri}&state=${state}`,
       );
 
       window.location.href = data.url;

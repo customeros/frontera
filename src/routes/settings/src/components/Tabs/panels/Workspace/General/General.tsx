@@ -89,11 +89,11 @@ export const General = () => {
           </div>
 
           <FileDropUploader
-            apiBaseUrl='/fs'
             onChange={setFile}
             onError={handleError}
             onLoadStart={handelLoad}
             onLoadEnd={handleLoadEnd}
+            apiBaseUrl='/internal/v1/files'
             onDragOverChange={setIsDragging}
             onSuccess={handleTenantLogoUpdate}
             endpointOptions={{
