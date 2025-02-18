@@ -93,7 +93,7 @@ export const General = () => {
             onError={handleError}
             onLoadStart={handelLoad}
             onLoadEnd={handleLoadEnd}
-            apiBaseUrl='/internal/v1/files'
+            apiBaseUrl='/internal/files'
             onDragOverChange={setIsDragging}
             onSuccess={handleTenantLogoUpdate}
             endpointOptions={{

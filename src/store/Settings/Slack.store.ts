@@ -29,7 +29,7 @@ export class Slack {
       this.isLoading = true;
 
       const { data } = await this.transportLayer.http.get(
-        '/internal/v1/settings/user/settings/slack',
+        '/internal/settings/user/settings/slack',
       );
       const { slack_Channels } = await this.service.getSlackChannels({
         pagination: { page: 0, limit: 1000 },

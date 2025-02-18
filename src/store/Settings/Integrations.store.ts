@@ -51,7 +51,7 @@ export class IntegrationsStore {
       });
 
       const { data } = await this.transport.http.get(
-        '/internal/v1/settings/integrations',
+        '/internal/settings/integrations',
       );
 
       runInAction(() => {
@@ -76,7 +76,7 @@ export class IntegrationsStore {
 
     try {
       this.isMutating = true;
-      this.transport.http.post('/internal/v1/settings/integrations', {
+      this.transport.http.post('/internal/settings/integrations', {
         [identifier]: payload,
       });
       this.root.ui.toastSuccess(
