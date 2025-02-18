@@ -1,2 +1,2 @@
 export * from './Header/Header';
-export * from './config';
+export * from './AgentConfig/config';
