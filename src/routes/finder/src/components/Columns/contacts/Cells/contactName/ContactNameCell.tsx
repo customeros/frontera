@@ -59,18 +59,20 @@ export const ContactNameCell = observer(
             {contactName}
           </p>
         )}
-        <Icon
-          name={'eye'}
-          className='text-gray-400 ml-2 opacity-0 group-hover/contact-preview:opacity-100 cursor-pointer'
-          onClick={() => {
-            if (store.ui.showPreviewCard && store.ui.focusRow === contactId) {
-              store.ui.setShowPreviewCard(false);
-            } else {
-              store.ui.setFocusRow(contactId);
-              store.ui.setShowPreviewCard(true);
-            }
-          }}
-        />
+        <div>
+          <Icon
+            name={'eye'}
+            className='text-gray-400 ml-2 opacity-0 group-hover/contact-preview:opacity-100 cursor-pointer'
+            onClick={() => {
+              if (store.ui.showPreviewCard && store.ui.focusRow === contactId) {
+                store.ui.setShowPreviewCard(false);
+              } else {
+                store.ui.setFocusRow(contactId);
+                store.ui.setShowPreviewCard(true);
+              }
+            }}
+          />
+        </div>
       </div>
     );
   },

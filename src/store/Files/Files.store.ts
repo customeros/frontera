@@ -20,7 +20,7 @@ export class FilesStore {
       this.loaders.set(fileId, true);
 
       const res = await this.transport.http.get(
-        `/fs/files/${fileId}/download?inline=true`,
+        `/files/${fileId}/download?inline=true`,
         {
           responseType: 'blob',
         },
@@ -67,10 +67,9 @@ export class FilesStore {
     try {
       this.loaders.set(fileId, true);
 
-      const res = await this.transport.http.get(
-        `/fs/files/${fileId}/download`,
-        { responseType: 'blob' },
-      );
+      const res = await this.transport.http.get(`/files/${fileId}/download`, {
+        responseType: 'blob',
+      });
       const mimeType = res.data.type;
       const blobUrl = window.URL.createObjectURL(res.data);
       const fileExtension = this.getFileExtension(mimeType);
