@@ -229,6 +229,19 @@ async function createServer() {
     followRedirects: true,
   });
 
+  const filesApiProxy = createProxyMiddleware({
+    pathFilter: '/files',
+    pathRewrite: { '^/files': '' },
+    target: process.env.CUSTOMER_OS_API_PATH + '/files/v1/files',
+    changeOrigin: true,
+    headers: {
+      'X-Openline-API-KEY': process.env.INTERNAL_API_KEY,
+    },
+    logger: console,
+    preserveHeaderKeyCase: true,
+    followRedirects: true,
+  });
+
   const basConfigProxy = createProxyMiddleware({
     pathFilter: '/bas',
     pathRewrite: { '^/bas': '' },
@@ -243,6 +256,7 @@ async function createServer() {
   app.use(customerOsApiRestProxy);
   app.use(customerOsApiRestProxyForTenant);
   app.use(internalApiProxy);
+  app.use(filesApiProxy);
   app.use(basConfigProxy);
 
   //login button
