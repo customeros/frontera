@@ -8,7 +8,9 @@ import { EditIcpDisqualificationCriteriaUsecase } from '@domain/usecases/agents/
 
 import { Icon } from '@ui/media/Icon';
 import { Button } from '@ui/form/Button/Button';
+import { CapabilityType } from '@graphql/types';
 import { IconButton } from '@ui/form/IconButton';
+import { useStore } from '@shared/hooks/useStore';
 import { Textarea } from '@ui/form/Textarea/Textarea';
 import { getFormattedLink } from '@utils/getExternalLink.ts';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
@@ -20,15 +22,19 @@ import {
 } from '@ui/utils/ScrollArea';
 
 import { IdealCustomersModal } from './IdealCustomersModal';
-
 const disqualificationCriteriaUsecase =
   new EditIcpDisqualificationCriteriaUsecase();
 const qualificationCriteriaUsecase = new EditIcpQualificationCriteriaUsecase();
 const editIcpDomainsUsecase = new EditIcpDomainsUsecase();
 
 export const EvaluateCompanyIcpFit = observer(() => {
+  const store = useStore();
   const { id } = useParams<{ id: string }>();
   const [isOpen, setIsOpen] = useState(false);
+
+  const agent = store.agents.getById(id ?? '');
+
+  if (!agent) return null;
 
   useEffect(() => {
     if (!id) return;
@@ -39,7 +45,9 @@ export const EvaluateCompanyIcpFit = observer(() => {
 
   return (
     <article className='flex flex-col gap-4 -mr-4'>
-      <h1 className='text-sm font-medium pr-4'>Evaluate company ICP fit</h1>
+      <h1 className='text-sm font-medium pr-4'>
+        {agent.getCapabilityName(CapabilityType.IcpQualify)}
+      </h1>
       <ScrollAreaRoot>
         <ScrollAreaViewport className=''>
           <div className='h-[90vh] pr-4 flex flex-col gap-4'>

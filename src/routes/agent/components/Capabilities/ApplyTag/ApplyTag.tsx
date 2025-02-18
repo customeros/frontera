@@ -8,6 +8,7 @@ import { cn } from '@ui/utils/cn.ts';
 import { Icon } from '@ui/media/Icon';
 import { Combobox } from '@ui/form/Combobox';
 import { Plus } from '@ui/media/icons/Plus.tsx';
+import { CapabilityType } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip.tsx';
 import { Tag, TagLabel, TagRightButton } from '@ui/presentation/Tag';
@@ -21,9 +22,15 @@ export const ApplyTag = observer(() => {
     ? store.tags.getById(usecase.selectedTag.value)
     : null;
 
+  const agent = store.agents.getById(id ?? '');
+
+  if (!agent) return null;
+
   return (
     <div className='flex flex-col gap-4'>
-      <p className='font-semibold text-sm'>Apply a tag to company</p>
+      <p className='font-semibold text-sm'>
+        {agent?.getCapabilityName(CapabilityType.ApplyTagToCompany)}
+      </p>
 
       {usecase.listenerErrors && (
         <div className='bg-error-50 text-error-700 px-2 py-1 rounded-[4px] mb-4'>

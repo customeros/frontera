@@ -9,7 +9,10 @@ import { Input } from '@ui/form/Input';
 import { Button } from '@ui/form/Button/Button';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
-import { AgentType } from '@shared/types/__generated__/graphql.types';
+import {
+  AgentType,
+  CapabilityType,
+} from '@shared/types/__generated__/graphql.types';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -42,11 +45,17 @@ export const DetectSupportWebVisit = observer(() => {
     }
   };
 
+  const agent = store.agents.getById(id ?? '');
+
+  if (!agent) return null;
+
   return (
     <>
       <div className='flex flex-col gap-4'>
         <div>
-          <p className='font-semibold text-sm'>Detect support web visit</p>
+          <p className='font-semibold text-sm'>
+            {agent.getCapabilityName(CapabilityType.IdentifyWebVisitor)}
+          </p>
 
           {usecase.listenerErrors && (
             <div className='bg-error-50 text-error-700 px-2 py-1 rounded-[4px] mb-4'>

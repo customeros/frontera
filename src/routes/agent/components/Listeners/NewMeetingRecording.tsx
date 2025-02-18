@@ -15,6 +15,7 @@ import { useStore } from '@shared/hooks/useStore';
 import { getOptionClassNames } from '@ui/form/Select';
 import logoCustomerOs from '@shared/assets/customer-os-small.png';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
+import { AgentListenerEvent } from '@shared/types/__generated__/graphql.types';
 
 const usecase = new NewMeetingRecordingUsecase();
 
@@ -30,9 +31,15 @@ export const NewMeetingRecording = observer(() => {
     };
   }, [id]);
 
+  const agent = store.agents.getById(id ?? '');
+
+  if (!agent) return null;
+
   return (
     <div>
-      <h2 className='text-sm font-medium mb-4'>Detect new meeting recording</h2>
+      <h2 className='text-sm font-medium mb-4'>
+        {agent.getListenerName(AgentListenerEvent.NewMeetingRecording)}
+      </h2>
 
       {usecase.listenerErrors && (
         <div className='bg-error-50 text-error-700 px-2 py-1 rounded-[4px] mb-4'>

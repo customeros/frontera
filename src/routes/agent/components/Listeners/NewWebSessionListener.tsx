@@ -9,8 +9,10 @@ import { Icon } from '@ui/media/Icon';
 import { Input } from '@ui/form/Input';
 import { Button } from '@ui/form/Button/Button';
 import { IconButton } from '@ui/form/IconButton';
+import { useStore } from '@shared/hooks/useStore';
 import { useCopyToClipboard } from '@shared/hooks/useCopyToClipboard';
 import { Menu, MenuList, MenuItem, MenuButton } from '@ui/overlay/Menu/Menu';
+import { AgentListenerEvent } from '@shared/types/__generated__/graphql.types';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -30,12 +32,17 @@ const SCRIPT = `<script id="customeros-tracker" type="text/javascript">
 })(window, "https://app.customeros.ai/analytics-0.1.js", "script");</script>`;
 
 export const NewWebSessionListener = observer(() => {
+  const store = useStore();
   const { id } = useParams<{ id: string }>();
 
   const usecase = useMemo(() => new AddWebsiteToTrackUsecase(id!), [id]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [_, copyToClipboard] = useCopyToClipboard();
+
+  const agent = store.agents.getById(id ?? '');
+
+  if (!agent) return null;
 
   useKey('Escape', usecase.close, {
     when: usecase.isOpen,
@@ -45,7 +52,7 @@ export const NewWebSessionListener = observer(() => {
     <>
       <div>
         <h2 className='text-sm font-medium mb-4'>
-          Track and identify website visitors
+          {agent.getListenerName(AgentListenerEvent.NewWebSession)}
         </h2>
 
         {usecase.listenerErrors && (

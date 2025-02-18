@@ -82,6 +82,14 @@ export class Agent extends Entity<AgentDatum> {
     this.commit({ syncOnly: true });
   }
 
+  public getCapabilityName(type: CapabilityType) {
+    return this.value.capabilities.find((c) => c.type === type)?.name;
+  }
+
+  public getListenerName(type: AgentListenerEvent) {
+    return this.value.listeners.find((l) => l.type === type)?.name;
+  }
+
   @action
   public setListenerConfig(
     listenerType: AgentListenerEvent,

@@ -13,23 +13,31 @@ import { Switch } from '@ui/form/Switch';
 import { Combobox } from '@ui/form/Combobox';
 import { Slack } from '@ui/media/logos/Slack';
 import { Button } from '@ui/form/Button/Button';
+import { CapabilityType } from '@graphql/types';
+import { useStore } from '@shared/hooks/useStore';
 import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { Popover, PopoverTrigger, PopoverContent } from '@ui/overlay/Popover';
 
-import { DisconnectSlackMenu } from './DisconnectSlackMenu.tsx';
+import { DisconnectSlackMenu } from './DisconnectSlackMenu';
 
 export const SendSlackNotificationCapability = observer(() => {
+  const store = useStore();
   const { id } = useParams<{ id: string }>();
 
   const usecase = useMemo(() => new AddSlackChannelUsecase(id!), [id]);
+
+  const agent = store.agents.getById(id ?? '');
+
+  if (!agent) return null;
 
   if (!usecase.isSlackEnabled) {
     return (
       <div>
         <div className='flex items-center justify-between mb-4'>
           <h2 className='text-sm font-medium '>
-            Send Slack notification{` `}
-            <span className='text-grayModern-500'>(optional)</span>
+            {agent.getCapabilityName(
+              CapabilityType.WebVisitorSendSlackNotification,
+            )}
           </h2>
           <Switch
             size='sm'
@@ -71,8 +79,9 @@ export const SendSlackNotificationCapability = observer(() => {
     <div>
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-sm font-medium '>
-          Send Slack notification{` `}
-          <span className='text-grayModern-500'>(optional)</span>
+          {agent.getCapabilityName(
+            CapabilityType.WebVisitorSendSlackNotification,
+          )}
         </h2>
         <Switch
           size='sm'
