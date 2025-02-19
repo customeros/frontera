@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useKey } from 'rooks';
 import { observer } from 'mobx-react-lite';
-import { RenameAgentUsecase } from '@domain/usecases/agents/rename-agent.usecase';
+import { RenameAgentUsecase } from '@domain/usecases/command-menu/rename-agent.usecase';
 
 import { Edit03 } from '@ui/media/icons/Edit03';
 import { useStore } from '@shared/hooks/useStore';

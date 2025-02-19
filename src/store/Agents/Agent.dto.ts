@@ -191,7 +191,7 @@ export class Agent extends Entity<AgentDatum> {
 
   public toPayload(): Omit<
     AgentDatum,
-    'createdAt' | 'updatedAt' | 'isConfigured' | 'scope' | 'goal'
+    'createdAt' | 'updatedAt' | 'isConfigured' | 'scope' | 'goal' | 'metric'
   > {
     return omit(this.value, [
       'createdAt',
@@ -200,6 +200,7 @@ export class Agent extends Entity<AgentDatum> {
       'isConfigured',
       'scope',
       'goal',
+      'metric',
     ]);
   }
 
@@ -207,7 +208,13 @@ export class Agent extends Entity<AgentDatum> {
     name: string,
   ): Omit<
     AgentDatum,
-    'createdAt' | 'updatedAt' | 'isConfigured' | 'id' | 'scope' | 'goal'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'isConfigured'
+    | 'id'
+    | 'scope'
+    | 'goal'
+    | 'metric'
   > {
     return omit({ ...this.value, name }, [
       'createdAt',
@@ -327,6 +334,7 @@ export class Agent extends Entity<AgentDatum> {
         scope: AgentScope.Workspace,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        metric: '',
       },
       payload,
     );

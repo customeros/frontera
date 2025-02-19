@@ -1,9 +1,12 @@
-import { useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 
+import { useKeys } from 'rooks';
 import { observer } from 'mobx-react-lite';
 import { useUnmount, useLocalStorage } from 'usehooks-ts';
+import { EditAgentStatusUsecase } from '@domain/usecases/agents/edit-agent-status';
 
 import { useStore } from '@shared/hooks/useStore';
+import { useModKey } from '@shared/hooks/useModKey';
 import { PreviewCard } from '@shared/components/PreviewCard';
 import { ShortcutsPanel } from '@shared/components/PreviewCard/components/ShortcutsPanel';
 import {
@@ -25,6 +28,10 @@ export const AgentsPage = observer(() => {
 
   const agents = store.agents.toArray();
 
+  const id = store.ui.commandMenu.context.ids?.[0];
+
+  const usecase = useMemo(() => new EditAgentStatusUsecase(id), [id]);
+
   useSlackOauthCallback();
 
   if ((!agents.length && store.agents.isBootstrapped) || !firstView) {
@@ -43,8 +50,33 @@ export const AgentsPage = observer(() => {
     );
   }
 
+  useKeys(['Shift', 'S'], (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    usecase.toggleActive();
+  });
+
+  useKeys(['Shift', 'R'], (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    store.ui.commandMenu.setType('RenameAgent');
+    store.ui.commandMenu.setOpen(true);
+  });
+
+  useModKey('Backspace', () => {
+    store.ui.commandMenu.setType('ArchiveAgent');
+    store.ui.commandMenu.setOpen(true);
+  });
+
   useEffect(() => {
     store.ui.commandMenu.setType('AgentsCommands');
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      store.ui.commandMenu.clearContext();
+      store.ui.commandMenu.setType('AgentsCommands');
+    };
   }, []);
 
   useUnmount(() => {
@@ -69,6 +101,7 @@ export const AgentsPage = observer(() => {
                         icon={agent.value.icon}
                         name={agent.value.name}
                         colorMap={agent.colorMap}
+                        metric={agent.value.metric}
                         defaultName={agent.defaultName}
                         status={agent.value.isActive ? 'ON' : 'OFF'}
                         hasError={
@@ -76,9 +109,9 @@ export const AgentsPage = observer(() => {
                         }
                       />
                     ))}
-                  <div className='min-w-[372px] flex-1 p-3'></div>
-                  <div className='min-w-[372px] flex-1 p-3'></div>
-                  <div className='min-w-[372px] flex-1 p-3'></div>
+                  <div className='min-w-[372px] flex-1'></div>
+                  <div className='min-w-[372px] flex-1'></div>
+                  <div className='min-w-[372px] flex-1'></div>
                 </div>
               </ScrollAreaViewport>
               <ScrollAreaScrollbar orientation='vertical'>

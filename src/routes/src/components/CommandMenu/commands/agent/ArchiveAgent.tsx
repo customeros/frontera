@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRef, useMemo, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { ArchiveAgentUsecase } from '@domain/usecases/agents/archive-agent.usecase';
+import { ArchiveAgentUsecase } from '@domain/usecases/command-menu/archive-agent.usecase';
 
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
@@ -16,6 +16,7 @@ import {
 export const ArchiveAgent = observer(() => {
   const { ui } = useStore();
   const navigate = useNavigate();
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   const context = ui.commandMenu.context;
   const usecase = useMemo(
@@ -36,6 +37,12 @@ export const ArchiveAgent = observer(() => {
     ui.commandMenu.setOpen(false);
   };
 
+  useEffect(() => {
+    if (cancelRef.current) {
+      cancelRef.current.focus();
+    }
+  }, []);
+
   return (
     <Command shouldFilter={false}>
       <article className='relative w-full p-6 flex flex-col border-b border-b-gray-100 cursor-default'>
@@ -49,7 +56,7 @@ export const ArchiveAgent = observer(() => {
         </div>
 
         <div className='flex justify-between gap-3 mt-6'>
-          <CommandCancelButton onClose={handleClose} />
+          <CommandCancelButton ref={cancelRef} onClose={handleClose} />
 
           <Button
             size='sm'
