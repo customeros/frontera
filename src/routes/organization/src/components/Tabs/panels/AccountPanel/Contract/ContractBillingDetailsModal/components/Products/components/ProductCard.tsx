@@ -56,9 +56,9 @@ export const ProductCard = observer(
       ? store.skus.getById(liveServices[0].tempValue.skuId)
       : null;
 
-    const isClosed = liveServices?.every(
-      (service) => service?.tempValue?.closed,
-    );
+    const isClosed =
+      !!liveServices?.length &&
+      liveServices.every((service) => service?.tempValue?.closed);
 
     const handleCloseChange = (closed: boolean) => {
       liveServices?.forEach((service) => {
