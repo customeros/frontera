@@ -75,7 +75,19 @@ export class AgentViewUsecase {
     }
 
     this.agent.toggleStatus();
-    this.service.saveAgent(this.agent);
+    this.service.saveAgent(this.agent).then(() => {
+      if (this.agent?.value.isActive) {
+        this.root.ui.toastSuccess(
+          `Agent ${this.agent?.value.name} turned on`,
+          'agent-status-updated',
+        );
+      } else {
+        this.root.ui.toastSuccess(
+          `Agent ${this.agent?.value.name} turned off`,
+          'agent-status-update-failed',
+        );
+      }
+    });
 
     span.end();
   }
