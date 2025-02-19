@@ -23,7 +23,7 @@ export const SocialIcon = ({ children, className, url }: SocialIconProps) => {
   const logoProps = logoConfig[knownUrl as keyof typeof logoConfig];
 
   if (logoProps) {
-    return <Logo {...logoProps} className={cn(className)} />;
+    return <Logo {...logoProps} className={cn(className, 'size-5')} />;
   }
 
   if (children) {

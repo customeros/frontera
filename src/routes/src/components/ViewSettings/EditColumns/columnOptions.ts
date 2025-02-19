@@ -141,7 +141,7 @@ export const organizationsHelperTextMap: Record<
   [ColumnViewType.OrganizationsStage]: 'E.g. Lead',
   [ColumnViewType.OrganizationsChurnDate]: 'E.g. 15 Aug 2024',
   [ColumnViewType.OrganizationsLtv]: 'E.g. $109,280',
-  [ColumnViewType.OrganizationsHeadquarters]: 'E.g. Germany',
+  [ColumnViewType.OrganizationsCountry]: 'E.g. Germany',
   [ColumnViewType.OrganizationsParentOrganization]: 'E.g. Alphabet',
   [ColumnViewType.OrganizationsUpdatedDate]: 'E.g. 16 Sep 2024',
   [ColumnViewType.OrganizationsPrimaryDomains]: 'eg. pile.com',
