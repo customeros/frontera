@@ -7,7 +7,7 @@ import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem
 import { useStore } from '@shared/hooks/useStore';
 import { BilledType, ContractStatus, ServiceLineItem } from '@graphql/types';
 
-import { ProductCard } from './ProductCard.tsx';
+import { ProductCard } from './ProductCard';
 
 interface ProductListProps {
   id: string;
@@ -24,11 +24,13 @@ export const ProductsList = observer(
 
     const serviceLineItems =
       ids
-        ?.filter(
-          (id) =>
-            (store.contractLineItems?.value.get(id) as ContractLineItemStore)
-              ?.value.closed === false,
-        )
+        ?.filter((id) => {
+          const sli = store.contractLineItems?.value.get(
+            id,
+          ) as ContractLineItemStore;
+
+          return sli?.value.closed === false;
+        })
         ?.map(
           (id) =>
             (store.contractLineItems?.value.get(id) as ContractLineItemStore)
@@ -71,21 +73,17 @@ export const ProductsList = observer(
           }
         });
 
-        const sortedGroups = Object.values(grouped).map((group) =>
+        return Object.values(grouped).map((group) =>
           group.sort(
             (a, b) =>
               new Date(a?.serviceStarted).getTime() -
               new Date(b?.serviceStarted).getTime(),
           ),
         );
-
-        return sortedGroups;
       };
 
       return {
-        subscription: getGroupedServices(subscription).filter((group) =>
-          group.some((service) => service?.serviceEnded === null),
-        ),
+        subscription: getGroupedServices(subscription),
         once: getGroupedServices(once),
       };
     };
