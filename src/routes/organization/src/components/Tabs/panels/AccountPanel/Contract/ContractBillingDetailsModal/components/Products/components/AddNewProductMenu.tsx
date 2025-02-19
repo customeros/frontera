@@ -41,6 +41,7 @@ export const AddNewProductMenu = observer(
           align='end'
           side='bottom'
           onClick={(e) => e.stopPropagation()}
+          onWheel={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
           className='py-1 min-w-[254px] max-w-[420px] z-[99999999]'
         >
