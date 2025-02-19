@@ -25,6 +25,7 @@ query agents {
     visible
     createdAt
     updatedAt
+    metric
     error
     color
     icon

@@ -25,6 +25,7 @@ query agent($id: ID!) {
     visible
     createdAt
     updatedAt
+    metric
     error
     color
     icon

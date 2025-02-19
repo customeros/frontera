@@ -17,6 +17,7 @@ export type AgentQuery = {
     visible: boolean;
     createdAt: any;
     updatedAt: any;
+    metric: string;
     error?: string | null;
     color: string;
     icon: string;

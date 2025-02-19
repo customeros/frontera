@@ -415,7 +415,6 @@ export enum CapabilityType {
   CreateContacts = 'CREATE_CONTACTS',
   CreateMarkdownTimelineEvent = 'CREATE_MARKDOWN_TIMELINE_EVENT',
   CreateOrganization = 'CREATE_ORGANIZATION',
-  CreayePaymentLink = 'CREAYE_PAYMENT_LINK',
   DetectSupportWebvisit = 'DETECT_SUPPORT_WEBVISIT',
   EnrichEmailAddress = 'ENRICH_EMAIL_ADDRESS',
   ExtractMeetingHighlights = 'EXTRACT_MEETING_HIGHLIGHTS',
@@ -440,6 +439,7 @@ export enum CapabilityType {
   SendSlackNotification = 'SEND_SLACK_NOTIFICATION',
   SummarizeMessage = 'SUMMARIZE_MESSAGE',
   SummarizeThread = 'SUMMARIZE_THREAD',
+  SyncInvoiceToAccounting = 'SYNC_INVOICE_TO_ACCOUNTING',
   UpdateCompanyStatus = 'UPDATE_COMPANY_STATUS',
   ValidateEmailDeliverability = 'VALIDATE_EMAIL_DELIVERABILITY',
   WebVisitorSendSlackNotification = 'WEB_VISITOR_SEND_SLACK_NOTIFICATION',
@@ -2214,6 +2214,7 @@ export enum InvoiceStatus {
   OnHold = 'ON_HOLD',
   Overdue = 'OVERDUE',
   Paid = 'PAID',
+  PaymentProcessing = 'PAYMENT_PROCESSING',
   Scheduled = 'SCHEDULED',
   Void = 'VOID',
 }

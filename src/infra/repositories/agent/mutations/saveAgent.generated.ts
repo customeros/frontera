@@ -17,6 +17,7 @@ export type SaveAgentMutation = {
     createdAt: any;
     updatedAt: any;
     error?: string | null;
+    metric: string;
     color: string;
     scope: Types.AgentScope;
     icon: string;
