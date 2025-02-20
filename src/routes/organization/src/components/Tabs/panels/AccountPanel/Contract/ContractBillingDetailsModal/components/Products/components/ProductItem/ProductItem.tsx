@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem.store.ts';
 
+import { Input } from '@ui/form/Input';
 import { DateTimeUtils } from '@utils/date.ts';
 import { ContractStatus, ServiceInvoicingStatus } from '@graphql/types';
 
@@ -53,7 +54,7 @@ export const ProductItem: FC<ServiceItemProps> = observer(
       type === 'one-time';
 
     return (
-      <>
+      <div>
         {showEditView && !isOneTimeHistory ? (
           <ProductItemEdit
             type={type}
@@ -74,7 +75,24 @@ export const ProductItem: FC<ServiceItemProps> = observer(
             allowIndividualRestore={allowIndividualRestore}
           />
         )}
-      </>
+
+        {type === 'one-time' && (
+          <>
+            {!showEditView ? (
+              <p className='text-xs text-grayModern-500'>
+                {service?.tempValue?.description}
+              </p>
+            ) : (
+              <Input
+                size='xxs'
+                variant='unstyled'
+                className='text-xs text-grayModern-500'
+                placeholder='Add an invoice description...'
+              />
+            )}
+          </>
+        )}
+      </div>
     );
   },
 );

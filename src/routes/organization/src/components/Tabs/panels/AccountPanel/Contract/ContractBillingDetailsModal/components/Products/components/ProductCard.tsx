@@ -160,7 +160,7 @@ export const ProductCard = observer(
             ) : null}
           </div>
         </CardHeader>
-        <CardContent className='text-sm p-0 gap-y-0.25 flex flex-col'>
+        <CardContent className='text-sm p-0 gap-y-1 flex flex-col'>
           {showEnded &&
             endedServices?.map(
               (service, serviceIndex) =>

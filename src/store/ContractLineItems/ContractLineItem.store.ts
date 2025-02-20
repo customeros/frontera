@@ -19,8 +19,8 @@ import {
 } from '@graphql/types';
 
 export class ContractLineItemStore implements Store<ServiceLineItem> {
-  value: ServiceLineItem = defaultValue;
-  tempValue: ServiceLineItem = defaultValue;
+  value: ServiceLineItem = getDefaultValue();
+  tempValue: ServiceLineItem = getDefaultValue();
   version = 0;
   isLoading = false;
   history: Operation[] = [];
@@ -140,7 +140,7 @@ export class ContractLineItemStore implements Store<ServiceLineItem> {
   }
 }
 
-const defaultValue: ServiceLineItem = {
+const getDefaultValue = (): ServiceLineItem => ({
   closed: false,
   externalLinks: [],
   metadata: {
@@ -168,7 +168,7 @@ const defaultValue: ServiceLineItem = {
   },
   sku: undefined,
   skuId: undefined,
-};
+});
 
 type CONTRACT_LINE_ITEM_QUERY_RESULT = {
   serviceLineItem: ServiceLineItem;

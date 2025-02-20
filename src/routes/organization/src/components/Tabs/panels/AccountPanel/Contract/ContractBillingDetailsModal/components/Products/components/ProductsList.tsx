@@ -38,7 +38,7 @@ export const ProductsList = observer(
         )
         .filter((e) => Boolean(e)) || [];
 
-    const groupServicesByParentId = (services: ServiceLineItem[]) => {
+    const groupServices = (services: ServiceLineItem[]) => {
       const { subscription, once } = services.reduce<{
         once: ServiceLineItem[];
         subscription: ServiceLineItem[];
@@ -59,45 +59,61 @@ export const ProductsList = observer(
         { subscription: [], once: [] },
       );
 
-      const getGroupedServices = (services: ServiceLineItem[]) => {
-        const grouped: Record<string, ServiceLineItem[]> = {};
+      const groupedSubscriptions: Record<string, ServiceLineItem[]> = {};
 
-        services.forEach((service) => {
-          const parentId = service?.parentId || service?.metadata?.id;
+      subscription.forEach((service) => {
+        const parentId = service?.parentId || service?.metadata?.id;
 
-          if (parentId) {
-            if (!grouped[parentId]) {
-              grouped[parentId] = [];
-            }
-            grouped[parentId].push(service);
+        if (parentId) {
+          if (!groupedSubscriptions[parentId]) {
+            groupedSubscriptions[parentId] = [];
           }
-        });
+          groupedSubscriptions[parentId].push(service);
+        }
+      });
 
-        return Object.values(grouped).map((group) =>
+      // Group one-time items by skuId
+      const groupedOnce: Record<string, ServiceLineItem[]> = {};
+
+      once.forEach((service) => {
+        const skuId = service?.skuId;
+
+        if (skuId) {
+          if (!groupedOnce[skuId]) {
+            groupedOnce[skuId] = [];
+          }
+          groupedOnce[skuId].push(service);
+        }
+      });
+
+      return {
+        subscription: Object.values(groupedSubscriptions).map((group) =>
           group.sort(
             (a, b) =>
               new Date(a?.serviceStarted).getTime() -
               new Date(b?.serviceStarted).getTime(),
           ),
-        );
-      };
-
-      return {
-        subscription: getGroupedServices(subscription),
-        once: getGroupedServices(once),
+        ),
+        once: Object.values(groupedOnce).map((group) =>
+          group.sort(
+            (a, b) =>
+              new Date(a?.serviceStarted).getTime() -
+              new Date(b?.serviceStarted).getTime(),
+          ),
+        ),
       };
     };
 
-    const groupedServicesByParentId = groupServicesByParentId(
+    const groupedServices = groupServices(
       serviceLineItems as ServiceLineItem[],
     );
 
     return (
       <div className='flex flex-col'>
-        {groupedServicesByParentId.subscription.length !== 0 && (
+        {groupedServices.subscription.length !== 0 && (
           <p className='text-sm font-medium mb-2'>Subscriptions</p>
         )}
-        {groupedServicesByParentId.subscription
+        {groupedServices.subscription
           .sort((a, b) => {
             const aDate = new Date(a[0]?.serviceStarted || 0);
             const bDate = new Date(b[0]?.serviceStarted || 0);
@@ -115,7 +131,7 @@ export const ProductsList = observer(
           })
           .map((data) => (
             <Fragment
-              key={`subscription-card-item-${data[0]?.parentId}-${data[0].description}-${data[0].metadata.id}`}
+              key={`subscription-card-item-${data[0]?.skuId}-${data[0]?.metadata.id}-${data[0].description}`}
             >
               <ProductCard
                 contractId={id}
@@ -127,10 +143,10 @@ export const ProductsList = observer(
             </Fragment>
           ))}
 
-        {groupedServicesByParentId.once.length !== 0 && (
+        {groupedServices.once.length !== 0 && (
           <p className='text-sm font-medium mb-2'>One-time</p>
         )}
-        {groupedServicesByParentId.once
+        {groupedServices.once
           .sort((a, b) => {
             const aDate = new Date(a[0]?.serviceStarted || 0);
             const bDate = new Date(b[0]?.serviceStarted || 0);
@@ -148,7 +164,7 @@ export const ProductsList = observer(
           })
           .map((data, i) => (
             <Fragment
-              key={`one-time-card-item-${data[0]?.parentId}-${data[0].description}-${i}`}
+              key={`one-time-card-item-${data[0]?.skuId}-${data[0]?.metadata.id}-${data[0].description}-${i}`}
             >
               <ProductCard
                 contractId={id}
