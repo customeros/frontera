@@ -36,7 +36,7 @@ export const NewMeetingRecording = observer(() => {
   if (!agent) return null;
 
   return (
-    <div>
+    <div className='px-4 py-3'>
       <h2 className='text-sm font-medium mb-4'>
         {agent.getListenerName(AgentListenerEvent.NewMeetingRecording)}
       </h2>

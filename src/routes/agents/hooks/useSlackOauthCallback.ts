@@ -20,7 +20,7 @@ export const useSlackOauthCallback = () => {
     const slackCode = queryParams.get('code');
     const [id, cid] = decodeURIComponent(state ?? '').split(':');
 
-    if (!store.session.isAuthenticated) return;
+    if (!store.session?.isAuthenticated) return;
 
     if (slackCode) {
       store.settings.slack.oauthCallback(
@@ -32,5 +32,5 @@ export const useSlackOauthCallback = () => {
     if (id) {
       navigate(`/agents/${id}?${cid}`, { replace: true });
     }
-  }, [store.session.isAuthenticated]);
+  }, [store.session?.isAuthenticated]);
 };
