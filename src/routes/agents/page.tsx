@@ -90,7 +90,7 @@ export const AgentsPage = observer(() => {
         <div className='relative h-full w-full'>
           <div className='h-full'>
             <ScrollAreaRoot className='h-full'>
-              <ScrollAreaViewport>
+              <ScrollAreaViewport className='h-screen'>
                 <div className='flex flex-wrap p-4 gap-4'>
                   {agents
                     .filter((agent) => agent.value.visible)
