@@ -84,7 +84,7 @@ export const AgentsPage = observer(() => {
   });
 
   return (
-    <div>
+    <>
       <Header />
       <div className='flex h-full'>
         <div className='relative h-full w-full'>
@@ -129,6 +129,6 @@ export const AgentsPage = observer(() => {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 });

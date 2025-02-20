@@ -232,7 +232,10 @@ export type IconName =
   | 'phone-hang-up'
   | 'database-01'
   | 'eraser'
-  | 'hand';
+  | 'hand'
+  | 'image-plus'
+  | 'x'
+  | 'upload-01';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

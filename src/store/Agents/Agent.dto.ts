@@ -16,7 +16,7 @@ import {
 
 import { AgentStore } from './Agent.store';
 
-type CapabilityConfig<T extends string> = {
+export type CapabilityConfig<T extends string> = {
   [key in T]: {
     value: unknown;
     error: string | null;

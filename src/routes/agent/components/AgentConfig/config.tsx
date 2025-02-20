@@ -5,6 +5,8 @@ import { AgentType, CapabilityType, AgentListenerEvent } from '@graphql/types';
 import { NewMeetingRecording, NewWebSessionListener } from './Listeners';
 import {
   ApplyTag,
+  GenerateInvoice,
+  ManageOnlinePayment,
   EvaluateCompanyIcpFit,
   DetectSupportWebVisit,
   SendSlackNotificationCapability,
@@ -28,6 +30,8 @@ export const configs: ConfigMap = {
     SendSlackNotificationCapability,
   [CapabilityType.ApplyTagToCompany]: ApplyTag,
   [CapabilityType.DetectSupportWebvisit]: DetectSupportWebVisit,
+  [CapabilityType.GenerateInvoice]: GenerateInvoice,
+  [CapabilityType.ProcessAutopayment]: ManageOnlinePayment,
   //////////////////
   //  LISTENERS   //
   //////////////////
@@ -40,4 +44,5 @@ export const goals: GoalMap = {
   [AgentType.IcpQualifier]: ['Qualify companies'],
   [AgentType.SupportSpotter]: ['Spot interactions where help might be needed'],
   [AgentType.MeetingKeeper]: ['Capture external meetings'],
+  [AgentType.CashflowGuardian]: ['Get you paid'],
 };

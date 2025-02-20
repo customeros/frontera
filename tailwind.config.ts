@@ -141,6 +141,14 @@ export default {
             transform: 'translateX(0)',
           },
         },
+        fadeOutFilteredGrayscale: {
+          from: {
+            filter: 'grayscale(100%) blur(4px)',
+          },
+          to: {
+            filter: 'grayscale(0%) blur(0px)',
+          },
+        },
       },
 
       animation: {
@@ -164,6 +172,7 @@ export default {
         fadeOut: 'fadeOut 300ms ease-in-out',
         focus: 'focus 1000ms ease-in-out',
         slideLeft: 'slideLeft 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        fadeOutFilteredGrayscale: 'fadeOutFilteredGrayscale 700ms ease-in-out',
       },
       flex: {
         2: '2 2 0%',

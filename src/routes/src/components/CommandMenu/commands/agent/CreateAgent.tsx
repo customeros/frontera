@@ -46,6 +46,12 @@ export const CreateAgent = () => {
           <Icon name='life-buoy-01' />
           <span>Support spotter</span>
         </CommandItem>
+        <CommandItem
+          onSelect={() => usecase.execute(AgentType.CashflowGuardian)}
+        >
+          <Icon name='life-buoy-01' />
+          <span>Cashflow</span>
+        </CommandItem>
       </Command.List>
     </Command>
   );
