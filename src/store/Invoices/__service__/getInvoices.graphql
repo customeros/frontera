@@ -69,6 +69,7 @@ query getInvoices($pagination: Pagination!, $where: Filter, $sort: [SortBy!]) {
           appSource
         }
         contractLineItem {
+          description
           serviceStarted
           price
           billingCycle

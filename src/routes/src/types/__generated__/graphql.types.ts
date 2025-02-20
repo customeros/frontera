@@ -2200,6 +2200,7 @@ export type InvoiceSimulateServiceLineInput = {
   quantity: Scalars['Int64']['input'];
   serviceLineItemId?: InputMaybe<Scalars['ID']['input']>;
   serviceStarted: Scalars['Time']['input'];
+  skuId?: InputMaybe<Scalars['ID']['input']>;
   taxRate?: InputMaybe<Scalars['Float']['input']>;
 };
 
@@ -4723,8 +4724,7 @@ export type ServiceLineItem = MetadataInterface & {
   closed: Scalars['Boolean']['output'];
   comments: Scalars['String']['output'];
   createdBy?: Maybe<User>;
-  /** @deprecated use skuId */
-  description: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   externalLinks: Array<ExternalSystem>;
   invoicingStatus?: Maybe<ServiceInvoicingStatus>;
   metadata: Metadata;

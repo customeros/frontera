@@ -62,6 +62,7 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
       id: payload.parentId,
       price: payload.price,
       quantity: payload.quantity,
+      description: payload.description ?? '',
       skuId: payload.skuId,
       serviceStarted: payload.serviceStarted,
     };
@@ -273,6 +274,7 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
             },
             contractId,
             skuId: payload.skuId,
+            description: payload.description ?? '',
             billingCycle: payload.billingCycle,
             price:
               typeof payload.price === 'string'

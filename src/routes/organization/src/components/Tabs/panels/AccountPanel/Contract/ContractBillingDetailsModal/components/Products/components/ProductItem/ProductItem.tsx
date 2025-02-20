@@ -88,6 +88,13 @@ export const ProductItem: FC<ServiceItemProps> = observer(
                 variant='unstyled'
                 className='text-xs text-grayModern-500'
                 placeholder='Add an invoice description...'
+                defaultValue={service?.tempValue?.description ?? ''}
+                onBlur={(e) => {
+                  service.updateTemp((prev) => ({
+                    ...prev,
+                    description: e.target.value ?? '',
+                  }));
+                }}
               />
             )}
           </>

@@ -76,6 +76,7 @@ export type InvoiceQuery = {
       };
       contractLineItem: {
         __typename?: 'ServiceLineItem';
+        description?: string | null;
         serviceStarted: any;
         price: number;
         billingCycle: Types.BilledType;
