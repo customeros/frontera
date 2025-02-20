@@ -2,8 +2,12 @@ import { ReactElement, ComponentType } from 'react';
 
 import { AgentType, CapabilityType, AgentListenerEvent } from '@graphql/types';
 
+import { ClassifyEmailThreads } from './Capabilities/ClassifyEmailThreads';
+
 import {
   InvoicePastDue,
+    NewEmails,
+
   NewMeetingRecording,
   NewWebSessionListener,
 } from './Listeners';
@@ -36,12 +40,14 @@ export const configs: ConfigMap = {
   [CapabilityType.DetectSupportWebvisit]: DetectSupportWebVisit,
   [CapabilityType.GenerateInvoice]: GenerateInvoice,
   [CapabilityType.ProcessAutopayment]: ManageOnlinePayment,
+  [CapabilityType.ClassifyEmail]: ClassifyEmailThreads,
   //////////////////
   //  LISTENERS   //
   //////////////////
   [AgentListenerEvent.NewWebSession]: NewWebSessionListener,
   [AgentListenerEvent.NewMeetingRecording]: NewMeetingRecording,
   [AgentListenerEvent.InvoicePastDue]: InvoicePastDue,
+  [AgentListenerEvent.NewEmail]: NewEmails,
 };
 
 export const goals: GoalMap = {
