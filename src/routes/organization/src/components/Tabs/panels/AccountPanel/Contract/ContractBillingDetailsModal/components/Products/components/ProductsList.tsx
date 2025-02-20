@@ -83,6 +83,11 @@ export const ProductsList = observer(
             groupedOnce[skuId] = [];
           }
           groupedOnce[skuId].push(service);
+        } else {
+          if (!groupedOnce[service.metadata.id]) {
+            groupedOnce[service.metadata.id] = [];
+          }
+          groupedOnce[service.metadata.id].push(service);
         }
       });
 
