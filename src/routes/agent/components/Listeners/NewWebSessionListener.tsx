@@ -50,7 +50,7 @@ export const NewWebSessionListener = observer(() => {
 
   return (
     <>
-      <div>
+      <div className='px-4 py-3'>
         <h2 className='text-sm font-medium mb-4'>
           {agent.getListenerName(AgentListenerEvent.NewWebSession)}
         </h2>

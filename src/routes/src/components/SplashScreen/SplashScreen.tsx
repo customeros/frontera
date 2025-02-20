@@ -57,7 +57,7 @@ export const SplashScreen = observer(
           !store.session.isBootstrapping &&
           (pathname === '/' || privatePaths.some((p) => pathname.startsWith(p)))
         ) {
-          if (!store.session.isAuthenticated) {
+          if (!store.session?.isAuthenticated) {
             navigate(
               '/auth/signin' +
                 (pathname !== '/'

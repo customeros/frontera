@@ -27,7 +27,7 @@ export const ApplyTag = observer(() => {
   if (!agent) return null;
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 px-4 py-3'>
       <p className='font-semibold text-sm'>
         {agent?.getCapabilityName(CapabilityType.ApplyTagToCompany)}
       </p>

@@ -9,6 +9,12 @@ import { cn } from '@ui/utils/cn';
 import { Icon, IconName } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
 import { useModKey } from '@shared/hooks/useModKey';
+import {
+  ScrollAreaRoot,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+} from '@ui/utils/ScrollArea';
 
 import { Scope } from './components/Scope';
 import { goals, Header, configs } from './components';
@@ -205,8 +211,15 @@ export const AgentPage = observer(() => {
         </div>
 
         {usecase.activeConfig && ActiveConfig && (
-          <div className='w-[418px] border-r border-r-grayModern-200 px-4 py-3'>
-            <ActiveConfig />
+          <div className='w-[418px] border-r border-r-grayModern-200'>
+            <ScrollAreaRoot>
+              <ScrollAreaViewport>
+                <ActiveConfig />
+              </ScrollAreaViewport>
+              <ScrollAreaScrollbar orientation='vertical'>
+                <ScrollAreaThumb />
+              </ScrollAreaScrollbar>
+            </ScrollAreaRoot>
           </div>
         )}
       </div>

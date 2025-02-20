@@ -146,7 +146,7 @@ export const useFileUploader = ({
       await upload(file);
     }
 
-    inputRef.current.value = '';
+    if (inputRef.current) inputRef.current.value = '';
   };
 
   const handleDragOver: DragEventHandler<HTMLDivElement> = (e) => {
