@@ -180,3 +180,4 @@ jobs:
           repository: customeros/cloud
           event-type: deploy-frontera-app
           client-payload: '{"version": "${{ steps.generate_version.outputs.next_version }}"}'
+
