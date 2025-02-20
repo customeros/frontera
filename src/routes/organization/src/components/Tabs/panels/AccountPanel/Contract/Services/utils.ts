@@ -116,7 +116,7 @@ export const groupServicesByParentId = (services: ServiceLineItem[]) => {
     subscription: processGroups(subscription),
     once: once.filter(
       (service) =>
-        service.closed &&
+        !service.closed &&
         service.invoicingStatus === ServiceInvoicingStatus.Ready,
     ),
   };
