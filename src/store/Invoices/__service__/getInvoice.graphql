@@ -62,6 +62,7 @@ query Invoice($number: String!) {
         appSource
       }
       contractLineItem {
+        description
         serviceStarted
         price
         billingCycle

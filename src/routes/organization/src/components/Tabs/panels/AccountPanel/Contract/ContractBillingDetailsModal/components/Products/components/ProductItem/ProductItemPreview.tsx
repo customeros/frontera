@@ -123,7 +123,7 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
             </span>
           </div>
           <div className='flex items-center'>
-            {type === 'one-time' && badge && (
+            {type === 'one-time' && badge && !service.tempValue.closed && (
               <div className=''>
                 <Tag
                   size='sm'
@@ -144,7 +144,7 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
                     service?.tempValue?.serviceStarted,
                     'UTC',
                   ).toString(),
-                  DateTimeUtils.dateWithShortYear,
+                  DateTimeUtils.defaultFormatShortString,
                 )}
             </div>
 
@@ -160,9 +160,7 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
                   className={deleteButtonClasses}
                   icon={<FlipBackward className='text-inherit' />}
                   onClick={() =>
-                    service.update((prev) => ({ ...prev, closed: false }), {
-                      mutate: false,
-                    })
+                    service.updateTemp((prev) => ({ ...prev, closed: false }))
                   }
                 />
               )}
