@@ -742,7 +742,7 @@ export class UpdateAgentIconUsecase {
 
     agent.setIcon(selectedIcon);
 
-    const err = await this.service.saveAgent(agent);
+    const [res, err] = await this.service.saveAgent(agent);
 
     if (err) {
       console.error(
@@ -754,6 +754,10 @@ export class UpdateAgentIconUsecase {
       this.root.ui.toastError('We could not update agent icon', `${err}`);
 
       return;
+    }
+
+    if (res?.agent_Save) {
+      agent.put(res?.agent_Save);
     }
 
     this.isSaving = false;

@@ -15,9 +15,9 @@ export type SaveAgentMutation = {
     isActive: boolean;
     visible: boolean;
     createdAt: any;
+    metric: string;
     updatedAt: any;
     error?: string | null;
-    metric: string;
     color: string;
     scope: Types.AgentScope;
     icon: string;
