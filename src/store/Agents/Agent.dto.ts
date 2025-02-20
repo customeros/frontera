@@ -220,6 +220,7 @@ export class Agent extends Entity<AgentDatum> {
     ]);
   }
 
+  @action
   public put(payload: AgentDatum) {
     const span = Tracer.span('Agent.put');
 

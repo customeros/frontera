@@ -5,6 +5,7 @@ interface FormFieldProps {
   label: string;
   value: string;
   optional?: boolean;
+  onBlur?: () => void;
   error: string | null;
   placeholder?: string;
   onChange: (value: string) => void;
@@ -21,6 +22,7 @@ export const FormField = ({
   label,
   value,
   error,
+  onBlur,
   optional,
   onChange,
   children,
@@ -43,6 +45,7 @@ export const FormField = ({
           size='sm'
           id={name}
           value={value}
+          onBlur={onBlur}
           variant='outline'
           placeholder={placeholder}
           className='bg-transparent max-w-[320px]'

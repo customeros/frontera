@@ -2,7 +2,11 @@ import { ReactElement, ComponentType } from 'react';
 
 import { AgentType, CapabilityType, AgentListenerEvent } from '@graphql/types';
 
-import { NewMeetingRecording, NewWebSessionListener } from './Listeners';
+import {
+  InvoicePastDue,
+  NewMeetingRecording,
+  NewWebSessionListener,
+} from './Listeners';
 import {
   ApplyTag,
   GenerateInvoice,
@@ -37,6 +41,7 @@ export const configs: ConfigMap = {
   //////////////////
   [AgentListenerEvent.NewWebSession]: NewWebSessionListener,
   [AgentListenerEvent.NewMeetingRecording]: NewMeetingRecording,
+  [AgentListenerEvent.InvoicePastDue]: InvoicePastDue,
 };
 
 export const goals: GoalMap = {

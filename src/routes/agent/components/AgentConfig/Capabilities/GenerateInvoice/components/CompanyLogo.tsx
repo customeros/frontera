@@ -111,7 +111,8 @@ export const CompanyLogo = observer(
                   <Image
                     src={imageSrc}
                     className={cn(
-                      'h-12 grayscale filter blur-sm',
+                      'h-12',
+                      (file || !value) && 'grayscale filter blur-sm',
                       hasLoaded &&
                         'grayscale-0 blur-none animate-fadeOutFilteredGrayscale',
                     )}

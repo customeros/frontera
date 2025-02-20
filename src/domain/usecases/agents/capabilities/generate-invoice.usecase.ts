@@ -1,12 +1,14 @@
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
 import { Agent } from '@store/Agents/Agent.dto';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
+import { AgentService } from '@domain/services/agent/agent.service';
 
 import { CapabilityType } from '@graphql/types';
 import { UploadResponse } from '@ui/form/FileUploader';
 
 export class GenerateInvoiceUsecase {
+  private service = new AgentService();
   private root = RootStore.getInstance();
   @observable accessor config = new GenerateInvoiceConfig();
 
@@ -16,6 +18,9 @@ export class GenerateInvoiceUsecase {
     this.removeCompanyLogo = this.removeCompanyLogo.bind(this);
     this.toggleBankDetails = this.toggleBankDetails.bind(this);
     this.onCompanyLogoError = this.onCompanyLogoError.bind(this);
+    this.toggleBankInfoTemplate = this.toggleBankInfoTemplate.bind(this);
+
+    setTimeout(this.init.bind(this), 0);
   }
 
   @action
@@ -33,6 +38,7 @@ export class GenerateInvoiceUsecase {
     return this.capability?.getCapabilityName(CapabilityType.GenerateInvoice);
   }
 
+  @action
   async init() {
     const span = Tracer.span('GenerateInvoiceUsecase.init');
 
@@ -58,8 +64,15 @@ export class GenerateInvoiceUsecase {
 
       return;
     }
-
     this.config = new GenerateInvoiceConfig(capability.config);
+
+    span.logArgs({
+      config: this.config,
+    });
+
+    if (this.config.bankInfoTemplate.value === '') {
+      this.toggleBankInfoTemplate('usa');
+    }
 
     span.end();
   }
@@ -68,8 +81,8 @@ export class GenerateInvoiceUsecase {
   setCompanyLogo(_refId: number, res: UploadResponse) {
     const span = Tracer.span('GenerateInvoiceUsecase.setCompanyLogo');
 
-    this.config.logoRepositoryField.value = res.id;
-
+    this.config.logoRepositoryFileId.value = res.id;
+    this.execute('logoRepositoryFileId');
     span.logArgs({
       res: res.id,
     });
@@ -78,7 +91,10 @@ export class GenerateInvoiceUsecase {
   }
 
   @action
-  setProperty(property: keyof GenerateInvoiceConfig, value: string) {
+  setProperty(
+    property: keyof GenerateInvoiceConfig,
+    value: string | boolean | string[],
+  ) {
     this.config[property].value = value;
   }
 
@@ -104,18 +120,88 @@ export class GenerateInvoiceUsecase {
   removeCompanyLogo() {
     const span = Tracer.span('GenerateInvoiceUsecase.removeCompanyLogo');
 
-    this.config.logoRepositoryField.value = '';
-
+    this.config.logoRepositoryFileId.value = '';
+    this.execute('logoRepositoryFileId');
     span.end();
   }
 
   @action
   toggleBankDetails() {
+    const span = Tracer.span('GenerateInvoiceUsecase.toggleBankDetails', {
+      includeBankTransferDetails: this.config.includeBankTransferDetails.value,
+    });
+
     this.config.includeBankTransferDetails.value =
       !this.config.includeBankTransferDetails.value;
+    this.execute('includeBankTransferDetails');
+
+    span.end({
+      includeBankTransferDetails: this.config.includeBankTransferDetails.value,
+    });
   }
 
-  async execute() {}
+  @action
+  toggleBankInfoTemplate(type: 'usa' | 'eu' | 'uk' | 'other') {
+    const span = Tracer.span('GenerateInvoiceUsecase.toggleBankInfoTemplate', {
+      bankInfoTemplate: this.config.bankInfoTemplate.value,
+    });
+
+    this.config.bankInfoTemplate.value = type;
+    this.execute('bankInfoTemplate');
+
+    span.end({
+      bankInfoTemplate: this.config.bankInfoTemplate.value,
+    });
+  }
+
+  async execute(property: keyof GenerateInvoiceConfig) {
+    const span = Tracer.span('GenerateInvoiceUsecase.execute', {
+      property,
+      value: this.config[property].value,
+    });
+
+    const agent = this.root.agents.getById(this.agentId);
+
+    if (!agent) {
+      console.error(
+        'GenerateInvoiceUsecase.execute: Agent not found, aborting.',
+      );
+      span.end();
+
+      return;
+    }
+
+    agent.setCapabilityConfig(
+      CapabilityType.GenerateInvoice,
+      property,
+      this.config[property].value,
+    );
+
+    const [res, err] = await this.service.saveAgent(agent);
+
+    if (err) {
+      console.error(
+        'GenerateInvoiceUsecase.execute: Could not save agent',
+        err,
+      );
+      span.end();
+
+      return;
+    }
+
+    if (res) {
+      agent.put(res.agent_Save);
+      this.init();
+    }
+
+    span.end();
+  }
+
+  isBankInfoTemplate(...args: ('usa' | 'eu' | 'uk' | 'other')[]) {
+    return args.includes(
+      this.config.bankInfoTemplate.value as 'usa' | 'eu' | 'uk' | 'other',
+    );
+  }
 }
 
 class GenerateInvoiceConfig {
@@ -125,10 +211,8 @@ class GenerateInvoiceConfig {
   region = new ConfigProperty();
   country = new ConfigProperty();
   bankName = new ConfigProperty();
-  ccEmails = new ConfigProperty();
   locality = new ConfigProperty();
   sortCode = new ConfigProperty();
-  bccEmails = new ConfigProperty();
   fromEmail = new ConfigProperty();
   legalName = new ConfigProperty();
   addressLine1 = new ConfigProperty();
@@ -136,11 +220,19 @@ class GenerateInvoiceConfig {
   otherDetails = new ConfigProperty();
   accountNumber = new ConfigProperty();
   routingNumber = new ConfigProperty();
-  logoRepositoryField = new ConfigProperty();
-  includeBankTransferDetails = new ConfigProperty<boolean>();
+  bankInfoTemplate = new ConfigProperty();
+  ccEmails = new ConfigProperty<string[]>();
+  bccEmails = new ConfigProperty<string[]>();
+  logoRepositoryFileId = new ConfigProperty();
+  includeBankTransferDetails = new ConfigProperty<boolean>({
+    value: false,
+    error: '',
+  });
 
   constructor(rawJSON?: string) {
-    const span = Tracer.span('GenerateInvoiceConfig.constructor');
+    const span = Tracer.span('GenerateInvoiceConfig.constructor', {
+      rawJSON,
+    });
 
     if (rawJSON) {
       const config = Agent.parseConfig(rawJSON);
@@ -155,20 +247,26 @@ class GenerateInvoiceConfig {
         return;
       }
 
-      Object.assign(this, config);
+      Object.entries(config).forEach(([key, value]) => {
+        runInAction(() => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (this[key as keyof GenerateInvoiceConfig] as any) =
+            new ConfigProperty(value as ConfigProperty);
+        });
+      });
     }
 
     span.end();
   }
 }
 
-class ConfigProperty<T extends string | number | boolean = string> {
+class ConfigProperty<T extends string | number | boolean | string[] = string> {
   @observable accessor value: T = '' as T;
   @observable accessor error: string | null = null;
 
-  constructor(property?: { value: T; error: string | null }) {
+  constructor(property?: { value?: T; error?: string | null }) {
     if (property) {
-      this.value = property?.value ?? '';
+      this.value = property?.value ?? ('' as T);
       this.error = property?.error ?? null;
     }
   }

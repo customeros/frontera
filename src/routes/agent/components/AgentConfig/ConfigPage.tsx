@@ -9,9 +9,15 @@ import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
 import { useModKey } from '@shared/hooks/useModKey';
+import {
+  ScrollAreaRoot,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+} from '@ui/utils/ScrollArea/index';
 
 import { Scope } from './Scope';
-import { goals, configs } from './config.tsx';
+import { goals, configs } from './config';
 
 export const ConfigPage = observer(() => {
   const store = useStore();
@@ -196,8 +202,15 @@ export const ConfigPage = observer(() => {
         </div>
 
         {usecase.activeConfig && ActiveConfig && (
-          <div className='w-[418px] border-r border-r-grayModern-200 px-4 py-3'>
-            <ActiveConfig />
+          <div className='w-[418px] border-r border-r-grayModern-200'>
+            <ScrollAreaRoot>
+              <ScrollAreaViewport>
+                <ActiveConfig />
+              </ScrollAreaViewport>
+              <ScrollAreaScrollbar orientation='vertical'>
+                <ScrollAreaThumb />
+              </ScrollAreaScrollbar>
+            </ScrollAreaRoot>
           </div>
         )}
       </div>

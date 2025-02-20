@@ -1,10 +1,12 @@
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
 import { action, computed, observable } from 'mobx';
+import { AgentService } from '@domain/services/agent/agent.service';
 
-import { CapabilityType } from '@shared/types/__generated__/graphql.types';
+import { CapabilityType } from '@graphql/types';
 
 export class ManageOnlinePaymentUsecase {
+  private service = new AgentService();
   private root = RootStore.getInstance();
 
   @observable accessor isConnecting = false;
@@ -39,21 +41,25 @@ export class ManageOnlinePaymentUsecase {
   }
 
   @action
-  toggleCapability() {
+  toggleCapability(value?: boolean) {
     const span = Tracer.span('ManageOnlinePaymentUsecase.toggleCapability', {
       isEnabled: this.isEnabled,
     });
 
-    this.isEnabled = !this.isEnabled;
-    // this.capability!.active = this.isEnabled;
+    this.isEnabled = value ?? !this.isEnabled;
+
+    this.execute();
 
     span.end({
       isEnabled: this.isEnabled,
     });
   }
 
+  @action
   async init() {
-    const span = Tracer.span('ManageOnlinePaymentUsecase.init');
+    const span = Tracer.span('ManageOnlinePaymentUsecase.init', {
+      isEnabled: this.isEnabled,
+    });
 
     const agent = this.root.agents.getById(this.agentId);
 
@@ -81,6 +87,44 @@ export class ManageOnlinePaymentUsecase {
 
     this.isEnabled = capability.active;
 
-    span.end();
+    span.end({
+      isEnabled: this.isEnabled,
+    });
+  }
+
+  async execute() {
+    const span = Tracer.span('ManageOnlinePaymentUsecase.execute', {
+      isEnabled: this.isEnabled,
+    });
+
+    const agent = this.root.agents.getById(this.agentId);
+
+    if (!agent) {
+      console.error(
+        'ManageOnlinePaymentUsecase.execute: Agent not found, aborting.',
+      );
+      span.end();
+
+      return;
+    }
+
+    agent?.toggleCapabilityStatus(CapabilityType.ProcessAutopayment);
+
+    const [res, err] = await this.service.saveAgent(agent);
+
+    if (err) {
+      console.error(
+        'ManageOnlinePaymentUsecase.execute: Error saving agent, aborting.',
+      );
+    }
+
+    if (res) {
+      agent.put(res.agent_Save);
+      this.init();
+    }
+
+    span.end({
+      isEnabled: this.isEnabled,
+    });
   }
 }

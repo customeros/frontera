@@ -12,7 +12,8 @@ export type LogoName =
   | 'instagram'
   | 'default'
   | 'grain'
-  | 'fathom';
+  | 'fathom'
+  | 'stripe';
 interface LogoProps extends SVGAttributes<SVGElement> {
   name: LogoName;
   className?: string;

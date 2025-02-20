@@ -54,9 +54,7 @@ export const ConfirmDialog = ({
           <AlertDialogContent className='rounded-xl '>
             <div className='flex items-start justify-between w-full'>
               <p className='pb-0 font-semibold line-clamp-2'>{title}</p>
-              {!hideCloseButton && (
-                <AlertDialogCloseIconButton className='mt-[3px]' />
-              )}
+              {!hideCloseButton && <AlertDialogCloseIconButton />}
             </div>
 
             <AlertDialogHeader className='font-bold mt-4'>
