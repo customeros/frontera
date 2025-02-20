@@ -67,7 +67,7 @@ export const AddSingleContact = observer(() => {
     e?.stopPropagation();
     e?.preventDefault();
     usecase.clearState();
-    store.ui.commandMenu.toggle('AddSingleContact');
+    store.ui.commandMenu.setOpen(false);
     store.ui.commandMenu.clearContext();
   };
 
