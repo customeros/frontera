@@ -23,6 +23,7 @@ mutation saveAgent($input: AgentSaveInput!) {
     isActive
     visible
     createdAt
+    metric
     updatedAt
     error
     metric
