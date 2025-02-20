@@ -38,9 +38,7 @@ export class RenameAgentUsecase {
       return;
     }
 
-    const span = Tracer.span('RenameAgentUsecase.execute', {
-      agentName: agent.value.name,
-    });
+    const span = Tracer.span('RenameAgentUsecase.execute');
 
     // Default to 'Name me maybe' if the input is empty
     const newAgentName = !this.inputValue.trim().length
@@ -58,10 +56,13 @@ export class RenameAgentUsecase {
       agent.setName(prevName);
       console.error('RenameAgentUsecase.execute: Could not rename agent', err);
       span.end();
+
+      return;
     }
 
     if (res?.agent_Save) {
       this.isSaving = false;
+      agent.put(res?.agent_Save);
       this.root.ui.commandMenu.setType('AgentCommands');
       this.root.ui.commandMenu.setOpen(false);
     }

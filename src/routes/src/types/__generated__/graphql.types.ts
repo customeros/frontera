@@ -160,6 +160,7 @@ export type AgentSaveInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   listeners?: InputMaybe<Array<AgentListenerSaveInput>>;
+  metric: Scalars['String']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<AgentType>;
   visible?: InputMaybe<Scalars['Boolean']['input']>;

@@ -16,7 +16,7 @@ export class ToggleAgentActiveUsecase {
     return this.root.agents.getById(this.id);
   }
 
-  toggleActive() {
+  async toggleActive() {
     const span = Tracer.span('ToggleAgentActiveUsecase.toggleActive');
 
     if (!this.agent) {
@@ -28,7 +28,19 @@ export class ToggleAgentActiveUsecase {
     }
 
     this.agent.toggleStatus();
-    this.service.saveAgent(this.agent);
+
+    const [res, err] = await this.service.saveAgent(this.agent);
+
+    if (err) {
+      console.error(
+        'ToggleAgentActiveUsecase.toggleActive: Could not toggle agent active',
+        err,
+      );
+    }
+
+    if (res?.agent_Save) {
+      this.agent?.put(res?.agent_Save);
+    }
 
     span.end();
   }

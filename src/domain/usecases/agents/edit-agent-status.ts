@@ -14,7 +14,7 @@ export class EditAgentStatusUsecase {
     return this.root.agents.getById(this.agentId);
   }
 
-  toggleActive() {
+  async toggleActive() {
     const span = Tracer.span('AgentViewUsecase.toggleActive');
 
     if (!this.agent) {
@@ -23,19 +23,31 @@ export class EditAgentStatusUsecase {
       return;
     }
     this.agent.toggleStatus();
-    this.service.saveAgent(this.agent).then(() => {
-      if (this.agent?.value.isActive) {
-        this.root.ui.toastSuccess(
-          `${this.agent?.value.name} is now turned on`,
-          'agent-status-toggle-on',
-        );
-      } else {
-        this.root.ui.toastSuccess(
-          `${this.agent?.value.name} is now turned off`,
-          'agent-status-toggle-off',
-        );
-      }
-    });
+
+    const [res, err] = await this.service.saveAgent(this.agent);
+
+    if (err) {
+      console.error(
+        'EditAgentStatusUsecase.toggleActive: Could not toggle agent active',
+        err,
+      );
+    }
+
+    if (res?.agent_Save) {
+      this.agent?.put(res?.agent_Save);
+    }
+
+    if (this.agent?.value.isActive) {
+      this.root.ui.toastSuccess(
+        `${this.agent?.value.name} is now turned on`,
+        'agent-status-toggle-on',
+      );
+    } else {
+      this.root.ui.toastSuccess(
+        `${this.agent?.value.name} is now turned off`,
+        'agent-status-toggle-off',
+      );
+    }
 
     span.end();
   }

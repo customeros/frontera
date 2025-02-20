@@ -55,6 +55,7 @@ export class UpdateAgentColorUsecase {
 
     if (res?.agent_Save) {
       this.isSaving = false;
+      agent.put(res?.agent_Save);
     }
 
     span.end();
