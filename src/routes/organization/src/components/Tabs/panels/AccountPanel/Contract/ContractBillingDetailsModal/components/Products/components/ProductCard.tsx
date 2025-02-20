@@ -97,7 +97,9 @@ export const ProductCard = observer(
         <CardHeader className={cn('flex justify-between pb-0.5')}>
           <p
             title={
-              sku?.value?.name || thisGroupLineItems?.[0]?.value?.description
+              sku?.value?.name ||
+              thisGroupLineItems?.[0]?.value?.description ||
+              ''
             }
             className={cn(
               'text-gray-700 min-w-2.5 w-full min-h-0 border-none hover:border-none focus:border-none truncate overflow-hidden',
