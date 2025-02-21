@@ -66,7 +66,6 @@ const AccountPanelComponent = observer(() => {
   return (
     <>
       <OrganizationPanel
-        withFade
         title='Account'
         shouldBlockPanelScroll={isModalOpen}
         actionItem={
