@@ -42,6 +42,10 @@ export const CreateAgent = () => {
           <Icon name='edit-04' />
           <span>Meeting keeper</span>
         </CommandItem>
+        <CommandItem onSelect={() => usecase.execute(AgentType.EmailKeeper)}>
+          <Icon name='mail-01' />
+          <span>Email keeper</span>
+        </CommandItem>
         <CommandItem onSelect={() => usecase.execute(AgentType.SupportSpotter)}>
           <Icon name='life-buoy-01' />
           <span>Support spotter</span>
