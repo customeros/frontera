@@ -29,6 +29,7 @@ import {
 import { EmptyState } from '../EmptyState/EmptyState';
 import { computeFinderData } from './computeFinderData';
 import { computeFinderColumns } from './computeFinderColumns';
+import { InvoicesTableActions } from '../Actions/InvoicesTableActions';
 import {
   ContactTableActions,
   OrganizationTableActions,
@@ -382,6 +383,7 @@ export const FinderTable = observer(() => {
   const enableRowSelection = match(tableType)
     .with(TableViewType.Organizations, () => enableFeature || true)
     .with(TableViewType.Contacts, () => true)
+    .with(TableViewType.Invoices, () => true)
     .with(TableViewType.Opportunities, () => true)
     .with(TableViewType.Flow, () => true)
     .otherwise(() => false);
@@ -424,7 +426,6 @@ export const FinderTable = observer(() => {
         enableRowSelection={enableRowSelection}
         tableType={tableViewDef?.value?.tableId}
         isLoading={store.organizations.isLoading}
-        fullRowSelection={tableType === TableViewType.Invoices}
         enableKeyboardShortcuts={
           !isEditing && !isFiltering && !isCommandMenuPrompted
         }
@@ -433,8 +434,7 @@ export const FinderTable = observer(() => {
           store.contacts.loadNext(preset!);
         }}
         enableTableActions={
-          tableType &&
-          [TableViewType.Invoices, TableViewType.Contracts].includes(tableType)
+          tableType && [TableViewType.Contracts].includes(tableType)
             ? false
             : enableFeature !== null
             ? enableFeature
@@ -503,6 +503,14 @@ export const FinderTable = observer(() => {
                   !isEditing &&
                   !isCommandMenuPrompted
                 }
+              />
+            );
+          }
+
+          if (tableType === TableViewType.Invoices) {
+            return (
+              <InvoicesTableActions
+                focusedId={focusRow !== null ? data?.[focusRow]?.id : null}
               />
             );
           }

@@ -11,11 +11,11 @@ interface DownloadFileProps extends ButtonProps {
 
 export const DownloadFile = observer(
   ({ fileId, variant, fileName, ...rest }: DownloadFileProps) => {
-    const { files } = useStore();
+    const files = useStore();
 
     const handleDownload = () => {
-      files.downloadAttachment(fileId, fileName);
-      files.clear(fileId);
+      files.files.downloadAttachment(fileId, fileName);
+      files.files.clear(fileId);
     };
 
     return (

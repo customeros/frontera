@@ -2,12 +2,6 @@ import { useState, ReactNode, useEffect } from 'react';
 
 import { cn } from '@ui/utils/cn';
 import { Spinner } from '@ui/feedback/Spinner';
-import {
-  ScrollAreaRoot,
-  ScrollAreaThumb,
-  ScrollAreaViewport,
-  ScrollAreaScrollbar,
-} from '@ui/utils/ScrollArea';
 
 interface OrganizationPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -48,7 +42,7 @@ export const OrganizationPanel = ({
       <div className='flex justify-between pt-[6px] pb-4 px-6'>
         <div className='flex items-center relative'>
           {leftActionItem && leftActionItem}
-          <span className='text-[16px] text-gray-700 font-semibold'>
+          <span className=' mt-1 text-[16px] text-gray-700 font-semibold'>
             {title}
           </span>
           {isLoading && (
@@ -62,21 +56,16 @@ export const OrganizationPanel = ({
 
         {actionItem && actionItem}
       </div>
-      <ScrollAreaRoot>
-        <ScrollAreaViewport>
-          <div
-            className={cn(
-              isMounted ? 'opacity-100' : 'opacity-0',
-              'flex flex-col space-y-2 justify-stretch w-full h-full px-6 pb-8 transition-opacity duration-300 ease-in-out',
-            )}
-          >
-            {children}
-          </div>
-        </ScrollAreaViewport>
-        <ScrollAreaScrollbar orientation='vertical'>
-          <ScrollAreaThumb />
-        </ScrollAreaScrollbar>
-      </ScrollAreaRoot>
+
+      <div
+        className={cn(
+          isMounted ? 'opacity-100' : 'opacity-0',
+          'flex flex-col space-y-2  w-full h-full px-6 pb-8 transition-opacity duration-300 ease-in-out',
+        )}
+      >
+        {children}
+      </div>
+
       {bottomActionItem && bottomActionItem}
     </div>
   );

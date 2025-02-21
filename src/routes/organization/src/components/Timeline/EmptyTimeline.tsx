@@ -32,11 +32,11 @@ export const EmptyTimeline = observer(
             </span>
           </div>
         </div>
-        <div className='flex bg-[#F9F9FB] flex-col flex-1'>
+        <div className='flex bg-white flex-col flex-1'>
           <div>
             <TimelineActions invalidateQuery={invalidateQuery} />
           </div>
-          <div className='flex flex-1 h-full bg-[#F9F9FB]'>
+          <div className='flex flex-1 h-full bg-white'>
             {/* <FutureZone /> */}
           </div>
         </div>

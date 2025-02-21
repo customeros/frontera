@@ -136,7 +136,7 @@ export const ContactDetails = observer(
             isExpanded && isExpandble ? 'bg-white' : 'border-transparent',
             !isExpanded && isExpandble && 'cursor-pointer',
             isExpandble
-              ? 'px-2 pb-2.5 pt-0.5 group-hover/card:border-gray-200 group-hover/card:bg-white max-w-[400px] rounded-lg border bg-card text-card-foreground shadow'
+              ? 'px-2 pb-2.5 pt-0.5 group-hover/card:border-gray-200 group-hover/card:bg-white max-w-[600px] rounded-lg border bg-card text-card-foreground shadow'
               : 'p-4',
           )}
         >

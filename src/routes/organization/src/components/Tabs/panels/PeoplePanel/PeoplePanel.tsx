@@ -98,7 +98,7 @@ export const PeoplePanel = observer(() => {
       }
     >
       {!contacts.length && (
-        <div className='flex flex-col items-center mt-4'>
+        <div className='flex flex-col items-center mt-4 max-w-[495px]'>
           <div className='border-1 border-gray-200 p-3 rounded-md mb-6 mt-5'>
             <FeaturedIcon colorScheme='gray'>
               <Users02 className='text-gray-700 size-6' />
@@ -160,7 +160,7 @@ export const PeoplePanel = observer(() => {
       )}
 
       {/* Filtered contacts */}
-      {contacts
+      {Array.from(new Set(contacts))
         .sort((a, b) => {
           if (sortBy === 'First name') {
             if (sortDir === 'asc') {
