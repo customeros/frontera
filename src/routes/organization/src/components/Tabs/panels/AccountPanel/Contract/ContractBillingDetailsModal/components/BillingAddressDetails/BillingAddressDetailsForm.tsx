@@ -63,6 +63,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
         <div className='flex flex-col'>
           <p className='text-sm font-semibold'>Billing address</p>
           <Select
+            isSearchable
             name='country'
             placeholder='Country'
             options={countryOptions}
