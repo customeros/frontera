@@ -19,6 +19,9 @@ jobs:
   create-release:
     runs-on: ubicloud-standard-2
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
+    outputs:
+      next_version: ${{ steps.generate_version.outputs.next_version }}
+      should_release: ${{ steps.generate_version.outputs.should_release }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -170,13 +173,3 @@ jobs:
             "VITE_REALTIME_WS_PATH=${{ secrets.PROD_VITE_REALTIME_WS_PATH }}"
             "VITE_REALTIME_WS_API_KEY=${{ secrets.PROD_VITE_REALTIME_WS_API_KEY }}"
             "VITE_STRIPE_PUBLIC_KEY=${{ secrets.PROD_VITE_STRIPE_PUBLIC_KEY }}"
-
-      # Trigger Frontera App Workflow after Docker build is complete
-      - name: Trigger Frontera App Workflow
-        if: steps.commit_message.outputs.version_bump != 'skip' && steps.generate_version.outputs.should_release == 'true'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.FE_TESTS_GITHUB_TOKEN }}
-          repository: customeros/cloud
-          event-type: deploy-frontera-app
-          client-payload: '{"version": "${{ steps.generate_version.outputs.next_version }}"}'
