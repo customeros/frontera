@@ -102,7 +102,7 @@ export const OrganizationDetails = observer(
           )}
 
           <div className='flex items-center justify-between'>
-            <p className='font-semibold text-base mt-0.5 overflow-hidden overflow-ellipsis'>
+            <p className='font-semibold text-base -mt-1 overflow-hidden overflow-ellipsis'>
               {organization?.value?.name ?? ''}
             </p>
 
