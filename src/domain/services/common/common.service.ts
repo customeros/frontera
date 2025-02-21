@@ -72,4 +72,28 @@ export class CommonService {
 
     return req;
   }
+
+  public async requestQuickbooksAccess(redirect_uri?: string, state?: string) {
+    const span = Tracer.span('CommonService.requestQuickbooksAccess');
+
+    const req = await unwrap(
+      this.repository.requestQuickbooksAccess(redirect_uri, state),
+    );
+
+    span.end();
+
+    return req;
+  }
+
+  public async quickbooksOauthCallback(code: string, redirect_uri?: string) {
+    const span = Tracer.span('CommonService.quickbooksOauthCallback');
+
+    const req = await unwrap(
+      this.repository.quickbooksOauthCallback(code, redirect_uri),
+    );
+
+    span.end();
+
+    return req;
+  }
 }
