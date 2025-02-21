@@ -277,6 +277,7 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
                 <ContentEditable
                   onBlur={onBlur}
                   onFocus={onFocus}
+                  autoFocus={false}
                   spellCheck='false'
                   data-test={dataTest}
                   onKeyDown={(e) =>

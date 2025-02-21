@@ -89,7 +89,7 @@ export const OrganizationTimeline = observer(() => {
   const store = useStore();
 
   const styles = useMemo(
-    () => ({ height: '100%', width: '100%', background: '#F9F9FB' }),
+    () => ({ height: '100%', width: '100%', background: 'white' }),
     [],
   );
   const id = useParams()?.id as string;
