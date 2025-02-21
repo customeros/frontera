@@ -69,4 +69,20 @@ export class CommonRepository {
       },
     );
   }
+
+  async requestQuickbooksAccess(redirect_uri?: string, state?: string) {
+    const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
+
+    return this.transport.http.get(
+      `/internal/settings/quickbooks/requestAccess?redirect_url=${redirectUri}&state=${state}`,
+    );
+  }
+
+  async quickbooksOauthCallback(code: string, redirect_uri?: string) {
+    const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
+
+    return this.transport.http.get(
+      `/internal/settings/quickbooks/oauth/callback?code=${code}&redirect_url=${redirectUri}`,
+    );
+  }
 }
