@@ -81,6 +81,7 @@ export const ParticipantsSelectGroup = observer(
                 ref={ref}
                 size='xs'
                 name='from'
+                isSearchable
                 menuPlacement={'auto'}
                 value={from.selectedEmail}
                 options={from.emailOptions}
