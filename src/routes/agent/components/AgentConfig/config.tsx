@@ -3,11 +3,9 @@ import { ReactElement, ComponentType } from 'react';
 import { AgentType, CapabilityType, AgentListenerEvent } from '@graphql/types';
 
 import { ClassifyEmailThreads } from './Capabilities/ClassifyEmailThreads';
-
 import {
+  NewEmails,
   InvoicePastDue,
-    NewEmails,
-
   NewMeetingRecording,
   NewWebSessionListener,
 } from './Listeners';

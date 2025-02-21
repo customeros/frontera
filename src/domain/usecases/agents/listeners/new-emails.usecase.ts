@@ -11,13 +11,6 @@ interface EmailConfig {
   provider: 'google' | 'azure';
 }
 
-interface ListenerConfig {
-  emails: {
-    errors: string;
-    value: EmailConfig[];
-  };
-}
-
 export class NewEmailsUsecase {
   private service = new AgentService();
   private root = RootStore.getInstance();
@@ -58,8 +51,8 @@ export class NewEmailsUsecase {
       return;
     }
 
-    const listener = agent.value.capabilities.find(
-      (c) => c.type === listenerType.ClassifyEmail,
+    const listener = agent.value.listeners.find(
+      (c) => c.type === AgentListenerEvent.NewEmail,
     );
 
     if (!listener) {
@@ -86,13 +79,21 @@ export class NewEmailsUsecase {
       return;
     }
 
-    this.emails = config.emails.value ?? [];
+    this.emails = Array.isArray(config.emails.value) ? config.emails.value : [];
     this.configError = config.emails.error ?? '';
 
     span.end({
       emails: this.emails,
       configError: this.configError,
     });
+  }
+
+  removeLink(email: string) {
+    this.emails = this.emails.filter((e) => e.email !== email);
+  }
+
+  addLink(email: string, provider: 'google' | 'azure') {
+    this.emails = [...this.emails, { email, provider }];
   }
 
   async execute() {
