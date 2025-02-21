@@ -217,7 +217,7 @@ export const ContractDetailsModal = observer(
 
           if (!itemStore?.tempValue) return;
 
-          if (itemStore.tempValue.closed) {
+          if (!itemStore.value.closed && itemStore.tempValue.closed) {
             if (!e.metadata.id.includes('new')) {
               promises.push(
                 contractLineItemsStore.closeServiceLineItem({
