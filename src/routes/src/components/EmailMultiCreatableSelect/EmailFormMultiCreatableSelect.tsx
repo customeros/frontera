@@ -115,6 +115,7 @@ export const EmailFormMultiCreatableSelect = observer(
         autoFocus
         size='sm'
         name={name}
+        isSearchable
         backspaceRemovesValue
         menuPlacement={'auto'}
         components={components}
