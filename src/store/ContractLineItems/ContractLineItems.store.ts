@@ -8,8 +8,11 @@ import { GroupOperation } from '@store/types.ts';
 import { runInAction, makeAutoObservable } from 'mobx';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 import { GroupStore, makeAutoSyncableGroup } from '@store/group-store.ts';
-import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem.store.ts';
 import { ContractLineItemService } from '@store/ContractLineItems/ContractLineItem.service.ts';
+import {
+  ServiceLineItemTemp,
+  ContractLineItemStore,
+} from '@store/ContractLineItems/ContractLineItem.store.ts';
 
 import { DateTimeUtils } from '@utils/date.ts';
 import {
@@ -47,7 +50,10 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
     return Array.from(this.value.values());
   }
 
-  createNewVersion = async (payload: ServiceLineItem, contractId: string) => {
+  createNewVersion = async (
+    payload: ServiceLineItemTemp,
+    contractId: string,
+  ) => {
     const newCli = new ContractLineItemStore(this.root, this.transport);
     const tempId = payload.metadata.id;
 
@@ -60,7 +66,10 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
         taxRate: payload.tax.taxRate,
       },
       id: payload.parentId,
-      price: payload.price,
+      price:
+        typeof payload.price === 'string' && payload.price
+          ? parseFloat((payload.price as string).replace(/,/g, ''))
+          : payload.price,
       quantity: payload.quantity,
       description: payload.description ?? '',
       skuId: payload.skuId,
@@ -153,6 +162,10 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
         merge(newContractLineItem.tempValue, {
           ...payload,
           skuId: payload.skuId,
+          price:
+            typeof payload.price === 'string' && payload.price
+              ? parseFloat((payload.price as string).replace(/,/g, ''))
+              : payload.price,
           metadata: { id: tempId },
         });
       }
@@ -197,6 +210,10 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
         ...prevVersion,
         ...payload,
         serviceStarted,
+        price:
+          typeof payload.price === 'string'
+            ? parseFloat(payload.price)
+            : payload.price,
         parentId: payload.id,
         metadata: { id: tempId },
       });

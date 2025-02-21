@@ -18,9 +18,10 @@ import {
   ServiceLineItemUpdateInput,
 } from '@graphql/types';
 
+export type ServiceLineItemTemp = ServiceLineItem & { price: string | number };
 export class ContractLineItemStore implements Store<ServiceLineItem> {
   value: ServiceLineItem = getDefaultValue();
-  tempValue: ServiceLineItem = getDefaultValue();
+  tempValue: ServiceLineItemTemp = getDefaultValue();
   version = 0;
   isLoading = false;
   history: Operation[] = [];
@@ -108,7 +109,10 @@ export class ContractLineItemStore implements Store<ServiceLineItem> {
       >(SERVICE_LINE_UPDATE_MUTATION, {
         input: {
           id: this.id,
-          price: this.tempValue.price,
+          price:
+            typeof this.tempValue.price === 'string' && this.tempValue.price
+              ? parseFloat((this.tempValue.price as string).replace(/,/g, ''))
+              : this.tempValue.price,
           quantity: this.tempValue.quantity,
           skuId: this.tempValue.skuId,
           description: this.tempValue?.description || '',

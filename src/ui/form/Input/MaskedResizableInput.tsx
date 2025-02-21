@@ -22,7 +22,7 @@ export const MaskedResizableInput = ({ ...props }: MaskedInputProps) => {
     };
 
     measureWidth();
-  }, [props.value, props.defaultValue]);
+  }, [props.value, props.defaultValue, props.measureValue]);
 
   const handleAccept = (unmaskedValue: string) => {
     if (props.onChange) {
