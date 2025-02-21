@@ -1,0 +1,37 @@
+name: Deploy Frontera App
+
+on:
+  workflow_run:
+    workflows: ["Create Release"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., v1.2.3)'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Set version
+        id: set_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ github.event.workflow_run.outputs.next_version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger Frontera App Workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.FE_TESTS_GITHUB_TOKEN }}
+          repository: customeros/cloud
+          event-type: deploy-frontera-app
+          client-payload: '{"version": "${{ steps.set_version.outputs.version }}"}'
