@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { FC, useRef, useEffect, PropsWithChildren } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
@@ -25,7 +24,6 @@ import {
 const AccountPanelComponent = observer(() => {
   const store = useStore();
   const baseCurrency = store.settings.tenant.value?.baseCurrency;
-  const createButtonRef = useRef<HTMLButtonElement>(null);
 
   const id = useParams()?.id as string;
 
@@ -65,14 +63,6 @@ const AccountPanelComponent = observer(() => {
     );
   }
 
-  useEffect(() => {
-    if (createButtonRef.current) {
-      setTimeout(() => {
-        createButtonRef.current?.focus();
-      }, 10);
-    }
-  }, [createButtonRef.current]);
-
   return (
     <>
       <OrganizationPanel
@@ -85,7 +75,6 @@ const AccountPanelComponent = observer(() => {
               <IconButton
                 size='xs'
                 variant='ghost'
-                ref={createButtonRef}
                 className='text-gray-500 mr-1'
                 onClick={() => handleCreate()}
                 aria-label='Create new contract'
@@ -117,7 +106,7 @@ const AccountPanelComponent = observer(() => {
   );
 });
 
-export const AccountPanel: FC<PropsWithChildren> = () => (
+export const AccountPanel = () => (
   <AccountModalsContextProvider>
     <AccountPanelComponent />
   </AccountModalsContextProvider>

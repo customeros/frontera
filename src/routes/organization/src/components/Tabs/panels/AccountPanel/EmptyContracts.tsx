@@ -1,22 +1,20 @@
-import { FC, useRef, useEffect, PropsWithChildren } from 'react';
-
 import { Button } from '@ui/form/Button/Button';
 import { File02 } from '@ui/media/icons/File02';
 import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
 import { RelationshipButton } from '@organization/components/Tabs/panels/AccountPanel/RelationshipButton';
 import { OrganizationPanel } from '@organization/components/Tabs/shared/OrganizationPanel/OrganizationPanel';
 
-export const EmptyContracts: FC<
-  PropsWithChildren<{ isPending: boolean; onCreate: () => void }>
-> = ({ children, onCreate, isPending }) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+interface EmptyContractsProps {
+  isPending: boolean;
+  onCreate: () => void;
+  children: React.ReactNode;
+}
 
-  useEffect(() => {
-    setTimeout(() => {
-      buttonRef.current?.focus();
-    }, 10);
-  }, []);
-
+export const EmptyContracts = ({
+  children,
+  onCreate,
+  isPending,
+}: EmptyContractsProps) => {
   return (
     <OrganizationPanel title='Account' actionItem={<RelationshipButton />}>
       <article className='my-4 w-full flex flex-col items-center'>
@@ -27,7 +25,6 @@ export const EmptyContracts: FC<
 
         <Button
           size='sm'
-          ref={buttonRef}
           variant='outline'
           onClick={onCreate}
           colorScheme='primary'

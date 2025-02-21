@@ -43,6 +43,8 @@ export class EditOrganizationNotesUsecase {
       return;
     }
 
-    this.organizationService.updateNotes(organization, this.note);
+    if (this.note !== organization.value?.notes) {
+      this.organizationService.updateNotes(organization, this.note);
+    }
   }
 }

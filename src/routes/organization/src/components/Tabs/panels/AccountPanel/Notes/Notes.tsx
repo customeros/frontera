@@ -36,10 +36,12 @@ export const Notes = observer(({ id }: NotesProps) => {
             className='cursor-text'
             namespace='opportunity-next-step'
             placeholderClassName='cursor-text'
-            onBlur={() => editNotesUsecase.execute()}
             dataTest='organization-account-notes-editor'
             defaultHtmlValue={editNotesUsecase.defaultNote ?? ''}
             placeholder='Write some notes or anything related to this customer'
+            onBlur={() => {
+              editNotesUsecase.execute();
+            }}
             onChange={(html) => {
               editNotesUsecase.setNotes(html);
             }}
