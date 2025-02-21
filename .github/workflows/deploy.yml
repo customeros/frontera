@@ -19,13 +19,43 @@ jobs:
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
       github.event_name == 'workflow_dispatch'
     steps:
+      - name: Get workflow output
+        id: workflow_output
+        if: github.event_name == 'workflow_run'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.payload.workflow_run.id,
+            });
+            const matchArtifact = allArtifacts.data.artifacts.find((artifact) => {
+              return artifact.name == "workflow-data"
+            });
+
+            const download = await github.rest.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: matchArtifact.id,
+              archive_format: 'zip',
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync('workflow-data.zip', Buffer.from(download.data));
+            
+            const execSync = require('child_process').execSync;
+            execSync('unzip workflow-data.zip');
+            const workflowData = JSON.parse(fs.readFileSync('workflow-data.json', 'utf8'));
+            core.setOutput('next_version', workflowData.next_version);
+
       - name: Set version
         id: set_version
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
           else
-            echo "version=${{ github.event.workflow_run.outputs.next_version }}" >> $GITHUB_OUTPUT
+            echo "version=${{ steps.workflow_output.outputs.next_version }}" >> $GITHUB_OUTPUT
           fi
 
       - name: Trigger Frontera App Workflow

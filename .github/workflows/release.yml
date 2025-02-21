@@ -173,3 +173,16 @@ jobs:
             "VITE_REALTIME_WS_PATH=${{ secrets.PROD_VITE_REALTIME_WS_PATH }}"
             "VITE_REALTIME_WS_API_KEY=${{ secrets.PROD_VITE_REALTIME_WS_API_KEY }}"
             "VITE_STRIPE_PUBLIC_KEY=${{ secrets.PROD_VITE_STRIPE_PUBLIC_KEY }}"
+
+      # Save outputs for the deploy workflow
+      - name: Save workflow outputs
+        if: steps.generate_version.outputs.should_release == 'true'
+        run: |
+          echo "{\"next_version\": \"${{ steps.generate_version.outputs.next_version }}\"}" > workflow-data.json
+
+      - name: Upload workflow outputs
+        if: steps.generate_version.outputs.should_release == 'true'
+        uses: actions/upload-artifact@v3
+        with:
+          name: workflow-data
+          path: workflow-data.json
