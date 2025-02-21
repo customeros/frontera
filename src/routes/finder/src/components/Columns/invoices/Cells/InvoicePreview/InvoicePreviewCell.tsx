@@ -1,14 +1,24 @@
 import { useSearchParams } from 'react-router-dom';
 
 import { Eye } from '@ui/media/icons/Eye';
+import { useStore } from '@shared/hooks/useStore';
 
 export const InvoicePreviewCell = ({ value }: { value: string }) => {
+  const store = useStore();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleClick = () => {
     const newSearchParams = new URLSearchParams(searchParams?.toString());
+    const currentPreview = searchParams.get('preview');
 
-    newSearchParams.set('preview', value);
+    if (currentPreview === value) {
+      newSearchParams.delete('preview');
+      store.ui.setShowPreviewCard(false);
+    } else {
+      newSearchParams.set('preview', value);
+      store.ui.setShowPreviewCard(true);
+      store.ui.setFocusRow(value);
+    }
     setSearchParams(newSearchParams.toString());
   };
 

@@ -116,8 +116,6 @@ export const TimelineEventPreviewContextContextProvider = ({
   const handleOpenInvoice = (timelineEventId: string) => {
     setIsModalOpen(true);
 
-    setModalContent({ id: timelineEventId, __typename: 'Invoice' });
-
     const params = new URLSearchParams(searchParams?.toString() ?? '');
 
     params.set('invoice', timelineEventId);

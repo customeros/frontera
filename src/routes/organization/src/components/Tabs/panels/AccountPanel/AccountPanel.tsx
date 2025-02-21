@@ -1,18 +1,15 @@
+import { useParams } from 'react-router-dom';
 import { FC, PropsWithChildren } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 
 import { Currency } from '@graphql/types';
 import { Plus } from '@ui/media/icons/Plus';
 import { DateTimeUtils } from '@utils/date.ts';
-import { Button } from '@ui/form/Button/Button';
-import { Skeleton } from '@ui/feedback/Skeleton';
 import { useStore } from '@shared/hooks/useStore';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { Spinner } from '@ui/feedback/Spinner/Spinner';
 import { IconButton } from '@ui/form/IconButton/IconButton';
-import { ChevronRight } from '@ui/media/icons/ChevronRight';
 import { OrganizationPanel } from '@organization/components/Tabs';
 import { Contracts } from '@organization/components/Tabs/panels/AccountPanel/Contracts/Contracts';
 import { RelationshipButton } from '@organization/components/Tabs/panels/AccountPanel/RelationshipButton';
@@ -26,7 +23,6 @@ import {
 } from './context/AccountModalsContext';
 
 const AccountPanelComponent = observer(() => {
-  const navigate = useNavigate();
   const store = useStore();
   const baseCurrency = store.settings.tenant.value?.baseCurrency;
 
@@ -74,25 +70,6 @@ const AccountPanelComponent = observer(() => {
         withFade
         title='Account'
         shouldBlockPanelScroll={isModalOpen}
-        bottomActionItem={
-          <Button
-            variant='ghost'
-            onClick={() => navigate(`?tab=invoices`)}
-            className='rounded-none bg-gray-25 p-7 justify-between items-center hover:bg-gray-25 group'
-            rightIcon={
-              <ChevronRight className='size-4 text-gray-400 group-hover:text-gray-500' />
-            }
-          >
-            <p className='text-sm font-semibold inline-flex items-center'>
-              Invoices •{' '}
-              {store.invoices.isLoading ? (
-                <Skeleton className='h-3 w-3 ml-1' />
-              ) : (
-                organizationStore.invoices?.length
-              )}
-            </p>
-          </Button>
-        }
         actionItem={
           <div className='flex items-center'>
             <Tooltip label='Create new contract'>

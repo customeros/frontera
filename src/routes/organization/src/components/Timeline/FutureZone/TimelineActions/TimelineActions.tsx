@@ -54,7 +54,7 @@ export const TimelineActions = observer(
         id={id}
         invalidateQuery={invalidateQuery}
       >
-        <div className='bg-gray-25'>
+        <div className='bg-white'>
           <TimelineActionButtons
             onClick={setActiveEditor}
             emailUseCase={emailUseCase}

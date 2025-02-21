@@ -13,7 +13,7 @@ export const TimelineItem: FC<TimelineItemProps> = ({
   children,
 }) => {
   return (
-    <div className='px-6 pb-2 bg-gray-25'>
+    <div className='px-6 pb-2 bg-white'>
       {showDate && (
         <span className='text-gray-500 text-xs font-medium mb-2 inline-block'>
           {DateTimeUtils.format(date, DateTimeUtils.dateWithAbreviatedMonth)}

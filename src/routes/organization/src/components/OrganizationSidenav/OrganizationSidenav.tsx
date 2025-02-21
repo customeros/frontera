@@ -3,14 +3,10 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { Users02 } from '@ui/media/icons/Users02';
+import { Icon } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
-import { Ticket02 } from '@ui/media/icons/Ticket02';
-import { Trophy01 } from '@ui/media/icons/Trophy01';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
-import { InfoSquare } from '@ui/media/icons/InfoSquare';
 import { IconButton } from '@ui/form/IconButton/IconButton';
-import { ActivityHeart } from '@ui/media/icons/ActivityHeart';
 import { ArrowNarrowLeft } from '@ui/media/icons/ArrowNarrowLeft';
 import { SidenavItem } from '@shared/components/RootSidenav/components/SidenavItem';
 import { useKeyboardNavigation } from '@shared/components/RootSidenav/hooks/useKeyboardNavigation';
@@ -103,7 +99,7 @@ export const OrganizationSidenav = observer(() => {
           label='About'
           dataTest='org-side-nav-item-about'
           onClick={handleItemClick('about')}
-          icon={<InfoSquare className='size-5' />}
+          icon={<Icon name='info-square' className='size-5' />}
           isActive={checkIsActive('about') || !searchParams?.get('tab')}
         />
         <SidenavItem
@@ -111,28 +107,37 @@ export const OrganizationSidenav = observer(() => {
           isActive={checkIsActive('people')}
           dataTest='org-side-nav-item-people'
           onClick={handleItemClick('people')}
-          icon={<Users02 className='size-5' />}
+          icon={<Icon name='users-02' className='size-5' />}
         />
         <SidenavItem
           label='Account'
+          isActive={checkIsActive('account')}
           dataTest='org-side-nav-item-account'
           onClick={handleItemClick('account')}
-          icon={<ActivityHeart className='size-5' />}
-          isActive={checkIsActive('account') || checkIsActive('invoices')}
+          icon={<Icon className='size-5' name='activity-heart' />}
+        />
+        <SidenavItem
+          label='Invoices'
+          isActive={checkIsActive('invoices')}
+          dataTest='org-side-nav-item-invoices'
+          onClick={handleItemClick('invoices')}
+          icon={<Icon name='invoice' className='size-5' />}
         />
         <SidenavItem
           label='Success'
           isActive={checkIsActive('success')}
           dataTest='org-side-nav-item-success'
           onClick={handleItemClick('success')}
-          icon={<Trophy01 className='size-5' />}
-        />
-        <SidenavItem
-          label='Issues'
-          isActive={checkIsActive('issues')}
-          dataTest='org-side-nav-item-issues'
-          onClick={handleItemClick('issues')}
-          icon={<Ticket02 className='size-5' />}
+          icon={
+            <Icon
+              strokeWidth='2'
+              name='trophy-01'
+              className='size-5'
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
+          }
         />
       </div>
       <div className='flex flex-col flex-grow justify-end'>

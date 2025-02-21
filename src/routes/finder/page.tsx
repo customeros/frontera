@@ -3,7 +3,6 @@ import { useEffect, MouseEventHandler } from 'react';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
-import { Preview } from '@invoices/components/Preview';
 import { FinderTable } from '@finder/components/FinderTable';
 import { FinderFilters } from '@finder/components/FinderFilters/FinderFilters';
 
@@ -19,6 +18,7 @@ import {
   TableIdType,
   TableViewType,
 } from '@shared/types/__generated__/graphql.types';
+import { InvoicePreviewModal } from '@organization/components/Timeline/PastZone/events/invoice/InvoicePreviewModal';
 
 import { Search } from './src/components/Search';
 
@@ -114,7 +114,11 @@ export const FinderPage = observer(() => {
           </div>
 
           {store.ui.showPreviewCard && !store.ui.isSearching && (
-            <PreviewCard>
+            <PreviewCard
+              isInvoice={
+                tableViewDef?.value.tableType === TableViewType.Invoices
+              }
+            >
               {tableViewDef?.value.tableType === TableViewType.Contacts && (
                 <ContactDetails
                   isExpandble={false}
@@ -125,15 +129,20 @@ export const FinderPage = observer(() => {
                 store.ui.focusRow && (
                   <OrganizationDetails id={store.ui.focusRow} />
                 )}
+
+              {tableViewDef?.value.tableType === TableViewType.Invoices &&
+                store.ui.focusRow && (
+                  <InvoicePreviewModal invoiceId={store.ui.focusRow} />
+                )}
             </PreviewCard>
           )}
+
           {store.ui.showShortcutsPanel && (
             <PreviewCard>
               <ShortcutsPanel />
             </PreviewCard>
           )}
         </div>
-        <Preview />
       </div>
     </div>
   );

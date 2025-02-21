@@ -16,7 +16,7 @@ const columnHelper = createColumnHelper<ColumnDatum>();
 export const columns = [
   columnHelper.accessor((row) => row, {
     id: ColumnViewType.InvoicesInvoiceNumber,
-    size: 100,
+    size: 150,
     enableColumnFilter: false,
     enableSorting: false,
     header: (props) => (
@@ -50,7 +50,7 @@ export const columns = [
 
   columnHelper.accessor((row) => row, {
     id: ColumnViewType.InvoicesInvoiceStatus,
-    size: 110,
+    size: 140,
     enableColumnFilter: false,
     enableSorting: true,
     header: (props) => (
@@ -67,7 +67,7 @@ export const columns = [
   }),
   columnHelper.accessor((row) => row, {
     id: ColumnViewType.InvoicesAmount,
-    size: 90,
+    size: 120,
     enableColumnFilter: false,
     enableSorting: false,
     header: (props) => (

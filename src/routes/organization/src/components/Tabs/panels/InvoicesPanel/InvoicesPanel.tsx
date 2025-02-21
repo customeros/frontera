@@ -1,33 +1,20 @@
-import { useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { motion } from 'framer-motion';
+import { useKey } from 'rooks';
 import { observer } from 'mobx-react-lite';
 import { InvoiceStore } from '@store/Invoices/Invoice.store.ts';
 
 import { Table } from '@ui/presentation/Table';
 import { useStore } from '@shared/hooks/useStore';
-import { ChevronDown } from '@ui/media/icons/ChevronDown';
-import { IconButton } from '@ui/form/IconButton/IconButton';
 import { EmptyState } from '@shared/components/Invoice/EmptyState/EmptyState';
 import { columns } from '@organization/components/Tabs/panels/InvoicesPanel/Columns/Columns';
 import { OrganizationPanel } from '@organization/components/Tabs/shared/OrganizationPanel/OrganizationPanel';
-import { useTimelineEventPreviewMethodsContext } from '@organization/components/Timeline/shared/TimelineEventPreview/context/TimelineEventPreviewContext';
 
-const slideUpVariants = {
-  initial: { y: '100%', opacity: 0 },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: { type: 'interia', stiffness: 100 },
-  },
-  exit: { y: '100%', opacity: 0, transition: { duration: 3 } },
-};
 export const InvoicesPanel = observer(() => {
   const id = useParams()?.id as string;
-  const navigate = useNavigate();
   const tableRef = useRef(null);
-  const { handleOpenInvoice } = useTimelineEventPreviewMethodsContext();
+  const [focusedRow, setFocusedRow] = useState<string | null>(null);
 
   const store = useStore();
   const invoices = store.invoices
@@ -44,44 +31,44 @@ export const InvoicesPanel = observer(() => {
     );
   }
 
+  const onPressSpace = () => {
+    if (!focusedRow) return;
+    const params = new URLSearchParams(window.location.search);
+    const currentPreview = params.get('preview');
+
+    if (currentPreview === focusedRow) {
+      params.delete('preview');
+    } else {
+      params.set('preview', focusedRow);
+    }
+
+    window.history.pushState({}, '', `?${params.toString()}`);
+    window.dispatchEvent(new Event('popstate'));
+  };
+
+  useKey('Space', () => {
+    onPressSpace();
+  });
+
   return (
     <OrganizationPanel title='Account'>
-      <motion.div
-        key='invoices'
-        initial='initial'
-        animate='animate'
-        style={{ width: '100%' }}
-        variants={slideUpVariants}
-        exit={{ x: -500, opacity: 0 }}
-      >
-        <div className='flex justify-between mb-2 mr-4'>
-          <p className='text-sm font-semibold'>Invoices</p>
-          <IconButton
-            size='xs'
-            variant='ghost'
-            aria-label='Go back'
-            onClick={() => navigate(`?tab=account`)}
-            icon={<ChevronDown className='text-gray-400' />}
-          />
-        </div>
-        <div className='-ml-6 max-w-[447px]'>
-          <Table<InvoiceStore>
-            rowHeight={28}
-            columns={columns}
-            tableRef={tableRef}
-            data={invoices ?? []}
-            borderColor='gray.100'
-            contentHeight={'80vh'}
-            fullRowSelection={true}
-            enableRowSelection={false}
-            totalItems={invoices.length}
-            isLoading={store.invoices.isLoading}
-            onFullRowSelection={(row) =>
-              row?.number && handleOpenInvoice(row.number)
-            }
-          />
-        </div>
-      </motion.div>
+      <div className='-ml-6 -mr-[33px]'>
+        <Table<InvoiceStore>
+          rowHeight={28}
+          columns={columns}
+          tableRef={tableRef}
+          data={invoices ?? []}
+          borderColor='gray.100'
+          fullRowSelection={false}
+          totalItems={invoices.length}
+          isLoading={store.invoices.isLoading}
+          onFocusedRowChange={(index) => {
+            const row = invoices[index ?? 0];
+
+            row?.number && setFocusedRow(row.value.invoiceNumber);
+          }}
+        />
+      </div>
     </OrganizationPanel>
   );
 });
