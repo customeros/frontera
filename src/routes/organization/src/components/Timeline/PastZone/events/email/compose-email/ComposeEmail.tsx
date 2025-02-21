@@ -3,8 +3,8 @@ import { FC, useRef, PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
 import { TimelineEmailUsecase } from '@domain/usecases/email-composer/send-timeline-email.usecase.ts';
 
-import { Button } from '@ui/form/Button/Button.tsx';
-import { Editor } from '@ui/form/Editor/Editor.tsx';
+import { Button } from '@ui/form/Button/Button';
+import { Editor } from '@ui/form/Editor/Editor';
 import { ParticipantsSelectGroup } from '@organization/components/Timeline/PastZone/events/email/compose-email/ParticipantsSelectGroup';
 
 export interface ComposeEmailProps extends PropsWithChildren {
