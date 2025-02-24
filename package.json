@@ -103,6 +103,7 @@
     "react-virtuoso": "^4.7.10",
     "recoil": "^0.7.7",
     "recursive-diff": "^1.0.9",
+    "reflect-metadata": "^0.2.2",
     "rooks": "^7.14.1",
     "sanitize-html": "^2.13.0",
     "slack-to-html": "^1.0.0",

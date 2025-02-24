@@ -13,6 +13,7 @@ import {
   ManageOnlinePayment,
   EvaluateCompanyIcpFit,
   DetectSupportWebVisit,
+  SyncInvoiceToAccounting,
   SendSlackNotificationCapability,
 } from './Capabilities';
 
@@ -36,6 +37,7 @@ export const configs: ConfigMap = {
   [CapabilityType.DetectSupportWebvisit]: DetectSupportWebVisit,
   [CapabilityType.GenerateInvoice]: GenerateInvoice,
   [CapabilityType.ProcessAutopayment]: ManageOnlinePayment,
+  [CapabilityType.SyncInvoiceToAccounting]: SyncInvoiceToAccounting,
   //////////////////
   //  LISTENERS   //
   //////////////////

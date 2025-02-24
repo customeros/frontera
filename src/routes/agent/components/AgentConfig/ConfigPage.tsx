@@ -203,7 +203,7 @@ export const ConfigPage = observer(() => {
 
         {usecase.activeConfig && ActiveConfig && (
           <div className='w-[418px] border-r border-r-grayModern-200'>
-            <ScrollAreaRoot>
+            <ScrollAreaRoot type='always'>
               <ScrollAreaViewport>
                 <ActiveConfig />
               </ScrollAreaViewport>

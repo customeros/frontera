@@ -1,5 +1,6 @@
 import { action } from 'mobx';
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import { JobRolesService as JobRoleRepo } from '@store/JobRoles/__service__/JobRoles.service';
 import { SaveJobRolesMutationVariables } from '@store/JobRoles/__service__/saveJobRole.generated';
 
@@ -7,6 +8,7 @@ import { unwrap } from '@utils/unwrap';
 
 type SaveJobRolePayload = SaveJobRolesMutationVariables['input'];
 
+@injectable
 export class JobRoleService {
   private root = RootStore.getInstance();
   private jobRoleRepo = JobRoleRepo.getInstance();

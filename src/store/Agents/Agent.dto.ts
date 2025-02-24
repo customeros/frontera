@@ -86,6 +86,15 @@ export class Agent extends Entity<AgentDatum> {
     return this.value.capabilities.find((c) => c.type === type)?.name;
   }
 
+  public getCapability(type: CapabilityType) {
+    const span = Tracer.span('Agent.getCapability');
+    const capability = this.value.capabilities.find((c) => c.type === type);
+
+    span.end();
+
+    return capability;
+  }
+
   public getListenerName(type: AgentListenerEvent) {
     return this.value.listeners.find((l) => l.type === type)?.name;
   }
@@ -162,12 +171,14 @@ export class Agent extends Entity<AgentDatum> {
     span.end();
   }
 
+  @action
   public toggleStatus() {
     this.draft();
     this.value.isActive = !this.value.isActive;
     this.commit({ syncOnly: true });
   }
 
+  @action
   public toggleCapabilityStatus(capabilityType: CapabilityType) {
     this.draft();
 

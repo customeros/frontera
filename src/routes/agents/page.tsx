@@ -16,7 +16,7 @@ import {
   ScrollAreaScrollbar,
 } from '@ui/utils/ScrollArea';
 
-import { useSlackOauthCallback } from './hooks';
+import { useOauthCallback } from './hooks';
 import { Header, AgentCard, EmptyState } from './components';
 
 export const AgentsPage = observer(() => {
@@ -32,7 +32,7 @@ export const AgentsPage = observer(() => {
 
   const usecase = useMemo(() => new EditAgentStatusUsecase(id), [id]);
 
-  useSlackOauthCallback();
+  useOauthCallback();
 
   if ((!agents.length && store.agents.isBootstrapped) || !firstView) {
     return (

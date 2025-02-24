@@ -2,36 +2,52 @@ import type { RootStore } from '@store/root';
 
 import { Transport } from '@infra/transport';
 import { runInAction, makeAutoObservable } from 'mobx';
+import { CommonRepository } from '@infra/repositories/common';
 
 export type OauthToken = {
   type: string;
   email: string;
-
   provider: string;
   needsManualRefresh: boolean;
 };
 
 export class OauthTokenStore {
+  private commonRepository = new CommonRepository();
+
   tokens: Array<OauthToken> = [];
   isLoading = false;
   error: string | null = null;
   isBootstrapped = false;
+  isQuickbooksConnected = false;
 
   constructor(private root: RootStore, private transport: Transport) {
     makeAutoObservable(this);
+    this.loadQuickbooksStatus = this.loadQuickbooksStatus.bind(this);
+  }
+
+  async loadQuickbooksStatus() {
+    try {
+      const { data } = await this.commonRepository.getQuickbooksStatus();
+
+      runInAction(() => {
+        this.isQuickbooksConnected = data.quickbooksConnected;
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = (err as Error)?.message;
+      });
+    }
   }
 
   async load() {
-    if (this.root.demoMode) {
-      return;
-    }
-
     try {
       this.isLoading = true;
 
       const { data } = await this.transport.http.get<OauthToken[]>(
         `/internal/settings/user/settings/oauth/${this.root.session.value.tenant}`,
       );
+
+      await this.loadQuickbooksStatus();
 
       runInAction(() => {
         this.tokens = data;

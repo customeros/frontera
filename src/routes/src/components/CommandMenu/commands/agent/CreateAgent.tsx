@@ -26,31 +26,25 @@ export const CreateAgent = () => {
           onSelect={() => usecase.execute(AgentType.WebVisitIdentifier)}
         >
           <Icon name='radar' />
-          <span>Web visitor identifier</span>
+          <span>Web Visitor Identifier</span>
         </CommandItem>
         <CommandItem onSelect={() => usecase.execute(AgentType.IcpQualifier)}>
           <Icon name='target-04' />
-          <span>ICP qualifier</span>
-        </CommandItem>
-        <CommandItem
-          onSelect={() => usecase.execute(AgentType.CampaignManager)}
-        >
-          <Icon name='send-03' />
-          <span>Outbound campaign manager</span>
+          <span>ICP Qualifier</span>
         </CommandItem>
         <CommandItem onSelect={() => usecase.execute(AgentType.MeetingKeeper)}>
           <Icon name='edit-04' />
-          <span>Meeting keeper</span>
+          <span>Meeting Keeper</span>
         </CommandItem>
         <CommandItem onSelect={() => usecase.execute(AgentType.SupportSpotter)}>
           <Icon name='life-buoy-01' />
-          <span>Support spotter</span>
+          <span>Support Spotter</span>
         </CommandItem>
         <CommandItem
           onSelect={() => usecase.execute(AgentType.CashflowGuardian)}
         >
-          <Icon name='life-buoy-01' />
-          <span>Cashflow</span>
+          <Icon name='shield-dollar' />
+          <span>Cashflow Guardian</span>
         </CommandItem>
       </Command.List>
     </Command>

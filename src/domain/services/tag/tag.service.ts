@@ -1,9 +1,11 @@
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import { TagDatum } from '@store/Tags/Tag.store';
 import { TagService as TagRepo } from '@store/Tags/__service__/Tag.service';
 
 import { unwrap } from '@utils/unwrap';
 
+@injectable
 export class TagService {
   private tagRepo = TagRepo.getInstance();
   private store = RootStore.getInstance();
