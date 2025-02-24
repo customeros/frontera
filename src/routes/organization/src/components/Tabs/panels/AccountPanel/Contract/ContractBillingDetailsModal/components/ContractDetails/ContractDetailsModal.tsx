@@ -4,18 +4,17 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import set from 'lodash/set';
 import { observer } from 'mobx-react-lite';
 import { motion, Variants } from 'framer-motion';
-import { ContractStore } from '@store/Contracts/Contract.store.ts';
-import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem.store.ts';
+import { ContractStore } from '@store/Contracts/Contract.store';
+import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem.store';
 
 import { cn } from '@ui/utils/cn';
 import { Input } from '@ui/form/Input';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { ModalFooter, ModalHeader } from '@ui/overlay/Modal/Modal';
-import { calculateMaxArr } from '@organization/components/Tabs/panels/AccountPanel/utils.ts';
+import { calculateMaxArr } from '@organization/components/Tabs/panels/AccountPanel/utils';
 import {
   Contract,
-  AgentType,
   ContractStatus,
   ServiceLineItem,
   TenantBillingProfile,
@@ -25,8 +24,8 @@ import {
   useContractModalStateContext,
 } from '@organization/components/Tabs/panels/AccountPanel/context/ContractModalsContext';
 
-import { ContractStatusTag } from './ContractStatusTag.tsx';
-import { ContractBillingDetailsForm } from './ContractBillingDetailsForm.tsx';
+import { ContractStatusTag } from './ContractStatusTag';
+import { ContractBillingDetailsForm } from './ContractBillingDetailsForm';
 
 interface ContractDetailsModalProps {
   contractId: string;
@@ -82,9 +81,6 @@ export const ContractDetailsModal = observer(
     const [isSaving, setIsSaving] = useState(false);
 
     const bankAccounts = store.settings.bankAccounts.toArray();
-    const cashflowGuardianAgent = store.agents.getFirstAgentByType(
-      AgentType.CashflowGuardian,
-    );
 
     const tenantBillingProfiles =
       store.settings.tenantBillingProfiles.toArray();
@@ -341,8 +337,6 @@ export const ContractDetailsModal = observer(
 
           <ContractBillingDetailsForm
             contractId={contractId}
-            bankAccounts={bankAccounts}
-            billingEnabled={cashflowGuardianAgent?.value?.isActive}
             contractStatus={contractStore?.tempValue?.contractStatus}
             openAddressModal={() =>
               onChangeModalMode(EditModalMode.BillingDetails)

@@ -102,7 +102,7 @@ export const ProductCard = observer(
               ''
             }
             className={cn(
-              'text-grayModern-700 min-w-2.5 w-full min-h-0 border-none hover:border-none focus:border-none truncate overflow-hidden',
+              'font-medium text-sm text-grayModern-700 min-w-2.5 w-full min-h-0 border-none hover:border-none focus:border-none truncate overflow-hidden',
               {
                 'text-grayModern-400 line-through': isClosed,
               },

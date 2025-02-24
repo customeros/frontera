@@ -73,28 +73,13 @@ export const MultiValueWithActionMenu = observer(
     };
 
     const handleAddContact = () => {
-      const name =
-        rest?.data?.label !== rest?.data?.value
-          ? rest?.data?.label
-          : rest?.data?.label
-              ?.split('@')?.[0]
-              ?.split('.')
-              .map(
-                (word: string) => word.charAt(0).toUpperCase() + word.slice(1),
-              )
-              .join(' ');
-
-      store.contacts.create(
+      store.contacts.createWithEmail(
         organizationId,
         {
-          onSuccess: () => {},
+          onSuccess: () =>
+            store.ui.toastSuccess('Contact created', 'contact-email-created'),
         },
-        {
-          name,
-          email: {
-            email: rest?.data?.value,
-          },
-        },
+        { email: { email: rest?.data?.value, primary: true } },
       );
     };
 

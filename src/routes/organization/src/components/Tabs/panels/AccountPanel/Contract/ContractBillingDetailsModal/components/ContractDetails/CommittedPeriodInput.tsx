@@ -82,7 +82,7 @@ export const CommittedPeriodInput = observer(
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              className='text-base min-w-2.5 min-h-0 max-h-4'
+              className='min-w-2.5 min-h-0 max-h-4'
               value={contractStore?.tempValue?.committedPeriodInMonths ?? 1}
               defaultValue={
                 contractStore?.tempValue?.committedPeriodInMonths ?? 1

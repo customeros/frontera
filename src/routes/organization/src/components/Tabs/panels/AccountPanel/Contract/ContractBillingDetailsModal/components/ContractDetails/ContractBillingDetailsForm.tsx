@@ -1,52 +1,46 @@
 import { useMemo } from 'react';
 
-import { Store } from '@store/store.ts';
 import { toZonedTime } from 'date-fns-tz';
 import { observer } from 'mobx-react-lite';
-import { useConnections } from '@integration-app/react';
-import { ContractStore } from '@store/Contracts/Contract.store.ts';
+import { Agent } from '@store/Agents/Agent.dto';
+import { ContractStore } from '@store/Contracts/Contract.store';
 
 import { Switch } from '@ui/form/Switch';
-import { DateTimeUtils } from '@utils/date.ts';
+import { DateTimeUtils } from '@utils/date';
+import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { Radio, RadioGroup } from '@ui/form/Radio';
-import { Button } from '@ui/form/Button/Button.tsx';
-import { ModalBody } from '@ui/overlay/Modal/Modal.tsx';
-import { Divider } from '@ui/presentation/Divider/Divider.tsx';
-import { currencyOptions } from '@shared/util/currencyOptions.ts';
-import { DatePickerUnderline } from '@ui/form/DatePicker/DatePickerUnderline.tsx';
+import { ModalBody } from '@ui/overlay/Modal/Modal';
+import { Divider } from '@ui/presentation/Divider/Divider';
+import { currencyOptions } from '@shared/util/currencyOptions';
+import { DatePickerUnderline } from '@ui/form/DatePicker/DatePickerUnderline';
 import {
   Currency,
-  BankAccount,
+  AgentType,
   ContractStatus,
   TenantBillingProfile,
 } from '@graphql/types';
 import {
   paymentDueOptions,
   contractBillingCycleOptions,
-} from '@organization/components/Tabs/panels/AccountPanel/utils.ts';
+} from '@organization/components/Tabs/panels/AccountPanel/utils';
 import { Products } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractBillingDetailsModal/components/Products';
 
-import { InlineSelect } from './InlineSelect.tsx';
-import { ContractUploader } from './ContractUploader.tsx';
-import { CommittedPeriodInput } from './CommittedPeriodInput.tsx';
-import { PaymentDetailsPopover } from './PaymentDetailsPopover.tsx';
+import { InlineSelect } from './InlineSelect';
+import { ContractUploader } from './ContractUploader';
+import { CommittedPeriodInput } from './CommittedPeriodInput';
+import { PaymentDetailsPopover } from './PaymentDetailsPopover';
 
 interface SubscriptionServiceModalProps {
   contractId: string;
-  billingEnabled?: boolean;
   openAddressModal: () => void;
   contractStatus?: ContractStatus | null;
   tenantBillingProfile?: TenantBillingProfile | null;
-  bankAccounts: Array<Store<BankAccount>> | null | undefined;
 }
 
 export const ContractBillingDetailsForm = observer(
   ({
     contractId,
-    tenantBillingProfile,
-    bankAccounts,
-    billingEnabled: _billingEnabled,
     contractStatus,
     openAddressModal,
   }: SubscriptionServiceModalProps) => {
@@ -56,40 +50,39 @@ export const ContractBillingDetailsForm = observer(
     ) as ContractStore;
 
     const currency = contractStore?.tempValue?.currency;
-    // temporary quick fix -> remove this once we have the billing enabling corect
-    const billingEnabled = true;
 
-    const { items: iConnections } = useConnections();
-    const isStripeActive = !!iConnections
-      .map((item) => item.integration?.key)
-      .find((e) => e === 'stripe');
+    const cashflowAgent = store.agents.getFirstAgentByType(
+      AgentType.CashflowGuardian,
+    )?.value;
 
-    const bankTransferPopoverContent = useMemo(() => {
-      if (!tenantBillingProfile?.canPayWithBankTransfer) {
-        return 'Bank transfer not enabled yet';
-      }
-
-      if (
-        tenantBillingProfile?.canPayWithBankTransfer &&
-        (!bankAccounts || bankAccounts.length === 0)
-      ) {
-        return 'No bank accounts added yet';
-      }
-      const accountIndexWithCurrency = bankAccounts?.findIndex(
-        (account) => account?.value?.currency === currency,
+    // TODO when errors are populated on capability level use that instead of using error check from config
+    const isStripeEnabled = useMemo(() => {
+      const capability = cashflowAgent?.capabilities.find(
+        (e) => e.type === 'PROCESS_AUTOPAYMENT',
       );
 
-      if (accountIndexWithCurrency === -1 && currency) {
-        return `None of your bank accounts hold ${currency}`;
-      }
+      if (!capability || !capability.active || !capability.config) return false;
 
-      if (!currency) {
-        return `Please select contract currency to enable bank transfer`;
-      }
+      const processAutopaymentConfig = Agent.parseConfig(capability.config);
 
-      return '';
-    }, [tenantBillingProfile, bankAccounts, currency]);
+      return !processAutopaymentConfig?.stripe?.error;
+    }, [cashflowAgent?.capabilities]);
 
+    // TODO when errors are populated on capability level use that instead of using error check from config
+    const isBankPaymentEnabled = useMemo(() => {
+      const capability = cashflowAgent?.capabilities.find(
+        (e) => e.type === 'GENERATE_INVOICE',
+      );
+
+      if (!capability || !capability.active || !capability.config) return false;
+      const bankPaymentConfig = Agent.parseConfig(capability.config);
+
+      if (!bankPaymentConfig) return false;
+
+      return Object.values(bankPaymentConfig).every(
+        (item) => !item?.error?.length,
+      );
+    }, [cashflowAgent?.capabilities]);
     const renewalCalculatedDate = useMemo(() => {
       if (!contractStore?.tempValue?.serviceStarted) return null;
       const parsed = contractStore?.tempValue?.committedPeriodInMonths
@@ -108,7 +101,7 @@ export const ContractBillingDetailsForm = observer(
     return (
       <ModalBody className='flex flex-col flex-1 p-0'>
         <ul className='mb-2 list-disc ml-5'>
-          <li className='text-base '>
+          <li className='text-sm'>
             <div className='flex items-baseline'>
               <CommittedPeriodInput contractId={contractId} />
 
@@ -127,7 +120,7 @@ export const ContractBillingDetailsForm = observer(
               />
             </div>
           </li>
-          <li className='text-base'>
+          <li className='text-sm'>
             <div className='flex items-baseline'>
               Live until{' '}
               {renewalCalculatedDate
@@ -140,7 +133,7 @@ export const ContractBillingDetailsForm = observer(
               <Button
                 size='sm'
                 variant='ghost'
-                className='font-normal text-base p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
+                className='font-normal text-sm p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
                 onClick={() =>
                   contractStore?.updateTemp((prev) => ({
                     ...prev,
@@ -154,7 +147,7 @@ export const ContractBillingDetailsForm = observer(
               </Button>
             </div>
           </li>
-          <li className='text-base '>
+          <li className='text-sm'>
             <div className='flex items-baseline'>
               <span className='whitespace-nowrap'>Contracting in</span>
               <div className='z-30'>
@@ -181,7 +174,7 @@ export const ContractBillingDetailsForm = observer(
           contractStatus={contractStatus}
           currency={currency ?? Currency.Usd}
         />
-        {billingEnabled && (
+        {cashflowAgent?.isActive && (
           <>
             <div className='flex relative items-center h-8 mb-1'>
               <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
@@ -190,7 +183,7 @@ export const ContractBillingDetailsForm = observer(
               <Divider />
             </div>
             <ul className='mb-2 list-disc ml-5'>
-              <li className='text-base '>
+              <li className='text-sm'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap mr-1'>
                     Billing starts{' '}
@@ -212,7 +205,7 @@ export const ContractBillingDetailsForm = observer(
                   />
                 </div>
               </li>
-              <li className='text-base '>
+              <li className='text-sm'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap'>Invoices are sent</span>
                   <span className='z-20'>
@@ -242,11 +235,11 @@ export const ContractBillingDetailsForm = observer(
                   </span>
                 </div>
               </li>
-              <li className='text-base '>
+              <li className='text-sm'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>Customer has</span>
                   <div className='inline z-10'>
-                    <InlineSelect<number>
+                    <InlineSelect
                       id='dueDays'
                       name='dueDays'
                       label='Payment due'
@@ -267,14 +260,14 @@ export const ContractBillingDetailsForm = observer(
                   <span className='whitespace-nowrap ml-0.5'>to pay</span>
                 </div>
               </li>
-              <li className='text-base '>
+              <li className='text-sm'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>Billing is </span>
                   <div>
                     <Button
                       size='sm'
                       variant='ghost'
-                      className='font-normal text-base p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
+                      className='font-normal text-sm p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
                       onClick={() =>
                         contractStore?.updateTemp((contract) => ({
                           ...contract,
@@ -293,7 +286,7 @@ export const ContractBillingDetailsForm = observer(
                   </span>
                 </div>
               </li>
-              <li className='text-base '>
+              <li className='text-sm'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>
                     Invoices are billed to{' '}
@@ -304,7 +297,7 @@ export const ContractBillingDetailsForm = observer(
                       variant='ghost'
                       onClick={openAddressModal}
                       dataTest='contract-billing-details-address'
-                      className='font-normal text-base p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
+                      className='font-normal text-sm p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
                     >
                       {contractStore?.tempValue.billingDetails
                         ?.organizationLegalName || 'this address'}
@@ -325,9 +318,8 @@ export const ContractBillingDetailsForm = observer(
                 <div className='flex  items-center justify-between w-full'>
                   <PaymentDetailsPopover
                     withNavigation
-                    content={
-                      isStripeActive ? '' : 'No payment provider enabled'
-                    }
+                    agentId={cashflowAgent?.id}
+                    content={isStripeEnabled ? '' : ' Enable Stripe in the'}
                   >
                     <div className='text-sm font-normal whitespace-nowrap'>
                       Checkout with Stripe (Card & ACH)
@@ -337,7 +329,7 @@ export const ContractBillingDetailsForm = observer(
                   <Switch
                     size='sm'
                     name='payAutomatically'
-                    isInvalid={!isStripeActive}
+                    isInvalid={!isStripeEnabled}
                     isChecked={
                       !!contractStore?.tempValue?.billingDetails?.payOnline
                     }
@@ -370,7 +362,7 @@ export const ContractBillingDetailsForm = observer(
                     }));
                   }}
                 >
-                  <div className='flex flex-col gap-2 items-start'>
+                  <div className='text-sm flex flex-col gap-2 items-start'>
                     <Radio value={'true'}>
                       <span>Auto-charge invoices</span>
                     </Radio>
@@ -384,16 +376,19 @@ export const ContractBillingDetailsForm = observer(
               <div className='flex w-full justify-between items-center'>
                 <PaymentDetailsPopover
                   withNavigation
-                  content={bankTransferPopoverContent}
+                  agentId={cashflowAgent?.id}
+                  content={
+                    isBankPaymentEnabled ? '' : 'Enable bank transfer in the'
+                  }
                 >
-                  <div className='font-normal whitespace-nowrap'>
+                  <div className='font-normal text-sm whitespace-nowrap'>
                     Bank transfer
                   </div>
                 </PaymentDetailsPopover>
                 <Switch
                   size='sm'
                   name='canPayWithBankTransfer'
-                  isInvalid={!!bankTransferPopoverContent.length}
+                  isInvalid={!isBankPaymentEnabled}
                   isChecked={
                     !!contractStore?.tempValue?.billingDetails
                       ?.canPayWithBankTransfer
@@ -404,32 +399,6 @@ export const ContractBillingDetailsForm = observer(
                       billingDetails: {
                         ...contract.billingDetails,
                         canPayWithBankTransfer: value,
-                      },
-                    }))
-                  }
-                />
-              </div>
-
-              <div className='flex w-full justify-between items-center'>
-                <PaymentDetailsPopover
-                  withNavigation
-                  content={
-                    tenantBillingProfile?.check ? '' : 'Check not enabled yet'
-                  }
-                >
-                  <div className='font-normal whitespace-nowrap'>Checks</div>
-                </PaymentDetailsPopover>
-                <Switch
-                  size='sm'
-                  name='check'
-                  isInvalid={!tenantBillingProfile?.check}
-                  isChecked={!!contractStore?.tempValue?.billingDetails?.check}
-                  onChange={(value) =>
-                    contractStore?.updateTemp((contract) => ({
-                      ...contract,
-                      billingDetails: {
-                        ...contract.billingDetails,
-                        check: value,
                       },
                     }))
                   }
