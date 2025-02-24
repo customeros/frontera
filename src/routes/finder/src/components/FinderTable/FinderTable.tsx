@@ -47,11 +47,14 @@ export const FinderTable = observer(() => {
   const preset = searchParams?.get('preset');
   const tableViewDef = store.tableViewDefs.getById(preset ?? '1');
   const contactsPreset = store.tableViewDefs.contactsPreset;
+  const opportunitiesPreset = store.tableViewDefs.opportunitiesTablePreset;
 
   const sortingData = tableViewDef?.getSorting();
   const defaultSorting =
     preset === contactsPreset
       ? [{ id: ColumnViewType.ContactsCreatedAt, desc: true }]
+      : preset === opportunitiesPreset
+      ? [{ id: ColumnViewType.OpportunitiesCreatedDate, desc: true }]
       : [{ id: ColumnViewType.OrganizationsLastTouchpoint, desc: true }];
 
   const sorting: ColumnSort[] = !sortingData?.id

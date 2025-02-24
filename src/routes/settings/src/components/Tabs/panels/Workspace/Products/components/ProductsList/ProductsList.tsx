@@ -40,7 +40,7 @@ export const ProductsList = observer(
         <div className='grid grid-cols-[minmax(40px,1fr)_minmax(40px,100px)_minmax(0,110px)_40px] w-full text-sm gap-x-2'>
           <div className='font-medium flex items-center'>Product</div>
           <div className='font-medium flex items-center'>Type</div>
-          <div className='font-medium flex items-center justify-end'>Price</div>
+          <div className='font-medium flex items-center justify-end'>Default Price</div>
           <div className='w-8 h-[28px]' />
         </div>
 
