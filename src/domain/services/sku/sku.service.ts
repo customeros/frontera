@@ -1,9 +1,11 @@
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import { SkuRepository } from '@infra/repositories/sku';
 
 import { unwrap } from '@utils/unwrap';
 import { SkuInput } from '@shared/types/__generated__/graphql.types';
 
+@injectable
 export class SkuService {
   private root = RootStore.getInstance();
   private skuRepository = SkuRepository.getInstance();

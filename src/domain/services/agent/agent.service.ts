@@ -1,10 +1,12 @@
 import { Tracer } from '@infra/tracer';
+import { injectable } from '@infra/container';
 import { type Agent } from '@store/Agents/Agent.dto';
 import { AgentRepository } from '@infra/repositories/agent';
 
 import { unwrap } from '@utils/unwrap';
 import { AgentType } from '@graphql/types';
 
+@injectable
 export class AgentService {
   private repo = new AgentRepository();
 

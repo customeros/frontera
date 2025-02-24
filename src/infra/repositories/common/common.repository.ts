@@ -73,7 +73,7 @@ export class CommonRepository {
   async requestQuickbooksAccess(redirect_uri?: string, state?: string) {
     const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
 
-    return this.transport.http.get(
+    return this.transport.http.get<{ url: string }>(
       `/internal/settings/quickbooks/requestAccess?redirect_url=${redirectUri}&state=${state}`,
     );
   }
@@ -81,8 +81,20 @@ export class CommonRepository {
   async quickbooksOauthCallback(code: string, redirect_uri?: string) {
     const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
 
-    return this.transport.http.get(
+    return this.transport.http.post(
       `/internal/settings/quickbooks/oauth/callback?code=${code}&redirect_url=${redirectUri}`,
+    );
+  }
+
+  async getQuickbooksStatus() {
+    return this.transport.http.get<{ quickbooksConnected: boolean }>(
+      '/internal/settings/tenant/settings/quickbooks',
+    );
+  }
+
+  async revokeQuickbooksAccess() {
+    return this.transport.http.post<{ success: boolean }>(
+      '/internal/settings/quickbooks/revoke',
     );
   }
 }

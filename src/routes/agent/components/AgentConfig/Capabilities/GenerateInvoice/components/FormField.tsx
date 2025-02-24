@@ -30,7 +30,7 @@ export const FormField = ({
 }: FormFieldProps) => {
   return (
     <div className='flex flex-col gap-0.5'>
-      <label htmlFor={name} className='text-sm font-medium'>
+      <label htmlFor={name} className='text-sm font-medium w-fit'>
         {label}
         {optional && (
           <span className='text-grayModern-500 ml-0.5 font-normal'>

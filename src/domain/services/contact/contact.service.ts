@@ -1,10 +1,12 @@
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import { TagStore } from '@store/Tags/Tag.store';
 import { Contact } from '@store/Contacts/Contact.dto';
 import { ContactService as ContactRepo } from '@store/Contacts/__service__/Contacts.service';
 
 import { unwrap } from '@utils/unwrap';
 
+@injectable
 export class ContactService {
   private store = RootStore.getInstance();
   private contactRepo = ContactRepo.getInstance();

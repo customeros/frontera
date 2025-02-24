@@ -210,7 +210,7 @@ export class AddSlackChannelUsecase {
 
     this.root.settings.slack.enableSync(
       `${import.meta.env.VITE_CLIENT_APP_URL}/agents`,
-      encodeURIComponent(`${this.agentId}:cid=${capabilityId}`),
+      encodeURIComponent(`slack:${this.agentId}:cid=${capabilityId}`),
     );
   }
 

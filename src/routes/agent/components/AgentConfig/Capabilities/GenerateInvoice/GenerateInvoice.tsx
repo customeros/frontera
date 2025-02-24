@@ -52,6 +52,15 @@ export const GenerateInvoice = observer(() => {
         onChange={(v) => usecase.setProperty('country', v)}
       />
       <FormField
+        name='state'
+        label='State'
+        placeholder='E.g. California'
+        value={usecase.config.region.value}
+        error={usecase.config.region.error}
+        onBlur={() => usecase.execute('region')}
+        onChange={(v) => usecase.setProperty('region', v)}
+      />
+      <FormField
         label='Address'
         name='addressLine1'
         placeholder='E.g. 742 Evergreen Terrace'
@@ -81,7 +90,7 @@ export const GenerateInvoice = observer(() => {
       />
       <FormField
         name='zip'
-        label='Postal code'
+        label='Zip code'
         placeholder='E.g. 72992'
         value={usecase.config.zip.value}
         error={usecase.config.zip.error}
@@ -151,7 +160,7 @@ export const GenerateInvoice = observer(() => {
                 selected: usecase.isBankInfoTemplate('eu'),
               })}
             >
-              EU(SEPA)
+              EU (SEPA)
             </Button>
             <Button
               size='xxs'
@@ -207,7 +216,7 @@ export const GenerateInvoice = observer(() => {
               onChange={(v) => usecase.setProperty('routingNumber', v)}
             />
           )}
-          {usecase.isBankInfoTemplate('usa', 'other') && (
+          {usecase.isBankInfoTemplate('usa', 'uk', 'other') && (
             <FormField
               name='accountNumber'
               label='Account number'

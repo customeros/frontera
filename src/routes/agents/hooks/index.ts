@@ -1,1 +1,1 @@
-export * from './useSlackOauthCallback';
+export * from './useOauthCallback';

@@ -29,7 +29,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    allowedHosts: ['localhost', '127.0.0.1', 'app.customeros.local'],
+    allowedHosts: [
+      'localhost',
+      '127.0.0.1',
+      'app.customeros.local',
+      'app-customeros-16.localcan.dev',
+    ],
   },
   plugins: [
     {

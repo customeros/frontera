@@ -1,8 +1,10 @@
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import { SettingsRepository } from '@infra/repositories/settings';
 
 import { unwrap } from '@utils/unwrap';
 
+@injectable
 export class SettingsService {
   private settingsRepo = new SettingsRepository();
   private store = RootStore.getInstance();

@@ -1,5 +1,6 @@
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import {
   CommonRepository,
   WebhookIntegration,
@@ -7,6 +8,7 @@ import {
 
 import { unwrap } from '@utils/unwrap';
 
+@injectable
 export class CommonService {
   private root = RootStore.getInstance();
   private repository = CommonRepository.getInstance();
@@ -74,7 +76,10 @@ export class CommonService {
   }
 
   public async requestQuickbooksAccess(redirect_uri?: string, state?: string) {
-    const span = Tracer.span('CommonService.requestQuickbooksAccess');
+    const span = Tracer.span('CommonService.requestQuickbooksAccess', {
+      redirect_uri,
+      state,
+    });
 
     const req = await unwrap(
       this.repository.requestQuickbooksAccess(redirect_uri, state),
@@ -91,6 +96,16 @@ export class CommonService {
     const req = await unwrap(
       this.repository.quickbooksOauthCallback(code, redirect_uri),
     );
+
+    span.end();
+
+    return req;
+  }
+
+  public async revokeQuickbooksAccess() {
+    const span = Tracer.span('CommonService.revokeQuickbooksAccess');
+
+    const req = await unwrap(this.repository.revokeQuickbooksAccess());
 
     span.end();
 

@@ -1,5 +1,6 @@
 import { runInAction } from 'mobx';
 import { RootStore } from '@store/root';
+import { injectable } from '@infra/container';
 import { TagStore } from '@store/Tags/Tag.store';
 import {
   Organization,
@@ -20,6 +21,7 @@ import {
   OpportunityRenewalLikelihood,
 } from '@shared/types/__generated__/graphql.types';
 
+@injectable
 export class OrganizationService {
   private root = RootStore.getInstance();
   private orgRepo = OrganizationRepository.getInstance();
