@@ -35,17 +35,17 @@ export const emailStatuses = {
   },
   CATCH_ALL: {
     message: "Don't know • Catch-all",
-    icon: <AlertCircle className='text-gray-500 size-3' />,
+    icon: <AlertCircle className='text-grayModern-500 size-3' />,
     value: EmailVerificationStatus.CatchAll,
   },
   NOT_VERIFIED: {
     message: "Don't know • Not verified yet",
-    icon: <HelpCircle className='text-gray-500 size-3' />,
+    icon: <HelpCircle className='text-grayModern-500 size-3' />,
     value: EmailVerificationStatus.NotVerified,
   },
   UNABLE_TO_VALIDATE: {
     message: "Don't know • Unable to validate",
-    icon: <HelpCircle className='text-gray-500 size-3' />,
+    icon: <HelpCircle className='text-grayModern-500 size-3' />,
     value: EmailVerificationStatus.UnableToValidate,
   },
   VERIFICATION_IN_PROGRESS: {

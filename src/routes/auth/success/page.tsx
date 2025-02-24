@@ -70,7 +70,10 @@ export const SuccessPage = observer(() => {
           </div>
         )}
       {!store.session.error && (
-        <Spinner label='loading' className='text-gray-300 fill-gray-500' />
+        <Spinner
+          label='loading'
+          className='text-grayModern-300 fill-grayModern-500'
+        />
       )}
     </div>
   );

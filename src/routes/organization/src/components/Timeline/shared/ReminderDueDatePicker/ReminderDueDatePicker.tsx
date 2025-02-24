@@ -75,8 +75,8 @@ export const ReminderDueDatePicker = ({
         open={isOpen}
         onOpenChange={(value) => setIsOpen(value)}
       >
-        <PopoverTrigger className='data-[state=open]:text-gray-700 data-[state=closed]:text-gray-500'>
-          <span className='cursor-pointer whitespace-pre pb-[1px] text-sm border-t-[1px] border-transparent hover:text-gray-700'>
+        <PopoverTrigger className='data-[state=open]:text-grayModern-700 data-[state=closed]:text-grayModern-500'>
+          <span className='cursor-pointer whitespace-pre pb-[1px] text-sm border-t-[1px] border-transparent hover:text-grayModern-700'>
             {`${DateTimeUtils.format(value, DateTimeUtils.date)} • `}
           </span>
         </PopoverTrigger>
@@ -140,7 +140,7 @@ const TimeInput = ({ onChange, value, ...rest }: TimeInputProps) => {
 
         onChange?.(val);
       }}
-      className='text-gray-500 mb-[-4px] text-sm appearance-none leading-[1] [&::-webkit-calendar-picker-indicator]:hidden p-0 min-h-0 w-fit focus:text-gray-700 focus:border-primary-500 cursor-text list-none'
+      className='text-grayModern-500 mb-[-4px] text-sm appearance-none leading-[1] [&::-webkit-calendar-picker-indicator]:hidden p-0 min-h-0 w-fit focusgrayModernt-grayModern-700 focus:border-primary-500 cursor-text list-none'
       {...rest}
     />
   );

@@ -23,8 +23,8 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
         variant='circle'
         name={user?.name ?? ''}
         src={user?.value?.profilePhotoUrl ?? ''}
-        icon={<User01 className='text-gray-500 size-3' />}
-        className={'w-5 h-5 min-w-5 mr-2 border border-gray-200'}
+        icon={<User01 className='text-grayModern-500 size-3' />}
+        className={'w-5 h-5 min-w-5 mr-2 border border-grayModern-200'}
       />
       <p>{mailbox}</p>
     </div>

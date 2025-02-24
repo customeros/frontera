@@ -37,7 +37,7 @@ export const EmailTimelineAction = ({
   });
 
   return (
-    <div className='rounded-md shadow-lg m-6 mt-2 bg-white border border-gray-100 max-w-[800px]'>
+    <div className='rounded-md shadow-lg m-6 mt-2 bg-white border border-grayModern-100 max-w-[800px]'>
       <div className='rounded-b-2xl py-4 px-6 overflow-visible pt-1 bg-white rounded-lg max-h-[100%]'>
         <ComposeEmailContainer
           modal={false}

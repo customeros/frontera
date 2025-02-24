@@ -121,11 +121,11 @@ export const WinProbabilityModal = observer(
             >
               <RangeSliderTrack
                 dataTest='slider-bar'
-                className='bg-gray-400 h-0.5'
+                className='bg-grayModern-400 h-0.5'
               >
-                <RangeSliderFilledTrack className='bg-gray-500' />
+                <RangeSliderFilledTrack className='bg-grayModern-500' />
               </RangeSliderTrack>
-              <RangeSliderThumb className='ring-1 shadow-md cursor-pointer ring-gray-400' />
+              <RangeSliderThumb className='ring-1 shadow-md cursor-pointer ring-grayModern-400' />
             </RangeSlider>
           </ModalBody>
           <ModalFooter className='flex gap-3'>

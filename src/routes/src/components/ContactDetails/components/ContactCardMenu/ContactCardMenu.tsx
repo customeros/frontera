@@ -31,8 +31,8 @@ export const ContactCardMenu = observer(
               size='xxs'
               variant='ghost'
               aria-label='More options'
-              icon={<DotsVertical className='text-gray-500' />}
               className='group-hover/card:opacity-100 opacity-0'
+              icon={<DotsVertical className='text-grayModern-500' />}
             />
           </MenuButton>
           <MenuList>
@@ -44,7 +44,7 @@ export const ContactCardMenu = observer(
                 }
               >
                 <div>
-                  <LinkedinOutline className='mr-2 text-gray-500 group-hover/linkedin:text-gray-700' />
+                  <LinkedinOutline className='mr-2 text-grayModern-500 group-hover/linkedingrayModernt-grayModern-700' />
                   <span>Go to LinkedIn profile</span>
                 </div>
               </MenuItem>
@@ -52,7 +52,7 @@ export const ContactCardMenu = observer(
 
             <MenuItem className='group/change' onClick={() => onOpen()}>
               <div>
-                <SwitchHorizontal02 className='mr-2 text-gray-500 group-hover/change:text-gray-700' />
+                <SwitchHorizontal02 className='mr-2 text-grayModern-500 group-hover/changegrayModernt-grayModern-700' />
                 <span>Change company</span>
               </div>
             </MenuItem>
@@ -61,7 +61,7 @@ export const ContactCardMenu = observer(
               onClick={() => store.contacts.archive([contactId])}
             >
               <div>
-                <Archive className='mr-2 text-gray-500 group-hover/archive:text-gray-700 ' />
+                <Archive className='mr-2 text-grayModern-500 group-hover/archivegrayModernt-grayModern-700 ' />
                 <span>Archive contact</span>
               </div>
             </MenuItem>

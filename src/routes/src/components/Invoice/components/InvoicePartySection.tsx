@@ -51,13 +51,13 @@ export const InvoicePartySection: FC<InvoiceHeaderProps> = ({
         tabIndex={onClick ? 0 : -1}
         role={onClick ? 'button' : 'none'}
         className={cn(
-          'data-[focus=true]:transition-opacity data-[focus=true]:ring-2 data-[focus=true]:ring-gray-700 data-[focus=true]:delay-250 data-[focus=true]:ease-in-out data-[focus=true]:filter',
-          'flex flex-col flex-1 w-[170px] py-2 px-3 border-t border-b border-gray-300 relative transition duration-250 ease-in-out filter',
+          'data-[focus=true]:transition-opacity data-[focus=true]:ring-2 data-[focus=true]:ring-grayModern-700 data-[focus=true]:delay-250 data-[focus=true]:ease-in-out data-[focus=true]:filter',
+          'flex flex-col flex-1 w-[170px] py-2 px-3 border-t border-b border-grayModern-300 relative transition duration-250 ease-in-out filter',
           borderRightPosition,
           filterDynamicClass,
           oppacity,
           {
-            'hover:ring-gray-700 hover:ring-2 hover:transition-opacity hover:delay-250 hover:ease-in-out hover:filter':
+            'hover:ring-grayModern-700 hover:ring-2 hover:transition-opacity hover:delay-250 hover:ease-in-out hover:filter':
               onClick,
           },
         )}
@@ -87,26 +87,28 @@ export const InvoicePartySection: FC<InvoiceHeaderProps> = ({
             {/*  </Text>*/}
             {/*)}*/}
 
-            <span className='text-sm text-gray-500 leading-5 break-words'>
+            <span className='text-sm text-grayModern-500 leading-5 break-words'>
               {addressLine1}
               <span className='block leading-4'>{addressLine2}</span>
             </span>
 
             {isUSA && (
-              <span className='leading-4 text-gray-500 text-sm break-words'>
+              <span className='leading-4 text-grayModern-500 text-sm break-words'>
                 {locality && `${locality}, `} {region} {zip}
               </span>
             )}
             {!isUSA && (
-              <span className='text-sm leading-4 text-gray-500 break-words'>
+              <span className='text-sm leading-4 text-grayModern-500 break-words'>
                 {locality}
                 {locality && zip && ', '} {zip}
               </span>
             )}
 
-            <span className='text-sm leading-4 text-gray-500'>{country}</span>
+            <span className='text-sm leading-4 text-grayModern-500'>
+              {country}
+            </span>
             {email && (
-              <span className='text-sm leading-4 text-gray-500 break-words'>
+              <span className='text-sm leading-4 text-grayModern-500 break-words'>
                 {email}
               </span>
             )}

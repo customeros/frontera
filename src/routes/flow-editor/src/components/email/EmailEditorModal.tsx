@@ -57,7 +57,7 @@ export const EmailEditorModal = observer(
             <div className='flex justify-between bg-white pt-4 pb-2 mb-[60px] w-[570px] sticky top-0 z-[50]'>
               <div className='flex items-center text-sm'>
                 <span>{flowName}</span>
-                <ChevronRight className='size-3 mx-1 text-gray-400' />
+                <ChevronRight className='size-3 mx-1 text-grayModern-400' />
                 <span className='mr-2 cursor-default'>
                   {action === FlowActionType.EMAIL_NEW
                     ? 'Send Email'
@@ -108,7 +108,7 @@ export const EmailEditorModal = observer(
                   className={cn(
                     `text-lg font-medium h-auto cursor-text email-editor-subject`,
                     {
-                      'pointer-events-none text-gray-400':
+                      'pointer-events-none text-grayModern-400':
                         action === FlowActionType.EMAIL_REPLY,
                     },
                   )}

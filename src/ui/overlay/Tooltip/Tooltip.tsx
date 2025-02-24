@@ -53,12 +53,12 @@ export const Tooltip = ({
             align={align}
             sideOffset={5}
             className={twMerge(
-              'z-[5000] data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-white select-none rounded-[4px] bg-gray-700 px-[8px] py-[4px] text-[12px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]',
+              'z-[5000] data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-white select-none rounded-[4px] bg-grayModern-700 px-[8px] py-[4px] text-[12px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]',
               className,
             )}
           >
             {label}
-            {hasArrow && <RadixTooltip.Arrow className='fill-gray-700' />}
+            {hasArrow && <RadixTooltip.Arrow className='fill-grayModern-700' />}
           </RadixTooltip.Content>
         </RadixTooltip.Portal>
       </RadixTooltip.Root>

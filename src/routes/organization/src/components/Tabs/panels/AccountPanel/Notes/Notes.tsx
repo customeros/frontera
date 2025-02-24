@@ -22,10 +22,10 @@ export const Notes = observer(({ id }: NotesProps) => {
   return (
     <Card className='bg-white p-4 w-full cursor-default hover:shadow-md focus-within:shadow-md transition-all duration-200 ease-out'>
       <CardContent className='flex p-0 w-full items-center'>
-        <FeaturedIcon colorScheme='gray' className='mr-4 ml-3 my-1 mt-3'>
+        <FeaturedIcon colorScheme='grayModern' className='mr-4 ml-3 my-1 mt-3'>
           <File02 />
         </FeaturedIcon>
-        <h2 className='ml-5 text-gray-700 font-semibold'>Notes</h2>
+        <h2 className='ml-5 text-grayModern-700 font-semibold'>Notes</h2>
       </CardContent>
       <CardFooter className='flex flex-col items-start p-0 w-full'>
         <Divider className='my-4' />

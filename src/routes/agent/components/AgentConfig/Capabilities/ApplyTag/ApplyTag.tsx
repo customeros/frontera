@@ -74,7 +74,9 @@ export const ApplyTag = observer(() => {
                     </TagRightButton>
                   </Tag>
                 ) : (
-                  <span className='text-gray-400 text-sm'>Company tag</span>
+                  <span className='text-grayModern-400 text-sm'>
+                    Company tag
+                  </span>
                 )}
               </div>
             </PopoverTrigger>
@@ -100,7 +102,7 @@ export const ApplyTag = observer(() => {
                   onClick={() => {
                     usecase.create();
                   }}
-                  className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'
+                  className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'
                 >
                   <Plus />
                   <span>{`Create "${inputValue}"`}</span>

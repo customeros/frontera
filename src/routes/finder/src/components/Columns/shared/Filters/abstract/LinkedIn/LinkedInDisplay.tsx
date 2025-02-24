@@ -34,7 +34,7 @@ export const LinkedInDisplay = ({
       <Tooltip label={url ?? ''}>
         <p
           onClick={() => window.open(url, '_blank', 'noopener')}
-          className='text-gray-700 truncate cursor-default hover:underline hover:cursor-pointer'
+          className='text-grayModern-700 truncate cursor-default hover:underline hover:cursor-pointer'
         >
           {displayLink}
         </p>
@@ -44,7 +44,7 @@ export const LinkedInDisplay = ({
         size='xxs'
         variant='ghost'
         aria-label='social-link'
-        icon={<Copy02 className='text-gray-500' />}
+        icon={<Copy02 className='text-grayModern-500' />}
         onClick={() => copyToClipboard(url, 'LinkedIn profile copied')}
         className='ml-1 rounded-[5px] opacity-0 group-hover/linkedin:opacity-100'
       />

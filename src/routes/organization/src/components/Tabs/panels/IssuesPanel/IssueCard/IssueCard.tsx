@@ -15,7 +15,7 @@ interface IssueCardProps {
 
 function getStatusColor(status: string) {
   if (['closed', 'solved'].includes(status.toLowerCase())) {
-    return 'gray';
+    return 'grayModern';
   }
 
   return 'blue';
@@ -82,7 +82,7 @@ export const IssueCard = ({ issue }: IssueCardProps) => {
       ref={cardRef}
       key={issue.id}
       onClick={() => openModal(issue.id)}
-      className='w-full shadow-xs cursor-pointer rounded-lg border border-gray-200 bg-white hover:shadow-md p-3 max-w-[400px]'
+      className='w-full shadow-xs cursor-pointer rounded-lg border border-grayModern-200 bg-white hover:shadow-md p-3 max-w-[400px]'
     >
       <CardHeader>
         <div className='flex flex-1 gap-2 items-start flex-wrap relative'>
@@ -111,7 +111,7 @@ export const IssueCard = ({ issue }: IssueCardProps) => {
             </span>
 
             {!!issue?.updatedAt && (
-              <span className='text-sm text-gray-500 leading-3'>
+              <span className='text-sm text-grayModern-500 leading-3'>
                 Last response was{' '}
                 {DateTimeUtils.timeAgo(issue.updatedAt, {
                   addSuffix: true,

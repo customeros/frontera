@@ -11,9 +11,9 @@ export function getLikelihoodColor(
     case OpportunityRenewalLikelihood.LowRenewal:
       return 'text-orangeDark-800';
     case OpportunityRenewalLikelihood.ZeroRenewal:
-      return 'text-gray-500';
+      return 'text-grayModern-500';
     default:
-      return 'text-gray-500';
+      return 'text-grayModern-500';
   }
 }
 

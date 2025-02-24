@@ -7,7 +7,7 @@ interface PeriodCellProps {
 
 export const PeriodCell = ({ committedPeriodInMonths }: PeriodCellProps) => {
   if (!committedPeriodInMonths) {
-    return <p className='text-gray-400'> {committedPeriodInMonths}</p>;
+    return <p className='text-grayModern-400'> {committedPeriodInMonths}</p>;
   }
 
   return (

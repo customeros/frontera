@@ -103,7 +103,7 @@ export const RenewalForecastCell = observer(
     if (!contractCount) {
       return (
         <span
-          className='text-gray-400'
+          className='text-grayModern-400'
           data-test='organization-arr-forecast-in-all-orgs-table'
         >
           No contract
@@ -111,7 +111,7 @@ export const RenewalForecastCell = observer(
       );
     }
 
-    const textColor = amount ? 'text-gray-700' : 'text-gray-500';
+    const textColor = amount ? 'text-grayModern-700' : 'text-grayModern-500';
 
     return (
       <div className='flexjustify-start group/forecast'>
@@ -120,7 +120,7 @@ export const RenewalForecastCell = observer(
             <PopoverAnchor>
               <span>
                 {showPotentialAmount && (
-                  <span className='text-sm text-gray-500 line-through mr-1'>
+                  <span className='text-sm text-grayModern-500 line-through mr-1'>
                     {formattedPotentialAmount}
                   </span>
                 )}
@@ -135,7 +135,7 @@ export const RenewalForecastCell = observer(
                 size='xxs'
                 variant='ghost'
                 aria-label='edit renewal likelihood'
-                icon={<Edit03 className='text-gray-500' />}
+                icon={<Edit03 className='text-grayModern-500' />}
                 className={cn(
                   'rounded-md opacity-0 group-hover/forecast:opacity-100',
                   isEditing && 'opacity-100',
@@ -163,7 +163,7 @@ export const RenewalForecastCell = observer(
                 }
               }}
             >
-              <RangeSliderTrack className='bg-gray-400 h-0.5'>
+              <RangeSliderTrack className='bg-grayModern-400 h-0.5'>
                 <RangeSliderFilledTrack className={trackStyle} />
               </RangeSliderTrack>
               <RangeSliderThumb className={thumbStyle} />

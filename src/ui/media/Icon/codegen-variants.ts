@@ -40,7 +40,6 @@ export const featureIconVariant = cva(
 
       colorScheme: {
         primary: [],
-        gray: [],
         grayBlue: [],
         grayModern: [],
         grayWarm: [],

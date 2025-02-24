@@ -13,7 +13,7 @@ export const Handle = ({
     <FlowHandle
       type={type}
       position={type === 'target' ? Position.Top : Position.Bottom}
-      className={cn(`h-2 w-2 bg-white border-gray-700`, className, {
+      className={cn(`h-2 w-2 bg-white border-grayModern-700`, className, {
         'bg-transparent': type === 'target',
         'border-transparent': type === 'target',
       })}

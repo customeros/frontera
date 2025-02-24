@@ -139,7 +139,7 @@ export const MeetingPreviewModal = ({
   return (
     <>
       <CardHeader className='sticky top-0 pt-4 p-4 pb-1 rounded-xl flex justify-between gap-4 items-center'>
-        <p className='text-gray-700 font-semibold text-lg line-clamp-1'>
+        <p className='text-grayModern-700 font-semibold text-lg line-clamp-1'>
           {event.name}
         </p>
         <div className='flex gap-1'>
@@ -148,7 +148,7 @@ export const MeetingPreviewModal = ({
               size='xs'
               variant='ghost'
               aria-label='copy link'
-              icon={<Link01 className='text-gray-500' />}
+              icon={<Link01 className='text-grayModern-500' />}
               onClick={() => copy(window.location.href, 'Link copied')}
             />
           </Tooltip>
@@ -158,7 +158,7 @@ export const MeetingPreviewModal = ({
               variant='ghost'
               aria-label='close'
               onClick={closeModal}
-              icon={<XClose className='text-gray-500' />}
+              icon={<XClose className='text-grayModern-500' />}
             />
           </Tooltip>
         </div>
@@ -167,7 +167,7 @@ export const MeetingPreviewModal = ({
         <div className='flex flex-col w-full items-start space-y-4'>
           <div className='flex flex-row items-center w-full'>
             <div className='flex flex-grow flex-col'>
-              <p className='text-sm font-semibold text-gray-700'>When</p>
+              <p className='text-sm font-semibold text-grayModern-700'>When</p>
               <Tooltip
                 side='bottom'
                 className='text-xs'
@@ -175,31 +175,31 @@ export const MeetingPreviewModal = ({
                   creatorTimeZone ? zoned : 'unknown'
                 }`}
               >
-                <p className='text-sm text-gray-700 w-full'>{when}</p>
+                <p className='text-sm text-grayModern-700 w-full'>{when}</p>
               </Tooltip>
             </div>
 
             <div className='flex items-center justify-center min-w-12 h-10 relative'>
               <MeetingIcon />
-              <p className='absolute mt-1 text-xl font-semibold text-gray-700'>
+              <p className='absolute mt-1 text-xl font-semibold text-grayModern-700'>
                 {new Date(event?.startedAt).getDate()}
               </p>
             </div>
           </div>
 
           <div className='flex flex-col'>
-            <p className='text-sm font-semibold text-gray-700'>With</p>
+            <p className='text-sm font-semibold text-grayModern-700'>With</p>
             <div className='flex flex-col space-y-0 items-start'>
               {owner && (
-                <p className='text-sm text-gray-700'>
+                <p className='text-sm text-grayModern-700'>
                   {owner}
-                  <span className='text-gray-500'>{` • Organizer`}</span>
+                  <span className='text-grayModern-500'>{` • Organizer`}</span>
                 </p>
               )}
               {participants?.map((participant, i) => (
                 <p
                   key={`${i}-${participant}`}
-                  className='text-sm text-gray-700'
+                  className='text-sm text-grayModern-700'
                 >
                   {participant}
                 </p>
@@ -209,10 +209,12 @@ export const MeetingPreviewModal = ({
 
           {event?.agenda && (
             <div className='flex flex-col'>
-              <p className='text-sm font-semibold text-gray-700'>Description</p>
+              <p className='text-sm font-semibold text-grayModern-700'>
+                Description
+              </p>
               <p
                 className={cn(
-                  event?.agenda ? 'text-gray-700' : 'text-gray-500',
+                  event?.agenda ? 'text-grayModern-700' : 'text-grayModern-500',
                   'text-sm',
                 )}
               >

@@ -60,8 +60,8 @@ export const InputGroup = ({
       <div
         {...props}
         className={cn(
-          border ? ' border-gray-200' : 'border-transparent',
-          'flex items-center w-full border-b gap-3 hover:broder-b hover:border-gray-300 focus-within:hover:border-primary-500 focus-within:border-primary-500 focus-within:border-b transition-all ease-in-out',
+          border ? ' border-grayModern-200' : 'border-transparent',
+          'flex items-center w-full border-b gap-3 hover:broder-b hover:border-grayModern-300 focus-within:hover:border-primary-500 focus-within:border-primary-500 focus-within:border-b transition-all ease-in-out',
           className,
         )}
       >

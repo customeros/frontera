@@ -123,13 +123,13 @@ export const ColumnItem = ({
       >
         <span
           data-test={`edit-col-${columnType}`}
-          className={cn('flex-1', isPinned && 'text-gray-500')}
+          className={cn('flex-1', isPinned && 'text-grayModern-500')}
         >
           {label}
         </span>
         <span
           className={cn(
-            'transition-opacity text-gray-500 select-none text-sm',
+            'transition-opacity text-grayModern-500 select-none text-sm',
             isPinned ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
           )}
         >
@@ -137,9 +137,9 @@ export const ColumnItem = ({
         </span>
         <div className='cursor-grab'>
           {isPinned ? (
-            <Pin02 className='w-4 h-4 ml-2 text-gray-400' />
+            <Pin02 className='w-4 h-4 ml-2 text-grayModern-400' />
           ) : (
-            <HandleDrag className='w-4 h-4 ml-2 text-gray-400' />
+            <HandleDrag className='w-4 h-4 ml-2 text-grayModern-400' />
           )}
         </div>
       </div>

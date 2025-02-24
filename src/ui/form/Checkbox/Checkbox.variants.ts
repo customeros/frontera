@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 
 export const CheckboxVariants = cva(
   [
-    'flex appearance-none items-center border-solid justify-center border border-gray-300 hover:border-[1px] hover:transition hover:ease-in hover:delay-150 data-[disabled]:cursor-not-allowed data-[disabled]:data-[state=checked]:bg-gray-100 data-[disabled]:data-[state=checked]:border-gray-300 focus:outline-none  disabled:pointer-events-none disabled:opacity-80 disabled:bg-gray-100',
+    'flex appearance-none items-center border-solid justify-center border border-grayModern-300 hover:border-[1px] hover:transition hover:ease-in hover:delay-150 data-[disabled]:cursor-not-allowed data-[disabled]:data-[state=checked]:bg-grayModern-100 data-[disabled]:data-[state=checked]:border-grayModern-300 focus:outline-none  disabled:pointer-events-none disabled:opacity-80 disabled:bg-grayModern-100',
   ],
   {
     variants: {
@@ -23,12 +23,12 @@ export const CheckboxVariants = cva(
           'data-[state=indeterminate]:border-primary-600',
           'data-[state=indeterminate]:focus:ring-4 data-[state=checked]:focus:ring-primary-50',
         ],
-        gray: [
-          'hover:border-gray-600',
-          'hover:bg-gray-100',
-          'data-[state=checked]:bg-gray-50',
-          'data-[state=checked]:border-gray-600',
-          'data-[state=checked]:focus:ring-4 data-[state=checked]:focus:ring-gray-50',
+        grayModern: [
+          'hover:border-grayModern-600',
+          'hover:bg-grayModern-100',
+          'data-[state=checked]:bg-grayModern-50',
+          'data-[state=checked]:border-grayModern-600',
+          'data-[state=checked]:focus:ring-4 data-[state=checked]:focus:ring-grayModern-50',
         ],
         warm: [
           'hover:border-warm-600',

@@ -396,7 +396,7 @@ export const InvoicePreview = ({ previewCard }: InvoicePreviewProps) => {
   return (
     <div
       data-state={previewCard ? 'open' : 'closed'}
-      className='absolute top-10 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t border-b border-gray-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
+      className='absolute top-10 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
     >
       <InvoicePreviewModal invoiceId={invoiceNumber ?? ''} />
     </div>

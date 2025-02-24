@@ -10,7 +10,7 @@ import { useTimelineEventPreviewMethodsContext } from '@organization/components/
 
 function getStatusColor(status: string) {
   if (status === 'solved' || status === 'closed') {
-    return 'gray';
+    return 'grayModern';
   }
 
   return 'blue';
@@ -25,7 +25,7 @@ export const IssueStub: FC<{ data: IssueWithAliases }> = ({ data }) => {
   return (
     <div className='flex cursor-pointer !imortant hover:transition-all hover:filter hover:drop-shadow-[0_2px_2px_rgba(16,24,40,0.09)] w-[510px] h-[110px] relative hover:duration-200 hover:ease-oute'>
       <div
-        className='left-[-1px] top-[-1px] w-[502px] h-[110px] bg-gray-200 absolute'
+        className='left-[-1px] top-[-1px] w-[502px] h-[110px] bg-grayModern-200 absolute'
         style={{
           clipPath:
             'polygon(0% 5.554%,0% 5.554%,0.016% 4.653%,0.061% 3.798%,0.134% 3.001%,0.232% 2.274%,0.351% 1.626%,0.491% 1.071%,0.648% 0.62%,0.821% 0.283%,1.005% 0.073%,1.2% 0%,84.4% 0%,84.4% 0%,84.417% 0.901%,84.467% 1.756%,84.545% 2.553%,84.651% 3.28%,84.781% 3.928%,84.932% 4.483%,85.103% 4.934%,85.289% 5.271%,85.489% 5.481%,85.7% 5.554%,85.7% 5.554%,85.911% 5.481%,86.111% 5.271%,86.298% 4.934%,86.468% 4.483%,86.619% 3.928%,86.749% 3.28%,86.855% 2.553%,86.934% 1.756%,86.983% 0.901%,87% 0%,98.8% 0%,98.8% 0%,98.995% 0.073%,99.179% 0.283%,99.352% 0.62%,99.509% 1.071%,99.649% 1.626%,99.768% 2.274%,99.866% 3.001%,99.939% 3.798%,99.984% 4.653%,100% 5.554%,100% 94.446%,100% 94.446%,99.984% 95.347%,99.939% 96.202%,99.866% 96.999%,99.768% 97.726%,99.649% 98.374%,99.509% 98.929%,99.352% 99.38%,99.179% 99.717%,98.995% 99.927%,98.8% 100%,87% 100%,87% 100%,86.983% 99.099%,86.934% 98.244%,86.855% 97.447%,86.749% 96.72%,86.619% 96.072%,86.468% 95.517%,86.298% 95.066%,86.111% 94.729%,85.911% 94.519%,85.7% 94.446%,85.7% 94.446%,85.489% 94.519%,85.289% 94.729%,85.103% 95.066%,84.932% 95.517%,84.781% 96.072%,84.651% 96.72%,84.545% 97.447%,84.467% 98.244%,84.417% 99.099%,84.4% 100%,1.2% 100%,1.2% 100%,1.005% 99.927%,0.821% 99.717%,0.648% 99.38%,0.491% 98.929%,0.351% 98.374%,0.232% 97.726%,0.134% 96.999%,0.061% 96.202%,0.016% 95.347%,0% 94.446%,0% 5.554%)',
@@ -46,16 +46,16 @@ export const IssueStub: FC<{ data: IssueWithAliases }> = ({ data }) => {
               <MarkdownContentRenderer
                 showAsInlineText
                 markdownContent={data?.description}
-                className='text-gray-500 line-clamp-3 text-sm'
+                className='text-grayModern-500 line-clamp-3 text-sm'
               />
             ) : (
-              <p className='text-gray-500 line-clamp-3 text-sm'>
+              <p className='text-grayModern-500 line-clamp-3 text-sm'>
                 {'[No description]'}
               </p>
             )}
           </div>
         </div>
-        <div className='footer p-0 relative h-[108px] flex flex-col justify-center min-w-[71px] border-l border-gray-200 border-dashed'>
+        <div className='footer p-0 relative h-[108px] flex flex-col justify-center min-w-[71px] border-l border-grayModern-200 border-dashed'>
           <div className='flex flex-col items-center justify-center overflow-hidden h-[103px] min-w-[66px] relative rounded-md'>
             <Tag
               size='md'

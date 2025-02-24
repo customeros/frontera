@@ -45,7 +45,7 @@ export const ChangeContactOrganizationModal = observer(
             </div>
 
             <Popover modal>
-              <PopoverTrigger className='w-full flex items-start justify-start mt-4 text-gray-400'>
+              <PopoverTrigger className='w-full flex items-start justify-start mt-4 text-grayModern-400'>
                 <p className='text-start w-full'>Contact's new company</p>
               </PopoverTrigger>
               <PopoverContent

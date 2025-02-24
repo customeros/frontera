@@ -17,10 +17,10 @@ export const Error = () => {
         <FeaturedIcon size='lg' colorScheme='primary'>
           <SearchSm className='size-5' />
         </FeaturedIcon>
-        <h2 className='font-semibold text-6xl leading-[80px] text-gray-900 py-6'>
+        <h2 className='font-semibold text-6xl leading-[80px] text-grayModern-900 py-6'>
           Something went wrong
         </h2>
-        <p className='text-gray-600 text-xl pb-12 px-8 leading-[30px]'>
+        <p className='text-grayModern-600 text-xl pb-12 px-8 leading-[30px]'>
           There was a small hiccup in the success plan. Let’s get you back to a
           familiar place.
         </p>

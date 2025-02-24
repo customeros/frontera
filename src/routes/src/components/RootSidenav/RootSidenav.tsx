@@ -51,7 +51,7 @@ export const RootSidenav = observer(() => {
   );
 
   return (
-    <div className='pb-4 h-full w-12.5 bg-white flex flex-col border-r border-gray-200 overflow-hidden'>
+    <div className='pb-4 h-full w-12.5 bg-white flex flex-col border-r border-grayModern-200 overflow-hidden'>
       <LogoSection />
 
       <NavigationSections

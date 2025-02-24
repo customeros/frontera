@@ -26,7 +26,7 @@ import {
 
 function getStatusColor(status: string) {
   if (['closed', 'solved'].includes(status?.toLowerCase())) {
-    return 'gray';
+    return 'grayModern';
   }
 
   return 'blue';
@@ -118,8 +118,8 @@ export const IssuePreviewModal: FC = () => {
           <Tag
             size='md'
             variant='outline'
-            colorScheme='gray'
-            className='bg-white border-gray-200 text-gray-500 font-normal min-h-6'
+            colorScheme='grayModern'
+            className='bg-white border-grayModern-200grayModernt-grayModern-500 font-normal min-h-6'
           >
             <TagLabel>#{issue?.externalLinks?.[0]?.externalId}</TagLabel>
           </Tag>
@@ -130,7 +130,7 @@ export const IssuePreviewModal: FC = () => {
         />
 
         {issue?.tags?.length && (
-          <span className='text-gray-500 text-sm mb-6'>
+          <span className='text-grayModern-500 text-sm mb-6'>
             {issue.tags.map((t) => t?.name).join(' • ')}
           </span>
         )}
@@ -143,7 +143,7 @@ export const IssuePreviewModal: FC = () => {
             <span className='mx-1 text-sm whitespace-nowrap font-medium'>
               {submittedBy || reportedBy}
             </span>
-            <span className='text-gray-400 text-sm whitespace-nowrap ml-1 mr-2'>
+            <span className='text-grayModern-400 text-sm whitespace-nowrap ml-1 mr-2'>
               {DateTimeUtils.format(
                 issue?.createdAt,
                 DateTimeUtils.dateWithHour,
@@ -158,7 +158,7 @@ export const IssuePreviewModal: FC = () => {
             <Fragment key={date}>
               {!DateTimeUtils.isSameDay(issue?.createdAt, date) && (
                 <div className='flex items-center w-full'>
-                  <span className='text-sm whitespace-nowrap text-gray-400 mr-2'>
+                  <span className='text-sm whitespace-nowrap text-grayModern-400 mr-2'>
                     {DateTimeUtils.format(date, DateTimeUtils.date)}
                   </span>
                   <Divider />
@@ -214,7 +214,7 @@ export const IssuePreviewModal: FC = () => {
             <div className='flex items-baseline'>
               <span className='text-sm whitespace-nowrap'>Issue closed</span>
 
-              <span className='text-gray-400 text-sm whitespace-nowrap ml-2 mr-2'>
+              <span className='text-grayModern-400 text-sm whitespace-nowrap ml-2 mr-2'>
                 {DateTimeUtils.format(
                   issue?.updatedAt,
                   DateTimeUtils.dateWithHour,

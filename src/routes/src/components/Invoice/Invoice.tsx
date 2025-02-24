@@ -114,13 +114,16 @@ export function Invoice({
           <div className='flex mt-2 justify-evenly transition duration-250 ease-in-out filter'>
             <div
               className={cn(
-                'flex flex-1 flex-col w-170 py-2 px-2 border-r border-t border-b border-gray-300 transition duration-250 ease-in-out filter',
+                'flex flex-1 flex-col w-170 py-2 px-2 border-r border-t border-b border-grayModern-300 transition duration-250 ease-in-out filter',
                 invoiceMetaSectionFilterProperty,
               )}
             >
               <span className='font-semibold mb-1 text-sm'>Issued</span>
               <span
-                className={cn('text-sm mb-4 text-gray-500', blurDummyClass)}
+                className={cn(
+                  'text-sm mb-4 text-grayModern-500',
+                  blurDummyClass,
+                )}
               >
                 {DateTimeUtils.format(
                   utcIssueDate,
@@ -128,7 +131,9 @@ export function Invoice({
                 )}
               </span>
               <span className='font-semibold mb-1 text-sm'>Due</span>
-              <span className={cn('text-sm text-gray-500', blurDummyClass)}>
+              <span
+                className={cn('text-sm text-grayModern-500', blurDummyClass)}
+              >
                 {DateTimeUtils.format(
                   utcDueDate,
                   DateTimeUtils.dateWithAbreviatedMonth,
@@ -196,7 +201,7 @@ export function Invoice({
       >
         <div
           className={cn('w-full, border-y-2 mt-10', {
-            'border-gray-900': isInvoiceBankDetailsSectionFocused,
+            'border-grayModern-900': isInvoiceBankDetailsSectionFocused,
             'border-transparent': !isInvoiceBankDetailsSectionFocused,
           })}
         >
@@ -210,27 +215,27 @@ export function Invoice({
         </div>
 
         {check && (
-          <div className='text-xs text-gray-500 my-2 pt-2 border-t border-gray-300'>
+          <div className='text-xs text-grayModern-500 my-2 pt-2 border-t bgrayModernr-grayModern-300'>
             Want to pay by check? Contact{' '}
             <a
               href={`mailto:${from.email}`}
-              className='underline text-gray-500'
+              className='underline text-grayModern-500'
             >
               {from.email}
             </a>
           </div>
         )}
-        <div className='flex items-center py-2 mt-2 border-t border-gray-300'>
+        <div className='flex items-center py-2 mt-2 border-t border-grayModern-300'>
           <div className='mr-2'>
             <img width={14} height={14} alt='CustomerOS' src={logoCustomerOs} />
           </div>
-          <span className='text-xs text-gray-500'>
+          <span className='text-xs text-grayModern-500'>
             Powered by
             <a
               target='blank'
               rel='noopener noreferrer'
               href='https://customeros.ai/'
-              className='text-gray-500 mx-1 underline cursor-pointer'
+              className='text-grayModern-500 mx-1 underline cursor-pointer'
             >
               CustomerOS
             </a>

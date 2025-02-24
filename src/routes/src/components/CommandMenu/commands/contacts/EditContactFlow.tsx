@@ -113,8 +113,8 @@ export const EditContactFlow = observer(() => {
             leftAccessory={<Plus />}
             onSelect={() => handleCreateOption(search)}
           >
-            <span className='text-gray-700 ml-1'>Create new flow:</span>
-            <span className='text-gray-500 ml-1'>{search}</span>
+            <span className='text-grayModern-700 ml-1'>Create new flow:</span>
+            <span className='text-grayModern-500 ml-1'>{search}</span>
           </CommandItem>
         )}
       </Command.List>

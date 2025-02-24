@@ -128,11 +128,11 @@ export const KanbanCard = observer(
         data-test='opp-kanban-card'
         onMouseEnter={() => onFocus(card.id)}
         className={cn(
-          'group/kanbanCard  relative flex flex-col items-start px-3 pb-3 pt-[6px] mb-2 bg-white rounded-lg border border-gray-200 shadow-xs hover:shadow-lg focus:border-primary-500 transition-all duration-200 ease-in-out',
+          'group/kanbanCard  relative flex flex-col items-start px-3 pb-3 pt-[6px] mb-2 bg-white rounded-lg border border-grayModern-200 shadow-xs hover:shadow-lg focus:border-primary-500 transition-all duration-200 ease-in-out',
           {
             '!shadow-lg cursor-grabbing': snapshot?.isDragging,
             'pointer-events-none': noPointerEvents,
-            'border-gray-400': isFocused,
+            'border-grayModern-400': isFocused,
           },
         )}
       >
@@ -142,7 +142,7 @@ export const KanbanCard = observer(
               <div className='flex flex-col'>
                 <OpportunityName opportunityId={card.id} />
                 <p
-                  className='text-sm text-gray-500 p-0 hover:text-gray-700 hover:cursor-pointer'
+                  className='text-sm text-grayModern-500 p-0 hovergrayModernt-grayModern-700 hover:cursor-pointer'
                   onClick={() => {
                     logo &&
                       navigate(
@@ -178,7 +178,7 @@ export const KanbanCard = observer(
                   <div className='flex items-center'>
                     <Clock
                       dataTest='kanban-clock'
-                      className='text-gray-500 size-3 mr-1'
+                      className='text-grayModern-500 size-3 mr-1'
                     />
                     <span className='text-nowrap text-xs items-center'>
                       {`${daysInStage} ${daysInStage === 1 ? 'day' : 'days'}`}

@@ -76,7 +76,7 @@ export const OnboardingStatus = observer(({ id }: OnboardingStatusProps) => {
       OnboardingStatusEnum.Stuck,
       () => 'warning',
     )
-    .otherwise(() => 'gray');
+    .otherwise(() => 'grayModern');
 
   return (
     <>
@@ -97,12 +97,12 @@ export const OnboardingStatus = observer(({ id }: OnboardingStatusProps) => {
         <div className='flex-col inline-grid'>
           <div className='flex'>
             <span className='ml-1 mr-1 font-semibold'>Onboarding</span>
-            <span className='text-gray-500'>{`${label} ${
+            <span className='text-grayModern-500'>{`${label} ${
               store.organizations?.isLoading ? '' : timeElapsed
             }`}</span>
           </div>
           {onboardingComments && (
-            <span className='line-clamp-2 text-gray-500 text-sm'>{`“${onboardingComments}”`}</span>
+            <span className='line-clamp-2 text-grayModern-500 text-sm'>{`“${onboardingComments}”`}</span>
           )}
         </div>
       </div>

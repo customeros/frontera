@@ -19,7 +19,7 @@ export const BankTransferCurrencySelect = ({
         <IconButton
           size='xs'
           variant='outline'
-          colorScheme='gray'
+          colorScheme='grayModern'
           aria-label='Select currency'
           className='rounded-full size-6'
           icon={currencyIcon?.[currency || '']}

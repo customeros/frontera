@@ -21,13 +21,13 @@ export const ContactJobExperience = observer(
 
     return timeAtOrg ? (
       <div className='flex items-center cursor-not-allowed text-sm'>
-        <GitTimeline className='text-gray-500' />
+        <GitTimeline className='text-grayModern-500' />
         <p className='ml-4 first-letter:capitalize'>{timeAtOrg}</p>
       </div>
     ) : (
       <div className='flex items-center gap-4'>
-        <GitTimeline className='text-gray-500' />
-        <p className='text-gray-400 text-sm'>Tenure at Catalog</p>
+        <GitTimeline className='text-grayModern-500' />
+        <p className='text-grayModern-400 text-sm'>Tenure at Catalog</p>
       </div>
     );
   },

@@ -74,7 +74,7 @@ export const OrganizationFields = observer(() => {
       {activeTab('core') ? (
         searchInCoreFields === 0 ? (
           <div className='flex items-center justify-center'>
-            <p className='text-center text-sm text-gray-500 mt-4 '>
+            <p className='text-center text-sm text-grayModern-500 mt-4 '>
               No fields insight...
             </p>
           </div>
@@ -93,19 +93,19 @@ export const OrganizationFields = observer(() => {
           {filteredCustomFields.length === 0 && search ? (
             !searchInCoreFields ? (
               <div className='flex items-center justify-center'>
-                <p className='text-center text-sm text-gray-500 mt-4 '>
+                <p className='text-center text-sm text-grayModern-500 mt-4 '>
                   No fields insight...
                 </p>
               </div>
             ) : searchInCoreFields ? (
               <div className='flex items-center justify-center'>
-                <p className='text-center text-sm text-gray-500 mt-4 '>
+                <p className='text-center text-sm text-grayModern-500 mt-4 '>
                   {`${emptyState}`}
                 </p>
               </div>
             ) : (
               <div className='flex items-center justify-center'>
-                <p className='text-center text-sm text-gray-500 mt-4 max-w-[300px] '>
+                <p className='text-center text-sm text-grayModern-500 mt-4 max-w-[300px] '>
                   Nothing to search for yet. Go ahead, add you first custom
                   field...
                 </p>

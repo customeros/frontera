@@ -16,10 +16,10 @@ export const EmptyState = ({ onClick }: EmptyStateProps) => {
           <HalfCirclePattern width={500} height={500} />
         </div>
         <div className='flex flex-col text-center items-center top-[5vh] transform translate-y-[-230px]'>
-          <p className='text-gray-900 text-md font-semibold'>
+          <p className='text-grayModern-900 text-md font-semibold'>
             Agents orchestrate your business
           </p>
-          <p className='max-w-[400px] text-sm text-gray-600 my-1'>
+          <p className='max-w-[400px] text-sm text-grayModern-600 my-1'>
             Agents let you manage your whole business from <br /> identifying
             website visitors, to qualifying them to <br /> sending outbound
             messages.

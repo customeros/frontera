@@ -33,7 +33,7 @@ const SkeletonCard = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <div className='w-full rounded-xl border border-gray-200 shadow-xs p-0 mb-4'>
+    <div className='w-full rounded-xl border border-grayModern-200 shadow-xs p-0 mb-4'>
       <div className='flex items-center w-full p-4'>
         <div className='flex justify-between w-full items-start'>
           <Skeleton className='size-10 rounded-full' />

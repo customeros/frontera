@@ -33,7 +33,7 @@ export const EmailsSection = observer(({ contactId }: EmailsSectionProps) => {
     <div>
       <div className='flex justify-center items-center w-full'>
         <div className='flex mr-4 items-center justify-between'>
-          <Mail01 className='text-gray-500 mt-0.5' />
+          <Mail01 className='text-grayModern-500 mt-0.5' />
         </div>
 
         <div className='flex flex-col flex-9 w-full'>
@@ -41,7 +41,7 @@ export const EmailsSection = observer(({ contactId }: EmailsSectionProps) => {
             <div className='flex w-full gap-2 items-center'>
               <p
                 data-test='add-work-email'
-                className='text-gray-400 cursor-pointer text-sm'
+                className='text-grayModern-400 cursor-pointer text-sm'
                 onClick={() => {
                   store.ui.commandMenu.setContext({
                     ids: [contactStore?.id || ''],
@@ -63,7 +63,7 @@ export const EmailsSection = observer(({ contactId }: EmailsSectionProps) => {
                   <Spinner
                     size='sm'
                     label='finding email'
-                    className='text-gray-400 fill-gray-700 mr-2'
+                    className='text-grayModern-400grayModernl-grayModern-700 mr-2'
                   />
                 </Tooltip>
               ) : (
@@ -95,7 +95,7 @@ export const EmailsSection = observer(({ contactId }: EmailsSectionProps) => {
                   </p>
 
                   {contactStore?.value.emails.length !== 1 && email.primary && (
-                    <span className='text-gray-500 text-sm ml-1'>
+                    <span className='text-grayModern-500 text-sm ml-1'>
                       {' '}
                       • Primary
                     </span>
@@ -106,7 +106,7 @@ export const EmailsSection = observer(({ contactId }: EmailsSectionProps) => {
                     <Spinner
                       size='sm'
                       label='finding email'
-                      className='text-gray-400 fill-gray-700 mr-2'
+                      className='text-grayModern-400grayModernl-grayModern-700 mr-2'
                     />
                   )}
                   {email && (

@@ -111,7 +111,7 @@ const StatusTag = ({
   icon?: ReactElement;
 }) => {
   return (
-    <div className='flex items-center overflow-x-hidden gap-2 overflow-ellipsis bg-gray-100 rounded-md px-1.5 truncate w-[fit-content]'>
+    <div className='flex items-center overflow-x-hidden gap-2 overflow-ellipsis bg-grayModern-100 rounded-md px-1.5 truncate w-[fit-content]'>
       {icon && <span className='flex'>{icon}</span>}
       <div className='truncate'>{status}</div>
     </div>

@@ -29,7 +29,7 @@ export const ContractStatusUpdatedAction = ({
     >
       {iconsByStatus[status]?.icon}
 
-      <p className='max-w-[500px] ml-2 text-sm text-gray-700 line-clamp-2'>
+      <p className='max-w-[500px] ml-2 text-sm text-grayModern-700 line-clamp-2'>
         {content}
         <span
           className={cn(

@@ -27,11 +27,11 @@ export const InvoicePreviewCell = ({ value }: { value: string }) => {
       tabIndex={0}
       role='button'
       onClick={handleClick}
-      className='font-medium cursor-pointer hover:text-gray-900 transition-colors group flex gap-1 items-center mr-2'
+      className='font-medium cursor-pointer hover:text-grayModern-900 transition-colors group flex gap-1 items-center mr-2'
     >
       <span className='truncate'>{value}</span>
       <div>
-        <Eye className='opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 size-4' />
+        <Eye className='opacity-0 group-hover:opacity-100 transition-opacity text-grayModern-400 size-4' />
       </div>
     </div>
   );

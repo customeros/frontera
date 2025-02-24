@@ -118,11 +118,11 @@ export const ForecastFilter = observer(
             onValueCommit={handleChange}
             onValueChange={handleDragChange}
           >
-            <RangeSliderTrack className='bg-gray-200 h-[2px]'>
-              <RangeSliderFilledTrack className='h-[2px] bg-gray-400' />
+            <RangeSliderTrack className='bg-grayModern-200 h-[2px]'>
+              <RangeSliderFilledTrack className='h-[2px] bg-grayModern-400' />
             </RangeSliderTrack>
-            <RangeSliderThumb className='border-2 border-gray-400' />
-            <RangeSliderThumb className='border-2 border-gray-400' />
+            <RangeSliderThumb className='border-2 border-grayModern-400' />
+            <RangeSliderThumb className='border-2 border-grayModern-400' />
           </RangeSlider>
         </div>
       </>
@@ -199,7 +199,7 @@ export const DebouncedNumberInput = forwardRef<
       <InputGroup>
         {!hideCurrencySymbol && (
           <LeftElement className='mb-1'>
-            <CurrencyDollar className='text-gray-500' />
+            <CurrencyDollar className='text-grayModern-500' />
           </LeftElement>
         )}
 

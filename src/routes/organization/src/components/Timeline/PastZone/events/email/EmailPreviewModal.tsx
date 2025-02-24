@@ -223,7 +223,7 @@ export const EmailPreviewModal = ({
           )}
         </div>
 
-        <div className='rounded-b-2xl py-4 px-6 overflow-visible pt-1 border-dashed border-t-[1px] border-gray-200 bg-grayBlue-50 rounded-none max-h-[50vh]'>
+        <div className='rounded-b-2xl py-4 px-6 overflow-visible pt-1 border-dashed border-t-[1px] border-grayModern-200 bg-grayBlue-50 rounded-none max-h-[50vh]'>
           <div style={{ position: 'relative' }}>
             <ModeChangeButtons handleModeChange={handleModeChange} />
           </div>

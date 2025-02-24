@@ -71,7 +71,7 @@ export const ChannelLinkSelect = observer(() => {
         <Button
           size='xs'
           variant='ghost'
-          leftIcon={<Link01 color='gray.500' />}
+          leftIcon={<Link01 color='grayModern.500' />}
           onClick={() => {
             onOpen();
             setTimeout(
@@ -119,7 +119,7 @@ export const ChannelLinkSelect = observer(() => {
         openMenuOnClick={!value}
         placeholder='Slack channel'
         noOptionsMessage={() => 'No channel found'}
-        leftElement={<Link01 className='text-gray-500 mr-2' />}
+        leftElement={<Link01 className='text-grayModern-500 mr-2' />}
       />
     </div>
   );

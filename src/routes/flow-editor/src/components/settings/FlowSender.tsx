@@ -65,9 +65,9 @@ export const FlowSender = observer(
             size='xs'
             textSize='xxs'
             name={flowSender?.user?.name ?? 'Unnamed'}
-            icon={<User01 className='text-gray-500 size-3' />}
             src={flowSender?.user?.value?.profilePhotoUrl ?? ''}
-            className={'w-5 h-5 min-w-5 mr-2 border border-gray-200'}
+            icon={<User01 className='text-grayModern-500 size-3' />}
+            className={'w-5 h-5 min-w-5 mr-2 border border-grayModern-200'}
           />
           <span className='flex-1 text-sm'>
             {flowSender?.user?.name ?? 'Unnamed'}
@@ -95,7 +95,7 @@ export const FlowSender = observer(
                   </div>
                 </Tooltip>
               )}
-              <div className='h-[10px] w-[1px] bg-gray-300 mx-1' />
+              <div className='h-[10px] w-[1px] bg-grayModern-300 mx-1' />
             </>
           )}
 

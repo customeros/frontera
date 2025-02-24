@@ -38,7 +38,7 @@ export const NextSteps = observer(
     return (
       <Tooltip side='top' align='start' label='Next steps'>
         <div className='flex gap-2 w-full items-start justify-start'>
-          <ArrowsRight className='size-4 ml-1 mr-0.5 mt-0.5 text-gray-500' />
+          <ArrowsRight className='size-4 ml-1 mr-0.5 mt-0.5 text-grayModern-500' />
           <Textarea
             size='xs'
             value={value}

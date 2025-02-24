@@ -13,7 +13,7 @@ export const ClearFilter = ({ onClearFilter }: ClearFilterProps) => {
       onClick={onClearFilter}
       colorScheme='grayModern'
       aria-label='clear filter selected'
-      icon={<X className='text-gray-500' />}
+      icon={<X className='text-grayModern-500' />}
       className=' bg-white  border-grayModern-300 focus:outline-none'
     />
   );

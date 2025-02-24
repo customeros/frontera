@@ -151,7 +151,7 @@ export const LocationFilter = observer(
         />
         <InputGroup>
           <LeftElement>
-            <SearchSm color='gray.500' />
+            <SearchSm color='grayModern.500' />
           </LeftElement>
           <Input
             size='sm'
@@ -169,7 +169,7 @@ export const LocationFilter = observer(
           />
         </InputGroup>
 
-        <div className='flex flex-col pt-2 pb-2 gap-2 border-b border-gray-200'>
+        <div className='flex flex-col pt-2 pb-2 gap-2 border-b border-grayModern-200'>
           <Checkbox
             isChecked={filter.includeEmpty ?? false}
             onChange={(value) => handleShowEmpty(value as boolean)}

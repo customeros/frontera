@@ -163,7 +163,7 @@ export function FloatingLinkEditor({
   return (
     <div
       ref={editorRef}
-      className='bg-gray-700 flex items-center min-w-[240px] max-w-[240px] p-1 pl-3 shadow-lg rounded-md'
+      className='bg-grayModern-700 flex items-center min-w-[240px] max-w-[240px] p-1 pl-3 shadow-lg rounded-md'
     >
       <Input
         size='sm'
@@ -176,7 +176,7 @@ export function FloatingLinkEditor({
         onKeyDown={(event) => {
           monitorInputInteraction(event);
         }}
-        className='leading-none min-h-0 pointer-events-auto text-gray-25 overflow-ellipsis'
+        className='leading-none min-h-0 pointer-events-auto text-grayModern-25 overflow-ellipsis'
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -184,7 +184,7 @@ export function FloatingLinkEditor({
         }}
       />
 
-      <Divider className='w-[1px] h-3 border-b-0 border-l-[1px] border-gray-500 mx-2' />
+      <Divider className='w-[1px] h-3 border-b-0 border-l-[1px] border-grayModern-500 mx-2' />
 
       {!!linkUrl.trim().length && linkUrl.trim() !== 'https://' && (
         <FloatingToolbarButton

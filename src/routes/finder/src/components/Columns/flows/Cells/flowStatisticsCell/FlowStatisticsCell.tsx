@@ -12,7 +12,7 @@ export const FlowStatisticsCell = observer(
   ({ value, dataTest }: FlowStatisticsCellProps) => {
     if (typeof value !== 'number') {
       return (
-        <div data-test={dataTest} className='text-gray-400'>
+        <div data-test={dataTest} className='text-grayModern-400'>
           No data yet
         </div>
       );

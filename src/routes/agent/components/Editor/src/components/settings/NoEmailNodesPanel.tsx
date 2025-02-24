@@ -13,13 +13,13 @@ export const NoEmailNodesPanel = () => {
       }}
     >
       <div className='flex flex-col items-center mt-8'>
-        <FeaturedIcon size='lg' colorScheme='gray'>
+        <FeaturedIcon size='lg' colorScheme='grayModern'>
           <Sliders04 className='text-primary-600' />
         </FeaturedIcon>
-        <span className='text-gray-700 font-semibold mt-8'>
+        <span className='text-grayModern-700 font-semibold mt-8'>
           Step up your flow game
         </span>
-        <span className='text-gray-500 mt-1 mb-6 text-sm text-center'>
+        <span className='text-grayModern-500 mt-1 mb-6 text-sm text-center'>
           To configure your flow’s settings, start by adding some steps to it
           first
         </span>

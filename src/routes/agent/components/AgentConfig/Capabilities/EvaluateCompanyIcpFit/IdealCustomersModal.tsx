@@ -81,7 +81,7 @@ export const IdealCustomersModal = observer(
                         <Spinner
                           size='sm'
                           label='validating...'
-                          className='text-gray-300 fill-gray-500 size-3'
+                          className='text-grayModern-300 fill-grayModern-500 size-3'
                         />
                       )
                     }
@@ -90,7 +90,7 @@ export const IdealCustomersModal = observer(
                         usecase.domainValidationMessage) && (
                         <p
                           className={cn(
-                            'text-xs text-gray-500',
+                            'text-xs text-grayModern-500',
                             usecase.domainValidationError.length > 0 &&
                               'text-error-500',
                           )}
@@ -122,7 +122,7 @@ export const IdealCustomersModal = observer(
                             usecase.selectCustom(usecase.searchTerm);
                           }}
                           rightAccessory={
-                            <PlusCircle className='invisible !text-gray-500 group-hover:visible group-data-[selected="true"]:visible' />
+                            <PlusCircle className='invisible !text-grayModern-500 group-hover:visible group-data-[selected="true"]:visible' />
                           }
                         >
                           Add {usecase.searchTerm}
@@ -144,7 +144,7 @@ export const IdealCustomersModal = observer(
                               usecase.icpCompanyExamples.has(option.website) ? (
                                 <Check className='text-primary-700' />
                               ) : (
-                                <PlusCircle className='invisible !text-gray-500 group-hover:visible group-data-[selected="true"]:visible' />
+                                <PlusCircle className='invisible !text-grayModern-500 group-hover:visible group-data-[selected="true"]:visible' />
                               )
                             }
                             leftAccessory={

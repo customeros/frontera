@@ -139,17 +139,17 @@ export const Header = observer(
                 role='button'
                 data-test='navigate-to-flows'
                 onClick={() => navigate(showFinder ? -2 : -1)}
-                className='font-medium text-gray-500 hover:text-gray-700'
+                className='font-medium text-grayModern-500 hover:text-grayModern-700'
               >
                 Flows
               </span>
-              <ChevronRight className='text-gray-400' />
+              <ChevronRight className='text-grayModern-400' />
 
               <HeaderInputName />
               {!showFinder && <FlowMoreActionsMenu id={id} />}
               {showFinder ? (
                 <>
-                  <ChevronRight className='text-gray-400' />
+                  <ChevronRight className='text-grayModern-400' />
                   <span className='font-medium cursor-default'>
                     {`${flow?.value?.participants?.length} ${
                       flow?.value?.participants?.length === 1
@@ -169,8 +169,8 @@ export const Header = observer(
                   <Button
                     size='xxs'
                     variant='outline'
-                    colorScheme='gray'
                     leftIcon={<User01 />}
+                    colorScheme='grayModern'
                     dataTest='flow-contacts'
                     isLoading={store.flows.isLoading}
                     onClick={() => {
@@ -180,7 +180,7 @@ export const Header = observer(
                       <Spinner
                         size='sm'
                         label='adding'
-                        className='text-gray-300 fill-gray-400'
+                        className='text-grayModern-300 fill-grayModern-400'
                       />
                     }
                   >
@@ -195,7 +195,7 @@ export const Header = observer(
               <Button
                 size='xs'
                 variant='outline'
-                colorScheme='gray'
+                colorScheme='grayModern'
                 leftIcon={<UserPlus01 />}
                 onClick={() =>
                   store.ui.commandMenu.setOpen(true, {
@@ -214,9 +214,9 @@ export const Header = observer(
               <Button
                 size='xs'
                 variant='outline'
-                colorScheme='gray'
                 dataTest='save-flow'
                 onClick={handleSave}
+                colorScheme='grayModern'
               >
                 Publish changes
               </Button>

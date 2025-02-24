@@ -6,7 +6,6 @@ export const tagSubtleVariant = cva(
     variants: {
       colorScheme: {
         primary: ['text-primary-700', 'bg-primary-100'],
-        gray: ['text-gray-700', 'bg-gray-100'],
         grayBlue: ['text-grayBlue-700', 'bg-grayBlue-100'],
         grayModern: ['text-grayModern-700', 'bg-grayModern-100'],
         grayWarm: ['text-grayWarm-700', 'bg-grayWarm-100'],
@@ -31,7 +30,7 @@ export const tagSubtleVariant = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );
@@ -42,7 +41,6 @@ export const tagSolidVariant = cva(
     variants: {
       colorScheme: {
         primary: ['bg-primary-500', 'text-white'],
-        gray: ['bg-gray-500', 'text-white'],
         grayBlue: ['bg-grayBlue-500', 'text-white'],
         grayModern: ['bg-grayModern-500', 'text-white'],
         grayWarm: ['bg-grayWarm-500', 'text-white'],
@@ -67,7 +65,7 @@ export const tagSolidVariant = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );
@@ -83,13 +81,6 @@ export const tagOutlineVariant = cva(
           'border',
           'border-solid',
           'border-primary-200',
-        ],
-        gray: [
-          'bg-gray-50',
-          'text-gray-700',
-          'border',
-          'border-solid',
-          'border-gray-200',
         ],
         grayBlue: [
           'bg-grayBlue-50',
@@ -241,7 +232,7 @@ export const tagOutlineVariant = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );
@@ -257,15 +248,6 @@ export const tagCloseButtonVariant = cva([], {
         'px-0.5',
         'hover:bg-primary-200',
         'hover:text-primary-500',
-      ],
-      gray: [
-        'text-gray-400',
-        'mr-0',
-        'bg-gray-100',
-        'rounded-e-md',
-        'px-0.5',
-        'hover:bg-gray-200',
-        'hover:text-gray-500',
       ],
       grayBlue: [
         'text-grayBlue-400',
@@ -459,7 +441,7 @@ export const tagCloseButtonVariant = cva([], {
     },
   },
   defaultVariants: {
-    colorScheme: 'gray',
+    colorScheme: 'grayModern',
   },
 });
 

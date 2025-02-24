@@ -60,7 +60,7 @@ export const DebouncedSearchInput = memo(
       return (
         <InputGroup>
           <LeftElement className='mb-[2px]'>
-            <SearchSm className='text-gray-500' />
+            <SearchSm className='text-grayModern-500' />
           </LeftElement>
           <Input
             value={value}
@@ -78,7 +78,7 @@ export const DebouncedSearchInput = memo(
                 variant='ghost'
                 onClick={handleClear}
                 aria-label='search company'
-                icon={<Delete className='text-gray-500' />}
+                icon={<Delete className='text-grayModern-500' />}
               />
             </RightElement>
           )}

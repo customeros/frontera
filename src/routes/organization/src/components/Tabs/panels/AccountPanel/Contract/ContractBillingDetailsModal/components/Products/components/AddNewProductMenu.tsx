@@ -32,7 +32,7 @@ export const AddNewProductMenu = observer(
             icon={<Plus />}
             className='ml-1'
             variant='outline'
-            colorScheme='gray'
+            colorScheme='grayModern'
             aria-label='Add a product'
             dataTest='contract-card-add-sli'
           />
@@ -66,7 +66,9 @@ export const AddNewProductMenu = observer(
                   {option.label}
                 </span>
                 <span className='mx-0.5'>•</span>
-                <span className='text-gray-500'>{option.sku.typeLabel}</span>
+                <span className='text-grayModern-500'>
+                  {option.sku.typeLabel}
+                </span>
               </div>
             )}
             onChange={(newValue) => {

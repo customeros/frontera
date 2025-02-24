@@ -140,7 +140,7 @@ export const ContractBillingDetailsForm = observer(
               <Button
                 size='sm'
                 variant='ghost'
-                className='font-normal text-base p-0 ml-1 relative text-gray-500 hover:bg-transparent focus:bg-transparent underline'
+                className='font-normal text-base p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
                 onClick={() =>
                   contractStore?.updateTemp((prev) => ({
                     ...prev,
@@ -184,7 +184,7 @@ export const ContractBillingDetailsForm = observer(
         {billingEnabled && (
           <>
             <div className='flex relative items-center h-8 mb-1'>
-              <p className='text-sm text-gray-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
+              <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
                 Billing policy
               </p>
               <Divider />
@@ -274,7 +274,7 @@ export const ContractBillingDetailsForm = observer(
                     <Button
                       size='sm'
                       variant='ghost'
-                      className='font-normal text-base p-0 ml-1 relative text-gray-500 hover:bg-transparent focus:bg-transparent underline'
+                      className='font-normal text-base p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
                       onClick={() =>
                         contractStore?.updateTemp((contract) => ({
                           ...contract,
@@ -304,7 +304,7 @@ export const ContractBillingDetailsForm = observer(
                       variant='ghost'
                       onClick={openAddressModal}
                       dataTest='contract-billing-details-address'
-                      className='font-normal text-base p-0 ml-1 relative text-gray-500 hover:bg-transparent focus:bg-transparent underline'
+                      className='font-normal text-base p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
                     >
                       {contractStore?.tempValue.billingDetails
                         ?.organizationLegalName || 'this address'}
@@ -314,7 +314,7 @@ export const ContractBillingDetailsForm = observer(
               </li>
             </ul>
             <div className='flex relative items-center h-8 '>
-              <p className='text-sm text-gray-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
+              <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
                 Payment options
               </p>
               <Divider />

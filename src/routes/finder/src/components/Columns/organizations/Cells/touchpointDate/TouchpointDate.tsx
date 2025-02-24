@@ -7,7 +7,7 @@ export const LastTouchpointDateCell = ({
 }) => {
   return (
     <span
-      className='text-gray-700'
+      className='text-grayModern-700'
       data-test='organization-last-touchpoint-date-in-all-orgs-table'
     >
       {DateTimeUtils.timeAgo(lastTouchPointAt, {

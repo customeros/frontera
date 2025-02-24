@@ -8,9 +8,9 @@ interface TagButtonProps {
 export const TagButton = ({ onTagSet, tag }: TagButtonProps) => (
   <Button
     size='xs'
-    color='gray.400'
     onClick={onTagSet}
-    className='text-gray-400 mr-2 leading-4'
+    color='grayModern.400'
+    className='text-grayModern-400 mr-2 leading-4'
   >
     {`#${tag}`}
   </Button>

@@ -72,7 +72,7 @@ export const OwnerCell = observer(({ id }: OwnerProps) => {
         <p
           // onDoubleClick={open}
           className={cn(
-            value ? 'text-gray-700' : 'text-gray-400',
+            value ? 'text-grayModern-700' : 'text-grayModern-400',
             'cursor-default overflow-hidden overflow-ellipsis',
           )}
         >
@@ -85,7 +85,7 @@ export const OwnerCell = observer(({ id }: OwnerProps) => {
         {/*  id='edit-button'*/}
         {/*  aria-label='edit owner'*/}
         {/*  className='edit-button opacity-0'*/}
-        {/*  icon={<Edit03 className='text-gray-500 size-3' />}*/}
+        {/*  icon={<Edit03 className='text-grayModern-500 size-3' />}*/}
         {/*/>*/}
       </div>
     );

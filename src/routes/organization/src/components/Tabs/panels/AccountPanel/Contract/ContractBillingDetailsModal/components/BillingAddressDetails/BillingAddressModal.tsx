@@ -181,8 +181,8 @@ export const BillingAddressModal = observer(
               <Button
                 size='md'
                 variant='outline'
-                colorScheme='gray'
                 className='w-full'
+                colorScheme='grayModern'
                 onClick={() => {
                   handleCancelAddressChanges();
                 }}

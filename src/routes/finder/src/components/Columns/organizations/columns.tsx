@@ -286,11 +286,11 @@ export const columns: Record<string, Column> = {
       enableResizing: true,
       cell: (props) => {
         if (!props.getValue()) {
-          return <p className='text-gray-400'>Unknown</p>;
+          return <p className='text-grayModern-400'>Unknown</p>;
         }
 
         return (
-          <p className='text-gray-700 cursor-default truncate'>
+          <p className='text-grayModern-700 cursor-default truncate'>
             {props.getValue()}
           </p>
         );
@@ -344,13 +344,15 @@ export const columns: Record<string, Column> = {
 
         if (!value) {
           return (
-            <p className='text-gray-400'>
+            <p className='text-grayModern-400'>
               {isEnriching ? 'Enriching...' : 'Not set'}
             </p>
           );
         }
 
-        return <p className='text-gray-700 cursor-default truncate'>{value}</p>;
+        return (
+          <p className='text-grayModern-700 cursor-default truncate'>{value}</p>
+        );
       },
       header: (props) => (
         <THead<HTMLInputElement>
@@ -378,7 +380,7 @@ export const columns: Record<string, Column> = {
 
         if (!value) {
           return (
-            <p className='text-gray-400'>
+            <p className='text-grayModern-400'>
               {isEnriching ? 'Enriching...' : 'Not set'}
             </p>
           );
@@ -390,7 +392,7 @@ export const columns: Record<string, Column> = {
             : parseFloat(value);
 
         if (isNaN(numberValue)) {
-          return <p className='text-gray-400'>Not set</p>;
+          return <p className='text-grayModern-400'>Not set</p>;
         }
 
         const formattedValue = numberValue.toLocaleString('en-US', {
@@ -399,7 +401,7 @@ export const columns: Record<string, Column> = {
         });
 
         return (
-          <p className='text-gray-700 cursor-default truncate'>
+          <p className='text-grayModern-700 cursor-default truncate'>
             {formattedValue}
           </p>
         );
@@ -533,8 +535,8 @@ export const columns: Record<string, Column> = {
       return (
         <p
           className={cn(
-            'text-gray-700 cursor-default',
-            !value && 'text-gray-400',
+            'text-grayModern-700 cursor-default',
+            !value && 'text-grayModern-400',
           )}
         >
           {value ? `${formatedValue}` : 'Unknown'}
@@ -624,7 +626,7 @@ export const columns: Record<string, Column> = {
           )?.followersCount;
 
         if (typeof value !== 'number')
-          return <div className='text-gray-400'>Unknown</div>;
+          return <div className='text-grayModern-400'>Unknown</div>;
 
         return <div>{Number(value).toLocaleString()}</div>;
       },
@@ -671,7 +673,7 @@ export const columns: Record<string, Column> = {
         const value = props.getValue();
 
         if (value === undefined) {
-          return <div className='text-gray-400'>Unknown</div>;
+          return <div className='text-grayModern-400'>Unknown</div>;
         }
 
         return <div>{value ? 'Public' : 'Private'}</div>;

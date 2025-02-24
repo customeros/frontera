@@ -28,13 +28,6 @@ export const AvatarCell = observer(
     return (
       <div className='items-center ml-[1px]'>
         <div
-          className={cn(
-            'w-6 h-6 flex items-center justify-center  border border-gray-200 cursor-pointer focus:outline-none rounded-full',
-            {
-              'animate-pulse': isEnriching,
-              'cursor-default': !canNavigate,
-            },
-          )}
           onClick={() => {
             if (store.ui.showPreviewCard && store.ui.focusRow === id) {
               store.ui.setShowPreviewCard(false);
@@ -43,6 +36,13 @@ export const AvatarCell = observer(
               store.ui.setShowPreviewCard(true);
             }
           }}
+          className={cn(
+            'w-6 h-6 flex items-center justify-center  border border-grayModern-200 cursor-pointer focus:outline-none rounded-full',
+            {
+              'animate-pulse': isEnriching,
+              'cursor-default': !canNavigate,
+            },
+          )}
         >
           {src && status !== 'error' && (
             <>
@@ -61,7 +61,7 @@ export const AvatarCell = observer(
             </>
           )}
           {(!src || status === 'error' || status === 'loading') && (
-            <User02 className='w-4 h-4 text-gray-700' />
+            <User02 className='w-4 h-4 text-grayModern-700' />
           )}
         </div>
       </div>

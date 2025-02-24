@@ -70,7 +70,7 @@ export const EmailStub: FC<{ email: InteractionEventWithDate }> = ({
         onClick={() => openModal(email.id)}
         className={cn(
           isSendByTenant ? 'ml-6' : 'ml-0',
-          'shadow-none cursor-pointer text-sm border border-gray-200 bg-white flex max-w-[549px]',
+          'shadow-none cursor-pointer text-sm border border-grayModern-200 bg-white flex max-w-[549px]',
           'rounded-lg hover:shadow-sm transition-all duration-200 ease-out',
         )}
       >

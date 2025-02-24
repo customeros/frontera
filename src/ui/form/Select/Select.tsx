@@ -91,14 +91,14 @@ export const Select = forwardRef<SelectInstance, SelectProps>(
         return (
           <div
             className={cn(
-              'flex rounded-md items-center justify-center bg-transparent hover:bg-gray-100',
+              'flex rounded-md items-center justify-center bg-transparent hover:bg-grayModern-100',
               wrapperSize,
             )}
             {...restInnerProps}
           >
             <Delete
               className={cn(
-                'text-transparent group-hover:text-gray-700 ',
+                'text-transparent group-hover:text-grayModern-700 ',
                 iconSize,
               )}
             />
@@ -155,11 +155,11 @@ const getDefaultClassNames = ({
   menuList: () => getMenuListClassNames(),
   option: ({ isFocused, isSelected }) =>
     getOptionClassNames('', { isFocused, isSelected }),
-  placeholder: () => 'text-gray-400',
+  placeholder: () => 'text-grayModern-400',
   multiValue: () => getMultiValueClassNames(''),
   multiValueLabel: () => getMultiValueLabelClassNames('', size),
   multiValueRemove: () => getMultiValueRemoveClassNames('', size),
-  groupHeading: () => 'text-gray-400 text-sm px-3 py-1.5 font-normal',
+  groupHeading: () => 'text-grayModern-400 text-sm px-3 py-1.5 font-normal',
   valueContainer: () => 'gap-1 py-0.5 mr-0.5 inline-grid',
 });
 
@@ -207,7 +207,7 @@ export const getMenuClassNames =
 
 export const getMenuListClassNames = (className?: string) => {
   const defaultStyle =
-    'p-2 max-h-[300px] border border-gray-200 bg-white outline-offset-[2px] outline-[2px] rounded-lg shadow-lg overflow-y-auto overscroll-auto ';
+    'p-2 max-h-[300px] border border-grayModern-200 bg-white outline-offset-[2px] outline-[2px] rounded-lg shadow-lg overflow-y-auto overscroll-auto ';
 
   return twMerge(defaultStyle, className);
 };
@@ -224,7 +224,7 @@ export const getMultiValueLabelClassNames = (
     .otherwise(() => '');
 
   const defaultStyle = cn(
-    'bg-grayModern-100 text-gray-700 px-1 mr-0 rounded-s-md hover:bg-grayModern-200 transition ease-in-out',
+    'bg-grayModern-100 text-grayModern-700 px-1 mr-0 rounded-s-md hover:bg-grayModern-200 transition ease-in-out',
     sizeClass,
   );
 
@@ -260,8 +260,8 @@ export const getOptionClassNames = (
   const { isFocused, isSelected } = props;
 
   return cn(
-    'my-[2px] px-3 py-1 rounded-md text-gray-700 truncate transition ease-in-out delay-50 hover:bg-grayModern-100',
-    isSelected && 'bg-gray-50 font-medium leading-normal',
+    'my-[2px] px-3 py-1 rounded-md text-grayModern-700 truncate transition ease-in-out delay-50 hover:bg-grayModern-100',
+    isSelected && 'bg-grayModern-50 font-medium leading-normal',
     isFocused && 'bg-grayModern-100',
     className,
   );

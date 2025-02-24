@@ -44,7 +44,7 @@ export const EmailFormMultiCreatableSelect = observer(
       const noEmail = rest?.data?.label && !rest?.data?.value && (
         <p className='text-xs'>
           {rest.data.label} -
-          <span className='text-gray-500 ml-1'>
+          <span className='text-grayModern-500 ml-1'>
             [No email for this contact]
           </span>
         </p>
@@ -58,7 +58,7 @@ export const EmailFormMultiCreatableSelect = observer(
           {rest.data.value && (
             <>
               {rest.data.label.length > 0 && (
-                <span className='text-gray-500 text-xs'> - </span>
+                <span className='text-grayModern-500 text-xs'> - </span>
               )}
               <span className='text-xs'> {rest.data.value}</span>
             </>
@@ -69,7 +69,7 @@ export const EmailFormMultiCreatableSelect = observer(
               variant='ghost'
               aria-label='Copy'
               className='h-5 p-0 self-end float-end'
-              icon={<Copy01 className='size-3 text-gray-500' />}
+              icon={<Copy01 className='size-3 text-grayModern-500' />}
               onClick={(e) => {
                 e.stopPropagation();
                 copyToClipboard(rest.data.value, 'Email copied');
@@ -135,7 +135,7 @@ export const EmailFormMultiCreatableSelect = observer(
         )}
         classNames={{
           input: () => 'pl-1',
-          placeholder: () => 'pl-1 text-gray-400',
+          placeholder: () => 'pl-1 text-grayModern-400',
           container: ({ isFocused }) =>
             getContainerClassNames('flex flex-col min-h-[auto]', 'unstyled', {
               isFocused,
@@ -146,7 +146,7 @@ export const EmailFormMultiCreatableSelect = observer(
           menuList: () => getMenuListClassNames(cn('w-full')),
           menu: ({ menuPlacement }) =>
             getMenuClassNames(menuPlacement)('bg-white', 'sm'),
-          noOptionsMessage: () => 'text-gray-500',
+          noOptionsMessage: () => 'text-grayModern-500',
           valueContainer: () => '!cursor-text mx-0 my-0.5',
           multiValueLabel: () => {
             return getMultiValueLabelClassNames(
@@ -175,7 +175,7 @@ export const EmailFormMultiCreatableSelect = observer(
         }}
         noOptionsMessage={({ inputValue }) => (
           <div
-            className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'
+            className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

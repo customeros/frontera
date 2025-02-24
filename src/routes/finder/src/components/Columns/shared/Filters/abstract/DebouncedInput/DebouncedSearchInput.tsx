@@ -69,7 +69,7 @@ export const DebouncedSearchInput = forwardRef<
   return (
     <InputGroup>
       <LeftElement>
-        <SearchSm color='gray.500' />
+        <SearchSm color='grayModern.500' />
       </LeftElement>
       <Input
         size='sm'
@@ -88,7 +88,7 @@ export const DebouncedSearchInput = forwardRef<
             variant='ghost'
             onClick={handleClear}
             aria-label='search organization'
-            icon={<Delete color='gray.500' />}
+            icon={<Delete color='grayModern.500' />}
           />
         </RightElement>
       )}

@@ -34,7 +34,7 @@ export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
         <Link
           to={href}
           ref={linkRef}
-          className='inline text-gray-700 no-underline hover:no-underline font-normal'
+          className='inline text-grayModern-700 no-underline hover:no-underline font-normal'
         >
           {orgName}
         </Link>

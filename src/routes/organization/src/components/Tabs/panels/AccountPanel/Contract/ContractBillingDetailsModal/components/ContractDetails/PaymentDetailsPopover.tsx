@@ -29,7 +29,7 @@ export const PaymentDetailsPopover: FC<PaymentDetailsPopoverProps> = ({
       <PopoverContent
         className={cn(
           content?.length ? 'block' : 'none',
-          'w-fit bg-gray-700 text-white rounded-md text-sm border-none z-[50000]',
+          'w-fit bg-grayModern-700 text-white rounded-md text-sm border-none z-[50000]',
         )}
       >
         <div className='flex'>

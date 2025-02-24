@@ -9,7 +9,7 @@ export default function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className='absolute p-0 flex-1 flex-col bg-no-repeat bg-contain w-[100vw] items-center justify-center bg-gray-25 border-1 border-gray-200 rounded-xl'>
+    <div className='absolute p-0 flex-1 flex-col bg-no-repeat bg-contain w-[100vw] items-center justify-center bg-grayModern-25 border-1 border-grayModern-200 rounded-xl'>
       <div
         style={{ transform: 'translate(-50%, -90%) rotate(180deg)' }}
         className='absolute h-[50vh] max-h-[768px] w-[768px] top-[50%] left-[50%]'
@@ -20,10 +20,10 @@ export default function NotFound() {
         <FeaturedIcon size='lg' colorScheme='primary'>
           <SearchSm className='size-5' />
         </FeaturedIcon>
-        <h2 className='text-5xl text-gray-900 py-6 font-semibold'>
+        <h2 className='text-5xl text-grayModern-900 py-6 font-semibold'>
           This company cannot be found
         </h2>
-        <p className='text-gray-600 text-2xl pb-12 px-8 text-center'>
+        <p className='text-grayModern-600 text-2xl pb-12 px-8 text-center'>
           It appears the company does not exist or you do not have sufficient
           rights to preview it.
         </p>

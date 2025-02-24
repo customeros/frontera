@@ -20,7 +20,7 @@ export const OwnerCell = observer(({ ownerId }: OwnerProps) => {
       }}
       className={cn(
         'inline w-full gap-1 items-center cursor-pointer truncate',
-        ownerId ? 'text-gray-700' : 'text-gray-400',
+        ownerId ? 'text-grayModern-700' : 'text-grayModern-400',
       )}
     >
       {userOwner?.name ?? 'No owner'}

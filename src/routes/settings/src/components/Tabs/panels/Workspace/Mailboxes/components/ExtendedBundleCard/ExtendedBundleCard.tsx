@@ -43,7 +43,7 @@ export const ExtendedBundleCard = observer(
               <div
                 key={`${domain}-${index}`}
                 className={cn(
-                  'flex items-center justify-between mt-1 rounded-[4px] py-1 px-2 border border-gray-100 bg-gray-100',
+                  'flex items-center justify-between mt-1 rounded-[4px] py-1 px-2 border border-grayModern-100 bg-grayModern-100',
                   isInvalid && 'bg-error-50 border-error-50',
                 )}
               >

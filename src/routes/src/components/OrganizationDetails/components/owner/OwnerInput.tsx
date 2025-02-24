@@ -28,7 +28,7 @@ export const OwnerInput = observer(({ id, dataTest }: OwnerProps) => {
       >
         <Tooltip label='Owner' align='start'>
           <PopoverTrigger className={cn('flex items-center')}>
-            <Icon name='key-01' className='mr-3 text-gray-500' />
+            <Icon name='key-01' className='mr-3 text-grayModern-500' />
             <div
               data-test={dataTest}
               className='flex flex-wrap  w-fit items-center'
@@ -36,7 +36,7 @@ export const OwnerInput = observer(({ id, dataTest }: OwnerProps) => {
               {ownerUseCase.selectedUser ? (
                 <div className='text-sm'>{ownerUseCase.selectedUser.label}</div>
               ) : (
-                <span className='text-gray-400 text-sm'>Owner</span>
+                <span className='text-grayModern-400 text-sm'>Owner</span>
               )}
             </div>
           </PopoverTrigger>
@@ -53,7 +53,7 @@ export const OwnerInput = observer(({ id, dataTest }: OwnerProps) => {
               ownerUseCase.toggleMenu(false);
             }}
             noOptionsMessage={({ inputValue }) => (
-              <div className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
+              <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
                 <span>{`No results matching "${inputValue}"`}</span>
               </div>
             )}

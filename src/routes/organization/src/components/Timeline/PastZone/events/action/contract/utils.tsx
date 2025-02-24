@@ -18,7 +18,7 @@ export const iconsByStatus: Record<
     text: '',
   },
   ended: {
-    icon: <FileX02 className='text-gray-500' />,
+    icon: <FileX02 className='text-grayModern-500' />,
     text: 'has',
   },
   out_of_contract: {

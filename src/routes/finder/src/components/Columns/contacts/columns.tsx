@@ -153,7 +153,7 @@ const columns: Record<string, Column> = {
 
   //     if (!phoneNumber)
   //       return (
-  //         <p className='text-gray-400'>
+  //         <p className='text-grayModern-400'>
   //           {isEnriching ? 'Enriching...' : 'Not set'}
   //         </p>
   //       );
@@ -267,7 +267,7 @@ const columns: Record<string, Column> = {
   //   enableSorting: false,
   //   enableColumnFilter: false,
   //   cell: () => {
-  //     return <div className='text-gray-400'>Unknown</div>;
+  //     return <div className='text-grayModern-400'>Unknown</div>;
   //   },
   //   header: (props) => (
   //     <THead<HTMLInputElement>
@@ -305,7 +305,7 @@ const columns: Record<string, Column> = {
 
         if (!startedAt)
           return (
-            <p className='text-gray-400'>
+            <p className='text-grayModern-400'>
               {isEnriching ? 'Enriching...' : 'Not set'}
             </p>
           );
@@ -375,7 +375,7 @@ const columns: Record<string, Column> = {
 
         if (typeof value !== 'number')
           return (
-            <div className='text-gray-400'>
+            <div className='text-grayModern-400'>
               {isEnriching ? 'Enriching...' : 'Not set'}
             </div>
           );
@@ -399,7 +399,7 @@ const columns: Record<string, Column> = {
     maxSize: 600,
     enableResizing: true,
     cell: (_props) => {
-      return <div className='text-gray-400'>None</div>;
+      return <div className='text-grayModern-400'>None</div>;
     },
     header: (props) => (
       <THead<HTMLInputElement>

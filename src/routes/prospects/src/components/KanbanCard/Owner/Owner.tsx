@@ -65,8 +65,8 @@ export const Owner = observer(({ ownerId, opportunityId }: OwnerProps) => {
               textSize='xxs'
               name={_user?.name ?? 'Unnamed'}
               src={_user?.value?.profilePhotoUrl ?? ''}
-              icon={<User01 className='text-gray-500 size-3' />}
-              className={'w-5 h-5 min-w-5 mr-2 border border-gray-200'}
+              icon={<User01 className='text-grayModern-500 size-3' />}
+              className={'w-5 h-5 min-w-5 mr-2 border border-grayModern-200'}
             />
             <span className='flex-1'>{children}</span>
             {user?.id === _user?.id && <Check />}
@@ -87,8 +87,8 @@ export const Owner = observer(({ ownerId, opportunityId }: OwnerProps) => {
               textSize='xxs'
               name={user?.name ?? 'Unnamed'}
               src={user?.value?.profilePhotoUrl ?? ''}
-              icon={<User01 className='text-gray-500 size-3' />}
-              className={'w-5 h-5 min-h-5 min-w-5 border border-gray-200'}
+              icon={<User01 className='text-grayModern-500 size-3' />}
+              className={'w-5 h-5 min-h-5 min-w-5 border border-grayModern-200'}
             />
           </PopoverTrigger>
 

@@ -80,7 +80,7 @@ const ServiceItem = observer(
               {formatCurrency(price ?? 0, currency || 'USD')}
               {getBilledTypeLabel(contractLineItem?.billingCycle as BilledType)}
               {isPaused && (
-                <PauseCircle className='ml-2 text-gray-500 size-4' />
+                <PauseCircle className='ml-2 text-grayModern-500 size-4' />
               )}
             </p>
           </div>

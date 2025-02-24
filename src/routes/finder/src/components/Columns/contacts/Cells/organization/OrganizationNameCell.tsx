@@ -46,7 +46,7 @@ export const OrganizationNameCell = observer(
 
     if (!org?.length && isEnriching) {
       return (
-        <p className='text-gray-400'>
+        <p className='text-grayModern-400'>
           {isEnriching ? 'Enriching...' : 'Not set'}
         </p>
       );
@@ -59,14 +59,14 @@ export const OrganizationNameCell = observer(
             <Link
               to={href}
               ref={linkRef}
-              className='inline text-gray-700 no-underline hover:no-underline font-normal cursor-pointer'
+              className='inline text-grayModern-700 no-underline hover:no-underline font-normal cursor-pointer'
             >
-              <span className='inline text-gray-700 no-underline hover:no-underline font-normal cursor-pointer'>
+              <span className='inline text-grayModern-700 no-underline hover:no-underline font-normal cursor-pointer'>
                 {contactStore?.value.primaryOrganizationName}
               </span>
             </Link>
           ) : (
-            <span className='text-gray-400'>None</span>
+            <span className='text-grayModern-400'>None</span>
           )}
         </span>
 

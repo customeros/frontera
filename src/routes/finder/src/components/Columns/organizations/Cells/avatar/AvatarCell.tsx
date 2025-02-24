@@ -39,7 +39,7 @@ export const AvatarCell = memo(
         <div
           onClick={handleNavigate}
           className={cn(
-            'w-6 h-6 flex items-center justify-center rounded border border-gray-200 cursor-pointer focus:outline-none',
+            'w-6 h-6 flex items-center justify-center rounded border border-grayModern-200 cursor-pointer focus:outline-none',
             {
               'animate-pulse': isEnriching,
             },
@@ -61,7 +61,7 @@ export const AvatarCell = memo(
           )}
 
           {(!src || status === 'error' || status === 'loading') && (
-            <Building06 className='w-4 h-4 text-gray-700' />
+            <Building06 className='w-4 h-4 text-grayModern-700' />
           )}
         </div>
       </div>

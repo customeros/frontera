@@ -32,15 +32,15 @@ export const OnboardingStatusChangedActionPreview = () => {
       <Card className='m-6 mt-3 p-4 shadow-xs'>
         <CardContent className='flex p-0 items-center'>
           <Flag04 className={iconClassName} />
-          <p className='max-w-[500px] line-clamp-2 ml-2 text-sm text-gray-700'>
+          <p className='max-w-[500px] line-clamp-2 ml-2 text-sm text-grayModern-700'>
             {event?.content}
           </p>
         </CardContent>
 
         {metadata?.comments && (
-          <CardFooter className='flex p-0 pt-3 mt-4 items-center border-t border-gray-200'>
-            <File02 color='gray.400' />
-            <p className='max-w-[500px] line-clamp-2 ml-2 text-sm text-gray-500'>
+          <CardFooter className='flex p-0 pt-3 mt-4 items-center border-t border-grayModern-200'>
+            <File02 color='grayModern.400' />
+            <p className='max-w-[500px] line-clamp-2 ml-2 text-sm text-grayModern-500'>
               {reasonForChange}
             </p>
           </CardFooter>

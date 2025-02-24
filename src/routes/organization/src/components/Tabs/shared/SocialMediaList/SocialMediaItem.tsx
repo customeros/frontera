@@ -66,7 +66,7 @@ export const SocialMediaItem = observer(
                           url={value}
                           className={cn(
                             openActionBar &&
-                              'border-[1px] border-gray-700 rounded-full ',
+                              'border-[1px] border-grayModern-700 rounded-full ',
                           )}
                         />
                       </div>
@@ -74,13 +74,13 @@ export const SocialMediaItem = observer(
                   </PopoverTrigger>
                   <PopoverContent
                     side='top'
-                    className='bg-gray-700 z-[99999999]'
+                    className='bg-grayModern-700 z-[99999999]'
                   >
                     <div className=' flex items-center text-white'>
                       <span className='mr-2 text-sm truncate w-[150px]'>
                         {formatSocialUrl(value)}
                       </span>
-                      <Divider className='bg-gray-500 w-3 rotate-90 h-[1px] border-0' />
+                      <Divider className='bg-grayModern-500 w-3 rotate-90 h-[1px] border-0' />
                       <div className='flex gap-2'>
                         <IconButton
                           size='xs'

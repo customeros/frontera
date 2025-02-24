@@ -61,7 +61,7 @@ export const UsersLinked = observer(
         </div>
 
         {tokens.length === 0 && (
-          <p className='text-gray-500 text-sm'>No accounts connected</p>
+          <p className='text-grayModern-500 text-sm'>No accounts connected</p>
         )}
 
         {tokens.map((token, idx) => {
@@ -84,7 +84,7 @@ export const UsersLinked = observer(
                 <Button
                   size='xxs'
                   variant='ghost'
-                  colorScheme='gray'
+                  colorScheme='grayModern'
                   leftIcon={<LinkBroken01 />}
                   className='opacity-0 group-hover:opacity-100'
                   onClick={() =>

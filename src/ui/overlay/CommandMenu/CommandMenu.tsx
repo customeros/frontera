@@ -44,13 +44,13 @@ export const CommandInput = ({
   return (
     <div
       className={cn(
-        'relative w-full p-6 pb-2 flex flex-col gap-2 border-b border-b-gray-100',
+        'relative w-full p-6 pb-2 flex flex-col gap-2 border-b border-b-grayModern-100',
         wrapperClassName,
       )}
     >
       {label ? (
         typeof label === 'string' ? (
-          <Tag size='md' variant='subtle' colorScheme='gray'>
+          <Tag size='md' variant='subtle' colorScheme='grayModern'>
             <TagLabel>{label}</TagLabel>
           </Tag>
         ) : (
@@ -147,7 +147,7 @@ export const CommandSubItem = ({
       className={cn(search.length <= 3 && 'hidden')}
       {...rest}
     >
-      <span className='text-gray-500'>{leftLabel}</span>
+      <span className='text-grayModern-500'>{leftLabel}</span>
       <ChevronRight className='mx-1' />
       <span className='overflow-hidden text-ellipsis whitespace-nowrap max-w-[250px]'>
         {rightLabel}
@@ -192,7 +192,7 @@ export const Kbd = ({ children, className, ...props }: KbdProps) => {
     <kbd
       {...props}
       className={cn(
-        'bg-gray-100 text-gray-700 size-5 flex items-center justify-center rounded-[4px] text-xs',
+        'bg-grayModern-100 text-grayModern-700 size-5 flex items-center justify-center rounded-[4px] text-xs',
         className,
       )}
     >
@@ -215,7 +215,7 @@ export const CommandKbd = ({
   return (
     <kbd
       className={cn(
-        'bg-gray-100 text-gray-700 flex p-1 py-0.5 items-center justify-center rounded-[4px] text-xs',
+        'bg-grayModern-100 text-grayModern-700 flex p-1 py-0.5 items-center justify-center rounded-[4px] text-xs',
         className,
       )}
     >

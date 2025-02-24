@@ -106,7 +106,7 @@ export const AddContactsBulk = observer(() => {
 
   return (
     <Command shouldFilter={false} label='Add contacts'>
-      <article className='relative w-full p-6 flex flex-col border-b border-b-gray-100 max-h-[580px]'>
+      <article className='relative w-full p-6 flex flex-col border-b border-b-grayModern-100 max-h-[580px]'>
         <div className='flex items-center justify-between mb-2'>
           <h1 className='text-base font-semibold'>
             Add one or many contacts via...
@@ -144,10 +144,14 @@ export const AddContactsBulk = observer(() => {
           </ButtonGroup>
         </div>
         <div
-          className={cn('mt-4 border border-gray-200 rounded max-h-[336px]', {
-            'border-warning-400': data.length > 0 && hasInvalidData.length,
-            'border-error-600': showEmptyError || tooManyLines || loadingError,
-          })}
+          className={cn(
+            'mt-4 border border-grayModern-200 rounded max-h-[336px]',
+            {
+              'border-warning-400': data.length > 0 && hasInvalidData.length,
+              'border-error-600':
+                showEmptyError || tooManyLines || loadingError,
+            },
+          )}
         >
           <BulkContactsEditor
             size='sm'

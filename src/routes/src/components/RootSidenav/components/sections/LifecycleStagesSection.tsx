@@ -90,8 +90,8 @@ export const LifecycleStagesSection = observer(
                       <Icon
                         name={iconNameMap?.[view.value.icon] ?? 'building-07'}
                         className={cn(
-                          'min-w-4 text-gray-500',
-                          isActive && 'text-gray-700',
+                          'min-w-4 text-grayModern-500',
+                          isActive && 'text-grayModern-700',
                         )}
                       />
                     )}
@@ -113,15 +113,15 @@ export const LifecycleStagesSection = observer(
                     <Icon
                       name={iconNameMap?.[view.value.icon] ?? 'building-07'}
                       className={cn(
-                        'min-w-4 text-gray-500',
-                        isActive && 'text-gray-700',
+                        'min-w-4 text-grayModern-500',
+                        isActive && 'text-grayModern-700',
                       )}
                     />
                   )}
                   rightElement={
                     noOfOrganizationsMovedByICP > 0 &&
                     view.value.tableId === TableIdType.Targets ? (
-                      <Tag size='sm' variant='solid' colorScheme='gray'>
+                      <Tag size='sm' variant='solid' colorScheme='grayModern'>
                         <TagLabel>{noOfOrganizationsMovedByICP}</TagLabel>
                       </Tag>
                     ) : null

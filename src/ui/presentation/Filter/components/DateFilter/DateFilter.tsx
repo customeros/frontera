@@ -86,7 +86,7 @@ export const DateFilter = ({
           size='xs'
           colorScheme='grayModern'
           onClick={() => setIsOpen(!isOpen)}
-          className='border-l-0 rounded-none text-gray-700 bg-white font-normal'
+          className='border-l-0 rounded-none text-grayModern-700 bg-white font-normal'
         >
           <span className=' max-w-[160px] text-ellipsis whitespace-nowrap overflow-hidden'>
             {selectedValue()}

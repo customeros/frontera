@@ -14,7 +14,7 @@ export const DomainsCell = observer(({ organizationId }: DomainCellProps) => {
 
   return (
     <div className='flex items-center cursor-pointer'>
-      <p className='text-gray-700  truncate'>
+      <p className='text-grayModern-700  truncate'>
         {domains?.length ? (
           <span className='truncate'>
             {domains.map((domain, index) => (
@@ -32,14 +32,14 @@ export const DomainsCell = observer(({ organizationId }: DomainCellProps) => {
           </span>
         ) : organization?.isEnriching ? (
           <span
-            className='text-gray-400'
+            className='text-grayModern-400'
             data-test='organization-website-in-all-orgs-table'
           >
             Enriching...
           </span>
         ) : (
           <span
-            className='text-gray-400'
+            className='text-grayModern-400'
             data-test='organization-website-in-all-orgs-table'
           >
             Not set

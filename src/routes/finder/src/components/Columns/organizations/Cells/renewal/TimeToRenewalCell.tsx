@@ -12,7 +12,7 @@ export const TimeToRenewalCell = ({
   if (!nextRenewalDate)
     return (
       <span
-        className='text-sm text-gray-400'
+        className='text-sm text-grayModern-400'
         data-test='organization-next-renewal-in-all-orgs-table'
       >
         No contract
@@ -22,7 +22,7 @@ export const TimeToRenewalCell = ({
   const parsedDate = toZonedTime(nextRenewalDate, 'UTC').toUTCString();
 
   return (
-    <span className='text-sm text-gray-700'>
+    <span className='text-sm text-grayModern-700'>
       {DateTimeUtils.format(parsedDate, DateTimeUtils.dateWithAbreviatedMonth)}
     </span>
   );

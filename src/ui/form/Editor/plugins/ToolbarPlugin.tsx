@@ -24,7 +24,8 @@ import { ListBulleted } from '@ui/media/icons/ListBulleted';
 import { ListNumbered } from '@ui/media/icons/ListNumbered';
 import { Strikethrough01 } from '@ui/media/icons/Strikethrough01';
 
-const activeStyle = 'bg-gray-100 text-gray-700 hover:bg-gray-100';
+const activeStyle =
+  'bg-grayModern-100 text-grayModern-700 hover:bg-grayModern-100';
 
 export default function ToolbarPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
@@ -186,7 +187,7 @@ export default function ToolbarPlugin(): JSX.Element {
         }}
       />
 
-      <div className='h-5 w-[1px] bg-gray-400 mx-1' />
+      <div className='h-5 w-[1px] bg-grayModern-400 mx-1' />
 
       <IconButton
         size='xs'
@@ -216,7 +217,7 @@ export default function ToolbarPlugin(): JSX.Element {
         }}
       />
 
-      <div className='h-5 w-[1px] bg-gray-400 mx-0.5' />
+      <div className='h-5 w-[1px] bg-grayModern-400 mx-0.5' />
 
       <IconButton
         size='xs'

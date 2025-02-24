@@ -136,7 +136,7 @@ export const ContactDetails = observer(
             isExpanded && isExpandble ? 'bg-white' : 'border-transparent',
             !isExpanded && isExpandble && 'cursor-pointer',
             isExpandble
-              ? 'px-2 pb-2.5 pt-0.5 group-hover/card:border-gray-200 group-hover/card:bg-white max-w-[600px] rounded-lg border bg-card text-card-foreground shadow'
+              ? 'px-2 pb-2.5 pt-0.5 group-hover/card:border-grayModern-200 group-hover/card:bg-white max-w-[600px] rounded-lg border bg-card text-card-foreground shadow'
               : 'p-4',
           )}
         >
@@ -164,7 +164,7 @@ export const ContactDetails = observer(
                     variant='outlineCircle'
                     name={contactStore?.value.name ?? ''}
                     className={cn(isEnriching && 'animate-pulse')}
-                    icon={<User03 className='text-gray-700 size-6' />}
+                    icon={<User03 className='text-grayModern-700 size-6' />}
                     src={
                       contactStore?.value?.profilePhotoUrl
                         ? contactStore.value.profilePhotoUrl
@@ -179,7 +179,7 @@ export const ContactDetails = observer(
                         <span
                           className={cn(
                             'cursor-default font-medium text-sm truncate max-w-[200px]',
-                            !contactStore.name && 'text-gray-400',
+                            !contactStore.name && 'text-grayModern-400',
                             !isExpanded && 'cursor-pointer',
                           )}
                         >
@@ -255,7 +255,7 @@ export const ContactDetails = observer(
                           <Spinner
                             size='sm'
                             label='finding email'
-                            className='text-gray-400 fill-gray-700 mr-2 group-hover/card:opacity-100 opacity-0'
+                            className='text-grayModern-400grayModernl-grayModern-700 mr-2 group-hover/card:opacity-100 opacity-0'
                           />
                         </Tooltip>
                       )}
@@ -283,7 +283,7 @@ export const ContactDetails = observer(
                     <p
                       className={cn(
                         'text-sm line-clamp-1 cursor-default',
-                        !findPrimaryJobRole?.jobTitle && 'text-gray-400',
+                        !findPrimaryJobRole?.jobTitle && 'text-grayModern-400',
                         !isExpanded && 'cursor-pointer',
                       )}
                     >
@@ -323,7 +323,7 @@ export const ContactDetails = observer(
               )}
               {!isExpandble && contactStore.value.primaryOrganizationName && (
                 <div className='flex items-center'>
-                  <Building07 className='text-gray-500' />
+                  <Building07 className='text-grayModern-500' />
                   <span className='text-sm  ml-4'>
                     {contactStore.value.primaryOrganizationName}
                   </span>
@@ -335,7 +335,7 @@ export const ContactDetails = observer(
               <EmailsSection contactId={id} />
 
               <div className='flex items-center max-h-6 group/linkedin'>
-                <Linkedin className='text-gray-500 mr-4' />
+                <Linkedin className='text-grayModern-500 mr-4' />
                 <div className='flex items-center w-full '>
                   {linkedInProfile ? (
                     <span
@@ -357,7 +357,7 @@ export const ContactDetails = observer(
                       data-test='org-people-linkedin'
                       className={cn(
                         'text-sm cursor-pointer max-w-[300px] truncate no-underline hover:no-underline',
-                        'text-gray-400',
+                        'text-grayModern-400',
                       )}
                     >
                       {'LinkedIn profile URL'}
@@ -368,10 +368,10 @@ export const ContactDetails = observer(
                       size='xxs'
                       variant='ghost'
                       title='Copy link'
-                      colorScheme='gray'
+                      colorScheme='grayModern'
                       aria-label='social link'
-                      icon={<Copy01 className='text-gray-500' />}
-                      className='hover:bg-gray-200 ml-2 opacity-0 group-hover/linkedin:opacity-100'
+                      icon={<Copy01 className='text-grayModern-500' />}
+                      className='hover:bg-grayModern-200 ml-2 opacity-0 group-hover/linkedin:opacity-100'
                       onClick={() =>
                         copyToClipboard(
                           contactStore.value.linkedInUrl || '',
@@ -392,7 +392,9 @@ export const ContactDetails = observer(
                 value={tagsUseCase.selectedTags}
                 inputValue={tagsUseCase.searchTerm}
                 setInputValue={tagsUseCase.setSearchTerm}
-                leftAccessory={<Tag01 className='mr-4 text-gray-500 size-4' />}
+                leftAccessory={
+                  <Tag01 className='mr-4 text-grayModern-500 size-4' />
+                }
                 onChange={(selected) => {
                   if (Array.isArray(selected)) {
                     if (!contactStore?.value) {

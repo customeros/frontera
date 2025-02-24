@@ -62,7 +62,7 @@ export const EmailActionNode = observer(
           <div className='truncate text-sm flex items-center'>
             <div
               className={cn(
-                `size-6 min-w-6 mr-2 bg-${color}-50 text-${color}-500 border border-gray-100 rounded flex items-center justify-center`,
+                `size-6 min-w-6 mr-2 bg-${color}-50 text-${color}-500 border border-grayModern-100 rounded flex items-center justify-center`,
                 {
                   'border-blue-100': color === 'blue',
                 },
@@ -76,7 +76,7 @@ export const EmailActionNode = observer(
               ) : parsedTemplate?.length > 0 ? (
                 parsedTemplate
               ) : (
-                <span className='text-gray-400 font-normal'>
+                <span className='text-grayModern-400 font-normal'>
                   Write an email that wows them
                 </span>
               )}

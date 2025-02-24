@@ -53,7 +53,7 @@ const THead = observer(
         <div
           style={{ paddingTop: py ?? '0', paddingBottom: py ?? '0' }}
           className={cn(
-            isActive ? 'border-gray-300 shadow-sm' : 'border-transparent',
+            isActive ? 'border-grayModern-300 shadow-sm' : 'border-transparent',
             (canSort && isActive) || isSorted ? 'ml-0' : 'ml-3',
             !canSort ? '' : 'group-hover:ml-0',
             'flex items-center border rounded-[4px] transition-opacity duration-200 ease-in-out pr-2',
@@ -67,7 +67,7 @@ const THead = observer(
                 onClick={onToggleSort}
                 className={cn(
                   isSorted || isActive ? 'w-3 ' : 'w-0 ',
-                  !isSorted ? 'text-gray-400' : 'text-gray-700',
+                  !isSorted ? 'text-grayModern-400' : 'text-grayModern-700',
                   'mx-1 w-3 h-3 cursor-pointer group-hover:transition-opacity group-hover:opacity-100 group-hover:w-3 group-hover:duration-200 group-hover:ease-in-out',
                 )}
               />
@@ -78,7 +78,7 @@ const THead = observer(
                 onClick={onToggleSort}
                 className={cn(
                   isSorted || isActive ? 'w-3 opacity-100' : 'w-0 opacity-0',
-                  !isSorted ? 'text-gray-400' : 'text-gray-700',
+                  !isSorted ? 'text-grayModern-400' : 'text-grayModern-700',
                   'mx-1 h-3 cursor-pointer group-hover:transition-opacity group-hover:opacity-100 group-hover:w-3 group-hover:duration-200 group-hover:ease-in-out',
                 )}
               />
@@ -93,13 +93,13 @@ const THead = observer(
               isSorted ? ' tracking-[-0.3px] ' : 'mt-0',
               canSort ? 'cursor-pointer' : 'cursor-default',
               !isSorted ? 'font-base' : 'font-medium',
-              'text-sm text-gray-700',
+              'text-sm text-grayModern-700',
             )}
           >
             {title}
           </p>
         </div>
-        {subTitle && <p className='text-xs text-gray-500'>{subTitle}</p>}
+        {subTitle && <p className='text-xs text-grayModern-500'>{subTitle}</p>}
       </div>
     );
   },

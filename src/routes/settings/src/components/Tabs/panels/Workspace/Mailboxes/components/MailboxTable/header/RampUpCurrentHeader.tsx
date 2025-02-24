@@ -11,7 +11,7 @@ export const RampUpCurrentHeader = () => {
         <span className='text-sm'>Current Limit (Max 40)</span>
         <InfoCircle
           onClick={onOpen}
-          className='size-3 text-gray-500 cursor-pointer hover:text-gray-700'
+          className='size-3 text-grayModern-500 cursor-pointer hover:text-grayModern-700'
         />
       </div>
 

@@ -65,14 +65,14 @@ export const OrganizationSidenav = observer(() => {
   if (!organization) return null;
 
   return (
-    <div className='px-2 pt-[6px] pb-4 h-full w-200 flex flex-col grid-area-sidebar bg-white relative border-r border-gray-200'>
+    <div className='px-2 pt-[6px] pb-4 h-full w-200 flex flex-col grid-area-sidebar bg-white relative border-r border-grayModern-200'>
       <div className='flex gap-2 items-center mb-4'>
         <IconButton
           size='xs'
           variant='ghost'
           aria-label='Go back'
           dataTest='org-side-nav-back'
-          icon={<ArrowNarrowLeft className=' text-gray-700 ' />}
+          icon={<ArrowNarrowLeft className=' text-grayModern-700 ' />}
           onClick={() => {
             navigate(`/${lastActivePosition?.root || 'finder'}`);
           }}
@@ -82,13 +82,13 @@ export const OrganizationSidenav = observer(() => {
           {parentOrgId && (
             <span
               onClick={() => navigate(`/organization/${parentOrgId}?tab=about`)}
-              className='text-xs text-gray-600 truncate no-underline cursor-pointer'
+              className='text-xs text-grayModern-600 truncate no-underline cursor-pointer'
             >
               {parentOrgName}
             </span>
           )}
           <Tooltip label={organization?.value?.name ?? ''}>
-            <span className='max-w-150px  font-semibold text-gray-700 truncate whitespace-nowrap '>
+            <span className='max-w-150px  font-semibold text-grayModern-700 truncate whitespace-nowrap '>
               {organization?.value?.name || 'Company'}
             </span>
           </Tooltip>

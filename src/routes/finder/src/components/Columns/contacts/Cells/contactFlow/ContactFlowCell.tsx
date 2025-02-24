@@ -49,7 +49,7 @@ export const ContactFlowCell = observer(
           )}
         >
           <div
-            className='text-gray-400'
+            className='text-grayModern-400'
             data-test={`contact-current-flows-in-contacts-table`}
           >
             None
@@ -96,13 +96,13 @@ export const ContactFlowCell = observer(
           <div ref={itemRef} className='flex overflow-hidden'>
             <div
               data-test='flow-name'
-              className='flex items-center overflow-x-hidden gap-2 overflow-ellipsis bg-gray-100 rounded-md px-1.5 truncate'
+              className='flex items-center overflow-x-hidden gap-2 overflow-ellipsis bg-grayModern-100 rounded-md px-1.5 truncate'
             >
               <span className='flex'>{status && icons?.[status]}</span>
               <div className='truncate'>{contactFlows?.[0]?.value.name}</div>
             </div>{' '}
             {!!contactFlows?.length && contactFlows.length > 1 && (
-              <div className='rounded-md w-fit px-1.5 ml-1 text-gray-500 '>
+              <div className='rounded-md w-fit px-1.5 ml-1 text-grayModern-500 '>
                 +{contactFlows?.length - 1}
               </div>
             )}

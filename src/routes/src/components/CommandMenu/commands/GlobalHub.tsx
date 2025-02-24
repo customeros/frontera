@@ -173,7 +173,7 @@ const KeyboardShortcut = ({ shortcut }: { shortcut: string }) => {
   return (
     <>
       <Kbd className='px-1.5'>G</Kbd>
-      <span className='text-gray-500 text-[12px]'>then</span>
+      <span className='text-grayModern-500 text-[12px]'>then</span>
       <Kbd className='px-1.5'>{shortcut}</Kbd>
     </>
   );

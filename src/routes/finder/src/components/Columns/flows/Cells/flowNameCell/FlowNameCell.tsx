@@ -68,7 +68,7 @@ export const FlowNameCell = observer(({ id }: FlowNameCellProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className='flex ' style={{ width: `calc(100% - 1rem)` }}>
-        {!isEdit && !flowName && <p className='text-gray-400'>Unnamed</p>}
+        {!isEdit && !flowName && <p className='text-grayModern-400'>Unnamed</p>}
         {!isEdit && flowName && (
           <TableCellTooltip
             hasArrow
@@ -118,7 +118,7 @@ export const FlowNameCell = observer(({ id }: FlowNameCellProps) => {
             aria-label='edit'
             className='ml-3 rounded-[5px]'
             onClick={() => setIsEdit(!isEdit)}
-            icon={<Edit03 className='text-gray-500' />}
+            icon={<Edit03 className='text-grayModern-500' />}
           />
         )}
       </div>

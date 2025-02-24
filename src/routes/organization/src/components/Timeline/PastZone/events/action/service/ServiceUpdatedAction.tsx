@@ -40,17 +40,17 @@ export const ServiceUpdatedAction = ({
       )}
     >
       {mode === 'removed' ? (
-        <XCircle className='mt-0.5 text-gray-500' />
+        <XCircle className='mt-0.5 text-grayModern-500' />
       ) : (
         <DotSingle
           className={cn('mt-0.5', {
             'text-primary-600': mode === 'created',
-            'text-gray-500': mode !== 'created',
+            'text-grayModern-500': mode !== 'created',
           })}
         />
       )}
 
-      <p className='max-w-[500px] line-clamp-2 ml-2 text-sm text-gray-700'>
+      <p className='max-w-[500px] line-clamp-2 ml-2 text-sm text-grayModern-700'>
         {formattedContent}
       </p>
     </div>

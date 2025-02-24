@@ -48,9 +48,9 @@ export const FlowBuilderToolbar = () => {
             disabled={!canZoomIn}
             onClick={handleZoomIn}
             data-test='flow-zoom-in'
-            className={`rounded-l-lg h-[36px] w-[36px] hover:bg-gray-50 focus:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`rounded-l-lg h-[36px] w-[36px] hover:bg-grayModern-50 focus:bg-grayModern-50 disabled:opacity-50 disabled:cursor-not-allowed`}
           >
-            <ZoomIn className='size-4 text-gray-500' />
+            <ZoomIn className='size-4 text-grayModern-500' />
           </ControlButton>
         </div>
       </Tooltip>
@@ -60,9 +60,9 @@ export const FlowBuilderToolbar = () => {
             disabled={!canZoomOut}
             onClick={handleZoomOut}
             data-test='flow-zoom-out'
-            className={`h-[36px] w-[36px] hover:bg-gray-50 focus:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`h-[36px] w-[36px] hover:bg-grayModern-50 focus:bg-grayModern-50 disabled:opacity-50 disabled:cursor-not-allowed`}
           >
-            <ZoomOut className='size-4 text-gray-500' />
+            <ZoomOut className='size-4 text-grayModern-500' />
           </ControlButton>
         </div>
       </Tooltip>
@@ -71,9 +71,9 @@ export const FlowBuilderToolbar = () => {
           <ControlButton
             onClick={handleFitView}
             data-test='flow-fit-to-view'
-            className='h-[36px] w-[36px] hover:bg-gray-50 focus:bg-gray-50'
+            className='h-[36px] w-[36px] hover:bg-grayModern-50 focus:bg-grayModern-50'
           >
-            <Maximize02 className='size-4 text-gray-500' />
+            <Maximize02 className='size-4 text-grayModern-500' />
           </ControlButton>
         </div>
       </Tooltip>
@@ -82,9 +82,9 @@ export const FlowBuilderToolbar = () => {
           <ControlButton
             onClick={organizeLayout}
             data-test='flow-tidy-up'
-            className='rounded-r-lg h-[36px] w-[36px] hover:bg-gray-50 focus:bg-gray-50'
+            className='rounded-r-lg h-[36px] w-[36px] hover:bg-grayModern-50 focus:bg-grayModern-50'
           >
-            <AlignHorizontalCentre02 className='size-4 text-gray-500' />
+            <AlignHorizontalCentre02 className='size-4 text-grayModern-500' />
           </ControlButton>
         </div>
       </Tooltip>

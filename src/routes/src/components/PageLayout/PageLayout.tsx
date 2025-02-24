@@ -79,7 +79,7 @@ export const PageLayout = ({
 
   return (
     <div
-      className='h-screen grid bg-gray-25 relative'
+      className='h-screen grid bg-grayModern-25 relative'
       style={{
         gridTemplateAreas: `"sidebar content"`,
         gridTemplateColumns: `${

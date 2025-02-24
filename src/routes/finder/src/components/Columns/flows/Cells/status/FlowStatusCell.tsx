@@ -68,8 +68,8 @@ export const FlowStatusCell = observer(
           onDoubleClick={() => setIsEditing(true)}
           data-test={`${dataTest}-text-in-flows-table`}
           className={cn(
-            'cursor-default text-gray-700',
-            !value && 'text-gray-400',
+            'cursor-default text-grayModern-700',
+            !value && 'text-grayModern-400',
           )}
         >
           {value?.label ?? 'No status'}
@@ -82,8 +82,8 @@ export const FlowStatusCell = observer(
               id='edit-button'
               aria-label='edit relationship'
               onClick={() => setIsEditing(true)}
-              icon={<Edit03 className='text-gray-500' />}
               dataTest={`${dataTest}-button-in-flows-table`}
+              icon={<Edit03 className='text-grayModern-500' />}
               className={cn(
                 'rounded-md opacity-0 group-hover/relationship:opacity-100 min-w-5',
                 isEditing && 'opacity-100',

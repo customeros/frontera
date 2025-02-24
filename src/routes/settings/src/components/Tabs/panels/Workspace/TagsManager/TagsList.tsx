@@ -136,7 +136,7 @@ export const TagList = observer(
       <div className='mb-6'>
         <div className='flex justify-between mb-2'>
           <div className='flex gap-2'>
-            <p className='text-sm font-medium text-gray-700 '>{`${title} tags`}</p>
+            <p className='text-sm font-medium text-grayModern-700 '>{`${title} tags`}</p>
             {tags.length > 0 && (
               <IconButton
                 size='xxs'
@@ -163,7 +163,7 @@ export const TagList = observer(
 
         {showNewTagInput === entityType && (
           <div
-            className='border border-gray-200 rounded-md mb-2 flex gap-2'
+            className='border border-grayModern-200 rounded-md mb-2 flex gap-2'
             onBlur={() => {
               if (newTag) {
                 handleNewTagSubmit(entityType);
@@ -205,12 +205,12 @@ export const TagList = observer(
         {!isCollapsed && (
           <>
             {tags.length === 0 ? (
-              <p className='text-sm text-gray-500'>No tags in sight</p>
+              <p className='text-sm text-grayModern-500'>No tags in sight</p>
             ) : (
               tags.map((tag) => (
                 <div
                   key={tag.value.metadata.id}
-                  className='py-1 max-h-[30px] mb-1 border rounded-md border-gray-200 flex justify-between items-center group bg-white'
+                  className='py-1 max-h-[30px] mb-1 border rounded-md border-grayModern-200 flex justify-between items-center group bg-white'
                 >
                   <TagColorPicker
                     colorCode={tag.value.colorCode}

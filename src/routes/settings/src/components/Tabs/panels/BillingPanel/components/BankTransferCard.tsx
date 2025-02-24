@@ -32,8 +32,8 @@ export const BankTransferCard = observer(
       <>
         <Card
           onMouseLeave={() => setHoverAccount(null)}
-          className='py-2 px-4 rounded-lg border-[1px] border-gray-200'
           onMouseEnter={() => setHoverAccount(account.value?.metadata?.id)}
+          className='py-2 px-4 rounded-lg border-[1px] border-grayModern-200'
         >
           <CardHeader className='p-0 pb-1 flex justify-between'>
             <BankNameInput account={account} />

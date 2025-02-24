@@ -78,12 +78,12 @@ export const General = () => {
   };
 
   return (
-    <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-gray-200 h-full'>
+    <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full'>
       <div className='flex flex-col gap-4'>
-        <p className='text-gray-700  font-semibold'>General</p>
+        <p className='text-grayModern-700  font-semibold'>General</p>
         <div className='flex flex-col'>
           <div className='flex justify-between items-center'>
-            <p className='text-sm text-gray-900 w-fit whitespace-nowrap font-semibold'>
+            <p className='text-sm text-grayModern-900 w-fit whitespace-nowrap font-semibold'>
               Workspace logo & name
             </p>
           </div>
@@ -102,8 +102,8 @@ export const General = () => {
             }}
           >
             {isDragging ? (
-              <div className='p-4 border border-dashed border-gray-300 rounded-lg text-center'>
-                <p className='text-sm text-gray-500'>
+              <div className='p-4 border border-dashed border-grayModern-300 rounded-lg text-center'>
+                <p className='text-sm text-grayModern-500'>
                   Drag and drop PNG or JPG (Max 150KB)
                 </p>
               </div>
@@ -129,8 +129,8 @@ export const General = () => {
                         uploadUrl: '',
                       }}
                       className={cn(
-                        outlineButton({ colorScheme: 'gray' }),
-                        'hover:bg-gray-100 p-1 rounded-md cursor-pointer text-gray-500',
+                        outlineButton({ colorScheme: 'grayModern' }),
+                        'hover:bg-grayModern-100 p-1 rounded-md cursor-pointergrayModernt-grayModern-500',
                         isLoading && 'opacity-50 pointer-events-none',
                       )}
                     >

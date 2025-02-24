@@ -17,13 +17,13 @@ export const Products = observer(() => {
   const hasProducts = store.skus.value.size > 0;
 
   return (
-    <div className='pt-2 max-w-[500px] border-r border-gray-200 h-full'>
+    <div className='pt-2 max-w-[500px] border-r border-grayModern-200 h-full'>
       <div className='flex flex-col gap-4 px-6 pb-4 '>
         <div>
           <div className='flex justify-between'>
             <p
               data-test='products-header'
-              className='text-gray-700  font-semibold'
+              className='text-grayModern-700  font-semibold'
             >
               Products
             </p>

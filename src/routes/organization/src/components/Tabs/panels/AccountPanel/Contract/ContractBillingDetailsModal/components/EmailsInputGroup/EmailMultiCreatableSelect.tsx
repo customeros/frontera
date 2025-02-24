@@ -79,7 +79,7 @@ export const EmailMultiCreatableSelect = forwardRef<
       const noEmail = rest?.data?.label && !rest?.data?.value && (
         <p>
           {rest.data.label} -
-          <span className='text-gray-500 ml-1'>
+          <span className='text-grayModern-500 ml-1'>
             [No email for this contact]
           </span>
         </p>
@@ -94,7 +94,7 @@ export const EmailMultiCreatableSelect = forwardRef<
               variant='ghost'
               aria-label='Copy'
               className='h-5 p-0 self-end float-end'
-              icon={<Copy01 className='size-3 text-gray-500' />}
+              icon={<Copy01 className='size-3 text-grayModern-500' />}
               onClick={(e) => {
                 e.stopPropagation();
                 copyToClipboard(rest.data.value, 'Email copied');

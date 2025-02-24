@@ -98,8 +98,8 @@ export const LogEntryPreviewModal = ({
                   size='xs'
                   variant='ghost'
                   aria-label='Copy link to this entry'
-                  className='text-sm text-gray-500 mr-1'
-                  icon={<Link01 className='text-gray-500' />}
+                  className='text-sm text-grayModern-500 mr-1'
+                  icon={<Link01 className='text-grayModern-500' />}
                   onClick={() => copy(window.location.href, 'Link copied')}
                 />
               </div>
@@ -114,12 +114,12 @@ export const LogEntryPreviewModal = ({
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  color='gray.500'
                   onClick={closeModal}
+                  color='grayModern.500'
                   aria-label='Close preview'
-                  className='text-sm text-gray-500'
+                  className='text-sm text-grayModern-500'
                   dataTest='timeline-popped-up-log-entry-close'
-                  icon={<XClose className='text-gray-500 size-5' />}
+                  icon={<XClose className='text-grayModern-500 size-5' />}
                 />
               </div>
             </Tooltip>

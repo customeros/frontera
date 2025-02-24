@@ -48,13 +48,13 @@ export const OnboardingCell = ({
       OnboardingStatus.Done,
       () => 'text-success-500',
     )
-    .with(OnboardingStatus.NotApplicable, () => 'text-gray-700')
+    .with(OnboardingStatus.NotApplicable, () => 'text-grayModern-700')
     .with(
       OnboardingStatus.Late,
       OnboardingStatus.Stuck,
       () => 'text-warning-500',
     )
-    .otherwise(() => 'gray.500');
+    .otherwise(() => 'grayModern.500');
 
   const label = labelMap[status];
 
@@ -68,8 +68,10 @@ export const OnboardingCell = ({
       </span>
       {timeElapsed && (
         <>
-          <span className='text-gray-500 text-xs leading-none mx-1'>•</span>
-          <span className='text-gray-500 text-xs leading-none'>
+          <span className='text-grayModern-500 text-xs leading-none mx-1'>
+            •
+          </span>
+          <span className='text-grayModern-500 text-xs leading-none'>
             {timeElapsed}
           </span>
         </>

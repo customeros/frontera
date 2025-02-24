@@ -34,10 +34,10 @@ export const GenericActionTypePreview = () => {
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  color='gray.500'
                   className='mr-1'
+                  color='grayModern.500'
                   aria-label='Copy link to this event'
-                  icon={<Link01 className='text-gray-500 size-4' />}
+                  icon={<Link01 className='text-grayModern-500 size-4' />}
                   onClick={() => copy(window.location.href, 'Link copied')}
                 />
               </div>
@@ -47,10 +47,10 @@ export const GenericActionTypePreview = () => {
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  color='gray.500'
                   onClick={closeModal}
+                  color='grayModern.500'
                   aria-label='Close preview'
-                  icon={<XClose className='text-gray-500 size-4' />}
+                  icon={<XClose className='text-grayModern-500 size-4' />}
                 />
               </div>
             </Tooltip>
@@ -79,7 +79,7 @@ export const GenericActionTypePreview = () => {
                     child.props?.node?.type === 'list'
                   ) {
                     return (
-                      <div key={index} className='text-gray-700'>
+                      <div key={index} className='text-grayModern-700'>
                         {child}
                       </div>
                     );
@@ -89,9 +89,11 @@ export const GenericActionTypePreview = () => {
                 });
               };
 
-              return <li className='text-gray-700'>{renderContent()}</li>;
+              return <li className='text-grayModern-700'>{renderContent()}</li>;
             },
-            p: ({ children }) => <p className='text-gray-700'>{children}</p>,
+            p: ({ children }) => (
+              <p className='text-grayModern-700'>{children}</p>
+            ),
             a: ({ children, href }) => (
               <a
                 target='_blank'

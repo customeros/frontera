@@ -23,10 +23,10 @@ export const EmptyTimeline = observer(
         <div className='flex flex-col items-center flex-1 max-h-[50%] bg-[url(/backgrounds/organization/dotted-bg-pattern.svg)] bg-no-repeat bg-contain bg-center'>
           <div className='flex flex-col items-center justify-center h-full max-w-[390px]'>
             <EmptyTimelineIllustration />
-            <h1 className='text-gray-900 text-lg font-semibold mt-3 mb-2'>
+            <h1 className='text-grayModern-900 text-lg font-semibold mt-3 mb-2'>
               {organization?.value?.name || 'Unknown'} has no events yet
             </h1>
-            <span className='text-gray-600 text-xs text-center'>
+            <span className='text-grayModern-600 text-xs text-center'>
               This organization’s events will show up here once a data source
               has been linked
             </span>

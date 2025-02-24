@@ -36,10 +36,10 @@ export const SharedTableActions = ({
         className='flex items-center translate-x-[-50%] justify-center bottom-[32px] *:border-none'
       >
         {selectCount && (
-          <div className='bg-gray-700 px-3 py-2 rounded-s-lg'>
+          <div className='bg-grayModern-700 px-3 py-2 rounded-s-lg'>
             <p
               onClick={clearSelection}
-              className='text-gray-25 text-sm font-semibold text-nowrap leading-5 outline-dashed outline-1 rounded-[2px] outline-gray-400 pl-2 pr-1 hover:bg-gray-800 transition-colors cursor-pointer'
+              className='text-grayModern-25 text-sm font-semibold text-nowrap leading-5 outline-dashed outline-1 rounded-[2px] ougrayModerne-grayModern-400 pl-2 prgrayModernover:bg-grayModern-800 transition-colors cursor-pointer'
             >
               {`${selectCount} selected`}
               <span className='ml-1'>
@@ -56,10 +56,10 @@ export const SharedTableActions = ({
           tooltip={
             <div className='flex gap-1'>
               <span className='text-sm'>Archive</span>
-              <div className='bg-gray-600  min-h-5 min-w-5 rounded flex justify-center items-center'>
+              <div className='bg-grayModern-600  min-h-5 min-w-5 rounded flex justify-center items-center'>
                 {isUserPlatformMac() ? '⌘' : 'Ctrl'}
               </div>
-              <div className='bg-gray-600  min-h-5 min-w-5 rounded flex justify-center items-center'>
+              <div className='bg-grayModern-600  min-h-5 min-w-5 rounded flex justify-center items-center'>
                 <Delete className='text-inherit' />
               </div>
             </div>

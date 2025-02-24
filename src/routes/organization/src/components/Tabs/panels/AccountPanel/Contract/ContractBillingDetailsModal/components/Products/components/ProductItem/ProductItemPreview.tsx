@@ -56,7 +56,7 @@ const billedTypeLabel: Record<
 };
 
 const deleteButtonClasses =
-  'border-none bg-transparent shadow-none text-gray-400 pr-3 pl-4 py-2 -mx-4 absolute -right-7 top-0 bottom-0 invisible group-hover:visible hover:bg-transparent';
+  'border-none bg-transparent shadow-none text-grayModern-400 pr-3 pl-4 py-2 -mx-4 absolute -right-7 top-0 bottom-0 invisible group-hover:visible hover:bg-transparent';
 
 export const ProductItemPreview: FC<ProductItemProps> = observer(
   ({
@@ -89,10 +89,10 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
       <>
         <div
           className={cn(
-            'flex justify-between group text-gray-700 relative items-center',
+            'flex justify-between group text-grayModern-700 relative items-center',
             {
-              'text-gray-400': isEnded,
-              'line-through text-gray-400 hover:text-gray-400':
+              'text-grayModern-400': isEnded,
+              'line-through text-grayModern-400 hovergrayModernt-grayModern-400':
                 service.tempValue.closed,
             },
           )}
@@ -167,7 +167,7 @@ export const ProductItemPreview: FC<ProductItemProps> = observer(
 
             {service.tempValue.paused && (
               <Tooltip label={'This service will be invoiced when resumed'}>
-                <PauseCircle className='text-gray-500 size-4 ml-2' />
+                <PauseCircle className='text-grayModern-500 size-4 ml-2' />
               </Tooltip>
             )}
           </div>

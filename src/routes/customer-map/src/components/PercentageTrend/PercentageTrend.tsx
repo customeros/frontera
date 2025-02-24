@@ -25,7 +25,7 @@ export const PercentageTrend = ({ percentage }: { percentage: string }) => {
 
   const icon =
     percentage.indexOf('0') == 0 ? (
-      <Minus className='size-5 text-gray-700' />
+      <Minus className='size-5 text-grayModern-700' />
     ) : percentage.indexOf('-') == 0 ? (
       <TrendDown01 className='size-5 text-warning-500' />
     ) : (
@@ -34,7 +34,7 @@ export const PercentageTrend = ({ percentage }: { percentage: string }) => {
 
   const color =
     percentage.indexOf('0') == 0
-      ? 'text-gray-700'
+      ? 'text-grayModern-700'
       : percentage.indexOf('-') == 0
       ? 'text-yellow-600'
       : 'text-succes-600';

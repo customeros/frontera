@@ -15,10 +15,10 @@ import { MessageXCircle } from '@ui/media/icons/MessageXCircle';
 import { Command, CommandItem, CommandInput } from '@ui/overlay/CommandMenu';
 import { relationshipOptions } from '@organization/components/Tabs/panels/AboutPanel/util';
 const iconMap = {
-  Customer: <ActivityHeart className='text-gray-500' />,
-  Prospect: <Seeding className='text-gray-500' />,
-  'Not a fit': <MessageXCircle className='text-gray-500' />,
-  'Former Customer': <BrokenHeart className='text-gray-500' />,
+  Customer: <ActivityHeart className='text-grayModern-500' />,
+  Prospect: <Seeding className='text-grayModern-500' />,
+  'Not a fit': <MessageXCircle className='text-grayModern-500' />,
+  'Former Customer': <BrokenHeart className='text-grayModern-500' />,
 };
 
 export const ChangeRelationship = observer(() => {

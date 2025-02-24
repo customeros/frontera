@@ -44,7 +44,7 @@ export const CompanyLogo = observer(
               fileKeyName: 'file',
               uploadUrl: '',
             }}
-            className='cursor-pointer hover:bg-gray-100 rounded-md leading-none p-0.5 transition-colors group'
+            className='cursor-pointer hover:bg-grayModern-100 rounded-md leading-none p-0.5 transition-colors group'
           >
             <label
               className='cursor-pointer'
@@ -70,8 +70,8 @@ export const CompanyLogo = observer(
           }}
         >
           {isDragging ? (
-            <div className='p-4 border border-dashed border-gray-300 rounded-lg text-center'>
-              <p className='text-sm text-gray-500'>
+            <div className='p-4 border border-dashed border-grayModern-300 rounded-lg text-center'>
+              <p className='text-sm text-grayModern-500'>
                 Drag and drop PNG or JPG (Max 150KB)
               </p>
             </div>

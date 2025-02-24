@@ -140,9 +140,9 @@ export const KanbanColumn = observer(
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         data-test={`kanban-column-${column?.name}`}
-        className='flex flex-col flex-shrink-0 w-72 bg-gray-100 rounded h-full'
+        className='flex flex-col flex-shrink-0 w-72 bg-grayModern-100 rounded h-full'
       >
-        <div className='flex items-center justify-between p-3 pb-0 bg-gray-100 rounded-t-[4px]'>
+        <div className='flex items-center justify-between p-3 pb-0 bg-grayModern-100 rounded-t-[4px]'>
           <div className='flex flex-col items-center mb-2 w-full'>
             <div className='flex justify-between w-full'>
               <Tooltip
@@ -204,7 +204,7 @@ export const KanbanColumn = observer(
             </div>
             <span
               data-test={`card-sum-length-${column?.name}`}
-              className={cn('w-full text-sm font-medium text-gray-500')}
+              className={cn('w-full text-sm font-medium text-grayModern-500')}
             >
               {`${totalSum} • ${cards.length}`}
             </span>
@@ -236,7 +236,7 @@ export const KanbanColumn = observer(
               ref={dropProvided.innerRef}
               data-test={`kanban-column-${column?.name}-cards`}
               className={cn('flex flex-col pb-2 p-3 overflow-auto', {
-                'bg-gray-100': dropSnapshot?.isDraggingOver,
+                'bg-grayModern-100': dropSnapshot?.isDraggingOver,
               })}
               {...dropProvided.droppableProps}
               style={{ height: 'calc(100% - 40px)' }}

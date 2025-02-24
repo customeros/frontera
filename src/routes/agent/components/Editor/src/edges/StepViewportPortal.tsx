@@ -27,7 +27,7 @@ export const StepViewportPortal = observer(
         {showStepDropdownMenu && (
           <ViewportPortal>
             <div
-              className='border border-gray-200 rounded-lg shadow-lg cursor-default'
+              className='border border-grayModern-200 rounded-lg shadow-lg cursor-default'
               style={{
                 transform: `translate(calc(${positionAbsoluteX}px - 50%), ${
                   positionAbsoluteY + 24 // 24 is desired spacing between dropdown and button

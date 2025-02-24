@@ -74,9 +74,9 @@ const AccountPanelComponent = observer(() => {
               <IconButton
                 size='xs'
                 variant='ghost'
-                className='text-gray-500 mr-1'
                 onClick={() => handleCreate()}
                 aria-label='Create new contract'
+                className='text-grayModern-500 mr-1'
                 isLoading={store.contracts.isLoading}
                 isDisabled={store.contracts.isLoading}
                 dataTest='org-account-nonempty-new-contract'
@@ -85,7 +85,7 @@ const AccountPanelComponent = observer(() => {
                     <Spinner
                       size='sm'
                       label='Creating contract...'
-                      className='text-gray-500 fill-gray-700'
+                      className='text-grayModern-500grayModernl-grayModern-700'
                     />
                   ) : (
                     <Plus />

@@ -117,7 +117,7 @@ export const IntegrationsPanel = observer(() => {
 
   return (
     <>
-      <div className='flex h-[calc(100vh-1rem)] max-w-[600px] bg-gray-25 rounded-2xl flex-col max-h-[calc(100vh - 1rem)] relative'>
+      <div className='flex h-[calc(100vh-1rem)] max-w-[600px] bg-grayModern-25 rounded-2xl flex-col max-h-[calc(100vh - 1rem)] relative'>
         <div className='pb-1 pt-2  px-6'>
           <h1 className='font-semibold'>Data Integrations</h1>
           <Input
@@ -148,7 +148,7 @@ export const IntegrationsPanel = observer(() => {
           })}
 
           {!mixedActiveIntegrations.length && (
-            <p className='text-gray-400 mt-1 mb-3'>
+            <p className='text-grayModern-400 mt-1 mb-3'>
               There are no active integrations
             </p>
           )}

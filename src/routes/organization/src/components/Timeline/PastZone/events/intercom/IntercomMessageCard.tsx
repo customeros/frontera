@@ -37,7 +37,7 @@ export const IntercomMessageCard = ({
         className={cn(
           className,
           onClick ? 'cursor-pointer' : '',
-          'text-sm flex shadow-none border border-gray-200 bg-white hover:shadow-sm [intercom-stub-date]:hover:text-gray-500 max-w-[549px]',
+          'text-sm flex shadow-none border border-grayModern-200 bg-white hover:shadow-sm [intercom-stub-date]:hover:text-grayModern-500 max-w-[549px]',
         )}
       >
         <CardContent className='p-3 overflow-hidden w-full'>
@@ -48,7 +48,7 @@ export const IntercomMessageCard = ({
               textSize='sm'
               variant='outlineSquare'
               src={profilePhotoUrl || undefined}
-              icon={<User01 className='text-gray-700 size-7' />}
+              icon={<User01 className='text-grayModern-700 size-7' />}
             />
             <div
               className={cn(
@@ -58,10 +58,10 @@ export const IntercomMessageCard = ({
             >
               <div className='flex justify-between flex-1'>
                 <div className='flex items-baseline'>
-                  <p className='text-gray-700 font-semibold'>{name}</p>
+                  <p className='text-grayModern-700 font-semibold'>{name}</p>
                   <p
                     className={cn(
-                      showDateOnHover ? 'transparent' : 'text-gray-500',
+                      showDateOnHover ? 'transparent' : 'text-grayModern-500',
                       'ml-2 text-xs intercom-stub-date',
                     )}
                   >

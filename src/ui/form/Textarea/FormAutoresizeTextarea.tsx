@@ -27,7 +27,7 @@ export const FormAutoresizeTextarea = forwardRef<
       <label
         {...labelProps}
         htmlFor={props.name}
-        className='mb-1 text-gray-700 font-semibold text-sm'
+        className='mb-1 text-grayModern-700 font-semibold text-sm'
       >
         {label}
       </label>

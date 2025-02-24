@@ -24,7 +24,7 @@
 }
 
 .react-calendar__month-view__weekdays__weekday abbr {
-  @apply text-gray-700 mb-2 no-underline text-sm;
+  @apply text-grayModern-700 mb-2 no-underline text-sm;
 }
 
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
@@ -32,7 +32,7 @@
 }
 
 .react-calendar__month-view__days__day--neighboringMonth abbr {
-  @apply text-gray-400;
+  @apply text-grayModern-400;
 }
 
 .react-calendar__tile {
@@ -44,7 +44,7 @@
 }
 
 .react-calendar__tile:enabled:focus {
-  @apply ring-[1.5px] ring-gray-700 ring-offset-2 ring-offset-white;
+  @apply ring-[1.5px] ring-grayModern-700 ring-offset-2 ring-offset-white;
   border: 1px solid #344054 !important;
 }
 
@@ -57,20 +57,20 @@
 // }
 
 .react-calendar__tile--active {
-  @apply bg-gray-700 text-white;
+  @apply bg-grayModern-700 text-white;
 
   &.react-calendar__tile--now {
-    @apply bg-gray-700 text-white;
+    @apply bg-grayModern-700 text-white;
     border: 1px transparent solid;
   }
 }
 
 .react-calendar__tile--active {
-  @apply bg-gray-700 text-white;
+  @apply bg-grayModern-700 text-white;
 }
 
 .react-calendar__tile--now {
-  @apply text-gray-700;
+  @apply text-grayModern-700;
   position: relative;
   border: 1px transparent solid;
 
@@ -92,7 +92,7 @@
 }
 
 .react-calendar__tile--active:enabled:focus {
-  @apply ring-offset-2 ring-offset-white ring-[1.5px] ring-gray-700 bg-gray-700;
+  @apply ring-offset-2 ring-offset-white ring-[1.5px] ring-grayModern-700 bg-grayModern-700;
   border: 1px transparent solid;
   &::after {
     content: '';
@@ -107,7 +107,7 @@
   }
 }
 .react-calendar__tile--active:enabled:hover {
-  @apply bg-gray-700 text-white;
+  @apply bg-grayModern-700 text-white;
   border: 1px transparent solid;
 
   &::after {
@@ -124,7 +124,7 @@
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
-  @apply bg-gray-300;
+  @apply bg-grayModern-300;
 }
 
 .react-calendar__year-view__months {
@@ -149,12 +149,12 @@
   @apply rounded-lg;
 }
 .react-calendar__tile.react-calendar__year-view__months__month:enabled:focus {
-  @apply ring-offset-2 ring-offset-white ring-[1.5px] ring-gray-700 bg-gray-700 text-white;
+  @apply ring-offset-2 ring-offset-white ring-[1.5px] ring-grayModern-700 bg-grayModern-700 text-white;
   border: 1px transparent solid;
 }
 
 .react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__year-view__months__month {
-  @apply bg-gray-700 text-white;
+  @apply bg-grayModern-700 text-white;
 }
 
 .react-calendar__decade-view__years {
@@ -179,7 +179,7 @@
 }
 
 .react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__decade-view__years__year {
-  @apply bg-gray-700 text-white;
+  @apply bg-grayModern-700 text-white;
 }
 .react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__decade-view__years__year:enabled:hover {
   @apply rounded-lg;

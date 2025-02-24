@@ -11,18 +11,18 @@ export function InvoiceSkeleton() {
           <h1 className='text-3xl font-bold'>Invoice</h1>
         </div>
 
-        <div className='flex items-center text-gray-500 text-sm'>
+        <div className='flex items-center text-grayModern-500 text-sm'>
           N° <Skeleton className='w-[60px] h-3 ml-1' />
         </div>
 
-        <div className='flex mt-1 justify-evenly gap-3 border-t border-b border-gray-300'>
-          <div className='flex flex-col flex-1 min-w-[150px] py-2 border-r border-gray-300 ml-2'>
+        <div className='flex mt-1 justify-evenly gap-3 border-t border-b border-grayModern-300'>
+          <div className='flex flex-col flex-1 min-w-[150px] py-2 border-r border-grayModern-300 ml-2'>
             <span className='font-semibold mb-2 text-sm'>Issued</span>
             <Skeleton className='w-[70px] h-3' />
             <span className='font-semibold mt-5 mb-2 text-sm'>Due</span>
             <Skeleton className='w-[70px] h-3' />
           </div>
-          <div className='flex flex-col flex-1 min-w-[150px] py-2 border-gray-300 relative'>
+          <div className='flex flex-col flex-1 min-w-[150px] py-2 border-grayModern-300 relative'>
             <span className='font-semibold mb-2 text-sm'>Billed to</span>
             <Skeleton className='w-[90px] h-3 mb-2' />
             <Skeleton className='w-[110px] h-3 mb-1' />
@@ -75,12 +75,12 @@ export function InvoiceSkeleton() {
             <span className='text-sm font-medium'>Total</span>
             <Skeleton className='w-5 h-3' />
           </div>
-          <Divider className='my-1 border-gray-500' />
+          <Divider className='my-1 border-grayModern-500' />
           <div className='flex justify-between items-center'>
             <span className='text-sm font-semibold'>Amount due</span>
             <Skeleton className='w-5 h-3' />
           </div>
-          <Divider className='my-1 border-gray-500' />
+          <Divider className='my-1 border-grayModern-500' />
         </div>
       </div>
     </div>

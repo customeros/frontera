@@ -33,7 +33,7 @@ const defaultButtonGroup = `
   [&>*:not(.selected)]:border-r
   [&>*:not(.selected)]:border-grayModern-300
   [&>*:not(.selected)]:bg-grayModern-50
-  [&>*:not(.selected)]:text-gray-500
+  [&>*:not(.selected)]:text-grayModern-500
   [&>*:not(.selected)]:font-normal
   [&>*:not(.selected):has(+.selected)]:border-r-0
   [&>*:not(:last-child):not(:first-child)]:rounded-none

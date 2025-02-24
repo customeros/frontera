@@ -3,7 +3,7 @@
 }
 
 [cmdk-input] {
-  @apply border-none outline-none bg-transparent leading-6 w-full border-b border-b-gray-100 caret-primary-500 placeholder:text-gray-400;
+  @apply border-none outline-none bg-transparent leading-6 w-full border-b border-b-grayModern-100 caret-primary-500 placeholder:text-grayModern-400;
 }
 
 [cmdk-list] {
@@ -18,7 +18,7 @@
   @apply flex ml-auto gap-2;
 
   kbd {
-    @apply text-xs text-gray-700;
+    @apply text-xs text-grayModern-700;
   }
 }
 
@@ -27,22 +27,22 @@
   @apply p-2 px-[14px] h-8 w-full text-sm flex rounded-md items-center gap-2 select-none cursor-pointer transition-all;
 
   svg {
-    @apply text-gray-500;
+    @apply text-grayModern-500;
   }
   &[data-selected='true'] {
     @apply bg-grayModern-100;
 
     svg {
-      @apply text-gray-700;
+      @apply text-grayModern-700;
     }
   }
 
   &[data-disabled='true'] {
-    @apply text-gray-300 transition-colors cursor-not-allowed;
+    @apply text-grayModern-300 transition-colors cursor-not-allowed;
   }
 
   &:active {
-    @apply transition-colors bg-gray-200;
+    @apply transition-colors bg-grayModern-200;
   }
 
   & + [cmdk-item] {
@@ -51,9 +51,9 @@
 }
 
 [cmdk-group-heading] {
-  @apply pt-4 pb-2 px-4 h-8 w-full text-sm flex items-center gap-2 select-none cursor-pointer transition-all ml-[-2px] text-gray-500;
+  @apply pt-4 pb-2 px-4 h-8 w-full text-sm flex items-center gap-2 select-none cursor-pointer transition-all ml-[-2px] text-grayModern-500;
 }
 
 [cmdk-empty] {
-  @apply flex  text-gray-400;
+  @apply flex  text-grayModern-400;
 }

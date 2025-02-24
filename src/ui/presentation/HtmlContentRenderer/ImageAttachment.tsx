@@ -8,8 +8,8 @@ export const ImageAttachment = (props: ImgHTMLAttributes<HTMLImageElement>) => {
   if (hasError) {
     return (
       <div className='flex items-center gap-1'>
-        <FileX03 color='gray.500' />
-        <span className='text-gray-500'>Attachment missing</span>
+        <FileX03 color='grayModern.500' />
+        <span className='text-grayModern-500'>Attachment missing</span>
       </div>
     );
   }

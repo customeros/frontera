@@ -28,7 +28,7 @@ export const JobTitleCell = observer(({ contactId }: JobTitleCellProps) => {
     <div ref={ref} className='flex justify-between gap-2 group/jobTitle'>
       <div className='flex gap-2 truncate'>
         {!findPrimaryJobRole?.jobTitle && (
-          <p className='text-gray-400'>
+          <p className='text-grayModern-400'>
             {enrichingStatus ? 'Enriching...' : 'Not set'}
           </p>
         )}

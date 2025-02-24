@@ -16,13 +16,15 @@ export const ViewInExternalAppButton: FC<{
       <IconButton
         size='xxs'
         isDisabled={!url}
-        colorScheme='gray'
+        colorScheme='grayModern'
         aria-label='View in slack'
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         variant={hovered ? 'ghost' : 'outline'}
-        className='absolute right-0 border-gray-200 shadow-none'
-        icon={hovered ? <LinkExternal02 className='text-gray-500' /> : icon}
+        className='absolute right-0 border-grayModern-200 shadow-none'
+        icon={
+          hovered ? <LinkExternal02 className='text-grayModern-500' /> : icon
+        }
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();

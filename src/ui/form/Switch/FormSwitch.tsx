@@ -54,7 +54,7 @@ export const FormSwitch = forwardRef(
           <label
             {...labelProps}
             className={cn(
-              props.isDisabled ? 'text-gray-500' : 'text-gray-700',
+              props.isDisabled ? 'text-grayModern-500' : 'text-grayModern-700',
               'text-base',
             )}
           >

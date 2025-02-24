@@ -55,7 +55,7 @@ export const EditableSideNavItem = observer(
         className={cn(
           buttonSize({ size: 'sm' }),
           (ghostButton({ colorScheme: 'grayModern' }),
-          `flex w-full justify-start items-center gap-2 px-3 text-gray-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-gray-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md ${dynamicClasses}`),
+          `flex w-full justify-start items-center gap-2 px-3 text-grayModern-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-grayModern-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md ${dynamicClasses}`),
         )}
       >
         <div className='mt-[-1px]'>
@@ -78,7 +78,7 @@ export const EditableSideNavItem = observer(
           )}
         >
           <Menu open={isEditing} onOpenChange={setIsEditing}>
-            <MenuButton className='min-w-6 h-5 rounded-md outline-none focus:outline-none text-gray-400 hover:text-gray-500 flex items-center'>
+            <MenuButton className='min-w-6 h-5 rounded-md outline-none focus:outline-none text-grayModern-400 hovergrayModernt-grayModern-500 flex items-center'>
               <Icon name='dots-vertical' className='text-inherit' />
             </MenuButton>
 
@@ -99,7 +99,7 @@ export const EditableSideNavItem = observer(
                   }, 1);
                 }}
               >
-                <TextInput className='text-gray-500' />
+                <TextInput className='text-grayModern-500' />
                 Rename
               </MenuItem>
               <MenuItem
@@ -115,7 +115,7 @@ export const EditableSideNavItem = observer(
                   setIsEditing(false);
                 }}
               >
-                <Icon name='layers-two-01' className='text-gray-500' />
+                <Icon name='layers-two-01' className='text-grayModern-500' />
                 Save as...
               </MenuItem>
               <MenuItem
@@ -131,7 +131,7 @@ export const EditableSideNavItem = observer(
                   store.ui.commandMenu.setOpen(true);
                 }}
               >
-                <Icon name='archive' className='text-gray-500' />
+                <Icon name='archive' className='text-grayModern-500' />
                 Archive view
               </MenuItem>
             </MenuList>

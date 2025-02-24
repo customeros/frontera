@@ -28,7 +28,7 @@ export const InvoiceSummary: FC<InvoiceSummaryProps> = ({
       <div className='flex justify-between'>
         <span className='text-sm items-center font-medium'>Subtotal</span>
         <span
-          className={cn('text-sm ml-2 span-gray-600', {
+          className={cn('text-sm ml-2 span-grayModern-600', {
             'filter-none': !shouldBlurDummy,
             'blur-[2px]': shouldBlurDummy,
           })}
@@ -36,12 +36,12 @@ export const InvoiceSummary: FC<InvoiceSummaryProps> = ({
           {formatCurrency(subtotal, 2, currency)}
         </span>
       </div>
-      <Divider className='my-1 border-gray-300' />
+      <Divider className='my-1 border-grayModern-300' />
 
       <div className='flex justify-between'>
         <span className='text-sm'>Tax</span>
         <span
-          className={cn('text-sm ml-2 span-gray-600', {
+          className={cn('text-sm ml-2 span-grayModern-600', {
             'filter-none': !shouldBlurDummy,
             'blur-[2px]': shouldBlurDummy,
           })}
@@ -49,12 +49,12 @@ export const InvoiceSummary: FC<InvoiceSummaryProps> = ({
           {formatCurrency(tax, 2, currency)}
         </span>
       </div>
-      <Divider className='my-1 border-gray-300' />
+      <Divider className='my-1 border-grayModern-300' />
 
       <div className='flex justify-between'>
         <span className='text-sm font-medium'>Total</span>
         <span
-          className={cn('text-sm ml-2 text-gray-600', {
+          className={cn('text-sm ml-2 text-grayModern-600', {
             'filter-none': !shouldBlurDummy,
             'blur-[2px]': shouldBlurDummy,
           })}
@@ -62,7 +62,7 @@ export const InvoiceSummary: FC<InvoiceSummaryProps> = ({
           {formatCurrency(total, 2, currency)}
         </span>
       </div>
-      <Divider className='my-1 border-gray-500' />
+      <Divider className='my-1 border-grayModern-500' />
 
       <div className='flex justify-between'>
         <span className='text-sm font-medium'>Amount due</span>
@@ -75,12 +75,12 @@ export const InvoiceSummary: FC<InvoiceSummaryProps> = ({
           {formatCurrency(amountDue || total, 2, currency)}
         </span>
       </div>
-      <Divider className='my-1 border-gray-500' />
+      <Divider className='my-1 border-grayModern-500' />
 
       {note && (
         <div>
           <span className='text-sm font-medium'>Note:</span>
-          <span className='text-sm ml-2 text-gray-500'>{note}</span>
+          <span className='text-sm ml-2 text-grayModern-500'>{note}</span>
         </div>
       )}
     </div>

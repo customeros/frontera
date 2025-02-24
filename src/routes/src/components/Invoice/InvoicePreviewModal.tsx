@@ -41,7 +41,7 @@ export const InvoicePreviewModalContent = ({
           <FileX02 className='size-7' />
         </FeaturedIcon>
         <h2 className='text-md mt-4 mb-1'>Preview not available</h2>
-        <span className='text-center text-sm text-gray-500'>
+        <span className='text-center text-sm text-grayModern-500'>
           Sorry, selected invoice cannot be previewed at this moment
         </span>
       </div>

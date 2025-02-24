@@ -49,7 +49,7 @@ export const SlackMessageCard = ({
         className={cn(
           className,
           onClick ? 'cursor-pointer' : '',
-          'max-w-[549px] text-sm bg-white flex shadow-none border border-gray-200 [slack-stub-date]:hover:text-gray-500 hover:shadow-sm transition-all duration-200 ease-out',
+          'max-w-[549px] text-sm bg-white flex shadow-none border border-grayModern-200 [slack-stub-date]:hover:text-grayModern-500 hover:shadow-sm transition-all duration-200 ease-out',
         )}
       >
         <CardContent className='p-3 overflow-hidden w-full'>
@@ -60,15 +60,15 @@ export const SlackMessageCard = ({
               textSize='sm'
               variant='outlineSquare'
               src={profilePhotoUrl || undefined}
-              icon={<User01 className='text-gray-700 size-7' />}
+              icon={<User01 className='text-grayModern-700 size-7' />}
             />
             <div className='flex flex-col flex-1 relative'>
               <div className='flex justify-between flex-1'>
                 <div className='flex items-center'>
-                  <p className='text-gray-700 font-semibold'>{name}</p>
+                  <p className='text-grayModern-700 font-semibold'>{name}</p>
                   <p
                     className={cn(
-                      showDateOnHover ? 'transparent' : 'text-gray-500',
+                      showDateOnHover ? 'transparent' : 'text-grayModern-500',
                       'ml-2 text-xs slack-stub-date',
                     )}
                   >

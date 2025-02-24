@@ -14,7 +14,7 @@ export const HelpButton = ({ isOpen, onOpen }: HelpButtonProps) => {
       variant='ghost'
       onClick={onOpen}
       aria-label='Help'
-      icon={<HelpCircle className='text-gray-500' />}
+      icon={<HelpCircle className='text-grayModern-500' />}
       className={cn(
         isOpen ? 'opacity-100' : 'opacity-0  group-hover:opacity-100',
       )}

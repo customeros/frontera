@@ -30,7 +30,7 @@ interface InvoiceStubMetadata {
 }
 
 const iconMap: Record<string, JSX.Element> = {
-  [ActionType.InvoiceVoided]: <SlashCircle01 className='text-gray-500' />,
+  [ActionType.InvoiceVoided]: <SlashCircle01 className='text-grayModern-500' />,
   [ActionType.InvoicePaid]: <FileCheck02 className='text-success-600' />,
   [ActionType.InvoiceSent]: <FileAttachment02 className='text-primary-600' />,
   [ActionType.InvoiceIssued]: <File02 className='text-primary-600' />,
@@ -65,7 +65,7 @@ const InvoiceStatusChangeAction = ({
       })}
     >
       {iconMap[mode]}
-      <p className='my-1 max-w-[500px] ml-2 text-sm text-gray-700 '>
+      <p className='my-1 max-w-[500px] ml-2 text-sm text-grayModern-700 '>
         {formattedContent}
       </p>
     </div>

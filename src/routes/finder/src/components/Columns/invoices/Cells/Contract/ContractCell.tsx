@@ -28,7 +28,7 @@ export const ContractCell = observer(
           <Link
             ref={itemRef}
             to={`/organization/${organizationId}?tab=account`}
-            className='font-medium line-clamp-1 text-gray-700 no-underline hover:no-underline hover:text-gray-900 transition-colors'
+            className='font-medium line-clamp-1 text-grayModern-700 no-underline hover:no-underline hover:text-grayModern-900 transition-colors'
           >
             {name}
           </Link>
@@ -41,7 +41,7 @@ export const ContractCell = observer(
             label='The company linked to this contract does not exist'
           >
             <div>
-              <span className='text-gray-700 font-medium cursor-pointer'>
+              <span className='text-grayModern-700 font-medium cursor-pointer'>
                 {name}
               </span>
             </div>

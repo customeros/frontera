@@ -79,7 +79,7 @@ export const SettingsIntegrationItem = ({
                 <Button
                   size='xs'
                   variant='outline'
-                  colorScheme='gray'
+                  colorScheme='grayModern'
                   onClick={() => {
                     if (onDisable) {
                       onDisable();
@@ -96,7 +96,7 @@ export const SettingsIntegrationItem = ({
                 <Button
                   size='xs'
                   variant='outline'
-                  colorScheme='gray'
+                  colorScheme='grayModern'
                   onClick={() => {
                     // If onEnable is present -> we're using the integration.app flows
                     if (onEnable) {
@@ -118,7 +118,7 @@ export const SettingsIntegrationItem = ({
                   <Button
                     size='xs'
                     variant='outline'
-                    colorScheme='gray'
+                    colorScheme='grayModern'
                     style={{ marginRight: '10px' }}
                     onClick={() => {
                       setCollapsed(true);
@@ -153,7 +153,7 @@ export const SettingsIntegrationItem = ({
                   <Button
                     size='xs'
                     variant='outline'
-                    colorScheme='gray'
+                    colorScheme='grayModern'
                     style={{ marginRight: '10px' }}
                     onClick={() => {
                       setCollapsed(true);
@@ -202,8 +202,8 @@ export const SettingsIntegrationItem = ({
                       <AutoresizeTextarea
                         rows={1}
                         id={fieldDefinition.name}
-                        className='border-gray-200'
                         disabled={state === 'ACTIVE'}
+                        className='border-grayModern-200'
                         onChange={({ target: { value } }) => {
                           field.onChange(value);
                         }}
@@ -218,8 +218,8 @@ export const SettingsIntegrationItem = ({
                     return (
                       <Input
                         id={fieldDefinition.name}
-                        className='border-gray-200'
                         disabled={state === 'ACTIVE'}
+                        className='border-grayModern-200'
                         onChange={({ target: { value } }) => {
                           field.onChange(value);
                         }}

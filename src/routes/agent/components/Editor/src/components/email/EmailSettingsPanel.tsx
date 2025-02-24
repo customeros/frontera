@@ -229,7 +229,7 @@ export const EmailSettingsPanel = observer(() => {
         }}
       >
         <article className=' h-full bg-white  border-l flex flex-col  animate-slideLeft'>
-          <div className='flex justify-between items-center border-b border-gray-200 p-4 y-2 h-[41px]'>
+          <div className='flex justify-between items-center border-b border-grayModern-200 p-4 y-2 h-[41px]'>
             <div className='flex items-center gap-2'>
               <h1 className='font-medium'>Email {}</h1>
 
@@ -269,7 +269,7 @@ export const EmailSettingsPanel = observer(() => {
           </div>
 
           {showTestEmailMode && (
-            <div className='bg-gray-50 w-full px-4 py-2 border-b border-gray-200 text-sm'>
+            <div className='bg-grayModern-50 w-full px-4 py-2 border-b bgrayModernr-grayModern-200 text-sm'>
               <div className='flex justify-between items-center mb-1'>
                 <p className='text-sm font-medium'>Send a test email...</p>
                 <Button
@@ -285,15 +285,15 @@ export const EmailSettingsPanel = observer(() => {
               <div>
                 <ul className='px-2'>
                   <li className='flex items-center'>
-                    <CornerDownRightDot className='text-gray-500 mr-2 size-3' />
+                    <CornerDownRightDot className='text-grayModern-500 mr-2 size-3' />
                     To {session.value.profile.email}
                   </li>
                   <li className='flex items-center'>
-                    <CornerDownRightDot className='text-gray-500 mr-2 size-3' />
+                    <CornerDownRightDot className='text-grayModern-500 mr-2 size-3' />
                     From {session.value.tenant}@testcustomeros.com
                   </li>
                   {/*<li className='flex items-center'>*/}
-                  {/*  <CornerDownRightDot className='text-gray-500 mr-2 size-3' />*/}
+                  {/*  <CornerDownRightDot className='text-grayModern-500 mr-2 size-3' />*/}
                   {/*  Emails will show up in{' '}*/}
                   {/*  <Link to={'/'} className='text-primary-700 ml-1'>*/}
                   {/*    Example, Inc’s timeline*/}
@@ -337,14 +337,14 @@ export const EmailSettingsPanel = observer(() => {
                     placeholderClassName={cn(
                       'text-sm font-medium h-auto cursor-text ',
                       {
-                        'pointer-events-none text-gray-400':
+                        'pointer-events-none text-grayModern-400':
                           data?.action === FlowActionType.EMAIL_REPLY,
                       },
                     )}
                     className={cn(
                       `text-sm font-medium h-auto cursor-text email-editor-subject`,
                       {
-                        'pointer-events-none text-gray-400':
+                        'pointer-events-none text-grayModern-400':
                           data?.action === FlowActionType.EMAIL_REPLY,
                       },
                     )}

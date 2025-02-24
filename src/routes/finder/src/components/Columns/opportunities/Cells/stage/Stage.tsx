@@ -60,7 +60,7 @@ export const StageCell = observer(({ stage, id }: StageCellProps) => {
   const stageObj = stageLabel?.[stage];
 
   if (!stageObj) {
-    return <p className='text-gray-400'>Unknown</p>;
+    return <p className='text-grayModern-400'>Unknown</p>;
   }
 
   return <p>{stageObj}</p>;

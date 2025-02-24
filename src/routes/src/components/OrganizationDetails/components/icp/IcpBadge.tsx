@@ -23,7 +23,7 @@ const icpData: Record<
   {
     label: string;
     icon?: IconName;
-    colorScheme: 'success' | 'warning' | 'gray';
+    colorScheme: 'success' | 'warning' | 'grayModern';
   }
 > = {
   [IcpFit.IcpFit]: {
@@ -39,7 +39,7 @@ const icpData: Record<
   [IcpFit.IcpNotSet]: {
     label: 'ICP not set',
     icon: undefined,
-    colorScheme: 'gray',
+    colorScheme: 'grayModern',
   },
 };
 
@@ -127,14 +127,14 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
                   <Spinner
                     size='xs'
                     label='icp profiling'
-                    className='text-gray-300 fill-gray-400'
+                    className='text-grayModern-300grayModernl-grayModern-400'
                   />
                 ) : (
                   <Icon
                     width={12}
                     height={12}
                     name={data.icon}
-                    className={cn('size-3 text-gray-500', {
+                    className={cn('size-3 text-grayModern-500', {
                       [`text-${data?.colorScheme}-500`]: true,
                     })}
                   />
@@ -149,7 +149,7 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
           <TagRightButton>
             <Icon
               name={open ? 'chevron-up' : 'chevron-down'}
-              className={cn('text-gray-500 ml-0', {
+              className={cn('text-grayModern-500 ml-0', {
                 [`text-${data?.colorScheme}-500`]: true,
               })}
             />

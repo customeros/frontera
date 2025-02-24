@@ -16,7 +16,6 @@ export const iconVariant = cva('', {
     colorScheme: {
       white: [],
       primary: [],
-      gray: [],
       grayBlue: [],
       grayModern: [],
       grayWarm: [],
@@ -51,12 +50,6 @@ export const iconVariant = cva('', {
       size: 'xxs',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-3 h-3', 'text-white'],
-    },
-    {
-      size: 'xxs',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-3 h-3', 'text-white'],
     },
     {
@@ -200,12 +193,6 @@ export const iconVariant = cva('', {
     {
       size: 'xxs',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-3 h-3', 'text-gray-600'],
-    },
-    {
-      size: 'xxs',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-3 h-3', 'text-grayBlue-600'],
     },
@@ -344,12 +331,6 @@ export const iconVariant = cva('', {
     {
       size: 'xxs',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-3 h-3', 'text-gray-700'],
-    },
-    {
-      size: 'xxs',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-3 h-3', 'text-grayBlue-700'],
     },
@@ -483,12 +464,6 @@ export const iconVariant = cva('', {
       size: 'xs',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-4 h-4', 'text-white'],
-    },
-    {
-      size: 'xs',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-4 h-4', 'text-white'],
     },
     {
@@ -632,12 +607,6 @@ export const iconVariant = cva('', {
     {
       size: 'xs',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-4 h-4', 'text-gray-600'],
-    },
-    {
-      size: 'xs',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-4 h-4', 'text-grayBlue-600'],
     },
@@ -772,12 +741,6 @@ export const iconVariant = cva('', {
       variant: 'ghost',
       colorScheme: 'primary',
       className: ['w-4 h-4', 'text-primary-700'],
-    },
-    {
-      size: 'xs',
-      variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-4 h-4', 'text-gray-700'],
     },
     {
       size: 'xs',
@@ -920,12 +883,6 @@ export const iconVariant = cva('', {
     {
       size: 'sm',
       variant: 'solid',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-white'],
-    },
-    {
-      size: 'sm',
-      variant: 'solid',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-white'],
     },
@@ -1060,12 +1017,6 @@ export const iconVariant = cva('', {
       variant: 'outline',
       colorScheme: 'primary',
       className: ['w-5 h-5', 'text-primary-600'],
-    },
-    {
-      size: 'sm',
-      variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-600'],
     },
     {
       size: 'sm',
@@ -1208,12 +1159,6 @@ export const iconVariant = cva('', {
     {
       size: 'sm',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-700'],
-    },
-    {
-      size: 'sm',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-700'],
     },
@@ -1347,12 +1292,6 @@ export const iconVariant = cva('', {
       size: 'md',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-5 h-5', 'text-white'],
-    },
-    {
-      size: 'md',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-5 h-5', 'text-white'],
     },
     {
@@ -1496,12 +1435,6 @@ export const iconVariant = cva('', {
     {
       size: 'md',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-600'],
-    },
-    {
-      size: 'md',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-600'],
     },
@@ -1640,12 +1573,6 @@ export const iconVariant = cva('', {
     {
       size: 'md',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-700'],
-    },
-    {
-      size: 'md',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-700'],
     },
@@ -1779,12 +1706,6 @@ export const iconVariant = cva('', {
       size: 'lg',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-6 h-6', 'text-white'],
-    },
-    {
-      size: 'lg',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-6 h-6', 'text-white'],
     },
     {
@@ -1928,12 +1849,6 @@ export const iconVariant = cva('', {
     {
       size: 'lg',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-6 h-6', 'text-gray-600'],
-    },
-    {
-      size: 'lg',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-6 h-6', 'text-grayBlue-600'],
     },
@@ -2068,12 +1983,6 @@ export const iconVariant = cva('', {
       variant: 'ghost',
       colorScheme: 'primary',
       className: ['w-6 h-6', 'text-primary-700'],
-    },
-    {
-      size: 'lg',
-      variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-6 h-6', 'text-gray-700'],
     },
     {
       size: 'lg',

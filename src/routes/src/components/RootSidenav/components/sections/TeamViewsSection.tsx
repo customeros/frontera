@@ -66,8 +66,8 @@ export const TeamViewsSectionSection = observer(
                   <Icon
                     name={iconNameMap?.[view.value.icon] ?? 'building-07'}
                     className={cn(
-                      'size-4 min-w-4 text-gray-500',
-                      isActive && 'text-gray-700',
+                      'size-4 min-w-4 text-grayModern-500',
+                      isActive && 'text-grayModern-700',
                     )}
                   />
                 )}

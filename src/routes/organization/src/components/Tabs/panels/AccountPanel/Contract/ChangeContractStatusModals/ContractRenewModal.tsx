@@ -178,8 +178,8 @@ export const ContractRenewsModal = ({
           size='lg'
           variant='outline'
           onClick={onClose}
-          colorScheme='gray'
           className='w-full'
+          colorScheme='grayModern'
         >
           Cancel
         </Button>

@@ -53,11 +53,11 @@ export const DatePickerUnderline = ({
       >
         <PopoverTrigger
           className={cn(
-            'data-[state=open]:text-gray-700 data-[state=closed]:text-gray-500 text-sm',
+            'data-[state=open]:text-grayModern-700 data-[state=closed]:text-grayModern-500 text-sm',
             textSize[size ?? 'md'],
           )}
         >
-          <span className='underline cursor-pointer whitespace-pre pb-[1px] text-inherit border-t-[1px] border-transparent hover:text-gray-700'>{`${
+          <span className='underline cursor-pointer whitespace-pre pb-[1px] text-inherit border-t-[1px] border-transparent hover:text-grayModern-700'>{`${
             value ? format(displayDate, 'dd MMM yyyy') : 'Select date'
           }`}</span>
         </PopoverTrigger>

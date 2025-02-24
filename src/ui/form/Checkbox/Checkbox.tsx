@@ -12,7 +12,7 @@ const iconColor = cva(
     variants: {
       iconColorScheme: {
         primary: ['fill-primary-600 text-primary-600'],
-        gray: ['fill-gray-600 text-gray-600'],
+        grayModern: ['fill-grayModern-600 text-grayModern-600'],
         warm: ['fill-warm-600 text-warm-600'],
         error: ['fill-error-600 text-error-600'],
         rose: ['fill-rose-600 text-rose-600'],
@@ -79,7 +79,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
       iconColor({
         iconSize,
         iconColorScheme,
-        className: disabled ? 'fill-gray-300' : undefined,
+        className: disabled ? 'fill-grayModern-300' : undefined,
       }),
     );
 
@@ -113,7 +113,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
             tabIndex={-1}
             className={twMerge(
               labelProps?.className,
-              disabled && 'text-gray-300',
+              disabled && 'text-grayModern-300',
             )}
           >
             {children}

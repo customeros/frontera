@@ -47,7 +47,7 @@ export const Header = ({
 
   return (
     <>
-      <div className='flex items-center justify-between  pt-[5px] sticky top-0 bg-gray-25 z-10'>
+      <div className='flex items-center justify-between  pt-[5px] sticky top-0 bg-grayModern-25 z-10'>
         <h1 className='font-medium'>{title}</h1>
         <Button
           size='xs'
@@ -82,7 +82,7 @@ export const Header = ({
         </ButtonGroup>
         <InputGroup className=''>
           <LeftElement>
-            <SearchSm className='text-gray-500' />
+            <SearchSm className='text-grayModern-500' />
           </LeftElement>
           <Input
             size='sm'

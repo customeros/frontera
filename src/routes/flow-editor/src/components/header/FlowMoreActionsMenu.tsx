@@ -45,7 +45,7 @@ export const FlowMoreActionsMenu = observer(
                 handleOpenMenu('DuplicateFlow');
               }}
             >
-              <LayersTwo01 className='mr-1 text-gray-500' />
+              <LayersTwo01 className='mr-1 text-grayModern-500' />
               Duplicate flow
             </MenuItem>
             <MenuItem
@@ -55,7 +55,7 @@ export const FlowMoreActionsMenu = observer(
                 handleOpenMenu('DeleteConfirmationModal');
               }}
             >
-              <Archive className='mr-1 text-gray-500' />
+              <Archive className='mr-1 text-grayModern-500' />
               Archive flow
             </MenuItem>
           </MenuList>

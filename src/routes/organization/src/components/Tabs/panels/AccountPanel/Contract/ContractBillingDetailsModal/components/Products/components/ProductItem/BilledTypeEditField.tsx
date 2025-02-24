@@ -57,7 +57,7 @@ export const BilledTypeEditField: FC<BilledTypeEditFieldProps> = observer(
       service?.tempValue?.parentId
     ) {
       return (
-        <p className='text-gray-700'>
+        <p className='text-grayModern-700'>
           /
           {service &&
             service.value &&
@@ -72,13 +72,13 @@ export const BilledTypeEditField: FC<BilledTypeEditFieldProps> = observer(
       <Menu>
         <MenuButton>
           {isModification ? (
-            <span className='text-gray-700'>
+            <span className='text-grayModern-700'>
               <span className='mr-0.5 underline'>/</span>
             </span>
           ) : (
-            <span className='text-gray-700'>
+            <span className='text-grayModern-700'>
               <span className='mr-0.5'>/</span>
-              <span className='underline text-gray-500'>
+              <span className='underline text-grayModern-500'>
                 {
                   billedTypeLabel[
                     service?.tempValue?.billingCycle as Exclude<

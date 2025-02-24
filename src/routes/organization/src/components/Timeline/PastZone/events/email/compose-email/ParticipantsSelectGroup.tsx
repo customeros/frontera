@@ -71,7 +71,7 @@ export const ParticipantsSelectGroup = observer(
       >
         <div className='w-[100%]'>
           <div className='flex items-baseline mb-[-1px] mt-0 flex-1 overflow-visible'>
-            <span className='text-gray-700 font-semibold mr-1 text-sm'>
+            <span className='text-grayModern-700 font-semibold mr-1 text-sm'>
               From:
             </span>
 
@@ -152,7 +152,7 @@ export const ParticipantsSelectGroup = observer(
           </>
 
           <div className='flex items-center flex-1'>
-            <span className='text-gray-700 font-semibold mr-1 text-sm'>
+            <span className='text-grayModern-700 font-semibold mr-1 text-sm'>
               Subject:
             </span>
             <Input
@@ -161,7 +161,7 @@ export const ParticipantsSelectGroup = observer(
               variant='unstyled'
               value={emailUseCase.subject}
               placeholder={'Enter subject...'}
-              className='text-gray-500 height-[5px] text-sm'
+              className='text-grayModern-500 height-[5px] text-sm'
               onChange={(e) => emailUseCase.updateSubject(e.target.value)}
             />
           </div>
@@ -171,7 +171,7 @@ export const ParticipantsSelectGroup = observer(
             <Button
               size='sm'
               variant='ghost'
-              className='text-gray-400 font-semibold px-1'
+              className='text-grayModern-400 font-semibold px-1'
               onClick={() => {
                 setShowCC(true);
                 setFocusedItemIndex(1);
@@ -185,8 +185,8 @@ export const ParticipantsSelectGroup = observer(
             <Button
               size='sm'
               variant='ghost'
-              color='gray.400'
-              className='text-gray-400 font-semibold px-1'
+              color='grayModern.400'
+              className='text-grayModern-400 font-semibold px-1'
               onClick={() => {
                 setShowBCC(true);
                 setFocusedItemIndex(2);

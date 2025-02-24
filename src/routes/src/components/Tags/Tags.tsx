@@ -84,7 +84,9 @@ export const Tags = observer(
                   );
                 })
               ) : (
-                <span className='text-gray-400 text-sm'>{placeholder}</span>
+                <span className='text-grayModern-400 text-sm'>
+                  {placeholder}
+                </span>
               )}
             </div>
           </PopoverTrigger>
@@ -106,7 +108,7 @@ export const Tags = observer(
             }}
             noOptionsMessage={({ inputValue }) => (
               <div
-                className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'
+                className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'
                 onClick={() => {
                   onCreate?.(inputValue);
                   setInputValue('');

@@ -30,7 +30,7 @@ export const HealthCell = observer(({ id }: RenewalLikelihoodCellProps) => {
   const value = opportunity?.value?.renewalLikelihood;
 
   const [isEditing, setIsEditing] = useState(false);
-  const colors = value ? getLikelihoodColor(value) : 'text-gray-400';
+  const colors = value ? getLikelihoodColor(value) : 'text-grayModern-400';
 
   const handleClick = (value: OpportunityRenewalLikelihood) => {
     opportunity?.update((opp: Opportunity) => {
@@ -97,7 +97,7 @@ export const HealthCell = observer(({ id }: RenewalLikelihoodCellProps) => {
       {/*  size='xxs'*/}
       {/*  variant='ghost'*/}
       {/*  aria-label='edit renewal likelihood'*/}
-      {/*  icon={<Edit03 className='text-gray-500' />}*/}
+      {/*  icon={<Edit03 className='text-grayModern-500' />}*/}
       {/*  onClick={() => {*/}
       {/*    setIsEditing(true);*/}
       {/*  }}*/}

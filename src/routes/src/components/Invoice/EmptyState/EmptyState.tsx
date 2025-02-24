@@ -22,10 +22,10 @@ export const EmptyState = () => {
         <HalfCirclePattern />
       </div>
       <div className='flex flex-col text-center items-center translate-y-[-200px]'>
-        <p className='text-gray-700 text-md font-semibold'>
+        <p className='text-grayModern-700 text-md font-semibold'>
           No upcoming invoices
         </p>
-        <p className='text-sm text-gray-500 my-1'>
+        <p className='text-sm text-grayModern-500 my-1'>
           Schedule invoices by creating a contract with services
         </p>
         <Button

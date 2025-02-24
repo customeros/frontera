@@ -12,7 +12,6 @@ export const featureIconVariant = cva(
     variants: {
       colorScheme: {
         primary: [],
-        gray: [],
         grayBlue: [],
         grayModern: [],
         grayWarm: [],
@@ -32,10 +31,6 @@ export const featureIconVariant = cva(
         purple: [],
         cyan: [],
         orangeDark: [],
-        white: [],
-        indigo: [],
-        blueLight: [],
-        pink: [],
       },
     },
     compoundVariants: [
@@ -49,12 +44,6 @@ export const featureIconVariant = cva(
         colorScheme: 'primary',
         className: [
           'bg-primary-100 ring-primary-50 ring-offset-primary-100 text-primary-600',
-        ],
-      },
-      {
-        colorScheme: 'gray',
-        className: [
-          'bg-gray-100 ring-gray-50 ring-offset-gray-100 text-gray-600',
         ],
       },
       {

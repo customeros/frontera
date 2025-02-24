@@ -10,7 +10,7 @@ interface ConnectedUsersProps {
 export const ConnectedUsers = observer(({ users }: ConnectedUsersProps) => {
   const store = useStore();
 
-  if (!users.length) return <p className='text-gray-400'> No one </p>;
+  if (!users.length) return <p className='text-grayModern-400'> No one </p>;
 
   const usersDisplayed = users?.map(
     (l: User) => store.users.value.get(l.id)?.name,
@@ -28,7 +28,7 @@ export const ConnectedUsers = observer(({ users }: ConnectedUsersProps) => {
       {usersDisplayed?.map((name, i) => (
         <div
           key={`connected-user-${i}`}
-          className='bg-gray-100 rounded-md w-fit px-1.5 '
+          className='bg-grayModern-100 rounded-md w-fit px-1.5 '
         >
           {name}
         </div>

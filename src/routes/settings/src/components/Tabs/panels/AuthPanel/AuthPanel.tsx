@@ -32,12 +32,12 @@ export const AuthPanel = observer(() => {
 
   return (
     <>
-      <div className='bg-gray-25 flex-col flex relative max-w-[550px] px-6 pb-4 pt-2 '>
+      <div className='bg-grayModern-25 flex-col flex relative max-w-[550px] px-6 pb-4 pt-2 '>
         <div className='flex gap-4 flex-col'>
           <div className='flex flex-col'>
             <h1
               data-test='settings-accounts-header'
-              className='text-gray-700 font-semibold '
+              className='text-grayModern-700 font-semibold '
             >
               Accounts
             </h1>
@@ -47,8 +47,8 @@ export const AuthPanel = observer(() => {
 
       <div className='flex flex-col max-w-[550px] px-6 '>
         <div className='flex items-center gap-1'>
-          <h2 className='text-gray-700 text-sm font-medium'>Email</h2>
-          <div className='w-full border-b border-gray-100 mx-2' />
+          <h2 className='text-grayModern-700 text-sm font-medium'>Email</h2>
+          <div className='w-full border-b border-grayModern-100 mx-2' />
         </div>
         <p className='line-clamp-2 mt-2 mb-4 text-sm'>
           Get all your customer contacts, conversations and meetings in one
@@ -62,9 +62,9 @@ export const AuthPanel = observer(() => {
       <article className='flex-col flex relative max-w-[550px] '>
         <div className='px-6 flex items-center w-full'>
           <div className='flex items-center gap-1'>
-            <h2 className='text-gray-700 text-sm font-medium'>Slack</h2>
+            <h2 className='text-grayModern-700 text-sm font-medium'>Slack</h2>
           </div>
-          <div className='w-full border-b border-gray-100 mx-2' />
+          <div className='w-full border-b border-grayModern-100 mx-2' />
           {store.settings.slack.isLoading && (
             <Spinner
               label='Slack Loading'

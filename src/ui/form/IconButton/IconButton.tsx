@@ -45,7 +45,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       children,
       className,
       dataTest,
-      colorScheme = 'gray',
+      colorScheme = 'grayModern',
       spinner,
       variant = 'outline',
       isLoading = false,

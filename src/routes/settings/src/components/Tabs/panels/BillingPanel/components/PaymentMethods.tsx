@@ -50,7 +50,7 @@ export const PaymentMethods = ({
   return (
     <>
       <div className='flex relative items-center'>
-        <span className='text-sm whitespace-nowrap mr-2 text-gray-500'>
+        <span className='text-sm whitespace-nowrap mr-2 text-grayModern-500'>
           Customer can pay using
         </span>
         <Divider />
@@ -70,7 +70,7 @@ export const PaymentMethods = ({
           />
         </label>
         {isStripeActive && (
-          <span className='capitalize text-gray-500 text-sm ml-7 line-clamp-1'>
+          <span className='capitalize text-grayModern-500 text-sm ml-7 line-clamp-1'>
             {availablePaymentMethodTypes?.length
               ? availablePaymentMethodTypes
                   ?.map((e) => paymentMethods?.[e])

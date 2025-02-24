@@ -11,7 +11,7 @@ export const IssuesPanelSkeleton = () => {
       {Array.from({ length: 3 }).map((_, i) => (
         <Card
           key={i}
-          className='w-full shadow-xs cursor-pointer bg-white border-1 border-gray-200 rounded-lg p-3'
+          className='w-full shadow-xs cursor-pointer bg-white border-1 border-grayModern-200 rounded-lg p-3'
         >
           <CardContent className='p-0'>
             <div className='flex flex-1 gap-4 items-start flex-wrap'>

@@ -84,7 +84,7 @@ const avatarStyle = cva(
   {
     variants: {
       variant: {
-        circle: ['rounded-full', 'bg-gray-25', 'text-gray-500'],
+        circle: ['rounded-full', 'bg-grayModern-25', 'text-grayModern-500'],
         shadowed: [
           'bg-primary-100',
           'text-primary-700',
@@ -117,12 +117,17 @@ const avatarStyle = cva(
           'border',
           'border-primary-200',
         ],
-        outlineSquare: ['rounded-sm', 'bg-gray-25', 'ring-1', 'ring-gray-200'],
+        outlineSquare: [
+          'rounded-sm',
+          'bg-grayModern-25',
+          'ring-1',
+          'ring-grayModern-200',
+        ],
         outlineCircle: [
           'rounded-full',
-          'bg-gray-25',
+          'bg-grayModern-25',
           'ring-1',
-          'ring-gray-200',
+          'ring-grayModern-200',
         ],
       },
 

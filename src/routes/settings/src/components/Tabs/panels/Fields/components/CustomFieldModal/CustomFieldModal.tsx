@@ -52,17 +52,17 @@ const options = [
   {
     label: 'Text',
     id: CustomFieldTemplateType.FreeText,
-    icon: <Type01 className='text-gray-500' />,
+    icon: <Type01 className='text-grayModern-500' />,
   },
   {
     label: 'Number',
     id: CustomFieldTemplateType.Number,
-    icon: <Hash02 className='text-gray-500' />,
+    icon: <Hash02 className='text-grayModern-500' />,
   },
   {
     label: 'Single select',
     id: CustomFieldTemplateType.SingleSelect,
-    icon: <RadioButton className='text-gray-500' />,
+    icon: <RadioButton className='text-grayModern-500' />,
   },
 ];
 

@@ -61,7 +61,8 @@ export const HeaderInputName = observer(() => {
           }
         }}
         className={cn({
-          'text-gray-500 cursor-pointer hover:text-gray-700': showFinder,
+          'text-grayModern-500 cursor-pointer hover:text-grayModern-700':
+            showFinder,
         })}
         onClick={(e) => {
           if (showFinder) {

@@ -58,8 +58,8 @@ export const InvoicesPanel = observer(() => {
           columns={columns}
           tableRef={tableRef}
           data={invoices ?? []}
-          borderColor='gray.100'
           fullRowSelection={false}
+          borderColor='grayModern.100'
           totalItems={invoices.length}
           isLoading={store.invoices.isLoading}
           onFocusedRowChange={(index) => {

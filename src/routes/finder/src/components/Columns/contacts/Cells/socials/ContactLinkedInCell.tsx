@@ -20,7 +20,7 @@ export const ContactLinkedInCell = observer(
     if (!linkedIn) {
       return (
         <p
-          className='text-sm text-gray-400 cursor-pointer'
+          className='text-sm text-grayModern-400 cursor-pointer'
           onClick={() => {
             store.ui.commandMenu.setType('AddLinkedin');
             store.ui.commandMenu.setOpen(true);

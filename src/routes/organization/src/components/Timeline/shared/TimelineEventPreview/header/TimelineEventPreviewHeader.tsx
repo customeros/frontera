@@ -32,7 +32,7 @@ export const TimelineEventPreviewHeader = ({
     >
       <div>
         <div className='flex justify-between '>
-          <span className='text-lg font-semibold text-gray-700'>
+          <span className='text-lg font-semibold text-grayModern-700'>
             {parsedName}
           </span>
 
@@ -44,9 +44,9 @@ export const TimelineEventPreviewHeader = ({
                   size='xs'
                   variant='ghost'
                   className='mr-1'
-                  colorScheme='gray'
                   aria-label={copyLabel}
-                  icon={<Link01 className='text-gray-500' />}
+                  colorScheme='grayModern'
+                  icon={<Link01 className='text-grayModern-500' />}
                   onClick={() => copy(window.location.href, 'Link copied')}
                 />
               </div>
@@ -57,16 +57,16 @@ export const TimelineEventPreviewHeader = ({
                   size='xs'
                   variant='ghost'
                   onClick={onClose}
-                  colorScheme='gray'
+                  colorScheme='grayModern'
                   aria-label='Close preview'
-                  icon={<XClose className='text-gray-500' />}
+                  icon={<XClose className='text-grayModern-500' />}
                 />
               </div>
             </Tooltip>
           </div>
         </div>
         {date && (
-          <span className='text-[12px] text-gray-500'>
+          <span className='text-[12px] text-grayModern-500'>
             {DateTimeUtils.format(date, DateTimeUtils.dateWithHour)}
           </span>
         )}

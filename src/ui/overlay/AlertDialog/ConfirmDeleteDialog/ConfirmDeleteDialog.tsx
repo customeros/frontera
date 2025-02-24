@@ -62,7 +62,7 @@ export const ConfirmDeleteDialog = ({
             </div>
             <AlertDialogHeader className='font-bold'>
               {description && (
-                <p className='mt-1 text-sm text-gray-700 font-normal'>
+                <p className='mt-1 text-sm text-grayModern-700 font-normal'>
                   {description}
                 </p>
               )}
@@ -75,9 +75,9 @@ export const ConfirmDeleteDialog = ({
                   size='md'
                   ref={cancelRef}
                   variant='outline'
-                  colorScheme={'gray'}
                   className='bg-white '
                   isDisabled={isLoading}
+                  colorScheme={'grayModern'}
                 >
                   {cancelButtonLabel}
                 </Button>

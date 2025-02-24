@@ -16,8 +16,8 @@ export const FieldsSection = ({
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex items-center gap-2 px-3'>
-        <CursorBox className='w-4 h-4 text-gray-500' />
-        <span className='text-sm  text-gray-700'>Fields</span>
+        <CursorBox className='w-4 h-4 text-grayModern-500' />
+        <span className='text-sm  text-grayModern-700'>Fields</span>
       </div>
       <div className='ml-[23px]'>
         <SidenavItem

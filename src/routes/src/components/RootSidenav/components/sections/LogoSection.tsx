@@ -55,7 +55,7 @@ export const LogoSection = observer(() => {
               <Spinner
                 size='sm'
                 label='Syncing'
-                className='text-gray-300 fill-gray-700 mr-3'
+                className='text-grayModern-300 fill-grayModern-700 mr-3'
               />
             </div>
           </Tooltip>
@@ -76,7 +76,7 @@ export const LogoSection = observer(() => {
           }
         >
           <div className='flex items-center'>
-            <Icon name='cloud-off' className='mr-3 text-gray-500' />
+            <Icon name='cloud-off' className='mr-3 text-grayModern-500' />
           </div>
         </Tooltip>
       )}

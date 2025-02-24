@@ -15,7 +15,7 @@ export const RenewalLikelihoodCell = observer(
     const organization = store.organizations.getById(id);
     const value = organization?.value?.renewalSummaryRenewalLikelihood;
 
-    const colors = value ? getLikelihoodColor(value) : 'text-gray-400';
+    const colors = value ? getLikelihoodColor(value) : 'text-grayModern-400';
 
     if (!organization?.value) return null;
 

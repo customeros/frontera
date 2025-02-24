@@ -34,8 +34,8 @@ export const ProspectsBoardPage = observer(() => {
   const showFinder = searchParams.get('show') === 'finder';
 
   return (
-    <div className='flex flex-col text-gray-700 overflow-hidden bg-white'>
-      <div className='flex justify-between pr-4 border-b border-b-gray-200 bg-gray-25'>
+    <div className='flex flex-col text-grayModern-700 overflow-hidden bg-white'>
+      <div className='flex justify-between pr-4 border-b border-b-grayModern-2grayModerng-grayModern-25'>
         <Search />
 
         <div className='flex items-center gap-2'>
@@ -53,7 +53,7 @@ export const ProspectsBoardPage = observer(() => {
           <ButtonGroup className='flex items-center w-[252px]'>
             <Button
               size='xs'
-              colorScheme='gray'
+              colorScheme='grayModern'
               dataTest='prospects-board-button'
               onClick={() => navigate('/prospects')}
               className={cn('px-4 w-full flex-1', {

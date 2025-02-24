@@ -160,7 +160,7 @@ export const TimelineActionButtons = observer(
 
     return (
       <>
-        <div className='relative border border-gray-200 p-2 gap-2 rounded-full bg-white top-0 left-6 z-1 transform translate-y-[5px] inline-flex'>
+        <div className='relative border border-grayModern-200 p-2 gap-2 rounded-full bg-white top-0 left-6 z-1 transform translate-y-[5px] inline-flex'>
           <Button
             size='xs'
             variant='outline'
@@ -169,7 +169,9 @@ export const TimelineActionButtons = observer(
             dataTest='timeline-email-button'
             leftIcon={<Mail01 color='inherit' />}
             colorScheme={
-              openedEditor === 'email' || !!openEmailEditor ? 'primary' : 'gray'
+              openedEditor === 'email' || !!openEmailEditor
+                ? 'primary'
+                : 'grayModern'
             }
           >
             Email
@@ -181,7 +183,7 @@ export const TimelineActionButtons = observer(
             onClick={handleLogEntry}
             dataTest='timeline-log-button'
             leftIcon={<MessageChatSquare color='inherit' />}
-            colorScheme={activeEditor === 'log-entry' ? 'primary' : 'gray'}
+            colorScheme={activeEditor === 'log-entry' ? 'primary' : 'grayModern'}
           >
             Log
           </Button> */}
@@ -191,7 +193,7 @@ export const TimelineActionButtons = observer(
             className='rounded-3xl'
             dataTest='timeline-reminder-button'
             leftIcon={<AlarmClockPlus color='inherit' />}
-            colorScheme={openedEditor === 'reminder' ? 'primary' : 'gray'}
+            colorScheme={openedEditor === 'reminder' ? 'primary' : 'grayModern'}
             onClick={() => {
               if (!id) return;
               store.reminders.create(id);

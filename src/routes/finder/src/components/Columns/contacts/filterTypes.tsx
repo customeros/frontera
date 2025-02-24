@@ -47,7 +47,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <User03 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <User03 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContactsOrganization]: {
@@ -61,7 +61,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Building07 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Building07 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
 
@@ -76,7 +76,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Mail01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Mail01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     ['EMAIL_VERIFICATION_PRIMARY_EMAIL']: {
@@ -90,7 +90,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Mail01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Mail01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: [],
       groupOptions: [
@@ -158,7 +158,7 @@ export const getFilterTypes = (store?: RootStore) => {
     //     ComparisonOperator.IsNotEmpty,
     //   ],
     //   icon: (
-    //     <Phone className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+    //     <Phone className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
     //   ),
     // },
     [ColumnViewType.ContactsCity]: {
@@ -172,7 +172,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Globe05 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Globe05 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: uniqBy(
         store?.globalCache.value?.contactCities
@@ -195,7 +195,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <LinkedinOutline className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <LinkedinOutline className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContactsPersona]: {
@@ -209,7 +209,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Tag01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Tag01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: store?.tags.toArray().map((tag) => ({
         id: tag?.value?.metadata.id,
@@ -227,7 +227,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Certificate01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Certificate01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContactsTimeInCurrentRole]: {
@@ -236,7 +236,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.ContactsTimeInCurrentRole,
       filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
       icon: (
-        <ClockCheck className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <ClockCheck className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContactsLinkedinFollowerCount]: {
@@ -250,7 +250,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Users03 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Users03 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     // [ColumnViewType.ContactsLastInteraction]: {
@@ -276,7 +276,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <LinkedinOutline className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <LinkedinOutline className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: store?.users.toArray().map((user) => ({
         id: user?.id,
@@ -295,7 +295,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Globe04 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Globe04 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: Array.from(countryMap).map(([key, value]) => ({
         id: key.toUpperCase(),
@@ -313,7 +313,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Globe06 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Globe06 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: uniqBy(
         store?.globalCache.value?.contactRegions
@@ -336,7 +336,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Shuffle01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Shuffle01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: uniqBy(
         store?.flows.toArray().map((flow) => ({
@@ -358,7 +358,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Shuffle01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Shuffle01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: [
         {

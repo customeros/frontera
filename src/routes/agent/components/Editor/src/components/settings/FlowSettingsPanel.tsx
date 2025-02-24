@@ -51,7 +51,7 @@ export const FlowSettingsPanel = ({
           <Button
             size='xs'
             variant='outline'
-            colorScheme='gray'
+            colorScheme='grayModern'
             leftIcon={<UserPlus01 />}
             onClick={() =>
               store.ui.commandMenu.setOpen(true, {
@@ -68,7 +68,7 @@ export const FlowSettingsPanel = ({
         </div>
       )}
 
-      <div className='flex justify-between items-center border-b border-gray-200 p-4 y-2 h-[41px]'>
+      <div className='flex justify-between items-center border-b border-grayModern-200 p-4 y-2 h-[41px]'>
         <h1 className='font-medium'>Flow settings</h1>
 
         <div className='flex gap-2'>

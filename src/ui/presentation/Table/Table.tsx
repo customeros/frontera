@@ -396,7 +396,7 @@ export const Table = <T extends object>({
                             {table.getIsAllRowsSelected() ? (
                               <CheckSquare className='text-primary-600' />
                             ) : (
-                              <Square className='text-gray-400' />
+                              <Square className='text-grayModern-400' />
                             )}
                           </div>
                         </Tooltip>
@@ -439,7 +439,7 @@ export const Table = <T extends object>({
                                 },
                               )}
                             >
-                              <div className='h-full w-[2px]  bg-gray-300' />
+                              <div className='h-full w-[2px]  bg-grayModern-300' />
                             </div>
                           )}
                       </THeaderCell>
@@ -561,7 +561,7 @@ const TableBody = <T extends object>({
               hoverStyle,
               focusStyle,
               'group/row',
-              row?.getIsSelected() && 'bg-gray-50',
+              row?.getIsSelected() && 'bg-grayModern-50',
               isShiftPressed && 'select-none',
             )}
             onClick={
@@ -603,7 +603,7 @@ const TableBody = <T extends object>({
                       {row?.getIsSelected() ? (
                         <CheckSquare className='text-primary-600' />
                       ) : (
-                        <Square className='text-gray-400' />
+                        <Square className='text-grayModern-400' />
                       )}
                     </div>
                   )}
@@ -678,7 +678,7 @@ const TRow = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
         style={style}
         onClick={onClick}
         className={cn(
-          'top-0 left-0 inline-flex items-center flex-1 w-full text-sm absolute border-b bg-white border-gray-100',
+          'top-0 left-0 inline-flex items-center flex-1 w-full text-sm absolute border-b bg-white border-grayModern-100',
           className,
         )}
         {...props}
@@ -740,10 +740,10 @@ const TContent = forwardRef<HTMLDivElement, TContentProps>(
     const timeoutRef = useRef<NodeJS.Timeout>();
     const mergedRef = useMergeRefs(ref, _ref);
 
-    const borderColorDynamic = borderColor ? borderColor : 'gray.200';
+    const borderColorDynamic = borderColor ? borderColor : 'grayModern.200';
     const heightDynamic = height ? height : 'calc(100vh - 88px)';
     const scrollBarStyle =
-      '[&::-webkit-scrollbar-track]:size-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-500 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar]:size-3 [&::-webkit-scrollbar]:bg-transparent';
+      '[&::-webkit-scrollbar-track]:size-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-grayModern-500 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar]:size-3 [&::-webkit-scrollbar]:bg-transparent';
 
     const hideCursor = () => {
       if (_ref?.current) {
@@ -817,7 +817,7 @@ const THeader = forwardRef<HTMLDivElement, GenericProps>(
         {...props}
         style={style}
         className={twMerge(
-          'bg-white border-b border-gray-100 z-[1]',
+          'bg-white border-b border-grayModern-100 z-[1]',
           className,
         )}
       >
@@ -867,8 +867,8 @@ const TActions = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
 const NoResults = ({ tableId }: { tableId?: TableIdType }) => {
   return (
-    <div className='pt-12 mx-auto text-gray-700 text-center'>
-      <Tumbleweed className='w-12 h-12 text-gray-500' />
+    <div className='pt-12 mx-auto text-grayModern-700 text-center'>
+      <Tumbleweed className='w-12 h-12 text-grayModern-500' />
       <p className='text-md font-semibold'>Empty here in No Resultsville</p>
       <p className='max-w-[380px]'>
         Try using different keywords, checking for typos, or adjusting your

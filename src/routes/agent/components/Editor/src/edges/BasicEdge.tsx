@@ -108,9 +108,9 @@ export const BasicEdge: FC<
               />
             }
             className={cn(
-              'bg-gray-300 border-4 border-white text-transparent hover:bg-gray-700 hover:text-white focus:bg-inherit focus:text-inherit rounded-full scale-[0.3635] transition-all ease-in-out ',
+              'bg-grayModern-300 border-4 border-white text-transparent hover:bg-grayModern-700 hover:text-white focus:bg-inherit focus:text-inherit rounded-full scale-[0.3635] transition-all ease-in-out ',
               {
-                'scale-100 !bg-gray-700 text-white border-2':
+                'scale-100 !bg-grayModern-700 text-white border-2':
                   showButton ||
                   data?.isHovered ||
                   (ui.flowCommandMenu.isOpen &&

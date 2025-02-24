@@ -117,7 +117,7 @@ export const GlobalSearchResultNavigationCommands = observer(() => {
                 {contactStore.name}
               </span>
 
-              <span className='ml-1.5 text-gray-500 line-clamp-1 max-w-[250px]'>
+              <span className='ml-1.5 text-grayModern-500 line-clamp-1 max-w-[250px]'>
                 ·{' '}
                 {contactStore.organizationId
                   ? organizations.value.get(contactStore.organizationId)?.value
