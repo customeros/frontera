@@ -46,7 +46,7 @@ export const ContractBillingDetailsForm = observer(
     contractId,
     tenantBillingProfile,
     bankAccounts,
-    billingEnabled,
+    billingEnabled: _billingEnabled,
     contractStatus,
     openAddressModal,
   }: SubscriptionServiceModalProps) => {
@@ -56,6 +56,8 @@ export const ContractBillingDetailsForm = observer(
     ) as ContractStore;
 
     const currency = contractStore?.tempValue?.currency;
+    // temporary quick fix -> remove this once we have the billing enabling corect
+    const billingEnabled = true;
 
     const { items: iConnections } = useConnections();
     const isStripeActive = !!iConnections
