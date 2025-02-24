@@ -51,7 +51,18 @@ export class SyncInvoiceToAccountingUsecase {
 
   @action
   public toggleRevokeOpen() {
+    const span = Tracer.span(
+      'SyncInvoiceToAccountingUsecase.toggleRevokeOpen',
+      {
+        isRevokeOpen: this.isRevokeOpen,
+      },
+    );
+
     this.isRevokeOpen = !this.isRevokeOpen;
+
+    span.end({
+      isRevokeOpen: this.isRevokeOpen,
+    });
   }
 
   @action
@@ -61,7 +72,15 @@ export class SyncInvoiceToAccountingUsecase {
 
   @action
   public toggleRevoking() {
+    const span = Tracer.span('SyncInvoiceToAccountingUsecase.toggleRevoking', {
+      isRevoking: this.isRevoking,
+    });
+
     this.isRevoking = !this.isRevoking;
+
+    span.end({
+      isRevoking: this.isRevoking,
+    });
   }
 
   @action
@@ -161,7 +180,6 @@ export class SyncInvoiceToAccountingUsecase {
         this.toggleRevoking();
         this.store.settings.oauthToken.loadQuickbooksStatus();
         this.toggleEnabled();
-        this.toggleRevokeOpen();
       }
     }
 
@@ -209,6 +227,7 @@ export class SyncInvoiceToAccountingUsecase {
       return;
     }
 
+    this.store.settings.oauthToken.loadQuickbooksStatus();
     this.isEnabled = this.capability.active;
 
     span.end({
