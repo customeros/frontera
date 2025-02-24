@@ -127,7 +127,7 @@ export const EditSku = observer(() => {
 
           <div className='flex flex-col'>
             <label htmlFor={'sku-price'} className='text-sm font-medium mb-1'>
-              Price
+              Default Price
             </label>
             <MaskedInput
               size='sm'
@@ -135,7 +135,7 @@ export const EditSku = observer(() => {
               id='sku-price'
               variant='outline'
               data-test='sku-price'
-              placeholder='Price per unit'
+              placeholder='Default Price per unit'
               onFocus={(e) => e.target.select()}
               value={editSkuUsecase.maskedPrice}
               className={cn({
