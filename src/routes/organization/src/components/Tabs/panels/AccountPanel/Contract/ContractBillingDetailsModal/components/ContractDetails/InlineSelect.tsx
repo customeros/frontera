@@ -48,6 +48,7 @@ export const InlineSelect = <T,>({
         <PopoverContent align='start' className='min-w-[80px] z-[99999]'>
           <Combobox
             options={options}
+            isSearchable={false}
             value={selectedOption}
             inputValue={inputValue}
             closeMenuOnSelect={true}

@@ -6,6 +6,7 @@ import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { Input } from '@ui/form/Input';
 import { Select } from '@ui/form/Select';
+import { AgentType } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
 import { countryOptions } from '@shared/util/countryOptions.ts';
 import { EmailsInputGroup } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractBillingDetailsModal/components/EmailsInputGroup/EmailsInputGroup.tsx';
@@ -18,13 +19,14 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
   ({ contractId }) => {
     const store = useStore();
     const id = useParams()?.id as string;
+    const cashflowGuardianAgent = store.agents.getFirstAgentByType(
+      AgentType.CashflowGuardian,
+    );
 
     const contractStore = store.contracts.value.get(
       contractId,
     ) as ContractStore;
     const organizationName = store.organizations.value.get(id)?.value?.name;
-
-    const tenantSettings = store.settings.tenant.value;
 
     const handleUpdateBillingDetails = (key: string, value: string) => {
       contractStore?.updateTemp((contract) => ({
@@ -41,6 +43,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
         <label className='text-sm font-semibold'>
           Organization legal name
           <Input
+            size='sm'
             autoComplete='off'
             name='organizationLegalName'
             placeholder='Organization legal name'
@@ -63,6 +66,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
         <div className='flex flex-col'>
           <p className='text-sm font-semibold'>Billing address</p>
           <Select
+            size='sm'
             isSearchable
             name='country'
             placeholder='Country'
@@ -78,6 +82,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
             )}
           />
           <Input
+            size='sm'
             autoComplete='off'
             name='addressLine1'
             placeholder='Address line 1'
@@ -88,6 +93,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
             }}
           />
           <Input
+            size='sm'
             autoComplete='off'
             name='addressLine2'
             placeholder='Address line 2'
@@ -99,6 +105,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
           />
           {contractStore?.tempValue?.billingDetails?.country === 'US' && (
             <Input
+              size='sm'
               name='locality'
               placeholder='City'
               autoComplete='off'
@@ -112,6 +119,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
           <div className='flex'>
             {contractStore?.tempValue?.billingDetails?.country === 'US' ? (
               <Input
+                size='sm'
                 name='region'
                 placeholder='State'
                 value={contractStore?.tempValue?.billingDetails?.region ?? ''}
@@ -121,6 +129,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
               />
             ) : (
               <Input
+                size='sm'
                 placeholder='City'
                 autoComplete='off'
                 className='overflow-hidden overflow-ellipsis'
@@ -131,6 +140,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
               />
             )}
             <Input
+              size='sm'
               name='postalCode'
               autoComplete='off'
               placeholder='ZIP/Postal code'
@@ -143,7 +153,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
           </div>
         </div>
 
-        {tenantSettings?.billingEnabled && (
+        {cashflowGuardianAgent?.value.isActive && (
           <EmailsInputGroup contractId={contractId} />
         )}
       </div>

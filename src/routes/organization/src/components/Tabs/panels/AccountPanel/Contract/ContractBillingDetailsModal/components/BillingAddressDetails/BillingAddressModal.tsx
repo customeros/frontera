@@ -163,7 +163,7 @@ export const BillingAddressModal = observer(
             }}
           >
             <div className='flex flex-col relative justify-between'>
-              <ModalHeader className='p-0 text-lg font-semibold'>
+              <ModalHeader className='p-0 text-base font-semibold'>
                 <div>
                   {contractStore?.tempValue?.billingDetails
                     ?.organizationLegalName ||

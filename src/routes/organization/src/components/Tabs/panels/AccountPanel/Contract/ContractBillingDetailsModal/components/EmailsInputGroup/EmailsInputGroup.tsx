@@ -30,7 +30,7 @@ const EmailList = ({ emailList }: { emailList: string[] }) => {
           <React.Fragment key={email}>
             <Tooltip label={validationMessage || ''}>
               <span
-                className={cn('mr-1 text-base my-1 block', {
+                className={cn('mr-1 text-sm my-1 block', {
                   'text-warning-700': validateEmail(email),
                 })}
               >
@@ -156,33 +156,37 @@ export const EmailsInputGroup = observer(
 
           <div className='flex'>
             {!showCC && !billingDetails?.billingEmailCC?.length && (
-              <Button
-                size='sm'
-                variant='ghost'
-                color='grayModern.400'
-                className='text-sm px-1 mx-1'
-                onClick={() => {
-                  setShowCC(true);
-                  setFocusedItemIndex(1);
-                }}
-              >
-                CC
-              </Button>
+              <div>
+                <Button
+                  size='sm'
+                  variant='ghost'
+                  color='gray.400'
+                  className='text-sm px-1 mx-1'
+                  onClick={() => {
+                    setShowCC(true);
+                    setFocusedItemIndex(1);
+                  }}
+                >
+                  CC
+                </Button>
+              </div>
             )}
 
             {!showBCC && !billingDetails?.billingEmailBCC?.length && (
-              <Button
-                size='sm'
-                variant='ghost'
-                color='grayModern.400'
-                className='text-sm px-1 '
-                onClick={() => {
-                  setShowBCC(true);
-                  setFocusedItemIndex(2);
-                }}
-              >
-                BCC
-              </Button>
+              <div>
+                <Button
+                  size='sm'
+                  variant='ghost'
+                  color='gray.400'
+                  className='text-sm px-1 '
+                  onClick={() => {
+                    setShowBCC(true);
+                    setFocusedItemIndex(2);
+                  }}
+                >
+                  BCC
+                </Button>
+              </div>
             )}
           </div>
         </div>

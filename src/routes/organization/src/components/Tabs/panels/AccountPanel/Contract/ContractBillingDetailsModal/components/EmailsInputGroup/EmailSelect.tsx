@@ -32,6 +32,7 @@ export const EmailSelect = forwardRef<SelectInstance, EmailParticipantSelect>(
         <label className='font-semibold text-sm'>{entryType}</label>
         <EmailMultiCreatableSelect
           ref={ref}
+          size='sm'
           isMulti={isMulti}
           options={options}
           onChange={onChange}
@@ -45,7 +46,7 @@ export const EmailSelect = forwardRef<SelectInstance, EmailParticipantSelect>(
               return `${d.label}`;
             }
 
-            return `${d.label} - ${d.value}`;
+            return `${d.value}`;
           }}
         />
       </div>
