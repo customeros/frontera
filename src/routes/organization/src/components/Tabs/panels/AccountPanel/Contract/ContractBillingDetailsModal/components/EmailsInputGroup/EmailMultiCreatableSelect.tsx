@@ -25,6 +25,7 @@ export const EmailMultiCreatableSelect = forwardRef<
   SelectInstance,
   {
     isMulti: boolean;
+    size: 'md' | 'sm';
     placeholder?: string;
     noOptionsMessage: () => null;
     value: SelectOption<string>[];
@@ -42,6 +43,7 @@ export const EmailMultiCreatableSelect = forwardRef<
       isMulti,
       onKeyDown,
       options,
+      size = 'md',
       ...rest
     },
     ref,
@@ -72,6 +74,7 @@ export const EmailMultiCreatableSelect = forwardRef<
       const fullLabel =
         rest?.data?.label.length > 1 &&
         rest?.data?.value.length > 1 &&
+        rest.data.value !== rest.data.label &&
         `${rest.data.label}  ${rest.data.value}`;
 
       const emailOnly = rest?.data?.value.length > 1 && `${rest.data.value}`;
@@ -131,7 +134,7 @@ export const EmailMultiCreatableSelect = forwardRef<
       [MultiValue, Option],
     );
     const defaultClassNames = useMemo(
-      () => merge(getDefaultClassNames({ size: 'md' })),
+      () => merge(getDefaultClassNames({ size })),
       [],
     );
 

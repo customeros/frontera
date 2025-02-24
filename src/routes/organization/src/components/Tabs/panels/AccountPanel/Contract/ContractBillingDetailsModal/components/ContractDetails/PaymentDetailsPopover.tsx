@@ -9,6 +9,7 @@ import {
 } from '@ui/overlay/Popover/Popover.tsx';
 
 interface PaymentDetailsPopoverProps {
+  agentId?: string;
   content?: string;
   children: ReactNode;
   withNavigation?: boolean;
@@ -18,6 +19,7 @@ export const PaymentDetailsPopover: FC<PaymentDetailsPopoverProps> = ({
   withNavigation,
   content,
   children,
+  agentId,
 }) => {
   const navigate = useNavigate();
 
@@ -27,24 +29,30 @@ export const PaymentDetailsPopover: FC<PaymentDetailsPopoverProps> = ({
         <div className='w-full'>{children}</div>
       </PopoverTrigger>
       <PopoverContent
+        onMouseDown={(e) => {
+          e.stopPropagation();
+        }}
         className={cn(
           content?.length ? 'block' : 'none',
           'w-fit bg-grayModern-700 text-white rounded-md text-sm border-none z-[50000]',
         )}
       >
         <div className='flex'>
-          <p className='text-base mr-2 text-white'>{content}</p>
+          <p className='text-xs mr-1 text-white'>{content}</p>
 
           {withNavigation && (
             <span
               tabIndex={0}
               role='button'
-              className={'text-base underline text-white'}
-              onClick={() => navigate('/settings?tab=billing')}
+              className={'text-xs underline text-white'}
+              onClick={() => {
+                navigate(`/agents/${agentId}`);
+              }}
             >
-              Go to Settings
+              Cashflow Guardian
             </span>
           )}
+          <span className='ml-1 text-xs'>agent</span>
         </div>
       </PopoverContent>
     </Popover>
