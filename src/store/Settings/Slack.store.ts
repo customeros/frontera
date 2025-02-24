@@ -56,7 +56,7 @@ export class Slack {
     try {
       this.isLoading = true;
       await this.transportLayer.http.post(
-        `/internal/settings/slack/oauth/callback?code=${code}&redirect_url=${redirect_uri}`,
+        `/internal/settings/slack/oauth/callback?code=${code}&redirect_uri=${redirect_uri}`,
       );
       this.load();
       this.root.common.fetchSlackChannels();
@@ -80,7 +80,7 @@ export class Slack {
       const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
 
       const { data } = await this.transportLayer.http.get(
-        `/internal/settings/slack/requestAccess?redirect_url=${redirectUri}&state=${state}`,
+        `/internal/settings/slack/requestAccess?redirect_uri=${redirectUri}&state=${state}`,
       );
 
       window.location.href = data.url;
