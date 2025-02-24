@@ -203,12 +203,12 @@ export const ConfigPage = observer(() => {
 
         {usecase.activeConfig && ActiveConfig && (
           <div className='w-[418px] border-r border-r-grayModern-200'>
-            <ScrollAreaRoot type='always'>
+            <ScrollAreaRoot>
               <ScrollAreaViewport>
                 <ActiveConfig />
               </ScrollAreaViewport>
               <ScrollAreaScrollbar orientation='vertical'>
-                <ScrollAreaThumb />
+                <ScrollAreaThumb className='before:min-w-[20px]' />
               </ScrollAreaScrollbar>
             </ScrollAreaRoot>
           </div>
