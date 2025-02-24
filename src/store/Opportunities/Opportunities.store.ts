@@ -156,7 +156,7 @@ export class OpportunitiesStore implements GroupStore<Opportunity> {
         action: 'APPEND',
         ids: [serverId],
       });
-
+      this.value.get(serverId)?.invalidate();
       this.root.ui.toastSuccess(
         `Opportunity created for ${payload.organization?.name}`,
         'create-opportunity-success',
