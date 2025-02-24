@@ -135,9 +135,9 @@ export const EditSku = observer(() => {
               id='sku-price'
               variant='outline'
               data-test='sku-price'
-              placeholder='Default Price per unit'
               onFocus={(e) => e.target.select()}
               value={editSkuUsecase.maskedPrice}
+              placeholder='Default Price per unit'
               className={cn({
                 'border-error-600 hover:!border-error-600 focus:!border-error-600 active:!border-error-600':
                   editSkuUsecase.errors.price,

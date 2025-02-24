@@ -48,7 +48,7 @@ export const ProspectsBoardPage = observer(() => {
               store.ui.commandMenu.setOpen(true);
             }}
           >
-            Create Opportunity
+            Create opportunity
           </Button>
           <ButtonGroup className='flex items-center w-[252px]'>
             <Button
