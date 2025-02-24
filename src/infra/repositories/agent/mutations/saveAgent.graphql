@@ -26,6 +26,7 @@ mutation saveAgent($input: AgentSaveInput!) {
     metric
     updatedAt
     error
+    description
     metric
     color
     scope

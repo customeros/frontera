@@ -340,6 +340,7 @@ export class Agent extends Entity<AgentDatum> {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         metric: '',
+        description: '',
       },
       payload,
     );

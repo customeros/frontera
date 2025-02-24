@@ -28,6 +28,7 @@ query agents {
     metric
     error
     color
+    description
     icon
     isConfigured
   }

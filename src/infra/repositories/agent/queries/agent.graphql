@@ -28,6 +28,7 @@ query agent($id: ID!) {
     metric
     error
     color
+    description
     icon
     isConfigured
   }
