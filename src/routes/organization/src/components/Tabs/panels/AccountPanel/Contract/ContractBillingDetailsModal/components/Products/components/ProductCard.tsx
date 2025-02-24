@@ -102,9 +102,9 @@ export const ProductCard = observer(
               ''
             }
             className={cn(
-              'font-medium text-sm text-gray-700 min-w-2.5 w-full min-h-0 border-none hover:border-none focus:border-none truncate overflow-hidden',
+              'font-medium text-sm text-grayModern-700 min-w-2.5 w-full min-h-0 border-none hover:border-none focus:border-none truncate overflow-hidden',
               {
-                'text-gray-400 line-through': isClosed,
+                'text-grayModern-400 line-through': isClosed,
               },
             )}
           >
@@ -116,7 +116,7 @@ export const ProductCard = observer(
               <IconButton
                 size='xs'
                 variant='ghost'
-                className='p-0 px-1 text-gray-400'
+                className='p-0 px-1 text-grayModern-400'
                 onClick={() => setShowEnded(!showEnded)}
                 aria-label={
                   showEnded ? 'Hide ended services' : 'Show ended services'
@@ -138,8 +138,8 @@ export const ProductCard = observer(
                   variant='ghost'
                   aria-label='Undo'
                   onClick={() => handleCloseChange(false)}
-                  icon={<FlipBackward className='text-gray-400' />}
-                  className='p-1  max-h-5 hover:bg-gray-100 rounded translate-x-1'
+                  icon={<FlipBackward className='text-grayModern-400' />}
+                  className='p-1  max-h-5 hover:bg-grayModern-100 rounded translate-x-1'
                 />
               </>
             ) : type === 'subscription' ? (
