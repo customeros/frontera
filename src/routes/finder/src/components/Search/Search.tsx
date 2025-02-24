@@ -165,7 +165,7 @@ export const Search = observer(() => {
         label: (
           <span className='flex items-center gap-3'>
             Add or search
-            <div className='bg-gray-600 text-xs min-h-4 min-w-4 rounded flex justify-center items-center'>
+            <div className='bg-grayModern-600 text-xs min-h-4 min-w-4 rounded flex justify-center items-center'>
               /
             </div>
           </span>
@@ -256,7 +256,7 @@ export const Search = observer(() => {
               <Tag variant='subtle' className='mb-[2px]' colorScheme='grayBlue'>
                 <TagLabel className='capitalize'>Enter</TagLabel>
               </Tag>
-              <span className='font-normal text-gray-400 break-keep w-max text-sm'>
+              <span className='font-normal text-grayModern-400 break-keep w-max text-sm'>
                 to create
               </span>
             </div>

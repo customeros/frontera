@@ -82,7 +82,7 @@ const theme: EditorThemeClasses = {
     underline: 'editor-textUnderline',
     underlineStrikethrough: 'editor-textUnderlineStrikethrough',
   },
-  quote: 'border-l-[2px] border-gray-300 pl-3 my-3',
+  quote: 'border-l-[2px] border-grayModern-300 pl-3 my-3',
 };
 
 const onError = (error: Error) => {
@@ -266,7 +266,7 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
                     size,
                     className: placeholderClassName,
                   }),
-                  'absolute top-0 text-gray-400',
+                  'absolute top-0 text-grayModern-400',
                 )}
               >
                 {placeholder}

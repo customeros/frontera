@@ -8,7 +8,7 @@ export class CustomersPage {
 
   async ensureNumberOfCustomersExist(numberOfCustomers: number) {
     const elements = await this.page.$$(
-      '.flex.flex-1.relative.w-full > .top-0.left-0.inline-flex.items-center.flex-1.w-full.text-sm.absolute.border-b.bg-white.border-gray-100.transition-all.animate-fadeIn.group[data-index="0"][data-selected="false"][data-focused="false"]',
+      '.flex.flex-1.relative.w-full > .top-0.left-0.inline-flex.items-center.flex-1.w-full.text-sm.absolute.border-b.bg-white.border-grayModern-100.transition-all.animate-fadeIn.group[data-index="0"][data-selected="false"][data-focused="false"]',
     );
 
     expect(

@@ -57,7 +57,7 @@ export const Branches = observer(({ id, isReadOnly }: BranchesProps) => {
             <Link
               key={organization.id}
               to={`/organization/${organization.id}?tab=about`}
-              className='line-clamp-1 text-sm break-keep text-gray-700 hover:text-primary-600 no-underline hover:underline'
+              className='line-clamp-1 text-sm break-keep text-grayModern-700 hover:text-primary-600 no-underline hover:underline'
             >
               {organization.name}
             </Link>

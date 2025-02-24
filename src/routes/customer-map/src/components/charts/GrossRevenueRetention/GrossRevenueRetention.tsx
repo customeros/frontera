@@ -51,7 +51,7 @@ export const GrossRevenueRetention = observer(() => {
       renderSubStat={
         hasMissingData
           ? () => (
-              <p className='font-semibold text-gray-400 mb-10'>
+              <p className='font-semibold text-grayModern-400 mb-10'>
                 Key data missing.
               </p>
             )

@@ -34,7 +34,7 @@ export function ServicesTable({
   return (
     <div className='w-full'>
       <div className='flex flex-col w-full'>
-        <div className='flex flex-row w-full justify-between border-b border-gray-300 py-2'>
+        <div className='flex flex-row w-full justify-between border-b border-grayModern-300 py-2'>
           <div className='w-1/2 text-left text-sm capitalize font-bold'>
             Service
           </div>
@@ -67,14 +67,14 @@ export function ServicesTable({
           return (
             <div
               key={`invoice-line-item-${price}-${vat}-${index}-${service.description}`}
-              className='flex flex-row w-full justify-between border-b border-gray-300 py-2 '
+              className='flex flex-row w-full justify-between border-b border-grayModern-300 py-2 '
             >
               <div className={'flex w-full'}>
                 <div className='w-1/2 '>
                   <div className='text-left text-sm capitalize font-medium leading-5'>
                     {service?.description ?? 'Unnamed'}
                   </div>
-                  <div className='text-gray-500 text-sm'>
+                  <div className='text-grayModern-500 text-sm'>
                     {isGenerated &&
                     isGenerated?.contractLineItem?.billingCycle ===
                       BilledType.Once ? (
@@ -130,16 +130,16 @@ export function ServicesTable({
                     )}
                   </div>
                 </div>
-                <div className='w-1/6 flex justify-end text-sm text-gray-500 leading-5'>
+                <div className='w-1/6 flex justify-end text-sm text-grayModern-500 leading-5'>
                   {service.quantity}
                 </div>
-                <div className='w-1/6 flex justify-end text-sm text-gray-500 leading-5'>
+                <div className='w-1/6 flex justify-end text-sm text-grayModern-500 leading-5'>
                   {price}
                 </div>
-                <div className='w-1/6 flex justify-end text-sm text-gray-500 leading-5'>
+                <div className='w-1/6 flex justify-end text-sm text-grayModern-500 leading-5'>
                   {vat}
                 </div>
-                <div className='w-1/6 text-right text-sm text-gray-500 leading-5'>
+                <div className='w-1/6 text-right text-sm text-grayModern-500 leading-5'>
                   {formatCurrency(service?.total ?? 0, 2, currency)}
                 </div>
               </div>

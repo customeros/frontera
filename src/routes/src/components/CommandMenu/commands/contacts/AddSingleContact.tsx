@@ -90,7 +90,7 @@ export const AddSingleContact = observer(() => {
 
   return (
     <Command shouldFilter={false} label='Add contacts'>
-      <article className='relative w-full p-6 flex flex-col border-b border-b-gray-100 max-h-[580px]'>
+      <article className='relative w-full p-6 flex flex-col border-b border-b-grayModern-100 max-h-[580px]'>
         <div className='flex items-center justify-between mb-2'>
           <h1 className='text-base font-medium'>
             Add a contact using their...

@@ -94,7 +94,9 @@ export const ArrEstimateCell = observer(
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className='flex ' style={{ width: `calc(100% - 1rem)` }}>
-          {!isEdit && !value && <p className='text-gray-400'>No estimate</p>}
+          {!isEdit && !value && (
+            <p className='text-grayModern-400'>No estimate</p>
+          )}
           {!isEdit && value && (
             <p className='overflow-ellipsis overflow-hidden'>
               {formatCurrency(
@@ -140,7 +142,7 @@ export const ArrEstimateCell = observer(
               aria-label='edit'
               className='ml-3 rounded-[5px]'
               onClick={() => setIsEdit(!isEdit)}
-              icon={<Edit03 className='text-gray-500' />}
+              icon={<Edit03 className='text-grayModern-500' />}
             />
           )}
         </div>

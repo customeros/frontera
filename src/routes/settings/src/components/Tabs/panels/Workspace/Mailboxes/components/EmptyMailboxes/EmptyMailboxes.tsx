@@ -17,7 +17,7 @@ export const EmptyMailboxes = ({ onUpdate }: EmptyMailboxesProps) => {
   return (
     <div className=' border-r-[1px] max-w-[418px] h-full'>
       <div className='flex flex-col pl-6 pr-5 pt-10'>
-        <FeaturedIcon colorScheme='gray'>
+        <FeaturedIcon colorScheme='grayModern'>
           <Inbox01 />
         </FeaturedIcon>
         <div className='mt-4 gap-1'>
@@ -75,7 +75,7 @@ export const EmptyMailboxes = ({ onUpdate }: EmptyMailboxesProps) => {
         </div>
 
         <div className='flex items-center py-2 px-3 border rounded-md border-grayModern-200 mt-4'>
-          <Sale03 className='text-gray-500 mr-2' />
+          <Sale03 className='text-grayModern-500 mr-2' />
           <span className='text-sm'>
             Get the <span className='font-medium'>Starter bundle</span> for{' '}
             <span className='text-success-500 font-medium'>$199.99/month</span>

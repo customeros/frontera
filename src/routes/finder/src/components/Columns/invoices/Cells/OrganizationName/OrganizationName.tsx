@@ -7,6 +7,6 @@ export const OrganizationName = ({ orgId }: { orgId: string }) => {
   return orgName ? (
     <span>{orgName}</span>
   ) : (
-    <span className='text-gray-400'>Does not exist</span>
+    <span className='text-grayModern-400'>Does not exist</span>
   );
 };

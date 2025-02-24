@@ -39,14 +39,14 @@ export const LogEntryStub = ({ data }: LogEntryStubProps) => {
   const getLogEntryIcon = useCallback((type: string | null) => {
     switch (type) {
       case 'email':
-        return <Mail01 className='text-gray-500 size-3' />;
+        return <Mail01 className='text-grayModern-500 size-3' />;
       case 'meeting':
-        return <Calendar className='text-gray-500 size-3' />;
+        return <Calendar className='text-grayModern-500 size-3' />;
       case 'voicemail':
       case 'call':
-        return <Phone className='text-gray-500 size-3' />;
+        return <Phone className='text-grayModern-500 size-3' />;
       case 'text-message':
-        return <MessageTextSquare01 className='text-gray-500 size-3' />;
+        return <MessageTextSquare01 className='text-grayModern-500 size-3' />;
 
       default:
         return null;
@@ -72,7 +72,7 @@ export const LogEntryStub = ({ data }: LogEntryStubProps) => {
     if (!icon) return null;
 
     return (
-      <div className='flex mr-[10px] relative bg-white border border-gray-200 rounded-md p-2 right-[-12px] top-[4px]'>
+      <div className='flex mr-[10px] relative bg-white border border-grayModern-200 rounded-md p-2 right-[-12px] top-[4px]'>
         {icon}
       </div>
     );
@@ -85,7 +85,7 @@ export const LogEntryStub = ({ data }: LogEntryStubProps) => {
         isTemporary
           ? 'opacity-50 cursor-progress'
           : 'opacity-100 cursor-pointer',
-        'hover:shadow-sm max-w-[549px] flex flex-col bg-white ml-6 shadow-none border border-gray-200 rounded-lg transition-all duration-200 ease-in-out',
+        'hover:shadow-sm max-w-[549px] flex flex-col bg-white ml-6 shadow-none border border-grayModern-200 rounded-lg transition-all duration-200 ease-in-out',
       )}
     >
       <CardContent
@@ -93,9 +93,9 @@ export const LogEntryStub = ({ data }: LogEntryStubProps) => {
         className='px-3 py-2 flex-1 flex'
       >
         <div className='flex w-full justify-between relative h-fit'>
-          <div className='w-[460px] line-clamp-4 text-sm text-gray-700 h-fit'>
+          <div className='w-[460px] line-clamp-4 text-sm text-grayModern-700 h-fit'>
             <span>{fullName}</span>
-            <span className='text-gray-500 mx-1'>wrote</span>
+            <span className='text-grayModern-500 mx-1'>wrote</span>
             <HtmlContentRenderer
               showAsInlineText
               data-test='timeline-log-entry-text'

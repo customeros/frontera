@@ -311,7 +311,7 @@ export const ContractDetailsModal = observer(
               : null
           }
           className={cn(
-            'flex flex-col gap-4 px-6 pb-6 pt-4 bg-gray-25  rounded-lg justify-between relative h-[80vh] w-[460px] overflow-y-auto overflow-x-hidden',
+            'flex flex-col gap-4 px-6 pb-6 pt-4 bg-grayModern-25  rounded-lg justify-between relative h-[80vh] w-[460px] overflow-y-auto overflow-x-hidden',
             {
               'cursor-pointer': editModalMode === EditModalMode.BillingDetails,
             },
@@ -351,12 +351,12 @@ export const ContractDetailsModal = observer(
               tenantBillingProfiles?.[0]?.value as TenantBillingProfile
             }
           />
-          <ModalFooter className='p-0 flex sticky z-[999] -bottom-6 -mb-6 pb-5 pt-3 bg-gray-25'>
+          <ModalFooter className='p-0 flex sticky z-[999] -bottom-6 -mb-6 pb-5 pt-3 bg-grayModern-25'>
             <Button
               size='md'
               variant='outline'
-              colorScheme='gray'
               className='w-full'
+              colorScheme='grayModern'
               onClick={() => {
                 handleCloseModal();
                 contractStore?.resetTempValue();

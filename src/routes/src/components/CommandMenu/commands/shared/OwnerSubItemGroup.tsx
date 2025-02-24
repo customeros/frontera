@@ -126,9 +126,9 @@ export const OwnerSubItemGroup = observer(() => {
               size='xs'
               textSize='xxs'
               name={user.name ?? 'Unnamed'}
-              className='border border-gray-200'
+              className='border border-grayModern-200'
               src={user.value.profilePhotoUrl ?? undefined}
-              icon={<User01 className='text-gray-500 size-3' />}
+              icon={<User01 className='text-grayModern-500 size-3' />}
             />
           }
         />

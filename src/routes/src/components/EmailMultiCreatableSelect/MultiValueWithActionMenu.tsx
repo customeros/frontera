@@ -84,7 +84,7 @@ export const MultiValueWithActionMenu: FC<MultiValueWithActionMenuProps> =
           className={cn(
             isContactWithoutEmail
               ? '[&_.multiValueClass]:data-[state=closed]:bg-warning-50 [&_.multiValueClass]:data-[state=closed]:text-warning-700 [&_.multiValueClass]:data-[state=closed]:border-warning-200 [&_.multiValueClass]:data-[state=open]:bg-warning-50 [&_.multiValueClass]:data-[state=open]:text-warning-700 [&_.multiValueClass]:data-[state=open]:border-warning-200'
-              : 'hover:bg-grayModern-100  rounded-sm px-[2px] [&_.multiValueClass]:data-[state=closed]:bg-gray-50 [&_.multiValueClass]:data-[state=closed]:text-gray-700 [&_.multiValueClass]:data-[state=closed]:border-gray-200 [&_.multiValueClass]:data-[state=open]:bg-primary-50 [&_.multiValueClass]:data-[state=open]:text-primary-700 [&_.multiValueClass]:data-[state=open]:last:border-primary-200',
+              : 'hover:bg-grayModern-100  rounded-sm px-[2px] [&_.multiValueClass]:data-[state=closed]:bg-grayModern-50 [&_.multiValueClass]:data-[state=closed]:text-grayModern-700 [&_.multiValueClass]:data-[state=closed]:border-grayModern-200 [&_.multiValueClass]:data-[state=open]:bg-primary-50 [&_.multiValueClass]:data-[state=open]:text-primary-700 [&_.multiValueClass]:data-[state=open]:last:border-primary-200',
             {
               'bg-grayModern-100 ': isOpen,
               'bg-transparent hover:bg-grayModern-100 focus:bg-grayModern-100':
@@ -106,7 +106,7 @@ export const MultiValueWithActionMenu: FC<MultiValueWithActionMenuProps> =
           <MenuList side='bottom' align='start' className='max-w-[300px] p-2'>
             {isContactInOrg?.id && (
               <MenuItem
-                className='flex justify-between items-center rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='flex justify-between items-center rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
                 onPointerDown={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
@@ -122,7 +122,7 @@ export const MultiValueWithActionMenu: FC<MultiValueWithActionMenuProps> =
                 }}
               >
                 Edit address
-                <Edit03 className='size-3 text-gray-500 ml-2' />
+                <Edit03 className='size-3 text-grayModern-500 ml-2' />
               </MenuItem>
             )}
 
@@ -131,14 +131,14 @@ export const MultiValueWithActionMenu: FC<MultiValueWithActionMenuProps> =
                 onPointerDown={() => {
                   copyToClipboard(rest?.data?.value, 'Email copied');
                 }}
-                className='flex justify-between items-center rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='flex justify-between items-center rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
               >
                 {rest?.data?.value}
-                <Copy01 className='size-3 text-gray-500 ml-2' />
+                <Copy01 className='size-3 text-grayModern-500 ml-2' />
               </MenuItem>
             ) : (
               <MenuItem
-                className='rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
                 onPointerDown={() => {
                   isContactInOrg &&
                     handleNavigateToContact(isContactInOrg.id, 'email');
@@ -152,13 +152,13 @@ export const MultiValueWithActionMenu: FC<MultiValueWithActionMenuProps> =
               onPointerDown={() => {
                 removeOption(rest.data.value);
               }}
-              className='rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+              className='rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
             >
               Remove address
             </MenuItem>
             {!isContactInOrg && (
               <MenuItem
-                className='rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
                 onPointerDown={(e) => {
                   e.stopPropagation();
                   e.preventDefault();

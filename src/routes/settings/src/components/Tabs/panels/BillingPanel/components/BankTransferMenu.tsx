@@ -11,14 +11,14 @@ export const BankTransferMenu = observer(({ id }: { id: string }) => {
   return (
     <Menu>
       <MenuButton className='mb-1 ml-1'>
-        <DotsVertical className='text-gray-400 size-4' />
+        <DotsVertical className='text-grayModern-400 size-4' />
       </MenuButton>
       <MenuList align='end' side='bottom' className='min-w-[150px]'>
         <MenuItem
           className='w-auto flex items-center'
           onClick={() => store.settings.bankAccounts.remove(id)}
         >
-          <Archive className='mr-2 text-gray-500' />
+          <Archive className='mr-2 text-grayModern-500' />
           Archive account
         </MenuItem>
       </MenuList>

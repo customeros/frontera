@@ -43,7 +43,7 @@ export const RevenueAtRisk = observer(() => {
           <div className='flex flex-col'>
             <div className='flex gap-2 items-center'>
               <div className='flex w-2 h-2 bg-warning-300 rounded-full' />
-              <p className='text-sm text-gray-500'>At Risk</p>
+              <p className='text-sm text-grayModern-500'>At Risk</p>
             </div>
             <p className='text-sm'>{formatCurrency(chartData.atRisk)}</p>
           </div>

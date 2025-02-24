@@ -12,7 +12,7 @@ export const shadows = {
   ringDestructive: '0px 0px 0px 4px #FEE4E2',
   ringWarning: '0px 0px 0px 4px #FEF0C7',
   avatarRing: '0px 0px 0px 6px #F9F5FF',
-  avatarRingGray: '0px 0px 0px 6px var(--chakra-colors-gray-100)',
+  avatarRingGray: '0px 0px 0px 6px var(--chakra-colors-grayModern-100)',
   menuOptionsFocus: '0px 0px 0px 2px #F2F4F7',
   sidenavItemFocus: '0px 0px 0px 2px ##F2F4F7',
   sidenavItemActive: '0px 0px 0px 3px #EAECF0',

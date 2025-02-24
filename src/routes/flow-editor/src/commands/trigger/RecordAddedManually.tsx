@@ -47,16 +47,16 @@ export const RecordAddedManually = observer(() => {
         leftAccessory={<Building07 />}
         keywords={keywords.organization}
       >
-        <span className='text-gray-700'>Organization</span>{' '}
-        <span className='text-gray-500'>(Coming soon)</span>
+        <span className='text-grayModern-700'>Organization</span>{' '}
+        <span className='text-grayModern-500'>(Coming soon)</span>
       </CommandItem>{' '}
       <CommandItem
         disabled
         keywords={keywords.opportunity}
         leftAccessory={<CoinsStacked01 />}
       >
-        <span className='text-gray-700'>Opportunity</span>{' '}
-        <span className='text-gray-500'>(Coming soon)</span>
+        <span className='text-grayModern-700'>Opportunity</span>{' '}
+        <span className='text-grayModern-500'>(Coming soon)</span>
       </CommandItem>
     </>
   );

@@ -25,7 +25,7 @@ export const TimelineActionsArea = ({
         openedEditor !== null || activeEditor !== null
           ? 'pt-6 pb-2'
           : 'pt-0 pb-8',
-        'mt-[-16px] bg-white border-dashed border-t-[1px] border-gray-200',
+        'mt-[-16px] bg-white border-dashed border-t-[1px] border-grayModern-200',
       )}
     >
       {openedEditor === 'email' && (

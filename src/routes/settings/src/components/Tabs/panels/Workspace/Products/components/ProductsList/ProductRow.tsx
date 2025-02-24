@@ -62,13 +62,13 @@ export const ProductRow = observer(({ id }: { id: string }) => {
               }}
             >
               <div className='flex items-center'>
-                <Edit03 className='mr-2 text-gray-500 group-hover/edit:text-gray-700' />
+                <Edit03 className='mr-2 text-grayModern-500 group-hover/edit:text-grayModern-700' />
                 Edit product
               </div>
             </MenuItem>
             <MenuItem onClick={onOpenArchive} className='group/archive'>
               <div className='flex items-center'>
-                <Archive className='mr-2 group-hover/archive:text-gray-700 text-gray-500' />
+                <Archive className='mr-2 group-hover/archive:text-grayModern-700grayModernt-grayModern-500' />
                 Archive product
               </div>
             </MenuItem>

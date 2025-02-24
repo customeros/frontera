@@ -29,8 +29,8 @@ export const ActionItem = ({
           <>
             <div className='flex items-center text-sm'>
               Open command menu
-              <CommandKbd className='bg-gray-600 text-gray-25 mx-1' />
-              <div className='bg-gray-600 text-xs min-h-5 min-w-5 rounded flex justify-center items-center'>
+              <CommandKbd className='bg-grayModern-600 text-grayModern-25 mx-1' />
+              <div className='bg-grayModern-600 text-xs min-h-5 min-w-5 rounded flex justify-center items-center'>
                 K
               </div>
             </div>
@@ -41,9 +41,9 @@ export const ActionItem = ({
       <Button
         leftIcon={icon}
         onClick={onClick}
-        colorScheme='gray'
         dataTest={dataTest}
-        className='bg-gray-700 text-gray-25 hover:bg-gray-800 hover:text-gray-25 focus:bg-gray-800'
+        colorScheme='grayModern'
+        className='bg-grayModern-700grayModernt-grayModern-grayModernover:bg-grayModegrayModern00 hover:textgrayModernyModern-25 focus:bg-grayModern-800'
       >
         {children}
       </Button>

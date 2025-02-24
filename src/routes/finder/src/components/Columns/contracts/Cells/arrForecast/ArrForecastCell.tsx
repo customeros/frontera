@@ -65,11 +65,11 @@ export const ArrForecastCell = observer(({ id }: OwnerProps) => {
       opportunity?.value?.maxAmount;
 
   if (!opportunity?.value?.amount && !opportunity?.value?.maxAmount)
-    return <span className='text-gray-400'>Unknown</span>;
+    return <span className='text-grayModern-400'>Unknown</span>;
 
   const textColor = opportunity?.value?.amount
-    ? 'text-gray-700'
-    : 'text-gray-500';
+    ? 'text-grayModern-700'
+    : 'text-grayModern-500';
 
   return (
     <div className='flex flex-col justify-center group/forecast'>
@@ -86,7 +86,7 @@ export const ArrForecastCell = observer(({ id }: OwnerProps) => {
             {/*  size='xxs'*/}
             {/*  variant='ghost'*/}
             {/*  aria-label='edit renewal likelihood'*/}
-            {/*  icon={<Edit03 className='text-gray-500' />}*/}
+            {/*  icon={<Edit03 className='text-grayModern-500' />}*/}
             {/*  className={cn(*/}
             {/*    'rounded-md opacity-0 group-hover/forecast:opacity-100',*/}
             {/*    isEditing && 'opacity-100',*/}
@@ -117,7 +117,7 @@ export const ArrForecastCell = observer(({ id }: OwnerProps) => {
             //   }
             // }}
           >
-            <RangeSliderTrack className='bg-gray-400 h-0.5'>
+            <RangeSliderTrack className='bg-grayModern-400 h-0.5'>
               <RangeSliderFilledTrack className={trackStyle} />
             </RangeSliderTrack>
             <RangeSliderThumb className={thumbStyle} />

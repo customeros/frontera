@@ -35,10 +35,10 @@ export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
   };
 
   if (isEnriching) {
-    return <p className='text-gray-400'>Enriching...</p>;
+    return <p className='text-grayModern-400'>Enriching...</p>;
   }
 
-  if (!org) return <p className='text-gray-400'>Not set</p>;
+  if (!org) return <p className='text-grayModern-400'>Not set</p>;
 
   return (
     <div className='flex items-center gap-2 group/orgName w-full'>
@@ -53,7 +53,7 @@ export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
         size='xs'
         variant='ghost'
         aria-label='preview company'
-        icon={<Eye className='text-gray-500' />}
+        icon={<Eye className='text-grayModern-500' />}
         className='opacity-0 group-hover/orgName:opacity-100 cursor-pointer'
         onClick={() => {
           if (store.ui.showPreviewCard && store.ui.focusRow === id) {

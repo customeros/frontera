@@ -16,4 +16,4 @@ export const getIconColor = (status: OnboardingStatus) =>
       OnboardingStatus.Stuck,
       () => 'text-warning-500',
     )
-    .otherwise(() => 'text-gray-500');
+    .otherwise(() => 'text-grayModern-500');

@@ -66,7 +66,7 @@ export const LogoUploader = observer(() => {
   return (
     <div className='flex flex-col'>
       <div className='flex justify-between items-center'>
-        <p className='text-sm text-gray-900 w-fit whitespace-nowrap font-semibold'>
+        <p className='text-sm text-grayModern-900 w-fit whitespace-nowrap font-semibold'>
           Company logo
         </p>
 
@@ -83,8 +83,8 @@ export const LogoUploader = observer(() => {
             uploadUrl: '',
           }}
           className={cn(
-            ghostButton({ colorScheme: 'gray' }),
-            'hover:bg-gray-100 p-1 rounded-lg cursor-pointer',
+            ghostButton({ colorScheme: 'grayModern' }),
+            'hover:bg-grayModern-100 p-1 rounded-lg cursor-pointer',
             isLoading && 'opacity-50 pointer-events-none',
           )}
         >
@@ -106,8 +106,8 @@ export const LogoUploader = observer(() => {
         }}
       >
         {isDragging ? (
-          <div className='p-4 border border-dashed border-gray-300 rounded-lg text-center'>
-            <p className='text-sm text-gray-500'>
+          <div className='p-4 border border-dashed border-grayModern-300 rounded-lg text-center'>
+            <p className='text-sm text-grayModern-500'>
               Drag and drop PNG or JPG (Max 150KB)
             </p>
           </div>
@@ -116,7 +116,7 @@ export const LogoUploader = observer(() => {
             {!store.settings.tenant.value?.logoRepositoryFileId && !file && (
               <label
                 htmlFor='logoUploader'
-                className='text-sm text-gray-500 underline cursor-pointer'
+                className='text-sm text-grayModern-500 underline cursor-pointer'
               >
                 Upload a PNG or JPG (Max 150KB)
               </label>

@@ -19,7 +19,7 @@ export const MarkdownEventStub: FC<{ event: MarkdownEventType }> = ({
       <Card
         onClick={() => openModal(event.markdownEventMetadata?.id)}
         className={cn(
-          'ml-6 shadow-none cursor-pointer text-sm border border-gray-200 bg-white flex max-w-[549px]',
+          'ml-6 shadow-none cursor-pointer text-sm border border-grayModern-200 bg-white flex max-w-[549px]',
           'rounded-lg hover:shadow-sm transition-all duration-200 ease-out',
         )}
       >

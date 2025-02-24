@@ -30,7 +30,7 @@ const solidButton = (color: string) => `
 
 const outlineButton = (color: string) => `
     ${color}: ${
-  color === 'gray'
+  color === 'grayModern'
     ? `[
     'text-${color}-700',
     'border',
@@ -54,7 +54,7 @@ const outlineButton = (color: string) => `
 
 const ghostButton = (color: string) => `
     ${color}: ${
-  color === 'gray'
+  color === 'grayModern'
     ? `[
       'bg-transparent',
       'shadow-none',
@@ -68,11 +68,11 @@ const ghostButton = (color: string) => `
     ? `[
       'bg-transparent',
       'shadow-none',
-      'text-gray-25',
-      'hover:text-gray-25',
-      'focus:text-gray-25',
-      'hover:bg-gray-600',
-      'focus:bg-gray-600',
+      'text-grayModern-25',
+      'hover:text-grayModern-25',
+      'focus:text-grayModern-25',
+      'hover:bg-grayModern-600',
+      'focus:bg-grayModern-600',
     ]`
     : `[
       'bg-transparent',
@@ -87,7 +87,7 @@ const ghostButton = (color: string) => `
 
 const linkButton = (color: string) => `
     ${color}: ${
-  color === 'gray'
+  color === 'grayModern'
     ? `[
       'text-${color}-500',
       'hover:text-${color}-700',
@@ -254,7 +254,7 @@ ${buttonTypes
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   })
 

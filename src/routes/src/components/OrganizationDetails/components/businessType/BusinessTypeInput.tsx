@@ -52,7 +52,7 @@ export const BusinessTypeInput = observer(
         <Popover open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
           <Tooltip align='start' label='Business type'>
             <PopoverTrigger className={cn('flex items-center ')}>
-              <Briefcase02 className='text-gray-500 mr-3' />
+              <Briefcase02 className='text-grayModern-500 mr-3' />
               <div
                 data-test={dataTest}
                 className='flex flex-wrap gap-1 w-fit items-center'
@@ -60,7 +60,9 @@ export const BusinessTypeInput = observer(
                 {value ? (
                   <div className='text-sm'>{value.label}</div>
                 ) : (
-                  <span className='text-gray-400 text-sm'>Business type</span>
+                  <span className='text-grayModern-400 text-sm'>
+                    Business type
+                  </span>
                 )}
               </div>
             </PopoverTrigger>
@@ -78,7 +80,7 @@ export const BusinessTypeInput = observer(
                 setIsOpen(false);
               }}
               noOptionsMessage={({ inputValue }) => (
-                <div className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
+                <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
                   <span>{`No results matching "${inputValue}"`}</span>
                 </div>
               )}

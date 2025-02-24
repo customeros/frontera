@@ -45,10 +45,10 @@ export const TagsManager = observer(() => {
 
   return (
     <>
-      <div className='px-6 pb-4 max-w-[500px] h-full overflow-y-auto border-r border-gray-200'>
+      <div className='px-6 pb-4 max-w-[500px] h-full overflow-y-auto border-r border-grayModern-200'>
         <div className='flex flex-col'>
-          <div className='flex justify-between items-center pt-2 sticky top-0 bg-gray-25'>
-            <p className='text-gray-700 font-semibold'>Tags</p>
+          <div className='flex justify-between items-center pt-2 sticky top-0 bg-grayModern-25'>
+            <p className='text-grayModern-700 font-semibold'>Tags</p>
           </div>
           <p className='mb-4 text-sm'>Manage your workspace tags</p>
 
@@ -78,8 +78,8 @@ export const TagsManager = observer(() => {
           {filteredTags.length === 0 && searchTerm ? (
             <div className='flex justify-center items-center h-full'>
               <div className='flex flex-col items-center mt-4 gap-2'>
-                <Tumbleweed className='w-8 h-8 text-gray-400' />
-                <span className='text-sm text-gray-500'>
+                <Tumbleweed className='w-8 h-8 text-grayModern-400' />
+                <span className='text-sm text-grayModern-500'>
                   Empty here in
                   <span className='font-semibold'> No Resultsville</span>
                 </span>

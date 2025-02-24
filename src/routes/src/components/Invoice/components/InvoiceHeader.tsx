@@ -36,7 +36,7 @@ export const InvoiceHeader: FC<InvoiceHeaderProps> = observer(
             )}
             {status && !isPreview && (
               <div className='ml-4 mt-1'>
-                <Tag variant='outline' colorScheme='gray'>
+                <Tag variant='outline' colorScheme='grayModern'>
                   {status}
                 </Tag>
               </div>
@@ -61,7 +61,7 @@ export const InvoiceHeader: FC<InvoiceHeaderProps> = observer(
         </div>
 
         {!isPreview && (
-          <h2 className='text-sm text-gray-500'>N° {invoiceNumber}</h2>
+          <h2 className='text-sm text-grayModern-500'>N° {invoiceNumber}</h2>
         )}
       </div>
     );

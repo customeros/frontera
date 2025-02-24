@@ -66,7 +66,7 @@ export const WelcomeSidenavItem = observer(
         className={cn(
           buttonSize({ size: 'sm' }),
           (ghostButton({ colorScheme: 'grayModern' }),
-          `flex w-full justify-start gap-2 px-3 text-gray-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-gray-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md ${dynamicClasses}`),
+          `flex w-full justify-start gap-2 px-3 text-grayModern-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-grayModern-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md ${dynamicClasses}`),
         )}
       >
         <div className='mt-[-1px]'>
@@ -90,13 +90,13 @@ export const WelcomeSidenavItem = observer(
           )}
         >
           <Menu open={isEditing} onOpenChange={setIsEditing}>
-            <MenuButton className='min-w-6 h-5 rounded-md outline-none focus:outline-none text-gray-400 hover:text-gray-500'>
+            <MenuButton className='min-w-6 h-5 rounded-md outline-none focus:outline-none text-grayModern-400 hovergrayModernt-grayModern-500'>
               <Icon name='dots-vertical' className='text-inherit' />
             </MenuButton>
 
             <MenuList align='end' side='bottom'>
               <MenuItem onClick={handleArchive}>
-                <Icon name='archive' className='text-gray-500' />
+                <Icon name='archive' className='text-grayModern-500' />
                 Archive
               </MenuItem>
             </MenuList>

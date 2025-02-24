@@ -134,7 +134,7 @@ export const TagsSelect: FC<EmailParticipantSelect> = ({
         <div ref={scope} className='flex items-baseline'>
           {!selectedTags?.length && (
             <>
-              <p className='text-gray-500 mr-2 whitespace-nowrap'>
+              <p className='text-grayModern-500 mr-2 whitespace-nowrap'>
                 Suggested tags:
               </p>
 
@@ -226,7 +226,7 @@ export const TagsSelect: FC<EmailParticipantSelect> = ({
                   getMenuClassNames(menuPlacement)('!z-[999]'),
                 multiValueLabel: () =>
                   getMultiValueLabelClassNames(
-                    'p-0 gap-0 text-gray-700 m-0 mr-1 cursor-text font-base leading-4 before:content-["#"]',
+                    'p-0 gap-0 text-grayModern-700 m-0 mr-1 cursor-text font-base leading-4 before:content-["#"]',
                   ),
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -31,7 +31,9 @@ export const BillingCycleCell = ({
 }) => {
   return (
     <div
-      className={cn(billingCycleInMonths ? 'text-gray-700' : 'text-gray-400')}
+      className={cn(
+        billingCycleInMonths ? 'text-grayModern-700' : 'text-grayModern-400',
+      )}
     >
       {billingCycleInMonths
         ? getBillingCycleLabel(billingCycleInMonths)

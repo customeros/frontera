@@ -28,7 +28,7 @@ export const Subdomain = observer(({ domain }: { domain: string }) => {
   if (!organization || !organization?.value) return null;
 
   return (
-    <div className='text-sm cursor-pointer flex items-center no-underline hover:no-underline text-gray-700 group'>
+    <div className='text-sm cursor-pointer flex items-center no-underline hover:no-underline text-grayModern-700 group'>
       <a
         target='_blank'
         rel='noreferrer noopener'

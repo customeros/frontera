@@ -85,7 +85,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (isJustCreated) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focus:text-grayModern-500 hover:text-grayModern-500 hover:no-underline focus:no-underline'>
         Contract starting... Edit contract
       </p>
     );
@@ -93,7 +93,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (isJustCreated && !serviceStartDate) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod ? `${renewalPeriod} contract ` : 'Contract '}
         {data?.autoRenew ? 'auto-renewing' : 'not auto-renewing'}
       </p>
@@ -106,12 +106,12 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
     data?.committedPeriodInMonths
   ) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod ? `${renewalPeriod} contract` : 'Contract'} starting ...
         <Button
           size='xs'
           variant='link'
-          className='underline ml-1 p-0 font-normal text-sm text-gray-500 hover:text-gray-500 focus:text-gray-500'
+          className='underline ml-1 p-0 font-normal text-sm text-grayModern-500 hovergrayModernt-grayModern-500grayModernus:text-grayModern-500'
         >
           Edit contract
         </Button>
@@ -126,7 +126,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
     data?.contractStatus === ContractStatus.Draft
   ) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod} contract{' '}
         {data?.autoRenew ? 'auto-renewing' : 'not auto-renewing'}
       </p>
@@ -135,7 +135,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (!hasStartedService && serviceStartDate && data?.committedPeriodInMonths) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod ? `${renewalPeriod} contract` : 'Contract'} set to go
         live on {serviceStartDate}
       </p>
@@ -144,7 +144,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (hasStartedService && endDate) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod ? `${renewalPeriod} contract` : 'Contract'}{' '}
         {contractEnded && DateTimeUtils.isFuture(contractEnded)
           ? 'ending'
@@ -156,7 +156,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (hasStartedService && renewalDate && data?.autoRenew) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod ? `${renewalPeriod} contract` : 'Contract'} auto-renewing{' '}
         {renewalDate}
       </p>
@@ -165,7 +165,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (hasStartedService && !data?.autoRenew) {
     return (
-      <p className='font-normal shadow-none text-sm  text-gray-500 focus:text-gray-500 hover:text-gray-500 hover:no-underline focus:no-underline'>
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focusgrayModernt-grayModern-500grayModerner:text-grayModern-500 hover:no-underline focus:no-underline'>
         {renewalPeriod ? `${renewalPeriod} contract` : 'Contract'} until{' '}
         {renewalDate}, not auto-renewing
       </p>

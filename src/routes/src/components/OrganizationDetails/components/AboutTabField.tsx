@@ -38,7 +38,7 @@ export const AboutTabField = ({
           {value ? (
             <span>{value}</span>
           ) : (
-            <span data-test={dataTest} className={'text-gray-400'}>
+            <span data-test={dataTest} className={'text-grayModern-400'}>
               {placeholder}
             </span>
           )}

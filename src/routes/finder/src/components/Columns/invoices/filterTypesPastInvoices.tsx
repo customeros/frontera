@@ -34,7 +34,9 @@ export const getFilterTypes = () => {
         ComparisonOperator.IsEmpty,
         ComparisonOperator.IsNotEmpty,
       ],
-      icon: <Invoice className='group-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <Invoice className='group-hover:text-grayModern-700 text-grayModern-500' />
+      ),
     },
     [ColumnViewType.InvoicesContract]: {
       filterType: 'text',
@@ -46,7 +48,9 @@ export const getFilterTypes = () => {
         ComparisonOperator.IsEmpty,
         ComparisonOperator.IsNotEmpty,
       ],
-      icon: <File02 className='group-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <File02 className='group-hover:text-grayModern-700grayModernt-grayModern-500' />
+      ),
     },
     [ColumnViewType.InvoicesBillingCycle]: {
       filterType: 'list',
@@ -59,7 +63,7 @@ export const getFilterTypes = () => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <ClockFastForward className='group-hover:text-gray-700 text-gray-500' />
+        <ClockFastForward className='group-hover:text-grayModern-700grayModernt-grayModern-500' />
       ),
       options: [
         { label: 'Monthly', id: 1 },
@@ -74,7 +78,9 @@ export const getFilterTypes = () => {
       filterName: 'Issue date',
       filterAccesor: ColumnViewType.InvoicesIssueDate,
       filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
-      icon: <Calendar className='group-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <Calendar className='group-hover:text-grayModern-700grayModernt-grayModern-500' />
+      ),
     },
 
     [ColumnViewType.InvoicesDueDate]: {
@@ -82,7 +88,9 @@ export const getFilterTypes = () => {
       filterName: 'Due date',
       filterAccesor: ColumnViewType.InvoicesDueDate,
       filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
-      icon: <Calendar className='group-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <Calendar className='group-hover:text-grayModern-700grayModernt-grayModern-500' />
+      ),
     },
     [ColumnViewType.InvoicesAmount]: {
       filterType: 'number',
@@ -95,7 +103,7 @@ export const getFilterTypes = () => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <CurrencyDollarCircle className='group-hover:text-gray-700 text-gray-500' />
+        <CurrencyDollarCircle className='group-hover:text-grayModern-700grayModernt-grayModern-500' />
       ),
     },
 
@@ -109,7 +117,9 @@ export const getFilterTypes = () => {
         ComparisonOperator.IsEmpty,
         ComparisonOperator.IsNotEmpty,
       ],
-      icon: <ClockCheck className='group-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <ClockCheck className='group-hover:text-grayModern-700grayModernt-grayModern-500' />
+      ),
       options: [
         { label: 'Out of contract', id: InvoiceStatus.OnHold },
         { label: 'Scheduled', id: InvoiceStatus.Scheduled },

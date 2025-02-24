@@ -49,8 +49,8 @@ export const ContactLocation = observer(
       </div>
     ) : (
       <div className='flex  items-center gap-4'>
-        <Globe05 className='text-gray-500' />
-        <p className='text-gray-400 text-sm'>Country</p>
+        <Globe05 className='text-grayModern-500' />
+        <p className='text-grayModern-400 text-sm'>Country</p>
       </div>
     );
   },

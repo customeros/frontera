@@ -51,49 +51,49 @@ export const handleOperatorIcon = (
 ) => {
   return match(operator)
     .with(ComparisonOperator.Between, () => (
-      <SpacingWidth01 className='text-gray-500 group-hover:text-gray-700' />
+      <SpacingWidth01 className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.In, () => (
-      <CheckCircle className='text-gray-500 group-hover:text-gray-700' />
+      <CheckCircle className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.Eq, () => (
-      <Equal className='text-gray-500 group-hover:text-gray-700' />
+      <Equal className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.Gt, () =>
       type === 'date' ? (
-        <CalendarAfter className='text-gray-500 group-hover:text-gray-700' />
+        <CalendarAfter className='text-grayModern-500 group-hover:text-grayModern-700' />
       ) : (
-        <ChevronRight className='text-gray-500 group-hover:text-gray-700' />
+        <ChevronRight className='text-grayModern-500 group-hover:text-grayModern-700' />
       ),
     )
     .with(ComparisonOperator.Gte, () => 'greater than or equal to')
     .with(ComparisonOperator.Contains, () => (
-      <CheckCircle className='text-gray-500 group-hover:text-gray-700' />
+      <CheckCircle className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.IsEmpty, () => (
-      <CubeOutline className='text-gray-500 group-hover:text-gray-700' />
+      <CubeOutline className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.IsNull, () => 'is null')
     .with(ComparisonOperator.Lt, () =>
       type === 'date' ? (
-        <CalendarBefore className='text-gray-500 group-hover:text-gray-700' />
+        <CalendarBefore className='text-grayModern-500 group-hover:text-grayModern-700' />
       ) : (
-        <ChevronLeft className='text-gray-500 group-hover:text-gray-700' />
+        <ChevronLeft className='text-grayModern-500 group-hover:text-grayModern-700' />
       ),
     )
     .with(ComparisonOperator.Lte, () => 'less than or equal to')
     .with(ComparisonOperator.StartsWith, () => 'starts with')
     .with(ComparisonOperator.IsNotEmpty, () => (
-      <Cube01 className='text-gray-500 group-hover:text-gray-700' />
+      <Cube01 className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.NotContains, () => (
-      <SlashCircle01 className='text-gray-500 group-hover:text-gray-700' />
+      <SlashCircle01 className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.NotIn, () => (
-      <SlashCircle01 className='text-gray-500 group-hover:text-gray-700' />
+      <SlashCircle01 className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .with(ComparisonOperator.NotEquals, () => (
-      <EqualNot className='text-gray-500 group-hover:text-gray-700' />
+      <EqualNot className='text-grayModern-500 group-hover:text-grayModern-700' />
     ))
     .otherwise(() => 'unknown');
 };

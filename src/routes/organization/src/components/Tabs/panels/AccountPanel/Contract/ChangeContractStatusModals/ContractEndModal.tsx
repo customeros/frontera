@@ -173,8 +173,8 @@ export const ContractEndModal = observer(
             <Button
               size='lg'
               variant='outline'
-              colorScheme='gray'
               className='w-full'
+              colorScheme='grayModern'
               onClick={onStatusModalClose}
             >
               Cancel

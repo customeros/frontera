@@ -77,7 +77,7 @@ export const AddNewDomain = observer(() => {
     <Command shouldFilter={false} className={'!w-auto'}>
       <article
         className={cn(
-          'relative w-full p-6 flex flex-col border-b border-b-gray-100 cursor-default bg-white',
+          'relative w-full p-6 flex flex-col border-b border-b-grayModern-100 cursor-default bg-white',
           'transition transform duration-500 ease-in-out origin-top translate-y-0 opacity-100 scale-100 z-50',
           {
             'absolute bg-white rounded-md scale-[0.80] opacity-90 -translate-y-2 transition transform duration-500 z-1':

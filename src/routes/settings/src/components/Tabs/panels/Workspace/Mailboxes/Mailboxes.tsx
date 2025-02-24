@@ -77,13 +77,13 @@ export const Mailboxes = observer(() => {
                 <span
                   onClick={goToMailboxes}
                   className={cn(
-                    'text-gray-500 font-semibold transition-colors',
-                    !campaign && 'cursor-pointer hover:text-gray-700',
+                    'text-grayModern-500 font-semibold transition-colors',
+                    !campaign && 'cursor-pointer hover:text-grayModern-700',
                   )}
                 >
                   Mailboxes
                 </span>
-                <ChevronRight className='mt-0.5 text-gray-400 size-3' />
+                <ChevronRight className='mt-0.5 text-grayModern-400 size-3' />
                 <span
                   data-test='settings-mailboxes-add-new'
                   className='font-semibold cursor-default'
@@ -115,21 +115,22 @@ export const Mailboxes = observer(() => {
               <div className='pb-[12px] pt-[8px] px-6 flex flex-col h-full border-r-[1px]'>
                 <div className='flex items-center justify-start gap-1 mb-4'>
                   <span
-                    className={cn(
-                      'font-semibold text-gray-500',
-                      !campaign && 'hover:cursor-pointer hover:text-gray-700',
-                    )}
                     onClick={() => {
                       if (campaign) return;
                       navigate('/settings?tab=mailboxes');
                       store.mailboxes.resetBuyFlow();
                     }}
+                    className={cn(
+                      'font-semibold text-grayModern-500',
+                      !campaign &&
+                        'hover:cursor-pointer hover:text-grayModern-700',
+                    )}
                   >
                     Mailboxes
                   </span>
-                  <ChevronRight className='mt-0.5 text-gray-400 size-3' />
+                  <ChevronRight className='mt-0.5 text-grayModern-400 size-3' />
                   <span
-                    className='font-semibold text-gray-500 hover:text-gray-700 hover:cursor-pointer'
+                    className='font-semibold text-grayModern-500 hovergrayModernt-grayModern-700 hover:cursor-pointer'
                     onClick={() =>
                       navigate(
                         '/settings?tab=mailboxes&view=buy' + campaignParam,
@@ -138,7 +139,7 @@ export const Mailboxes = observer(() => {
                   >
                     Add new
                   </span>
-                  <ChevronRight className='mt-0.5 text-gray-400 size-3' />
+                  <ChevronRight className='mt-0.5 text-grayModern-400 size-3' />
                   <span className='font-semibold'>Checkout</span>
                 </div>
                 <div className='flex flex-col gap-2'>

@@ -68,11 +68,11 @@ export const UrlInput = memo(
             <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className='bg-gray-25 w-full absolute top-[1px] hover:border-gray-300 hover:border-b border-b border-transparent'
+              className='bg-grayModern-25 w-full absolute top-[1px] hover:border-grayModern-300 hover:border-b border-b border-transparent'
             >
               <p
                 onClick={handleFocus}
-                className='text-gray-700 top-0 truncate text-sm'
+                className='text-grayModern-700 top-0 truncate text-sm'
               >
                 {formattedUrl}
               </p>
@@ -81,13 +81,13 @@ export const UrlInput = memo(
                   to={href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='absolute -top-[1px] right-0 flex items-center text-gray-500 hover:text-gray-900'
+                  className='absolute -top-[1px] right-0 flex items-center text-grayModern-500 hover:text-grayModern-900'
                 >
                   <IconButton
                     size='xxs'
                     variant='ghost'
-                    colorScheme='gray'
                     className='mt-[5px]'
+                    colorScheme='grayModern'
                     aria-label='social link'
                     icon={<LinkExternal02 />}
                   />

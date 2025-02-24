@@ -28,7 +28,10 @@ export const UserCell = observer(({ id }: UserCellProps) => {
       <p
         tabIndex={0}
         role={'button'}
-        className={cn('hover:text-gray-500', !user && 'text-gray-400')}
+        className={cn(
+          'hover:text-grayModern-500',
+          !user && 'text-grayModern-400',
+        )}
         onClick={() => {
           store.ui.commandMenu.setType('ActiveFlowUpdateInfo');
           store.ui.commandMenu.setContext({
@@ -50,7 +53,10 @@ export const UserCell = observer(({ id }: UserCellProps) => {
       <PopoverTrigger>
         <p
           onDoubleClick={onToggle}
-          className={cn('hover:text-gray-500', !user && 'text-gray-400')}
+          className={cn(
+            'hover:text-grayModern-500',
+            !user && 'text-grayModern-400',
+          )}
         >
           {user?.name || 'Not set yet'}
         </p>
@@ -98,8 +104,8 @@ const UserSelector = observer(({ id, onOpenChange }: UserSelectorProps) => {
               textSize='xxs'
               name={_user?.name ?? 'Unnamed'}
               src={_user?.value?.profilePhotoUrl ?? ''}
-              icon={<User01 className='text-gray-500 size-3' />}
-              className={'w-5 h-5 min-w-5 mr-2 border border-gray-200'}
+              icon={<User01 className='text-grayModern-500 size-3' />}
+              className={'w-5 h-5 min-w-5 mr-2 border border-grayModern-200'}
             />
             <span className='flex-1'>{children}</span>
             {user?.id === _user?.id && <Check />}

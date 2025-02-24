@@ -173,7 +173,7 @@ export const AlertDialogCloseIconButton = forwardRef<
         size='xs'
         variant='ghost'
         icon={<XClose />}
-        colorScheme='gray'
+        colorScheme='grayModern'
         aria-label='Close dialog'
       />
     </RadixAlertDialog.Cancel>

@@ -3,7 +3,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 /**
  * @example
- * <Spinner label='Loading' className='text-gray-500 fill-gray-700 w-4 h-4'/>
+ * <Spinner label='Loading' className='text-grayModern-500 fill-grayModern-700 w-4 h-4'/>
  * label:string
  * // The label for accessibility
  */

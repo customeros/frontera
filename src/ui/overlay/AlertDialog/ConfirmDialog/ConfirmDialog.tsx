@@ -59,7 +59,7 @@ export const ConfirmDialog = ({
 
             <AlertDialogHeader className='font-bold mt-4'>
               {description && (
-                <p className='mt-1 text-sm text-gray-700 font-normal'>
+                <p className='mt-1 text-sm text-grayModern-700 font-normal'>
                   {description}
                 </p>
               )}
@@ -71,8 +71,8 @@ export const ConfirmDialog = ({
                   size='md'
                   ref={cancelRef}
                   variant='outline'
-                  colorScheme={'gray'}
                   isDisabled={isLoading}
+                  colorScheme={'grayModern'}
                   className='bg-white w-full'
                 >
                   {cancelButtonLabel}

@@ -14,9 +14,9 @@ export const SystemUpdateNotification = observer(() => {
   if (!store.ui.isSystemNotificationOpen) return null;
 
   return (
-    <div className='m-[10px] p-1 flex flex-col items-start gap-1 border rounded-[4px] border-gray-100 bg-gray-50'>
+    <div className='m-[10px] p-1 flex flex-col items-start gap-1 border rounded-[4px] border-grayModern-100 bg-grayModern-50'>
       <div className='flex items-center gap-1 flex-wrap'>
-        <Icon name='download-04' className='text-gray-500' />
+        <Icon name='download-04' className='text-grayModern-500' />
         <p className='font-medium text-sm'>New version available</p>
       </div>
       <p className='text-xs'>

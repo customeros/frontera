@@ -93,10 +93,10 @@ export const SignIn = observer(() => {
                     alt='CustomerOS'
                     src={CustomerOsLogo}
                   />
-                  <h2 className='text-gray-900 leading-9 font-bold text-3xl py-3 mt-[-40px]'>
+                  <h2 className='text-grayModern-900 leading-9 font-bold text-3xl py-3 mt-[-40px]'>
                     Check your email
                   </h2>
-                  <p className='mb-4 text-gray-500 text-center'>
+                  <p className='mb-4 text-grayModern-500 text-center'>
                     We've sent you an email with a magic code to {email}
                   </p>
                   <Button
@@ -131,10 +131,10 @@ export const SignIn = observer(() => {
                 alt='CustomerOS'
                 src={CustomerOsLogo}
               />
-              <h2 className='text-gray-900 leading-9 font-bold text-3xl py-3 mt-[-40px]'>
+              <h2 className='text-grayModern-900 leading-9 font-bold text-3xl py-3 mt-[-40px]'>
                 Welcome back
               </h2>
-              <p className='text-gray-500'>Sign in to your account</p>
+              <p className='text-grayModern-500'>Sign in to your account</p>
               {providers.map((provider, i) => {
                 let icon = undefined;
 
@@ -155,7 +155,7 @@ export const SignIn = observer(() => {
                     leftIcon={icon}
                     key={provider.id}
                     variant='outline'
-                    colorScheme='gray'
+                    colorScheme='grayModern'
                     onClick={() => handleSignIn(provider.id)}
                     isLoading={store.session.isLoading === provider.id}
                     className={cn(
@@ -170,7 +170,7 @@ export const SignIn = observer(() => {
                       <Spinner
                         size='sm'
                         label='Authenthicating'
-                        className='text-gray-300 fill-gray-500'
+                        className='text-grayModern-300grayModernl-grayModern-500'
                       />
                     }
                   >
@@ -179,7 +179,9 @@ export const SignIn = observer(() => {
                 );
               })}
               <Divider className='my-4'>
-                <span className='text-sm text-gray-500 leading-none'>or</span>
+                <span className='text-sm text-grayModern-500 leading-none'>
+                  or
+                </span>
               </Divider>
               <div className='flex w-full flex-col gap-4 items-center'>
                 <div className='w-full'>
@@ -214,22 +216,22 @@ export const SignIn = observer(() => {
                     <Spinner
                       size='sm'
                       label='Authenthicating'
-                      className='text-gray-300 fill-gray-500'
+                      className='text-grayModern-300grayModernl-grayModern-500'
                     />
                   }
                 >
                   Sign in with email
                 </Button>
-                <p className='text-xs text-gray-500'>
+                <p className='text-xs text-grayModern-500'>
                   We'll send you an email with a magic link
                 </p>
               </div>
 
               <Divider className='my-4' />
 
-              <div className='text-gray-500 mt-2 text-center text-xs'>
+              <div className='text-grayModern-500 mt-2 text-center text-xs'>
                 By logging in you agree to CustomerOS&apos;s
-                <div className='text-gray-500'>
+                <div className='text-grayModern-500'>
                   <a
                     className='text-primary-700 mr-1 no-underline'
                     href='https://customeros.ai/legal/terms-of-service'

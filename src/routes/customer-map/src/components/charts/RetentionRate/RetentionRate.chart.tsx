@@ -186,7 +186,7 @@ const RetentionRateChart = ({
           }}
         />
       </XYChart>
-      <p className='text-gray-500 text-xs mt-2'>
+      <p className='text-grayModern-500 text-xs mt-2'>
         <i>*Key data missing.</i>
       </p>
     </>
@@ -216,7 +216,7 @@ const TooltipEntry = ({
       <div className='flex justify-start'>
         <p
           className={cn(
-            isMissingData ? 'text-gray-400' : 'text-white',
+            isMissingData ? 'text-grayModern-400' : 'text-white',
             'text-sm',
           )}
         >

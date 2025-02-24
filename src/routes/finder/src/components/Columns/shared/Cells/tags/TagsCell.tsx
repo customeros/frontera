@@ -12,7 +12,9 @@ interface ContactCardProps {
 export const TagsCell = ({ tags, isHovered }: ContactCardProps) => {
   return (
     <>
-      {!tags?.length && <p className='text-gray-400 truncate'>No tags set</p>}
+      {!tags?.length && (
+        <p className='text-grayModern-400 truncate'>No tags set</p>
+      )}
 
       <div className='flex '>
         {!!tags?.length && tags.length > 0 && (

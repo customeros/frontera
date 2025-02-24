@@ -40,7 +40,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <File02 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <File02 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContractsEnded]: {
@@ -49,7 +49,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.ContractsEnded,
       filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
       icon: (
-        <Calendar className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContractsPeriod]: {
@@ -63,7 +63,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <ClockFastForward className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <ClockFastForward className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: [
         { id: '1', label: 'Monthly' },
@@ -83,7 +83,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <CurrencyDollarCircle className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <CurrencyDollarCircle className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: [
         { id: 'USD', label: 'USD' },
@@ -103,7 +103,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <ClockCheck className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <ClockCheck className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: [
         { label: 'Draft', id: ContractStatus.Draft },
@@ -123,7 +123,9 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsEmpty,
         ComparisonOperator.IsNotEmpty,
       ],
-      icon: <Calendar className='grou-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <Calendar className='grou-hover:text-grayModern-700grayModernt-grayModern-500' />
+      ),
       options: [
         { label: 'Auto-renews', id: 'Auto-renews' },
         { label: 'Not auto-renewing', id: 'Not auto-renewing' },
@@ -140,7 +142,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <CurrencyDollarCircle className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <CurrencyDollarCircle className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContractsRenewalDate]: {
@@ -149,7 +151,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.ContractsRenewalDate,
       filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
       icon: (
-        <Calendar className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContractsForecastArr]: {
@@ -163,7 +165,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Calculator className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Calculator className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.ContractsHealth]: {
@@ -177,7 +179,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Activity className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Activity className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: [
         { id: OpportunityRenewalLikelihood.HighRenewal, label: 'High' },
@@ -197,7 +199,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Key01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Key01 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: store?.users.toArray().map((user) => ({
         id: user?.id,

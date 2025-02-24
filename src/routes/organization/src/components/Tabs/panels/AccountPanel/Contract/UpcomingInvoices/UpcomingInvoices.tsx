@@ -68,7 +68,7 @@ export const UpcomingInvoices = ({
       return (
         <Button
           size='xxs'
-          colorScheme='gray'
+          colorScheme='grayModern'
           onClick={onOpenBillingDetailsModal}
           className='ml-2 font-normal rounded'
           leftIcon={<Edit03 className='size-3' />}
@@ -82,7 +82,7 @@ export const UpcomingInvoices = ({
       return (
         <Button
           size='xxs'
-          colorScheme='gray'
+          colorScheme='grayModern'
           className='ml-2 font-normal rounded'
           onClick={onOpenServiceLineItemsModal}
           leftIcon={<Plus className='size-3' />}
@@ -96,7 +96,7 @@ export const UpcomingInvoices = ({
       return (
         <Button
           size='xxs'
-          colorScheme='gray'
+          colorScheme='grayModern'
           leftIcon={<RefreshCw05 />}
           className='ml-2 font-normal rounded'
           onClick={() => onStatusModalOpen(ContractStatusModalMode.Renew)}
@@ -110,8 +110,8 @@ export const UpcomingInvoices = ({
       return (
         <Button
           size='xxs'
-          colorScheme='gray'
           leftIcon={<Play />}
+          colorScheme='grayModern'
           className='ml-2 font-normal rounded'
           onClick={() => onStatusModalOpen(ContractStatusModalMode.Start)}
         >

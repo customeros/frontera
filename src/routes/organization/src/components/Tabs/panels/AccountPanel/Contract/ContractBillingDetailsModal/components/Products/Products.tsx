@@ -17,7 +17,7 @@ export const Products = observer(
     return (
       <>
         <div className='flex relative items-center h-8 '>
-          <p className='text-sm text-gray-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
+          <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
             Products
           </p>
           <Divider />

@@ -45,7 +45,7 @@ export const OrganizationCell = ({
     >
       <span className='inline'>
         {isSubsidiary && (
-          <span className='text-xs text-gray-500'>
+          <span className='text-xs text-grayModern-500'>
             {parentOrganizationName}
           </span>
         )}

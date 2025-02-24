@@ -34,10 +34,10 @@ export const ContractMenu = ({
         <MenuButton
           data-test='contract-menu-dots'
           className={cn(
-            `flex items-center max-h-5 p-1 hover:bg-gray-100 rounded`,
+            `flex items-center max-h-5 p-1 hover:bg-grayModern-100 rounded`,
           )}
         >
-          <DotsVertical className='text-gray-400' />
+          <DotsVertical className='text-grayModern-400' />
         </MenuButton>
         <MenuList align='end' side='bottom' className='p-0'>
           <MenuItem
@@ -45,7 +45,7 @@ export const ContractMenu = ({
             className='flex items-center text-base'
             data-test='contract-menu-edit-contract'
           >
-            <Edit03 className='mr-1 text-gray-500' />
+            <Edit03 className='mr-1 text-grayModern-500' />
             Edit contract
           </MenuItem>
 
@@ -58,7 +58,7 @@ export const ContractMenu = ({
                     onStatusModalOpen(ContractStatusModalMode.Renew)
                   }
                 >
-                  <RefreshCw05 className='text-gray-500 mr-1' />
+                  <RefreshCw05 className='text-grayModern-500 mr-1' />
                   Renew contract
                 </MenuItem>
               )}
@@ -77,7 +77,7 @@ export const ContractMenu = ({
               data-test='contract-menu-delete-contract'
               onClick={() => onStatusModalOpen(ContractStatusModalMode.Delete)}
             >
-              <Trash01 className='mr-1 text-gray-500' />
+              <Trash01 className='mr-1 text-grayModern-500' />
               Delete contract
             </MenuItem>
           )}

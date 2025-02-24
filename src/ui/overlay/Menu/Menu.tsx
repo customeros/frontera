@@ -18,8 +18,8 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         {...props}
         ref={forwardedRef}
         className={twMerge(
-          'font-normal flex gap-2 items-center text-sm text-start py-[6px] px-[10px] leading-[18px] text-gray-700  rounded-sm outline-none cursor-pointer hover:bg-grayModern-100 hover:rounded-[4px] ',
-          'data-[highlighted]:bg-grayModern-100 data-[highlighted]:text-gray-700 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed hover:data-[disabled]:bg-transparent',
+          'font-normal flex gap-2 items-center text-sm text-start py-[6px] px-[10px] leading-[18px] text-grayModern-700  rounded-sm outline-none cursor-pointer hover:bg-grayModern-100 hover:rounded-[4px] ',
+          'data-[highlighted]:bg-grayModern-100 data-[highlighted]:text-grayModern-700 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed hover:data-[disabled]:bg-transparent',
           className,
         )}
       >
@@ -70,7 +70,7 @@ export const MenuLabel = forwardRef<
       ref={ref}
       {...props}
       className={twMerge(
-        'text-xs text-gray-500 uppercase px-3 pt-[10px] pb-1 focus:outline-none',
+        'text-xs text-grayModern-500 uppercase px-3 pt-[10px] pb-1 focus:outline-none',
         className,
       )}
     />

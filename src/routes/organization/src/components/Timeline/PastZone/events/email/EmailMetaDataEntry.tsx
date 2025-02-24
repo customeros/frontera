@@ -27,7 +27,9 @@ export const EmailMetaDataEntry: FC<EmailMetaDataEntry> = ({
 
   return (
     <div className='flex overflow-hidden max-w-[100%]'>
-      <span className='text-gray-700 font-semibold mr-1'>{entryType}:</span>
+      <span className='text-grayModern-700 font-semibold mr-1'>
+        {entryType}:
+      </span>
       <Tooltip
         label={
           typeof content !== 'string' && !!data
@@ -35,7 +37,7 @@ export const EmailMetaDataEntry: FC<EmailMetaDataEntry> = ({
             : ''
         }
       >
-        <p className='text-gray-500 whitespace-nowrap text-ellipsis overflow-hidden inline'>
+        <p className='text-grayModern-500 whitespace-nowrap text-ellipsis overflow-hidden inline'>
           <>
             {typeof content === 'string' && content}
             {typeof content !== 'string' &&

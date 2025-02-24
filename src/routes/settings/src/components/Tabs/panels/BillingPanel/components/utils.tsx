@@ -4,7 +4,7 @@ import { Currency } from '@graphql/types';
 
 const CurrencySymbol = ({ children }: { children: ReactNode }) => {
   return (
-    <div className='align-middle text-gray-500 whitespace-nowrap font-semibold text-sm'>
+    <div className='align-middle text-grayModern-500 whitespace-nowrap font-semibold text-sm'>
       {children}
     </div>
   );

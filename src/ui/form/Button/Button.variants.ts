@@ -17,7 +17,6 @@ export const iconVariant = cva('', {
     colorScheme: {
       white: [],
       primary: [],
-      gray: [],
       grayBlue: [],
       grayModern: [],
       grayWarm: [],
@@ -52,12 +51,6 @@ export const iconVariant = cva('', {
       size: 'xxs',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-3 h-3', 'text-white'],
-    },
-    {
-      size: 'xxs',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-3 h-3', 'text-white'],
     },
     {
@@ -201,12 +194,6 @@ export const iconVariant = cva('', {
     {
       size: 'xxs',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-3 h-3', 'text-gray-600'],
-    },
-    {
-      size: 'xxs',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-3 h-3', 'text-grayBlue-600'],
     },
@@ -345,12 +332,6 @@ export const iconVariant = cva('', {
     {
       size: 'xxs',
       variant: 'link',
-      colorScheme: 'gray',
-      className: ['w-3 h-3', 'text-gray-700'],
-    },
-    {
-      size: 'xxs',
-      variant: 'link',
       colorScheme: 'grayBlue',
       className: ['w-3 h-3', 'text-grayBlue-700'],
     },
@@ -489,12 +470,6 @@ export const iconVariant = cva('', {
     {
       size: 'xxs',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-3 h-3', 'text-gray-700'],
-    },
-    {
-      size: 'xxs',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-3 h-3', 'text-grayBlue-700'],
     },
@@ -628,12 +603,6 @@ export const iconVariant = cva('', {
       size: 'xs',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-4 h-4', 'text-white'],
-    },
-    {
-      size: 'xs',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-4 h-4', 'text-white'],
     },
     {
@@ -777,12 +746,6 @@ export const iconVariant = cva('', {
     {
       size: 'xs',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-4 h-4', 'text-gray-600'],
-    },
-    {
-      size: 'xs',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-4 h-4', 'text-grayBlue-600'],
     },
@@ -921,12 +884,6 @@ export const iconVariant = cva('', {
     {
       size: 'xs',
       variant: 'link',
-      colorScheme: 'gray',
-      className: ['w-4 h-4', 'text-gray-700'],
-    },
-    {
-      size: 'xs',
-      variant: 'link',
       colorScheme: 'grayBlue',
       className: ['w-4 h-4', 'text-grayBlue-700'],
     },
@@ -1065,12 +1022,6 @@ export const iconVariant = cva('', {
     {
       size: 'xs',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-4 h-4', 'text-gray-700'],
-    },
-    {
-      size: 'xs',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-4 h-4', 'text-grayBlue-700'],
     },
@@ -1209,12 +1160,6 @@ export const iconVariant = cva('', {
     {
       size: 'sm',
       variant: 'solid',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-white'],
-    },
-    {
-      size: 'sm',
-      variant: 'solid',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-white'],
     },
@@ -1349,12 +1294,6 @@ export const iconVariant = cva('', {
       variant: 'outline',
       colorScheme: 'primary',
       className: ['w-5 h-5', 'text-primary-600'],
-    },
-    {
-      size: 'sm',
-      variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-600'],
     },
     {
       size: 'sm',
@@ -1497,12 +1436,6 @@ export const iconVariant = cva('', {
     {
       size: 'sm',
       variant: 'link',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-700'],
-    },
-    {
-      size: 'sm',
-      variant: 'link',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-700'],
     },
@@ -1641,12 +1574,6 @@ export const iconVariant = cva('', {
     {
       size: 'sm',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-700'],
-    },
-    {
-      size: 'sm',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-700'],
     },
@@ -1780,12 +1707,6 @@ export const iconVariant = cva('', {
       size: 'md',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-5 h-5', 'text-white'],
-    },
-    {
-      size: 'md',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-5 h-5', 'text-white'],
     },
     {
@@ -1929,12 +1850,6 @@ export const iconVariant = cva('', {
     {
       size: 'md',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-600'],
-    },
-    {
-      size: 'md',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-600'],
     },
@@ -2073,12 +1988,6 @@ export const iconVariant = cva('', {
     {
       size: 'md',
       variant: 'link',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-700'],
-    },
-    {
-      size: 'md',
-      variant: 'link',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-700'],
     },
@@ -2217,12 +2126,6 @@ export const iconVariant = cva('', {
     {
       size: 'md',
       variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-5 h-5', 'text-gray-700'],
-    },
-    {
-      size: 'md',
-      variant: 'ghost',
       colorScheme: 'grayBlue',
       className: ['w-5 h-5', 'text-grayBlue-700'],
     },
@@ -2356,12 +2259,6 @@ export const iconVariant = cva('', {
       size: 'lg',
       variant: 'solid',
       colorScheme: 'primary',
-      className: ['w-6 h-6', 'text-white'],
-    },
-    {
-      size: 'lg',
-      variant: 'solid',
-      colorScheme: 'gray',
       className: ['w-6 h-6', 'text-white'],
     },
     {
@@ -2505,12 +2402,6 @@ export const iconVariant = cva('', {
     {
       size: 'lg',
       variant: 'outline',
-      colorScheme: 'gray',
-      className: ['w-6 h-6', 'text-gray-600'],
-    },
-    {
-      size: 'lg',
-      variant: 'outline',
       colorScheme: 'grayBlue',
       className: ['w-6 h-6', 'text-grayBlue-600'],
     },
@@ -2649,12 +2540,6 @@ export const iconVariant = cva('', {
     {
       size: 'lg',
       variant: 'link',
-      colorScheme: 'gray',
-      className: ['w-6 h-6', 'text-gray-700'],
-    },
-    {
-      size: 'lg',
-      variant: 'link',
       colorScheme: 'grayBlue',
       className: ['w-6 h-6', 'text-grayBlue-700'],
     },
@@ -2789,12 +2674,6 @@ export const iconVariant = cva('', {
       variant: 'ghost',
       colorScheme: 'primary',
       className: ['w-6 h-6', 'text-primary-700'],
-    },
-    {
-      size: 'lg',
-      variant: 'ghost',
-      colorScheme: 'gray',
-      className: ['w-6 h-6', 'text-gray-700'],
     },
     {
       size: 'lg',
@@ -2957,13 +2836,6 @@ export const linkButton = cva(
           'hover:underline',
           'focus:underline',
         ],
-        gray: [
-          'text-gray-500',
-          'hover:text-gray-700',
-          'focus:text-gray-700',
-          'hover:underline',
-          'focus:underline',
-        ],
         grayBlue: [
           'text-grayBlue-700',
           'hover:text-grayBlue-700',
@@ -2972,7 +2844,7 @@ export const linkButton = cva(
           'focus:underline',
         ],
         grayModern: [
-          'text-grayModern-700',
+          'text-grayModern-500',
           'hover:text-grayModern-700',
           'focus:text-grayModern-700',
           'hover:underline',
@@ -3114,7 +2986,7 @@ export const linkButton = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );
@@ -3158,18 +3030,6 @@ export const solidButton = cva(
           'focus:bg-primary-700',
           'border-primary-600',
           'hover:border-primary-700',
-          'focus:shadow-ringPrimary',
-          'focus-visible:shadow-ringPrimary',
-        ],
-        gray: [
-          'text-white',
-          'border',
-          'border-solid',
-          'bg-gray-600',
-          'hover:bg-gray-700',
-          'focus:bg-gray-700',
-          'border-gray-600',
-          'hover:border-gray-700',
           'focus:shadow-ringPrimary',
           'focus-visible:shadow-ringPrimary',
         ],
@@ -3428,7 +3288,7 @@ export const solidButton = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );
@@ -3454,11 +3314,11 @@ export const ghostButton = cva(
         white: [
           'bg-transparent',
           'shadow-none',
-          'text-gray-25',
-          'hover:text-gray-25',
-          'focus:text-gray-25',
-          'hover:bg-gray-600',
-          'focus:bg-gray-600',
+          'text-grayModern-25',
+          'hover:text-grayModern-25',
+          'focus:text-grayModern-25',
+          'hover:bg-grayModern-600',
+          'focus:bg-grayModern-600',
         ],
         primary: [
           'bg-transparent',
@@ -3468,15 +3328,6 @@ export const ghostButton = cva(
           'focus:text-primary-700',
           'hover:bg-primary-100',
           'focus:bg-primary-100',
-        ],
-        gray: [
-          'bg-transparent',
-          'shadow-none',
-          'text-gray-700',
-          'hover:text-gray-700',
-          'focus:text-gray-700',
-          'hover:bg-gray-100',
-          'focus:bg-gray-100',
         ],
         grayBlue: [
           'bg-transparent',
@@ -3489,8 +3340,8 @@ export const ghostButton = cva(
         ],
         grayModern: [
           'bg-transparent',
-          'text-grayModern-700',
           'shadow-none',
+          'text-grayModern-700',
           'hover:text-grayModern-700',
           'focus:text-grayModern-700',
           'hover:bg-grayModern-100',
@@ -3670,7 +3521,7 @@ export const ghostButton = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );
@@ -3713,15 +3564,6 @@ export const outlineButton = cva(
           'hover:text-primary-700',
           'focus:bg-primary-100',
         ],
-        gray: [
-          'text-gray-700',
-          'border',
-          'border-solid',
-          'border-gray-300',
-          'hover:bg-gray-50',
-          'hover:text-gray-700',
-          'focus:bg-gray-50',
-        ],
         grayBlue: [
           'bg-grayBlue-50',
           'text-grayBlue-700',
@@ -3733,14 +3575,13 @@ export const outlineButton = cva(
           'focus:bg-grayBlue-100',
         ],
         grayModern: [
-          'bg-grayModern-50',
           'text-grayModern-700',
           'border',
           'border-solid',
           'border-grayModern-300',
-          'hover:bg-grayModern-100',
+          'hover:bg-grayModern-50',
           'hover:text-grayModern-700',
-          'focus:bg-grayModern-100',
+          'focus:bg-grayModern-50',
         ],
         grayWarm: [
           'bg-grayWarm-50',
@@ -3935,7 +3776,7 @@ export const outlineButton = cva(
       },
     },
     defaultVariants: {
-      colorScheme: 'gray',
+      colorScheme: 'grayModern',
     },
   },
 );

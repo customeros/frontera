@@ -14,7 +14,7 @@ import {
 
 const sizeTextArea = cva(
   [
-    'w-full border-b border-transparent placeholder-gray-400 leading-6 resize-none overflow-hidden gap-2 bg-transparent focus-within:outline-none',
+    'w-full border-b border-transparent placeholder-grayModern-400 leading-6 resize-none overflow-hidden gap-2 bg-transparent focus-within:outline-none',
   ],
   {
     variants: {

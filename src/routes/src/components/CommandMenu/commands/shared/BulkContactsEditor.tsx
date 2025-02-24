@@ -127,7 +127,7 @@ export const BulkContactsEditor = ({
                   size,
                   className: placeholderClassName,
                 }),
-                'absolute top-0 text-gray-400 p-2 text-sm',
+                'absolute top-0 text-grayModern-400 p-2 text-sm',
               )}
             >
               {type === 'email' ? (

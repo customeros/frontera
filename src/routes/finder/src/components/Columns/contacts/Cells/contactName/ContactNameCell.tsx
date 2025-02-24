@@ -27,7 +27,7 @@ export const ContactNameCell = observer(
       <div ref={ref} className='flex group/contact-preview items-center'>
         {!contactName && (
           <p
-            className='text-gray-700 font-medium no-underline hover:no-underline cursor-pointer'
+            className='text-grayModern-700 font-medium no-underline hover:no-underline cursor-pointer'
             onClick={() => {
               if (store.ui.showPreviewCard && store.ui.focusRow === contactId) {
                 store.ui.setShowPreviewCard(false);
@@ -62,7 +62,7 @@ export const ContactNameCell = observer(
         <div>
           <Icon
             name={'eye'}
-            className='text-gray-400 ml-2 opacity-0 group-hover/contact-preview:opacity-100 cursor-pointer'
+            className='text-grayModern-400 ml-2 opacity-0 group-hover/contact-preview:opacity-100 cursor-pointer'
             onClick={() => {
               if (store.ui.showPreviewCard && store.ui.focusRow === contactId) {
                 store.ui.setShowPreviewCard(false);

@@ -77,7 +77,9 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
           className='text-ellipsis overflow-hidden whitespace-nowrap'
         >
           <div className='flex items-center gap-2'>
-            {!email && <p className='text-gray-400 '>{enrichingStatus}</p>}
+            {!email && (
+              <p className='text-grayModern-400 '>{enrichingStatus}</p>
+            )}
             {email && (
               <EmailValidationMessage
                 email={email}
@@ -92,7 +94,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
                     <Spinner
                       size='sm'
                       label='finding email'
-                      className='text-gray-400 fill-gray-700 ml-2'
+                      className='text-grayModern-400grayModernl-grayModern-700 ml-2'
                     />
                   </div>
                 </Tooltip>
@@ -109,11 +111,11 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
                     <Spinner
                       size='sm'
                       label='finding email'
-                      className='text-gray-400 fill-gray-700 mr-2'
+                      className='text-grayModern-400grayModernl-grayModern-700 mr-2'
                     />
                   </Tooltip>
                 ) : (
-                  <Star06 className='mr-2 text-gray-500 size-4' />
+                  <Star06 className='mr-2 text-grayModern-500 size-4' />
                 )}
                 <p className='w-[190px] truncate'>
                   {isEnrichingEmail
@@ -136,7 +138,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
             }}
           >
             <div className='overflow-hidden text-ellipsis'>
-              <PlusCircle className='mr-2 text-gray-500' />
+              <PlusCircle className='mr-2 text-grayModern-500' />
               Add new email
             </div>
           </MenuItem>
@@ -201,7 +203,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
                 variant='ghost'
                 aria-label='edit'
                 className='rounded-[5px] ml-[2px] '
-                icon={<DotsVertical className='text-gray-500' />}
+                icon={<DotsVertical className='text-grayModern-500' />}
               />
             )}
           </MenuButton>
@@ -216,7 +218,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
               }}
             >
               <div className='overflow-hidden text-ellipsis'>
-                <TextInput className='mr-2 group-hover/edit-email:text-gray-700 text-gray-500 ' />
+                <TextInput className='mr-2 group-hover/edit-email:text-grayModern-700grayModernt-grayModern-500 ' />
                 Edit email
               </div>
             </MenuItem>
@@ -236,7 +238,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
               }}
             >
               <div className='overflow-hidden text-ellipsis'>
-                <Archive className='mr-2 group-hover/archive-email:text-gray-700 text-gray-500' />
+                <Archive className='mr-2 group-hover/archive-email:text-grayModern-700grayModernt-grayModern-500' />
                 Archive email
               </div>
             </MenuItem>
@@ -248,7 +250,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
                 }}
               >
                 <div className='overflow-hidden text-ellipsis'>
-                  <Copy01 className='group-hover/copy-email:text-gray-700 text-gray-500 mr-2' />
+                  <Copy01 className='group-hover/copy-email:text-grayModern-700grayModernt-grayModern-500 mr-2' />
                   Copy email
                 </div>
               </MenuItem>

@@ -38,10 +38,10 @@ export const ProductItemMenu = observer(
         <Menu>
           <MenuButton
             className={cn(
-              `flex items-center max-h-5 p-1 py-2 hover:bg-gray-100 rounded translate-x-2 outline:0`,
+              `flex items-center max-h-5 p-1 py-2 hover:bg-grayModern-100 rounded translate-x-2 outline:0`,
             )}
           >
-            <DotsVertical className='text-gray-400' />
+            <DotsVertical className='text-grayModern-400' />
           </MenuButton>
           <MenuList align='end' side='bottom' className='p-0'>
             {allowAddModification ? (
@@ -54,7 +54,7 @@ export const ProductItemMenu = observer(
                   })
                 }
               >
-                <BracketsPlus className='mr-2 text-gray-500' />
+                <BracketsPlus className='mr-2 text-grayModern-500' />
                 Add modification
               </MenuItem>
             ) : (
@@ -68,12 +68,12 @@ export const ProductItemMenu = observer(
               >
                 {paused ? (
                   <>
-                    <PlayCircle className='mr-2 text-gray-500' />
+                    <PlayCircle className='mr-2 text-grayModern-500' />
                     Resume this product
                   </>
                 ) : (
                   <>
-                    <PauseCircle className='mr-2 text-gray-500' />
+                    <PauseCircle className='mr-2 text-grayModern-500' />
                     Pause this product
                   </>
                 )}
@@ -86,7 +86,7 @@ export const ProductItemMenu = observer(
               className='flex items-center text-base'
               onClick={() => handleCloseService(true)}
             >
-              <XSquare className='mr-2 text-gray-500' />
+              <XSquare className='mr-2 text-grayModern-500' />
               End the service
             </MenuItem>
           </MenuList>

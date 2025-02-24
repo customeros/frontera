@@ -58,7 +58,10 @@ export const FavoritesSection = observer(
             icon={(isActive) => (
               <Icon
                 name='play'
-                className={cn('text-gray-500', isActive && 'text-gray-700')}
+                className={cn(
+                  'text-grayModern-500',
+                  isActive && 'text-grayModern-700',
+                )}
               />
             )}
           />
@@ -79,8 +82,8 @@ export const FavoritesSection = observer(
                 <Icon
                   name={iconNameMap?.[view.value.icon] ?? 'building-07'}
                   className={cn(
-                    'min-w-4 text-gray-500',
-                    isActive && 'text-gray-700',
+                    'min-w-4 text-grayModern-500',
+                    isActive && 'text-grayModern-700',
                   )}
                 />
               )}

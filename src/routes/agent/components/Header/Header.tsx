@@ -65,7 +65,7 @@ export const Header = observer(() => {
   };
 
   return (
-    <div className='w-full border-b border-b-gray-200 px-3 py-[6px] flex justify-between items-center'>
+    <div className='w-full border-b border-b-grayModern-200 px-3 py-[6px] flex justify-between items-center'>
       <div className='flex items-center gap-1'>
         <Link
           to='/agents'
@@ -73,7 +73,7 @@ export const Header = observer(() => {
         >
           Agents
         </Link>
-        <Icon name='chevron-right' className='w-4 h-4 text-gray-500' />
+        <Icon name='chevron-right' className='w-4 h-4 text-grayModern-500' />
         <div className='flex items-center gap-1'>
           <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
             <PopoverTrigger className={'group'} ref={iconPickerTriggerRef}>

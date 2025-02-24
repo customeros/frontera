@@ -16,7 +16,7 @@ export const MissingPermissionsPrompt: FC<{
     <form
       className={cn(
         modal
-          ? 'bg-grayBlue-50 border-t w-full border-dashed border-gray-200 max-h-[50vh]'
+          ? 'bg-grayBlue-50 border-t w-full border-dashed border-grayModern-200 max-h-[50vh]'
           : 'bg-white rounded-lg max-h-[auto] ',
         'flex items-center mt-4 p-6 overflow-visible rounded-b-2xl justify-center',
       )}
@@ -27,20 +27,20 @@ export const MissingPermissionsPrompt: FC<{
           'flex flex-col items-center p-6',
         )}
       >
-        <FeaturedIcon size='lg' className='mb-4' colorScheme='gray'>
-          <Mail01 className='text-gray-700 size-6' />
+        <FeaturedIcon size='lg' className='mb-4' colorScheme='grayModern'>
+          <Mail01 className='text-grayModern-700 size-6' />
         </FeaturedIcon>
-        <p className='text-gray-700 font-semibold mb-1'>
+        <p className='text-grayModern-700 font-semibold mb-1'>
           Allow CustomerOS to send emails
         </p>
 
-        <p className='text-gray-500 mb-6 text-center'>
+        <p className='text-grayModern-500 mb-6 text-center'>
           To send emails, you need to allow CustomerOS to connect to your email
           account
         </p>
         <Button
           variant='outline'
-          colorScheme='gray'
+          colorScheme='grayModern'
           dataTest='timeline-email-permission-prompt'
           onClick={() => {
             navigate('/settings?tab=oauth');

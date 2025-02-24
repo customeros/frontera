@@ -95,7 +95,7 @@ export const AddDomainsCard = observer(() => {
               <Spinner
                 size='sm'
                 label='loading'
-                className='absolute right-2 text-gray-300 fill-gray-700'
+                className='absolute right-2 text-grayModern-300 fill-grayModern-700'
               />
             ) : (
               <IconButton

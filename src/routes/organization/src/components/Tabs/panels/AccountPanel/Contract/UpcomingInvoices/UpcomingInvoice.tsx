@@ -52,7 +52,7 @@ export const UpcomingInvoice = observer(
         <div className='whitespace-nowrap mr-1'>
           {renewalPeriod} {autoRenewal ? 'recurring' : ''}:
         </div>
-        <div className='whitespace-nowrap text-gray-500 underline'>
+        <div className='whitespace-nowrap text-grayModern-500 underline'>
           {formatCurrency(invoice.amountDue, 2, invoice?.currency)} on{' '}
           {DateTimeUtils.format(
             toZonedTime(invoice?.invoicePeriodStart, 'UTC').toUTCString(),

@@ -142,7 +142,7 @@ export const ListFilter = ({
                 variant='outlineCircle'
                 src={data?.avatar ?? ''}
                 name={data?.label ?? ''}
-                icon={<User01 className='text-gray-500 size-3' />}
+                icon={<User01 className='text-grayModern-500 size-3' />}
               />
             )}
             <span
@@ -202,7 +202,9 @@ export const ListFilter = ({
 
   const formatGroupLabel = (groupOption: GroupedOption) => (
     <div className='flex justify-between items-center'>
-      <span className='font-medium text-gray-700'>{groupOption.label}</span>
+      <span className='font-medium text-grayModern-700'>
+        {groupOption.label}
+      </span>
     </div>
   );
 
@@ -212,7 +214,7 @@ export const ListFilter = ({
         <Button
           size='xs'
           colorScheme='grayModern'
-          className='border-l-0 rounded-none text-gray-700 bg-white font-normal'
+          className='border-l-0 rounded-none text-grayModern-700 bg-white font-normal'
         >
           {filterValueLabels?.length === 1
             ? filterValueLabels?.[0]

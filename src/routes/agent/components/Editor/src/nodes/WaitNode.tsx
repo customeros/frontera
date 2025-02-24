@@ -137,8 +137,8 @@ export const WaitNode = observer(
       <div className='relative w-[156px] h-[56px] bg-white border border-grayModern-300 p-4 rounded-lg group cursor-pointer flex items-center'>
         <div className='truncate text-sm flex items-center justify-between w-full'>
           <div className='flex items-center'>
-            <div className='size-6 mr-2 bg-gray-50 border border-gray-100 rounded flex items-center justify-center'>
-              <Hourglass02 className='text-gray-500' />
+            <div className='size-6 mr-2 bg-grayModern-50 border border-grayModern-100 rounded flex items-center justify-center'>
+              <Hourglass02 className='text-grayModern-500' />
             </div>
 
             {isEditing ? (

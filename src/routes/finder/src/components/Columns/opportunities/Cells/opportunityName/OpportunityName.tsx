@@ -35,7 +35,7 @@ export const OpportunityName = observer(
             className=' '
             variant='ghost'
             aria-label='Edit tags'
-            icon={<Edit01 className='text-gray-500' />}
+            icon={<Edit01 className='text-grayModern-500' />}
             onClick={() => {
               store.ui.commandMenu.setType('RenameOpportunityName');
               store.ui.commandMenu.setOpen(true);

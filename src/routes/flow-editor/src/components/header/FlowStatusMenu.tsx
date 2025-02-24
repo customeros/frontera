@@ -172,7 +172,7 @@ export const FlowStatusMenu = observer(
               <Spinner
                 size='sm'
                 label='Scheduling'
-                className='text-gray-500 fill-gray-200'
+                className='text-grayModern-500 fill-grayModern-200'
               />
             }
           >
@@ -213,7 +213,7 @@ export const FlowStatusMenu = observer(
                 })
               }
             >
-              <StopCircle className='mr-1 text-gray-500' />
+              <StopCircle className='mr-1 text-grayModern-500' />
               Stop flow...
             </MenuItem>
           </MenuList>

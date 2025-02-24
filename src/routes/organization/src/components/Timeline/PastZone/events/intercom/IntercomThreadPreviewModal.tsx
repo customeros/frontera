@@ -98,9 +98,9 @@ export const IntercomThreadPreviewModal = () => {
                   size='xs'
                   variant='ghost'
                   className='mr-1'
-                  color='gray.500'
+                  color='grayModern.500'
                   aria-label='Copy link to this thread'
-                  icon={<Link01 className='text-gray-500' />}
+                  icon={<Link01 className='text-grayModern-500' />}
                   onClick={() => copy(window.location.href, 'Link copied')}
                 />
               </div>
@@ -115,10 +115,10 @@ export const IntercomThreadPreviewModal = () => {
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  color='gray.500'
                   onClick={closeModal}
+                  color='grayModern.500'
                   aria-label='Close preview'
-                  icon={<XClose className='text-gray-500 size-5' />}
+                  icon={<XClose className='text-grayModern-500 size-5' />}
                 />
               </div>
             </Tooltip>
@@ -139,7 +139,7 @@ export const IntercomThreadPreviewModal = () => {
         {isLoading && (
           <>
             <div className='flex my-2 items-center'>
-              <p className='text-gray-400 text-sm whitespace-nowrap mr-2'>
+              <p className='text-grayModern-400 text-sm whitespace-nowrap mr-2'>
                 {/* subtracting 2 for intercom because system messages are hidden */}
                 {timelineEventsIds.length - 2}{' '}
                 {timelineEventsIds.length - 2 === 1 ? 'reply' : 'replies'}
@@ -158,7 +158,7 @@ export const IntercomThreadPreviewModal = () => {
         {!!intercomEventReplies.length && (
           <>
             <div className='flex my-2 items-center'>
-              <p className='text-gray-400 text-sm whitespace-nowrap mr-2'>
+              <p className='text-grayModern-400 text-sm whitespace-nowrap mr-2'>
                 {intercomEventReplies.length}{' '}
                 {intercomEventReplies.length === 1 ? 'reply' : 'replies'}
               </p>

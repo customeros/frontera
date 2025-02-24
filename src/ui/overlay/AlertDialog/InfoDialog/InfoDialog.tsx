@@ -49,7 +49,7 @@ export const InfoDialog = ({
             </div>
             <AlertDialogHeader className='font-bold'>
               {description && (
-                <p className='mt-1 text-sm text-gray-700 font-normal'>
+                <p className='mt-1 text-sm text-grayModern-700 font-normal'>
                   {description}
                 </p>
               )}

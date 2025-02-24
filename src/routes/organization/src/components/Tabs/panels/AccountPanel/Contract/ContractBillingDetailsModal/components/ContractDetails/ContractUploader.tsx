@@ -69,7 +69,7 @@ export const ContractUploader = observer(
     return (
       <div className='flex flex-col'>
         <div className='flex relative items-center h-8 '>
-          <p className='text-sm text-gray-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
+          <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
             Contracts & documents
           </p>
           <Divider />
@@ -96,7 +96,7 @@ export const ContractUploader = observer(
               className={cn(
                 'p-1 rounded-md cursor-pointer ml-[5px] outline-none focus:outline-none',
                 loadingIds.length && 'opacity-50 pointer-events-none ',
-                outlineButton({ colorScheme: 'gray' }),
+                outlineButton({ colorScheme: 'grayModern' }),
               )}
             >
               <Plus tabIndex={-1} className='size-3 outline-none' />
@@ -123,7 +123,7 @@ export const ContractUploader = observer(
             {!attachments?.length && !files.length && (
               <label
                 htmlFor='contractUpload'
-                className='text-base text-gray-500 underline cursor-pointer'
+                className='text-base text-grayModern-500 underline cursor-pointer'
               ></label>
             )}
 
@@ -146,11 +146,11 @@ export const ContractUploader = observer(
                 isLoading={loadingIds.includes(refId)}
               />
             ))}
-            <div className='p-4 border border-dashed border-gray-300 rounded-lg text-center mt-2'>
-              <p className='text-sm text-gray-500'>
+            <div className='p-4 border border-dashed border-grayModern-300 rounded-lg text-center mt-2'>
+              <p className='text-sm text-grayModern-500'>
                 <label
                   htmlFor='contractUpload'
-                  className='text-sm text-gray-500 underline cursor-pointer'
+                  className='text-sm text-grayModern-500 underline cursor-pointer'
                 >
                   Click to upload{' '}
                 </label>
@@ -190,7 +190,7 @@ const AttachmentItem = observer(
           variant='ghost'
           onClick={handleDownload}
           className={
-            'text-base pt-0 pb-0 leading-none font-normal text-gray-500 underline hover:bg-transparent focus:bg-transparent group-hover:text-gray-700'
+            'text-base pt-0 pb-0 leading-none font-normal text-grayModern-500 underline hover:bg-transparent focus:bg-transparent group-hovergrayModernt-grayModern-700'
           }
         >
           {fileName}
@@ -200,14 +200,14 @@ const AttachmentItem = observer(
           <Spinner
             size='sm'
             label='loading'
-            className='text-gray-300 fill-gray-700'
+            className='text-grayModern-300grayModernl-grayModern-700'
           />
         ) : (
           <Delete
             role='button'
             aria-label='Delete attachment'
             onClick={() => onRemove?.(id)}
-            className='hidden size-4 text-gray-500 cursor-pointer group-hover:inline-block hover:text-gray-700'
+            className='hidden size-4 text-grayModern-500 cursor-pointer group-hover:inline-block hovergrayModernt-grayModern-700'
           />
         )}
       </div>

@@ -204,7 +204,7 @@ export const Filters = ({
     return (
       <components.Option {...props} className='group'>
         <div className='flex justify-start items-center gap-2'>
-          <span className='align-middle group-hover:text-gray-700 text-gray-500'>
+          <span className='align-middle group-hover:text-grayModern-700 text-grayModern-500'>
             {data.icon}
           </span>
           <span className='align-middle text-sm'>{data.label}</span>

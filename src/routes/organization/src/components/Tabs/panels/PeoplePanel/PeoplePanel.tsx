@@ -72,14 +72,14 @@ export const PeoplePanel = observer(() => {
             size='xs'
             variant='outline'
             aria-label='Add contact'
-            className='text-gray-500'
+            className='text-grayModern-500'
             dataTest={'org-people-add-contact'}
-            icon={<UsersPlus className='text-gray-500' />}
+            icon={<UsersPlus className='text-grayModern-500' />}
             spinner={
               <Spinner
                 size='sm'
                 label='adding'
-                className='text-gray-300 fill-gray-400'
+                className='text-grayModern-300grayModernl-grayModern-400'
               />
             }
             onClick={() => {
@@ -99,13 +99,15 @@ export const PeoplePanel = observer(() => {
     >
       {!contacts.length && (
         <div className='flex flex-col items-center mt-4 max-w-[495px]'>
-          <div className='border-1 border-gray-200 p-3 rounded-md mb-6 mt-5'>
-            <FeaturedIcon colorScheme='gray'>
-              <Users02 className='text-gray-700 size-6' />
+          <div className='border-1 border-grayModern-200 p-3 rounded-md mb-6 mt-5'>
+            <FeaturedIcon colorScheme='grayModern'>
+              <Users02 className='text-grayModern-700 size-6' />
             </FeaturedIcon>
           </div>
-          <span className='text-gray-700 font-medium'>Assemble the team</span>
-          <span className='text-gray-700 mt-1 mb-6 text-center text-sm'>
+          <span className='text-grayModern-700 font-medium'>
+            Assemble the team
+          </span>
+          <span className='text-grayModern-700 mt-1 mb-6 text-center text-sm'>
             Start by adding people that work at {organization?.value.name}, and
             keep track of everyone from decision-makers to day-to-day
             collaborators.
@@ -136,7 +138,7 @@ export const PeoplePanel = observer(() => {
       {contacts.length > 0 && (
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>
-            <SearchSm className='text-gray-500 size-4' />
+            <SearchSm className='text-grayModern-500 size-4' />
             <Input
               size='xs'
               type='text'
@@ -242,7 +244,7 @@ export const PeoplePanel = observer(() => {
         ))}
 
       {filteredContactsState && (
-        <div className='text-center text-gray-500 mt-4 text-sm'>
+        <div className='text-center text-grayModern-500 mt-4 text-sm'>
           No matches found—looks like a ghost town in here
         </div>
       )}

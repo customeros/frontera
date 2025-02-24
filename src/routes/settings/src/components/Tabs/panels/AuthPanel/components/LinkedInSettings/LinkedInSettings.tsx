@@ -56,9 +56,11 @@ export const LinkedInSettings = observer(() => {
       <article className='flex-col flex relative max-w-[550px] px-6 '>
         <div className='flex items-center w-full'>
           <div className='flex items-center gap-1'>
-            <h2 className='text-gray-700 text-sm font-medium'>LinkedIn</h2>
+            <h2 className='text-grayModern-700 text-sm font-medium'>
+              LinkedIn
+            </h2>
           </div>
-          <div className='w-full border-b border-gray-100 mx-2' />
+          <div className='w-full border-b border-grayModern-100 mx-2' />
 
           <Tooltip label={isActive ? 'Remove LinkedIn account' : ''}>
             <div className='flex items-center'>

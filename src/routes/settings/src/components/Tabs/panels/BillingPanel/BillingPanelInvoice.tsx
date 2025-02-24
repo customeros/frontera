@@ -71,7 +71,7 @@ export const BillingPanelInvoice = observer(
       : store.settings.bankAccounts?.toArray()?.[0]?.value;
 
     return (
-      <div className='border-r border-gray-300 max-h-[100vh] w-full max-w-[794px]'>
+      <div className='border-r border-grayModern-300 max-h-[100vh] w-full max-w-[794px]'>
         <Invoice
           check={values?.check}
           availableBankAccount={displayedBankAccount}

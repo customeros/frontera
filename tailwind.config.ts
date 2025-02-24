@@ -16,6 +16,11 @@ export default {
       sticky: ['var(--font-merriweather)'],
     },
     boxShadow: shadows,
+    borderColor: {
+      ...colors,
+      transparent: 'transparent',
+      DEFAULT: colors.grayModern[200],
+    },
     listStyleType: {
       disc: 'disc',
       decimal: 'decimal',

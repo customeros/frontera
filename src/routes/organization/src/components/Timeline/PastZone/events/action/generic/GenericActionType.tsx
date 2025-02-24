@@ -20,7 +20,7 @@ export const GenericActionType = ({ data }: GenericActionTypeProps) => {
         onClick={() => openModal(data.id)}
         className='flex cursor-pointer min-h-[40px]'
       >
-        <Globe06 className='text-gray-500 mt-0.5 mr-2' />
+        <Globe06 className='text-grayModern-500 mt-0.5 mr-2' />
         <Markdown
           className='text-sm whitespace-pre-line
         [&>ul]:list-disc [&>ul>li>ul]:list-circle [&>ul>li>ul>li>ul]:list-square
@@ -42,7 +42,7 @@ export const GenericActionType = ({ data }: GenericActionTypeProps) => {
                     child.props?.node?.type === 'list'
                   ) {
                     return (
-                      <div key={index} className='text-gray-700'>
+                      <div key={index} className='text-grayModern-700'>
                         {child}
                       </div>
                     );
@@ -52,7 +52,7 @@ export const GenericActionType = ({ data }: GenericActionTypeProps) => {
                 });
               };
 
-              return <li className='text-gray-700'>{renderContent()}</li>;
+              return <li className='text-grayModern-700'>{renderContent()}</li>;
             },
 
             a: ({ children }) => (

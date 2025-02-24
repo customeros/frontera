@@ -22,7 +22,7 @@ interface EmailsInputGroupProps extends InputProps {
 
 const EmailList = ({ emailList }: { emailList: string[] }) => {
   return (
-    <p className='text-gray-500 whitespace-nowrap overflow-ellipsis overflow-hidden h-8 mt-1 border-b-1 border-transparent flex'>
+    <p className='text-grayModern-500 whitespace-nowrap overflow-ellipsis overflow-hidden h-8 mt-1 border-b-1 border-transparent flex'>
       {[...emailList].map((email, i) => {
         const validationMessage = validateEmail(email);
 
@@ -149,7 +149,7 @@ export const EmailsInputGroup = observer(
     return (
       <div ref={ref}>
         <div className='flex relative items-center h-8  mt-2'>
-          <p className='text-sm text-gray-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
+          <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
             Send invoice
           </p>
           <Divider />
@@ -159,7 +159,7 @@ export const EmailsInputGroup = observer(
               <Button
                 size='sm'
                 variant='ghost'
-                color='gray.400'
+                color='grayModern.400'
                 className='text-sm px-1 mx-1'
                 onClick={() => {
                   setShowCC(true);
@@ -174,7 +174,7 @@ export const EmailsInputGroup = observer(
               <Button
                 size='sm'
                 variant='ghost'
-                color='gray.400'
+                color='grayModern.400'
                 className='text-sm px-1 '
                 onClick={() => {
                   setShowBCC(true);
@@ -211,7 +211,9 @@ export const EmailsInputGroup = observer(
               'flex-1': !billingDetails?.billingEmailBCC?.length,
             })}
           >
-            <span className='text-sm font-semibold text-gray-700 mr-1'>To</span>
+            <span className='text-sm font-semibold text-grayModern-700 mr-1'>
+              To
+            </span>
             <EmailList emailList={valueTO} />{' '}
           </div>
         )}
@@ -260,7 +262,7 @@ export const EmailsInputGroup = observer(
                   'flex-1': !billingDetails?.billingEmailBCC?.length,
                 })}
               >
-                <span className='text-sm font-semibold text-gray-700 mr-1'>
+                <span className='text-sm font-semibold text-grayModern-700 mr-1'>
                   CC
                 </span>
                 <EmailList emailList={billingDetails?.billingEmailCC ?? []} />
@@ -275,7 +277,7 @@ export const EmailsInputGroup = observer(
                   'flex-1': !billingDetails?.billingEmailBCC?.length,
                 })}
               >
-                <span className='text-sm font-semibold text-gray-700 mr-1'>
+                <span className='text-sm font-semibold text-grayModern-700 mr-1'>
                   BCC
                 </span>
                 <EmailList emailList={billingDetails?.billingEmailBCC ?? []} />

@@ -60,14 +60,14 @@ export const CheckoutCard = observer(
           )}
         >
           <CardContent className='p-0'>
-            <div className='mb-2 bg-gray-100 w-full flex items-center gap-2 rounded-lg py-1 px-2 leading-4'>
-              <Inbox01 className='ml-1 text-gray-500 mr-2 size-5 min-w-5' />
+            <div className='mb-2 bg-grayModern-100 w-full flex items-center gap-2 rounded-lg py-1 px-2 leading-4'>
+              <Inbox01 className='ml-1 text-grayModern-500 mr-2 size-5 min-w-5' />
               {store.mailboxes.usernamesCount === 0 ? (
-                <span className='text-gray-700 text-sm'>
+                <span className='text-grayModern-700 text-sm'>
                   Add usernames to see how many emails you can send
                   <InfoCircle
                     onClick={onOpen}
-                    className='size-3 ml-1 text-gray-500 cursor-pointer hover:text-gray-700'
+                    className='size-3 ml-1 text-grayModern-500 cursor-pointer hovergrayModernt-grayModern-700'
                   />
                 </span>
               ) : (
@@ -82,7 +82,7 @@ export const CheckoutCard = observer(
                   per month
                   <InfoCircle
                     onClick={onOpen}
-                    className='size-3 ml-1 text-gray-500 cursor-pointer hover:text-gray-700'
+                    className='size-3 ml-1 text-grayModern-500 cursor-pointer hovergrayModernt-grayModern-700'
                   />
                 </p>
               )}

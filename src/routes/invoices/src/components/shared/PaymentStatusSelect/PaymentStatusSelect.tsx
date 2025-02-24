@@ -62,7 +62,9 @@ export const PaymentStatusSelect = observer(
             >
               <div className='flex gap-2 items-center'>
                 <SlashCircle01
-                  className={cn(isPaid ? 'text-gray-400' : 'text-gray-500')}
+                  className={cn(
+                    isPaid ? 'text-grayModern-400' : 'text-grayModern-500',
+                  )}
                 />
                 <span>Void</span>
               </div>
@@ -76,7 +78,7 @@ export const PaymentStatusSelect = observer(
               }}
             >
               <div className='flex gap-2 items-center'>
-                <CheckCircle className='text-gray-500' />
+                <CheckCircle className='text-grayModern-500' />
                 <span>Paid</span>
               </div>
             </MenuItem>
@@ -89,7 +91,7 @@ export const PaymentStatusSelect = observer(
               }}
             >
               <div className='flex gap-2 items-center'>
-                <Clock className='text-gray-500' />
+                <Clock className='text-grayModern-500' />
                 <span>Due</span>
               </div>
             </MenuItem>

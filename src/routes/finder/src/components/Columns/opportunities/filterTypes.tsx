@@ -53,7 +53,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <CoinsStacked01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <CoinsStacked01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OpportunitiesOrganization]: {
@@ -67,7 +67,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Building07 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Building07 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OpportunitiesStage]: {
@@ -81,7 +81,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Columns03 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Columns03 className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
       options: Object.entries(stageLabels ?? {}).map(([key, value]) => ({
         id: key,
@@ -100,7 +100,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <ArrowsRight className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <ArrowsRight className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
 
@@ -115,7 +115,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Calculator className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Calculator className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OpportunitiesOwner]: {
@@ -128,7 +128,9 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsEmpty,
         ComparisonOperator.IsNotEmpty,
       ],
-      icon: <Key01 className='grou-hover:text-gray-700 text-gray-500' />,
+      icon: (
+        <Key01 className='grou-hover:text-grayModern-700grayModernt-grayModern-500' />
+      ),
       options: store?.users.toArray().map((user) => ({
         id: user?.id,
         label: user?.name,
@@ -146,7 +148,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <ClockCheck className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <ClockCheck className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OpportunitiesCreatedDate]: {
@@ -155,7 +157,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.OpportunitiesCreatedDate,
       filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
       icon: (
-        <Calendar className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
   };

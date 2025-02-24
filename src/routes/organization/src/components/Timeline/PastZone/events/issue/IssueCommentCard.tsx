@@ -52,8 +52,10 @@ export const IssueCommentCard: FC<IssueCommentCardProps> = ({
             <div className='flex flex-col flex-1 relative'>
               <div className='flex justify-between flex-1'>
                 <div className='flex items-baseline'>
-                  <span className='text-gray-700 font-semibold'>{name}</span>
-                  <span className='text-gray-500 ml-2 text-xs'>
+                  <span className='text-grayModern-700 font-semibold'>
+                    {name}
+                  </span>
+                  <span className='text-grayModern-500 ml-2 text-xs'>
                     {DateTimeUtils.formatTime(date)}
                   </span>
                 </div>

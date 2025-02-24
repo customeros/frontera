@@ -35,11 +35,15 @@ import {
 import { Tags } from '../Tags';
 
 const iconMap = {
-  Customer: <Icon name='activity-heart' className='text-gray-500' />,
-  Prospect: <Icon name='seeding' className='text-gray-500' />,
-  'Not a fit': <Icon name='message-x-circle' className='text-gray-500' />,
-  'Former Customer': <Icon name='broken-heart' className='text-gray-500' />,
-  unknown: <Icon className='text-gray-500' name='align-horizontal-centre-02' />,
+  Customer: <Icon name='activity-heart' className='text-grayModern-500' />,
+  Prospect: <Icon name='seeding' className='text-grayModern-500' />,
+  'Not a fit': <Icon name='message-x-circle' className='text-grayModern-500' />,
+  'Former Customer': (
+    <Icon name='broken-heart' className='text-grayModern-500' />
+  ),
+  unknown: (
+    <Icon className='text-grayModern-500' name='align-horizontal-centre-02' />
+  ),
 };
 
 interface OrganizationDetailsProps {
@@ -112,7 +116,7 @@ export const OrganizationDetails = observer(
                   <Tooltip asChild={false} label={'Copy ID'}>
                     <Tag
                       variant='outline'
-                      colorScheme='gray'
+                      colorScheme='grayModern'
                       className='cursor-pointer w-full max-w-[100px]'
                       onClick={() => {
                         copyToClipboard(
@@ -164,7 +168,7 @@ export const OrganizationDetails = observer(
               inputValue={tagsUsecase.searchTerm}
               setInputValue={tagsUsecase.setSearchTerm}
               leftAccessory={
-                <Icon name='tag-01' className='mr-3 text-gray-500' />
+                <Icon name='tag-01' className='mr-3 text-grayModern-500' />
               }
               onChange={(selection) => {
                 tagsUsecase.select(selection.map((o) => o.value));
@@ -192,7 +196,8 @@ export const OrganizationDetails = observer(
                       <span
                         className={cn(
                           'ml-3 text-sm',
-                          !selectedRelationshipOption?.label && 'text-gray-400',
+                          !selectedRelationshipOption?.label &&
+                            'text-grayModern-400',
                         )}
                       >
                         {selectedRelationshipOption?.label ?? 'Relationship'}
@@ -227,7 +232,7 @@ export const OrganizationDetails = observer(
                       <MenuButton className='min-h-[20px] outline-none focus:outline-none'>
                         <Icon
                           name='target-05'
-                          className='text-gray-500 mb-0.5'
+                          className='text-grayModern-500 mb-0.5'
                         />
                         <span className='ml-3 text-sm'>
                           {selectedStageOption?.label || 'Stage'}
@@ -260,7 +265,9 @@ export const OrganizationDetails = observer(
               value={organization?.value?.industryName}
               field={FlagWrongFields.OrganizationIndustry}
               flaggedAsIncorrect={organization?.value?.wrongIndustry ?? false}
-              icon={<Icon name='building-07' className='text-gray-500 mr-3' />}
+              icon={
+                <Icon name='building-07' className='text-grayModern-500 mr-3' />
+              }
             />
 
             {organization.country && (
@@ -279,7 +286,7 @@ export const OrganizationDetails = observer(
             {typeof organization.value!.employees === 'number' && (
               <Tooltip align='start' label='Number of employees'>
                 <p className='text-sm flex items-center cursor-default '>
-                  <Icon name='users-02' className='text-gray-500 mr-3' />
+                  <Icon name='users-02' className='text-grayModern-500 mr-3' />
                   {organization.value!.employees} employees
                 </p>
               </Tooltip>
@@ -297,7 +304,7 @@ export const OrganizationDetails = observer(
           {organization?.value.customerOsId && (
             <Tooltip label='Copy ID'>
               <span
-                className='py-3 w-fit text-gray-400 cursor-pointer text-sm'
+                className='py-3 w-fit text-grayModern-400 cursor-pointer text-sm'
                 onClick={() =>
                   copyToClipboard(
                     organization.value?.customerOsId ?? '',

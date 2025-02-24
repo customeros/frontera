@@ -72,7 +72,7 @@ export const IntercomStub: FC<{ intercomEvent: InteractionEventWithDate }> = ({
                     textSize='xs'
                     name={displayName}
                     variant='outlineSquare'
-                    icon={<User02 color='text-gray-700' />}
+                    icon={<User02 color='text-grayModern-700' />}
                     src={profilePhotoUrl ? profilePhotoUrl : undefined}
                     key={`uniq-intercom-thread-participant-${intercomEvent.id}-${id}`}
                   />

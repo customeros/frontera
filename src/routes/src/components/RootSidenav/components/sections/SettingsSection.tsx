@@ -84,7 +84,7 @@ export const SettingsSection = observer(() => {
               >
                 <Icon
                   name='keyboard-02'
-                  className='group-hover:text-gray-700 text-gray-500'
+                  className='group-hover:text-grayModern-700 text-grayModern-500'
                 />
                 <span>Shortcuts</span>
               </div>
@@ -100,13 +100,13 @@ export const SettingsSection = observer(() => {
                 <div className='flex gap-2 items-center'>
                   <Icon
                     name='code-browser'
-                    className='group-hover:text-gray-700 text-gray-500'
+                    className='group-hover:text-grayModern-700grayModernt-grayModern-500'
                   />
                   <span>API docs</span>
                 </div>
                 <Icon
                   name='arrow-narrow-up-right'
-                  className='group-hover:text-gray-500 text-gray-400'
+                  className='group-hover:text-grayModern-500grayModernt-grayModern-400'
                 />
               </div>
             </MenuItem>
@@ -121,13 +121,13 @@ export const SettingsSection = observer(() => {
                 <div className='flex gap-2 items-center'>
                   <Icon
                     name='book-closed'
-                    className='group-hover:text-gray-700 text-gray-500'
+                    className='group-hover:text-grayModern-700grayModernt-grayModern-500'
                   />
                   <span>Help docs</span>
                 </div>
                 <Icon
                   name='arrow-narrow-up-right'
-                  className='group-hover:text-gray-500 text-gray-400'
+                  className='group-hover:text-grayModern-500grayModernt-grayModern-400'
                 />
               </div>
             </MenuItem>
@@ -139,7 +139,7 @@ export const SettingsSection = observer(() => {
               <div className='flex gap-2 items-center'>
                 <Icon
                   name='message-smile-square'
-                  className='group-hover:text-gray-700 text-gray-500'
+                  className='group-hover:text-grayModern-700grayModernt-grayModern-500'
                 />
                 <span>Ask for help</span>
               </div>
@@ -149,7 +149,7 @@ export const SettingsSection = observer(() => {
               <MenuItem onClick={onOpen} className='group'>
                 <Icon
                   name='code-square-02'
-                  className='group-hover:text-gray-700 text-gray-500'
+                  className='group-hover:text-grayModern-700grayModernt-grayModern-500'
                 />
                 <span>Debugger</span>
               </MenuItem>

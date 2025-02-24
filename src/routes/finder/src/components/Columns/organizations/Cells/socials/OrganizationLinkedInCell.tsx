@@ -19,11 +19,11 @@ export const OrganizationLinkedInCell = observer(
     );
 
     if (organization?.isEnriching && !linkedIn) {
-      return <span className='text-gray-400'>Enriching...</span>;
+      return <span className='text-grayModern-400'>Enriching...</span>;
     }
 
     if (!linkedIn) {
-      return <span className='text-gray-400'>Not set</span>;
+      return <span className='text-grayModern-400'>Not set</span>;
     }
 
     const link = linkedIn.url;
@@ -43,7 +43,7 @@ export const OrganizationLinkedInCell = observer(
     return (
       <div className='flex items-center cursor-pointer'>
         <Link to={url} target='_blank' className='flex items-center'>
-          <p className='text-gray-700 truncate hover:underline'>
+          <p className='text-grayModern-700 truncate hover:underline'>
             {displayLink}
           </p>
         </Link>

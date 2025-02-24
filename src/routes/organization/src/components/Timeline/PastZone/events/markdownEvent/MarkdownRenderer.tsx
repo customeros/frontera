@@ -11,7 +11,7 @@ export const MarkdownRenderer = ({ content }: { content: string }) => {
         [&>ol]:pl-4 [&_ol]:pl-4 [&>ul]:pl-4 [&_ul]:pl-4'
       components={{
         blockquote: ({ children }) => (
-          <blockquote className='text-gray-500 border-l border-gray-500 pl-3'>
+          <blockquote className='text-grayModern-500 border-l border-grayModern-500 pl-3'>
             {children}
           </blockquote>
         ),

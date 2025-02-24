@@ -72,15 +72,15 @@ export const LastTouchpointCell = ({
       label={`${label} • ${subLabel}`}
     >
       <span ref={cellRef}>
-        <Icon className='size-3 min-w-3 text-gray-700' />
+        <Icon className='size-3 min-w-3 text-grayModern-700' />
         <span
-          className='text-gray-700 ml-2 leading-none'
+          className='text-grayModern-700 ml-2 leading-none'
           data-test='organization-last-touchpoint-in-all-orgs-table'
         >
           {label}
         </span>
-        <span className='text-gray-500 text-xs ml-1 leading-none'>•</span>
-        <span className='text-gray-500 text-xs ml-1 leading-none'>
+        <span className='text-grayModern-500 text-xs ml-1 leading-none'>•</span>
+        <span className='text-grayModern-500 text-xs ml-1 leading-none'>
           {subLabel}
         </span>
       </span>

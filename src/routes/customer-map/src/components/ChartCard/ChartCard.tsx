@@ -34,7 +34,7 @@ export const ChartCard = ({
     <>
       <Card
         className={twMerge(
-          'w-full rounded-lg shadow-none border border-gray-200 group',
+          'w-full rounded-lg shadow-none border border-grayModern-200 group',
           className,
         )}
         {...props}
@@ -49,7 +49,7 @@ export const ChartCard = ({
           {stat && (
             <h2
               className={cn(
-                hasData ? 'text-gray-700' : 'text-lg text-gray-400',
+                hasData ? 'text-grayModern-700' : 'text-lg text-grayModern-400',
                 'text-3xl font-semibold',
               )}
             >

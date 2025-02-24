@@ -62,7 +62,7 @@ export const EmailExpiredSidebarNotification = observer(() => {
 
                   <IconButton
                     variant='ghost'
-                    colorScheme='gray'
+                    colorScheme='grayModern'
                     aria-label='Close dialog'
                     icon={<Icon name='x-close' />}
                     onClick={() => {
@@ -78,8 +78,8 @@ export const EmailExpiredSidebarNotification = observer(() => {
                 <div className='flex mt-2 justify-center'>
                   <Button
                     variant='ghost'
-                    colorScheme='gray'
-                    className='font-semibold hover:gray-700 text-sm'
+                    colorScheme='grayModern'
+                    className='font-semibold hover:grayModern-700 text-sm'
                     onClick={() => {
                       infoModal.onOpen();
                     }}

@@ -48,14 +48,14 @@ export const OrganizationPanel = ({
       <div className='flex justify-between pt-[6px] pb-4 px-6'>
         <div className='flex items-center relative'>
           {leftActionItem && leftActionItem}
-          <span className='text-[16px] text-gray-700 font-semibold'>
+          <span className='text-[16px] text-grayModern-700 font-semibold'>
             {title}
           </span>
           {isLoading && (
             <Spinner
               size='sm'
               label='syncing'
-              className='text-gray-300 fill-gray-700 w-3 h-3 ml-1 absolute left-[-20px]'
+              className='text-grayModern-300grayModernl-grayModern-700 w-3 h-3 ml-1 absolute left-[-20px]'
             />
           )}
         </div>

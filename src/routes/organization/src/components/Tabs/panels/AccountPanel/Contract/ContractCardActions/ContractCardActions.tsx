@@ -34,18 +34,18 @@ export const ContractCardActions = ({
 
     switch (status) {
       case ContractStatus.Live:
-        icon = <XSquare className='text-gray-500 mr-1' />;
+        icon = <XSquare className='text-grayModern-500 mr-1' />;
         text = 'End contract...';
         break;
       case ContractStatus.Draft:
       case ContractStatus.Ended:
         icon = (
-          <DotLive className='text-gray-500 mr-1 [&>*:nth-child(1)]:fill-gray-200 [&>*:nth-child(1)]:stroke-gray-300 [&>*:nth-child(2)]:fill-gray-600 ' />
+          <DotLive className='text-grayModern-500 mr-1 [&>*:nth-child(1)]grayModernl-grayModern-200 [&>*:nth-childgrayModern:stroke-grayModern-300 [&>*:ngrayModernhild(2)]:fill-grayModern-600 ' />
         );
         text = 'Make live';
         break;
       case ContractStatus.OutOfContract:
-        icon = <RefreshCw05 className='text-gray-500 mr-2' />;
+        icon = <RefreshCw05 className='text-grayModern-500 mr-2' />;
         text = 'Renew contract';
         break;
       case ContractStatus.Scheduled:

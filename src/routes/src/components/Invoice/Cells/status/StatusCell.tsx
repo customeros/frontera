@@ -15,7 +15,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
   switch (type) {
     case InvoiceStatus.Initialized:
       return (
-        <Tag variant='outline' colorScheme='gray'>
+        <Tag variant='outline' colorScheme='grayModern'>
           <TagLeftIcon>
             <ClockFastForward />
           </TagLeftIcon>
@@ -42,7 +42,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       );
     case InvoiceStatus.Void:
       return (
-        <Tag variant='outline' colorScheme='gray'>
+        <Tag variant='outline' colorScheme='grayModern'>
           <TagLeftIcon>
             <SlashCircle01 />
           </TagLeftIcon>
@@ -51,7 +51,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       );
     case InvoiceStatus.Scheduled:
       return (
-        <Tag variant='outline' colorScheme='gray'>
+        <Tag variant='outline' colorScheme='grayModern'>
           <TagLeftIcon>
             <ClockFastForward />
           </TagLeftIcon>

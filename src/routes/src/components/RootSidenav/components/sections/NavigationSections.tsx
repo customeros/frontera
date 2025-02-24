@@ -39,7 +39,10 @@ export const NavigationSections = ({
             icon={(isActive) => (
               <Icon
                 name='bubbles'
-                className={cn('text-gray-500', isActive && 'text-gray-700')}
+                className={cn(
+                  'text-grayModern-500',
+                  isActive && 'text-grayModern-700',
+                )}
               />
             )}
           />
@@ -54,8 +57,8 @@ export const NavigationSections = ({
             <Icon
               name='atom-01'
               className={cn(
-                'size-4 min-w-4 text-gray-500',
-                isActive && 'text-gray-700',
+                'size-4 min-w-4 text-grayModern-500',
+                isActive && 'text-grayModern-700',
               )}
             />
           )}

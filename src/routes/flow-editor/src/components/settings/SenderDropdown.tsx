@@ -69,13 +69,13 @@ export const SenderDropdown = observer(
                 textSize='xxs'
                 name={_user?.name ?? 'Unnamed'}
                 src={_user?.value?.profilePhotoUrl ?? ''}
-                icon={<User01 className='text-gray-500 size-3' />}
-                className={'w-5 h-5 min-w-5 mr-2 border border-gray-200'}
+                icon={<User01 className='text-grayModern-500 size-3' />}
+                className={'w-5 h-5 min-w-5 mr-2 border border-grayModern-200'}
               />
               <div className='flex-1 flex items-center text-sm gap-1'>
                 {children}
                 {hasEmailNodes && (
-                  <span className='text-xs text-gray-500'>
+                  <span className='text-xs text-grayModern-500'>
                     • {userMailboxes?.length} mailbox
                     {userMailboxes?.length === 1 ? '' : 'es'}
                   </span>

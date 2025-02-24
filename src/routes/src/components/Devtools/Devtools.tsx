@@ -177,7 +177,7 @@ export const Devtools = observer(
             {() => (
               <div
                 className={cn(
-                  'relative flex bg-white drop-shadow-2xl ring-1 ring-gray-200 w-full h-full z-10 flex-col p-0 rounded-lg transition',
+                  'relative flex bg-white drop-shadow-2xl ring-1 ring-grayModern-200 w-full h-full z-10 flex-col p-0 rounded-lg transition',
                   isDragging && 'ring-2 ring-primary-400',
                 )}
               >
@@ -192,7 +192,7 @@ export const Devtools = observer(
 
                 <div
                   onMouseDown={(e) => startMove(e, true)}
-                  className='border-b rounded-t-lg border-b-gray-200 pb-0.5 pl-0.5 w-full bg-gray-50 hover:cursor-grab'
+                  className='border-b rounded-t-lg border-b-grayModern-200 pb-0.5 pl-0.5 w-fugrayModerng-grayModern-50 hover:cursor-grab'
                 >
                   <ButtonGroup variant='old'>
                     <Button
@@ -242,11 +242,11 @@ export const Devtools = observer(
                     isMovable={false}
                     defaultWidth={200}
                     resizeDirection='horizontal'
-                    className='border-r border-r-gray-200'
+                    className='border-r border-r-grayModern-200'
                   >
                     <ScrollAreaRoot className='h-full w-full overflow-hidden'>
                       <ScrollAreaViewport className='h-full'>
-                        <div className='bg-white border-b border-b-gray-200 p-1'>
+                        <div className='bg-white border-b border-b-grayModern-200 p-1'>
                           <Input
                             size='xs'
                             variant='outline'
@@ -275,8 +275,10 @@ export const Devtools = observer(
                                     devTools.toggleGqlOp(op.id);
                                   }}
                                   className={cn(
-                                    'border-b border-b-gray-200 cursor-pointer hover:bg-gray-50 pl-1',
-                                    isSelected && !hasError && 'bg-gray-100',
+                                    'border-b border-b-grayModern-200 cursor-pointer hovgrayModerng-grayModern-50 pl-1',
+                                    isSelected &&
+                                      !hasError &&
+                                      'bg-grayModern-100',
                                     isSelected && hasError && 'bg-error-100',
                                     !isSelected &&
                                       hasError &&
@@ -307,8 +309,8 @@ export const Devtools = observer(
                                     devTools.toggleStore(name);
                                   }}
                                   className={cn(
-                                    'border-b border-b-gray-200 cursor-pointer hover:bg-gray-50 pl-1',
-                                    isSelected && 'bg-gray-100',
+                                    'border-b border-b-grayModern-200 cursor-pointer hovgrayModerng-grayModern-50 pl-1',
+                                    isSelected && 'bg-grayModern-100',
                                   )}
                                 >
                                   <span
@@ -402,14 +404,14 @@ export const Devtools = observer(
                                     <div
                                       onClick={() => devTools.toggleEntity(k)}
                                       className={cn(
-                                        'flex items-center border-b borde-b-gray-200 cursor-pointer hover:bg-gray-50 py-0.5',
-                                        isSelected && 'bg-gray-100',
+                                        'flex items-center border-b borde-b-grayModern-200 cursor-pointer hovgrayModerng-grayModern-50 py-0.5',
+                                        isSelected && 'bg-grayModern-100',
                                       )}
                                     >
                                       <span className='text-xs font-medium mr-0.5'>
                                         {name}
                                       </span>
-                                      <span className='text-xs text-gray-500'>
+                                      <span className='text-xs text-grayModern-500'>
                                         ({k})
                                       </span>
                                     </div>

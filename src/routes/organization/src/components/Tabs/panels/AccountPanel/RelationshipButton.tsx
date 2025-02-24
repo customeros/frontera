@@ -35,7 +35,7 @@ export const RelationshipButton = observer(() => {
   const spinnerColors =
     selectedValue?.value === OrganizationRelationship.Customer
       ? 'text-success-500 fill-succes-700'
-      : 'text-gray-400 fill-gray-700';
+      : 'text-grayModern-400 fill-grayModern-700';
 
   const iconTag = iconMap[selectedValue?.label as keyof typeof iconMap];
 
@@ -72,12 +72,12 @@ export const RelationshipButton = observer(() => {
             colorScheme={
               selectedValue?.value === OrganizationRelationship.Customer
                 ? 'success'
-                : 'gray'
+                : 'grayModern'
             }
             className={cn(
               selectedValue?.value === OrganizationRelationship.Customer
                 ? 'text-success-500'
-                : 'text-gray-500',
+                : 'text-grayModern-500',
               'rounded-full py-0.5 cursor-pointer',
             )}
           >

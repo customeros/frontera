@@ -51,7 +51,7 @@ export const SlackStub: FC<{ slackEvent: InteractionEventWithDate }> = ({
                   name={displayName}
                   variant='outlineSquare'
                   src={photoUrl ?? undefined}
-                  icon={<User02 className='text-gray-700' />}
+                  icon={<User02 className='text-grayModern-700' />}
                   key={`uniq-slack-thread-participant-${slackEvent.id}-${id}`}
                 />
               );

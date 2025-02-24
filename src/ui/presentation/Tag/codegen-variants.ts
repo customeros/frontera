@@ -75,7 +75,7 @@ export const tag${capitalize(variant)}Variant = cva(${tagCommonClasses}, {
     },
   },
   defaultVariants: {
-    colorScheme: 'gray',
+    colorScheme: 'grayModern',
   },
 });
 `;
@@ -100,7 +100,7 @@ export const tagCloseButtonVariant = cva(${closeButtonCommonClasses}, {
     },
   },
   defaultVariants: {
-    colorScheme: 'gray',
+    colorScheme: 'grayModern',
   },
 });
 `;

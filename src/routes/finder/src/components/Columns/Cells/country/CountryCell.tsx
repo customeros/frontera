@@ -31,7 +31,7 @@ export const CountryCell = observer(({ id, type }: ContactNameCellProps) => {
 
   if (!country) {
     return (
-      <div className='text-gray-400'>
+      <div className='text-grayModern-400'>
         {isEnriching ? 'Enriching...' : 'Not set'}
       </div>
     );

@@ -3,7 +3,7 @@ import { Card, CardContent } from '@ui/presentation/Card/Card';
 
 export const MessageCardSkeleton = () => {
   return (
-    <Card className='text-sm bg-white flex shadow-xs border border-gray-200 w-full'>
+    <Card className='text-sm bg-white flex shadow-xs border border-grayModern-200 w-full'>
       <CardContent className='p-3 w-full'>
         <div className='flex gap-4'>
           <Skeleton className='w-10 h-10 rounded-[6px]' />

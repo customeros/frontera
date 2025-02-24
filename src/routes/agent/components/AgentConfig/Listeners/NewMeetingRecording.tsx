@@ -72,7 +72,9 @@ export const NewMeetingRecording = observer(() => {
               {usecase.notetaker ? (
                 <div className='text-sm'>{usecase.notetaker.label}</div>
               ) : (
-                <span className='text-gray-400 text-sm'>Select option...</span>
+                <span className='text-grayModern-400 text-sm'>
+                  Select option...
+                </span>
               )}
             </div>
           </PopoverTrigger>
@@ -88,7 +90,7 @@ export const NewMeetingRecording = observer(() => {
                 usecase.execute();
               }}
               noOptionsMessage={({ inputValue }) => (
-                <div className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
+                <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
                   <span>{`No results matching "${inputValue}"`}</span>
                 </div>
               )}
@@ -131,8 +133,8 @@ export const NewMeetingRecording = observer(() => {
             <p
               className={cn(
                 'text-sm truncate',
-                !usecase.webhookUrl && 'text-gray-400',
-                usecase.isWebhookUrlLoading && 'text-gray-400',
+                !usecase.webhookUrl && 'text-grayModern-400',
+                usecase.isWebhookUrlLoading && 'text-grayModern-400',
               )}
             >
               {usecase.isWebhookUrlLoading

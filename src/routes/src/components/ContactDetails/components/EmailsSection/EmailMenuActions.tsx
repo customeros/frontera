@@ -77,7 +77,7 @@ export const EmailMenuActions = observer(
             }}
           >
             <div className='flex items-center gap-2'>
-              <TextInput className='group-hover/edit-email:text-gray-700 text-gray-500' />
+              <TextInput className='group-hover/edit-email:text-grayModern-700 text-grayModern-500' />
               <span>Edit email</span>
             </div>
           </MenuItem>
@@ -92,7 +92,7 @@ export const EmailMenuActions = observer(
               }}
             >
               <div className='flex items-center gap-2'>
-                <Star01 className='group-hover/primary-email:text-gray-700 text-gray-500' />
+                <Star01 className='group-hover/primary-email:text-grayModern-700grayModernt-grayModern-500' />
                 <span>Make primary</span>
               </div>
             </MenuItem>
@@ -113,7 +113,7 @@ export const EmailMenuActions = observer(
                   }, 0);
                 }}
               >
-                <Send03 className='text-gray-500 group-hover/send-email:text-gray-700' />
+                <Send03 className='text-grayModern-500 group-hover/send-emailgrayModernt-grayModern-700' />
                 Send email to contact
               </MenuItem>
             )}
@@ -129,7 +129,7 @@ export const EmailMenuActions = observer(
               store.ui.commandMenu.setOpen(true);
             }}
           >
-            <PlusCircle className='text-gray-500 group-hover/add-email:text-gray-700' />
+            <PlusCircle className='text-grayModern-500 group-hover/add-emailgrayModernt-grayModern-700' />
             Add email
           </MenuItem>
           <MenuItem
@@ -138,7 +138,7 @@ export const EmailMenuActions = observer(
               contactStore.findEmail();
             }}
           >
-            <Stars02 className='text-gray-500 group-hover/work-email:text-gray-700' />
+            <Stars02 className='text-grayModern-500 group-hover/work-emailgrayModernt-grayModern-700' />
             Find work email
           </MenuItem>
           <MenuItem
@@ -151,7 +151,7 @@ export const EmailMenuActions = observer(
               contactStore?.commit();
             }}
           >
-            <Archive className='text-gray-500 group-hover/archive-email:text-gray-700' />
+            <Archive className='text-grayModern-500 group-hover/archive-emailgrayModernt-grayModern-700' />
             Archive email
           </MenuItem>
 
@@ -159,7 +159,7 @@ export const EmailMenuActions = observer(
             className='group/copy-email'
             onClick={() => copyToClipboard(email || '', 'Email copied')}
           >
-            <Copy01 className='group-hover/copy-email:text-gray-700 text-gray-500' />
+            <Copy01 className='group-hover/copy-email:text-grayModern-700grayModernt-grayModern-500' />
             Copy email
           </MenuItem>
         </MenuList>

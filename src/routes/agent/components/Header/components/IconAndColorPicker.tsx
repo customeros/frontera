@@ -54,8 +54,8 @@ export const IconAndColorPicker = observer(() => {
             size={'xxs'}
             key={iconName}
             variant={'ghost'}
-            colorScheme={'gray'}
             aria-label={iconName}
+            colorScheme={'grayModern'}
             icon={
               <Icon name={iconName} className={'text-inherit size-[14px]'} />
             }

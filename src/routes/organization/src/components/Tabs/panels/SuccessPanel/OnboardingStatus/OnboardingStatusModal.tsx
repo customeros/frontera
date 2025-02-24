@@ -48,7 +48,7 @@ const getIconcolorScheme: any = (status: OnboardingStatus) =>
       () => 'success',
     )
     .with(OnboardingStatus.Late, OnboardingStatus.Stuck, () => 'warning')
-    .otherwise(() => 'gray');
+    .otherwise(() => 'grayModern');
 
 const getIcon = (status: OnboardingStatus) => {
   const color = `${getIconcolorScheme(status)}.500`;

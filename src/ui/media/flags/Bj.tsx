@@ -15,7 +15,7 @@ export const Bj = ({ className, ...props }: IconProps) => (
   >
     <defs>
       <clipPath id='bj-a'>
-        <path fill='gray' d='M67.6-154h666v666h-666z' />
+        <path fill='grayModern' d='M67.6-154h666v666h-666z' />
       </clipPath>
     </defs>
     <g clipPath='url(#bj-a)' transform='matrix(.961 0 0 .7207 -65 111)'>

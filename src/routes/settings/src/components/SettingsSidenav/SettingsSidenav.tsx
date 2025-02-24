@@ -61,7 +61,7 @@ export const SettingsSidenav = observer(() => {
   );
 
   return (
-    <div className='px-2 pt-[6px] h-full w-[200px] bg-white flex flex-col relative border-r border-gray-200'>
+    <div className='px-2 pt-[6px] h-full w-[200px] bg-white flex flex-col relative border-r border-grayModern-200'>
       {hasCampaign ? (
         <div className='flex gap-2 items-center mb-4 pl-[10px] pt-[2px]'>
           <Image
@@ -83,13 +83,13 @@ export const SettingsSidenav = observer(() => {
               variant='ghost'
               aria-label='Go back'
               dataTest='settings-go-back'
-              icon={<ArrowNarrowLeft className='text-gray-700' />}
               onClick={() => navigate(`/${lastActivePosition.root}`)}
+              icon={<ArrowNarrowLeft className='text-grayModern-700' />}
             />
 
             <p
               data-test='settings-header'
-              className='font-semibold text-gray-700 break-keep line-clamp-1'
+              className='font-semibold text-grayModern-700 break-keep line-clamp-1'
             >
               Settings
             </p>
@@ -108,7 +108,9 @@ export const SettingsSidenav = observer(() => {
               icon={
                 <Link01
                   className={cn(
-                    checkIsActive('oauth') ? 'text-gray-700' : 'text-gray-500',
+                    checkIsActive('oauth')
+                      ? 'text-grayModern-700'
+                      : 'text-grayModern-500',
                     'size-5',
                   )}
                 />
@@ -126,8 +128,8 @@ export const SettingsSidenav = observer(() => {
                 <Receipt
                   className={cn(
                     checkIsActive('billing')
-                      ? 'text-gray-700'
-                      : 'text-gray-500',
+                      ? 'text-grayModern-700'
+                      : 'text-grayModern-500',
                     'size-5',
                   )}
                 />
@@ -141,8 +143,8 @@ export const SettingsSidenav = observer(() => {
                 <Dataflow03
                   className={cn(
                     checkIsActive('integrations')
-                      ? 'text-gray-700'
-                      : 'text-gray-500',
+                      ? 'text-grayModern-700'
+                      : 'text-grayModern-500',
                   )}
                 />
               }

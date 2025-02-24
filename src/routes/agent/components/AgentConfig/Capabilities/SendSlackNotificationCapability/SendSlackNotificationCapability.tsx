@@ -105,11 +105,13 @@ export const SendSlackNotificationCapability = observer(() => {
           <Popover open={usecase.isOpen} onOpenChange={usecase.togglePopover}>
             <PopoverTrigger className={'flex items-center w-full'}>
               <div className='flex w-full items-center bg-white border border-grayModern-200 px-2 py-1 rounded-md min-h-8'>
-                <Slack className='mr-3 text-gray-500' />
+                <Slack className='mr-3 text-grayModern-500' />
                 {usecase.selectedChannel ? (
                   <div className='text-sm'>{usecase.selectedChannelName}</div>
                 ) : (
-                  <span className='text-gray-400 text-sm'>Slack channel</span>
+                  <span className='text-grayModern-400 text-sm'>
+                    Slack channel
+                  </span>
                 )}
               </div>
             </PopoverTrigger>
@@ -124,7 +126,7 @@ export const SendSlackNotificationCapability = observer(() => {
                   usecase.selectChannel(newValue.value);
                 }}
                 noOptionsMessage={({ inputValue }) => (
-                  <div className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
+                  <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
                     <span>{`No results matching "${inputValue}"`}</span>
                   </div>
                 )}
@@ -149,7 +151,7 @@ export const SendSlackNotificationCapability = observer(() => {
               onClick={() => usecase.setCooldownPeriod(period)}
               className='cursor-pointer hover:bg-primary-100 transition-colors'
               colorScheme={
-                usecase.cooldownPeriod === period ? 'primary' : 'gray'
+                usecase.cooldownPeriod === period ? 'primary' : 'grayModern'
               }
             >
               <TagLabel>{cooldownPeriodsMap[period]}</TagLabel>

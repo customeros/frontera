@@ -55,8 +55,10 @@ export const ChangeTags = observer(() => {
           ))}
           {editTags.searchTerm && (
             <CommandItem leftAccessory={<Plus />} onSelect={editTags.create}>
-              <span className='text-gray-700 ml-1'>Create new tag:</span>
-              <span className='text-gray-500 ml-1'>{editTags.searchTerm}</span>
+              <span className='text-grayModern-700 ml-1'>Create new tag:</span>
+              <span className='text-grayModern-500 ml-1'>
+                {editTags.searchTerm}
+              </span>
             </CommandItem>
           )}
         </Command.List>

@@ -55,12 +55,12 @@ export const TriggersHub = observer(() => {
         keywords={keywords.record_created}
       >
         <span
-          className='text-gray-700'
+          className='text-grayModern-700'
           data-test={'flow-trigger-record-created'}
         >
           Record is created
         </span>{' '}
-        <span className='text-gray-500'>(Coming soon)</span>
+        <span className='text-grayModern-500'>(Coming soon)</span>
       </CommandItem>
       <CommandItem
         disabled
@@ -68,12 +68,12 @@ export const TriggersHub = observer(() => {
         keywords={keywords.record_updated}
       >
         <span
-          className='text-gray-700'
+          className='text-grayModern-700'
           data-test={'flow-trigger-record-updated'}
         >
           Record is updated
         </span>{' '}
-        <span className='text-gray-500'>(Coming soon)</span>
+        <span className='text-grayModern-500'>(Coming soon)</span>
       </CommandItem>
       <CommandItem
         disabled
@@ -81,22 +81,25 @@ export const TriggersHub = observer(() => {
         keywords={keywords.record_matches_condition}
       >
         <span
-          className='text-gray-700'
+          className='text-grayModern-700'
           data-test={'flow-trigger-record-matches-condition'}
         >
           Record matches condition
         </span>{' '}
-        <span className='text-gray-500'>(Coming soon)</span>
+        <span className='text-grayModern-500'>(Coming soon)</span>
       </CommandItem>
       <CommandItem
         disabled
         leftAccessory={<Code01 />}
         keywords={keywords.webhook}
       >
-        <span className='text-gray-700' data-test={'flow-trigger-webhook'}>
+        <span
+          className='text-grayModern-700'
+          data-test={'flow-trigger-webhook'}
+        >
           Webhook is called
         </span>{' '}
-        <span className='text-gray-500'>(Coming soon)</span>
+        <span className='text-grayModern-500'>(Coming soon)</span>
       </CommandItem>
     </>
   );

@@ -29,7 +29,7 @@ export const getFilterTypes = () => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Shuffle01 className='group-hover:text-gray-700 text-gray-500 mb-0.5' />
+        <Shuffle01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
   };

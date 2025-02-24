@@ -184,7 +184,7 @@ export const TenantBillingPanelDetailsForm = ({
       </div>
       <div className='flex flex-col'>
         <div className='flex relative items-center'>
-          <span className='text-sm whitespace-nowrap mr-2 text-gray-500'>
+          <span className='text-sm whitespace-nowrap mr-2 text-grayModern-500'>
             Email invoice
           </span>
           <Divider />

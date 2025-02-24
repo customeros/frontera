@@ -113,7 +113,7 @@ export const RenewalARRCard = observer(
             setIsLocalOpen(true);
           }}
           className={cn(
-            'px-4 py-3 w-full my-2 border border-gray-200 relative bg-white rounded-lg shadow-xs',
+            'px-4 py-3 w-full my-2 border border-grayModern-200 relative bg-white rounded-lg shadow-xs',
             {
               'cursor-pointer': !hasEnded,
               'cursor-default': hasEnded,
@@ -127,25 +127,25 @@ export const RenewalARRCard = observer(
             <div className='flex items-center justify-between w-full'>
               <div className='flex flex-col'>
                 <div className='flex flex-1 items-center'>
-                  <h1 className='text-gray-700 font-semibold text-sm line-height-1'>
+                  <h1 className='text-grayModern-700 font-semibold text-sm line-height-1'>
                     Renewal ARR
                   </h1>
 
                   {showTimeToRenewal && (
-                    <p className='ml-1 text-gray-500 text-sm inline'>
+                    <p className='ml-1 text-grayModern-500 text-sm inline'>
                       {timeToRenewal}
                     </p>
                   )}
                 </div>
 
                 {opportunity?.renewalLikelihood && (
-                  <p className='w-full text-gray-500 text-sm line-height-1'>
+                  <p className='w-full text-grayModern-500 text-sm line-height-1'>
                     {!hasEnded ? (
                       <>
                         Likelihood{' '}
                         <span
                           className={cn(
-                            `capitalize font-medium text-gray-500`,
+                            `capitalize font-medium text-grayModern-500`,
                             {
                               'text-greenLight-500':
                                 opportunity?.renewalLikelihood ===

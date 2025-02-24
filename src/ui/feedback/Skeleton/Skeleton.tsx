@@ -7,7 +7,7 @@ interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-const defaultClasses = 'animate-pulse bg-gray-300 rounded-sm';
+const defaultClasses = 'animate-pulse bg-grayModern-300 rounded-sm';
 
 export const Skeleton = forwardRef(
   (

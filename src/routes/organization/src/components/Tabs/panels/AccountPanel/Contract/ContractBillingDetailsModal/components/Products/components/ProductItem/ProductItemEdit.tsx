@@ -33,7 +33,7 @@ const inputClasses =
   'text-sm min-w-2.5 min-h-0 max-h-4 text-inherit underline hover:border-none focus:border-none border-none';
 
 const deleteButtonClasses =
-  'border-none bg-transparent shadow-none text-gray-400 pr-3 pl-4 py-2 -mx-4 absolute -right-7 top-0 bottom-0 invisible group-hover:visible hover:bg-transparent';
+  'border-none bg-transparent shadow-none text-grayModern-400 pr-3 pl-4 py-2 -mx-4 absolute -right-7 top-0 bottom-0 invisible group-hover:visible hover:bg-transparent';
 
 const formatPrice = (price: number | undefined | string): string => {
   if (price === undefined || price === null) return '';
@@ -208,7 +208,7 @@ export const ProductItemEdit = observer(
     };
 
     return (
-      <div className='flex items-baseline justify-between group relative text-gray-500 '>
+      <div className='flex items-baseline justify-between group relative text-grayModern-500 '>
         <div className='flex items-baseline'>
           <MaskedResizableInput
             min={0}
@@ -229,7 +229,7 @@ export const ProductItemEdit = observer(
                 : updateQuantity(e.target.value)
             }
           />
-          <span className=' mx-1 text-gray-700'>×</span>
+          <span className=' mx-1 text-grayModern-700'>×</span>
 
           {sliCurrencySymbol}
 
@@ -268,14 +268,14 @@ export const ProductItemEdit = observer(
           />
 
           {type === 'one-time' ? (
-            <span className='text-gray-700'></span>
+            <span className='text-grayModern-700'></span>
           ) : (
             <BilledTypeEditField
               isModification={isModification}
               id={service.tempValue.metadata.id}
             />
           )}
-          <span className=' mx-1 text-gray-700'>•</span>
+          <span className=' mx-1 text-grayModern-700'>•</span>
 
           <MaskedResizableInput
             min={0}
@@ -295,7 +295,9 @@ export const ProductItemEdit = observer(
             }
           />
 
-          <span className='whitespace-nowrap  mx-1 text-gray-700'>% VAT</span>
+          <span className='whitespace-nowrap  mx-1 text-grayModern-700'>
+            % VAT
+          </span>
         </div>
 
         <div className='flex items-center gap-2'>
@@ -328,7 +330,7 @@ export const ProductItemEdit = observer(
           />
           {service.tempValue.paused && (
             <Tooltip label={'This service will be invoiced when resumed'}>
-              <PauseCircle className='text-gray-500 size-4 ml-2' />
+              <PauseCircle className='text-grayModern-500 size-4 ml-2' />
             </Tooltip>
           )}
         </div>

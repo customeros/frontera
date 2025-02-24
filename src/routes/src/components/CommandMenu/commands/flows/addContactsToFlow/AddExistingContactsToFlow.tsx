@@ -121,7 +121,7 @@ export const AddExistingContacts = observer(() => {
                     {contactStore.name?.length ? contactStore.name : 'Unnamed'}
                   </span>
 
-                  <span className='ml-1.5 text-gray-500 line-clamp-1 max-w-[250px]'>
+                  <span className='ml-1.5 text-grayModern-500 line-clamp-1 max-w-[250px]'>
                     ·{' '}
                     {contactStore.value.emails.find((e) => e.primary)?.email ??
                       'No email yet'}

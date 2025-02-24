@@ -29,7 +29,7 @@ export const Combobox = ({
       styles={{ menuList: (base) => ({ ...base, maxHeight }) }}
       classNames={{
         input: () => 'pl-3',
-        placeholder: () => 'pl-3 text-gray-400',
+        placeholder: () => 'pl-3 text-grayModern-400',
         container: ({ isFocused }) =>
           getContainerClassNames(
             cn('flex flex-col', isSearchable ? 'pt-2' : 'pt-0 mt-0'),
@@ -50,7 +50,7 @@ export const Combobox = ({
             cn('!relative', !isSearchable && 'mt-0'),
             'sm',
           ),
-        noOptionsMessage: () => 'text-gray-500',
+        noOptionsMessage: () => 'text-grayModern-500',
       }}
       {...props}
       isSearchable={isSearchable}

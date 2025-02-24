@@ -182,7 +182,7 @@ const RenewalDetailsForm = ({
               />
 
               {updatedAt && (
-                <p className='text-gray-500 text-xs mt-2'>
+                <p className='text-grayModern-500 text-xs mt-2'>
                   Last updated{' '}
                   {updatedByUserFullName
                     ? `by ${updatedByUserFullName}`
@@ -276,7 +276,7 @@ const LikelihoodButtonGroup = ({
               : idx === 1
               ? 'rounded-none'
               : 'border-s-0 rounded-s-none rounded-e-lg !important ',
-            'w-full data-[selected=true]:bg-white !important bg-gray-50',
+            'w-full data-[selected=true]:bg-white !important bg-grayModern-50',
           )}
         >
           <div className='flex items-center gap-1'>
@@ -351,7 +351,7 @@ const FormRangeSlider = ({
         <p className='font-medium text-sm'>
           Renewal ARR{' '}
           {formattedRenewedAt && (
-            <span className='text-gray-400 font-normal text-sm'>
+            <span className='text-grayModern-400 font-normal text-sm'>
               on {formattedRenewedAt}
             </span>
           )}
@@ -359,7 +359,7 @@ const FormRangeSlider = ({
 
         <p className='text-sm font-medium'>
           {formattedNewAmount !== defaultFormattedAmount && (
-            <span className='text-sm text-gray-400 font-normal'>
+            <span className='text-sm text-grayModern-400 font-normal'>
               <s>{defaultFormattedAmount}</s>
             </span>
           )}{' '}
@@ -380,7 +380,7 @@ const FormRangeSlider = ({
         }}
         {...rest}
       >
-        <RangeSliderTrack className='bg-gray-400 h-0.5'>
+        <RangeSliderTrack className='bg-grayModern-400 h-0.5'>
           <RangeSliderFilledTrack className={trackStyle} />
         </RangeSliderTrack>
         <RangeSliderThumb className={thumbStyle} />

@@ -21,15 +21,15 @@ export const Ec = ({ className, ...props }: IconProps) => (
     <g fillRule='evenodd'>
       <path d='M269.6 290.8 197 367.3l-1.2-1.6 72.4-76.5 1.2 1.6zm50.4 12.5-94.8 100-1.6-1.6 94.7-100z' />
       <path
-        fill='gray'
         stroke='#000'
+        fill='grayModern'
         strokeWidth='4.1'
         d='M478.4 60.2v88.6l17.7 88.6 17.7-88.6V60.2z'
         transform='matrix(-.07 -.07 -.1 .1 265 429.6)'
       />
       <path
-        fill='gray'
         stroke='#000'
+        fill='grayModern'
         strokeWidth='4.1'
         d='M478.4 60.2v88.6l17.7 88.6 17.7-88.6V60.2z'
         transform='matrix(-.07 -.07 -.1 .1 240.6 390.5)'
@@ -300,15 +300,15 @@ export const Ec = ({ className, ...props }: IconProps) => (
     <g fillRule='evenodd'>
       <path d='m370.4 290.8 72.5 76.5 1.3-1.6-72.5-76.5zM320 303.3l94.8 100 1.6-1.6-94.7-100z' />
       <path
-        fill='gray'
         stroke='#000'
+        fill='grayModern'
         strokeWidth='4.1'
         transform='matrix(.07 -.07 .1 .1 375 429.6)'
         d='M478.4 60.2v88.6l17.7 88.6 17.7-88.6V60.2z'
       />
       <path
-        fill='gray'
         stroke='#000'
+        fill='grayModern'
         strokeWidth='4.1'
         d='M478.4 60.2v88.6l17.7 88.6 17.7-88.6V60.2z'
         transform='matrix(.07 -.07 .1 .1 399.4 390.5)'
@@ -674,8 +674,8 @@ export const Ec = ({ className, ...props }: IconProps) => (
       d='M182.6 89.5s21-11.6 44.9-20.2a303.8 303.8 0 0 1 54.2-14.4c7 0 19.2 17.8 21.2 17.8s10.1-5 20.3-5 16.1 8 18.2 8h18.2c2 0-6.1-19.8 0-18.8 3 .5 28.8 4.5 52.8 12.2 24 7.8 58 21.6 58 21.6S414.9 98 400 95.9c-2 1 0 13-3 7.7-4.6-1-21.7-3.7-24.7-3.7s-8.7 3.4-16.8 5.4c-8 2-18.2 5-18.2 5l13.2 20.7-16.2 8s-10.1-23.8-14.2-23.8-6 16.8-11.1 15.8c-5-1-7-15.8-11.1-19.8-4-3.9-25.4-5.4-33.5-7.3-8-2-21.1-3.5-28.2-5.5-7-2-14.2 5-17.2 5s4-6 1-7-5 3-7 3-23.3-4-25.3-5 5-4.9 3-4.9z'
     />
     <path
-      fill='gray'
       stroke='#772600'
+      fill='grayModern'
       strokeWidth='3.7'
       fillRule='evenodd'
       transform='matrix(.22 0 0 .26 231.6 96.5)'

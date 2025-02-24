@@ -56,12 +56,12 @@ export const Domains = observer(({ id }: { id: string }) => {
     return (
       <div className='flex flex-col mt-1 h-6'>
         <div className='flex items-center w-full gap-2 group h-full'>
-          <Globe01 className='text-gray-500' />
+          <Globe01 className='text-grayModern-500' />
           <span
             tabIndex={0}
             role={'button'}
-            className='text-sm text-gray-400'
             data-test='org-about-domain-empty'
+            className='text-sm text-grayModern-400'
             onClick={() => {
               store.ui.commandMenu.setOpen(true);
               store.ui.commandMenu.setType('AddNewDomain');
@@ -87,13 +87,13 @@ export const Domains = observer(({ id }: { id: string }) => {
               'ml-6': index !== 0,
             })}
           >
-            {index === 0 && <Globe01 className='text-gray-500' />}
+            {index === 0 && <Globe01 className='text-grayModern-500' />}
 
             <a
               target='_blank'
               rel='noreferrer noopener'
               href={getExternalUrl(domainGroup.primaryDomain.domain || '/')}
-              className='w-fit cursor-pointer text-sm flex items-center no-underline hover:no-underline text-gray-700'
+              className='w-fit cursor-pointer text-sm flex items-center no-underline hover:no-underline text-grayModern-700'
             >
               <span
                 className='hover:underline'

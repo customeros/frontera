@@ -56,10 +56,10 @@ export const SlackThreadPreviewModal = () => {
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  color='gray.500'
                   className='mr-1'
+                  color='grayModern.500'
                   aria-label='Copy link to this thread'
-                  icon={<Link01 className='text-gray-500 size-4' />}
+                  icon={<Link01 className='text-grayModern-500 size-4' />}
                   onClick={() => copy(window.location.href, 'Link copied')}
                 />
               </div>
@@ -69,10 +69,10 @@ export const SlackThreadPreviewModal = () => {
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  color='gray.500'
                   onClick={closeModal}
+                  color='grayModern.500'
                   aria-label='Close preview'
-                  icon={<XClose className='text-gray-500 size-5' />}
+                  icon={<XClose className='text-grayModern-500 size-5' />}
                 />
               </div>
             </Tooltip>
@@ -93,7 +93,7 @@ export const SlackThreadPreviewModal = () => {
         {isLoading && (
           <>
             <div className='flex my-2 items-center'>
-              <p className='text-gray-400 text-sm whitespace-nowrap mr-2'>
+              <p className='text-grayModern-400 text-sm whitespace-nowrap mr-2'>
                 {timelineEventsIds.length - 1}{' '}
                 {timelineEventsIds.length - 1 === 1 ? 'reply' : 'replies'}
               </p>
@@ -111,7 +111,7 @@ export const SlackThreadPreviewModal = () => {
         {!!slackEventReplies.length && (
           <>
             <div className='flex my-2 items-center'>
-              <p className='text-gray-400 text-sm whitespace-nowrap mr-2'>
+              <p className='text-grayModern-400 text-sm whitespace-nowrap mr-2'>
                 {slackEventReplies.length}{' '}
                 {slackEventReplies.length === 1 ? 'reply' : 'replies'}
               </p>

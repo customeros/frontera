@@ -66,7 +66,7 @@ const columns: Record<string, Column> = {
       const contractEnded = props.getValue()?.value?.contractEnded;
 
       if (!contractEnded) {
-        return <p className='text-gray-400'>No date yet</p>;
+        return <p className='text-grayModern-400'>No date yet</p>;
       }
       const formatted = DateTimeUtils.format(
         contractEnded,
@@ -251,7 +251,7 @@ const columns: Record<string, Column> = {
         )?.renewedAt;
 
       if (!renewsAt) {
-        return <p className='text-gray-400'>No date yet</p>;
+        return <p className='text-grayModern-400'>No date yet</p>;
       }
       const formatted = DateTimeUtils.format(
         renewsAt,

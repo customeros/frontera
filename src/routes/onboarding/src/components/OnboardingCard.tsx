@@ -65,7 +65,9 @@ export const OnboardingCard = ({
             'text-base': isFeatured,
           })}
         >
-          <span className={cn('mr-3 text-gray-500', { 'mr-4': isFeatured })}>
+          <span
+            className={cn('mr-3 text-grayModern-500', { 'mr-4': isFeatured })}
+          >
             {contentIcon}
           </span>
           {contentTitle}
@@ -91,8 +93,8 @@ export const OnboardingCard = ({
         {!isCompleted && (
           <div className='flex justify-between w-full'>
             <div className='flex items-center gap-2'>
-              <Clock className='text-gray-500' />
-              <span className='text-gray-500 text-sm'>
+              <Clock className='text-grayModern-500' />
+              <span className='text-grayModern-500 text-sm'>
                 Time: {timeInMinutes} minutes
               </span>
             </div>
@@ -100,7 +102,7 @@ export const OnboardingCard = ({
               onClick={onClick}
               leftIcon={<Play />}
               size={isFeatured ? 'sm' : 'xs'}
-              colorScheme={isFeatured ? 'primary' : 'gray'}
+              colorScheme={isFeatured ? 'primary' : 'grayModern'}
             >
               Get Started
             </Button>

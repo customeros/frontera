@@ -34,9 +34,9 @@ export const InlineSelect = <T,>({
         <PopoverTrigger className={'flex items-center w-full'}>
           <span
             className={cn(
-              'underline ml-1 text-gray-500 hover:text-gray-700 focus:text-gray-700',
+              'underline ml-1 text-grayModern-500 hover:text-grayModern-700 focus:text-grayModern-700',
               {
-                'text-gray-400': !value,
+                'text-grayModern-400': !value,
               },
             )}
           >
@@ -57,7 +57,7 @@ export const InlineSelect = <T,>({
               onChange(newValue);
             }}
             noOptionsMessage={({ inputValue }) => (
-              <div className='text-gray-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
+              <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>
                 <span>{`No results matching "${inputValue}"`}</span>
               </div>
             )}

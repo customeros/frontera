@@ -35,7 +35,7 @@ export const columns: Record<string, Column> = {
     cell: (props) => {
       const name = props.row.original.value.name;
 
-      if (!name) return <div className='text-gray-400'>Unnamed</div>;
+      if (!name) return <div className='text-grayModern-400'>Unnamed</div>;
 
       return <OpportunityName opportunityId={props.row.original.value.id} />;
     },
@@ -59,7 +59,7 @@ export const columns: Record<string, Column> = {
       enableSorting: true,
       cell: (props) => {
         if (!props.row.original.value.organization?.metadata?.id) {
-          return <p className='text-gray-400'>Unknown</p>;
+          return <p className='text-grayModern-400'>Unknown</p>;
         }
 
         return (

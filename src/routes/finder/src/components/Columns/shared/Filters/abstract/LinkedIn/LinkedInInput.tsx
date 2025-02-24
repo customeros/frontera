@@ -76,7 +76,7 @@ export const LinkedInInput = ({
       onKeyDown={(e) => e.metaKey && setMetaKey(true)}
     >
       {!isEdit ? (
-        <p className='text-gray-400'>
+        <p className='text-grayModern-400'>
           {enrichedStatus ? 'Enriching...' : 'Not set'}
         </p>
       ) : (
@@ -100,7 +100,7 @@ export const LinkedInInput = ({
           aria-label='edit'
           className='ml-3 rounded-[5px]'
           onClick={() => setIsEdit(!isEdit)}
-          icon={<Edit03 className='text-gray-500' />}
+          icon={<Edit03 className='text-grayModern-500' />}
         />
       )}
     </div>

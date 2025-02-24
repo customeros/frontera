@@ -26,7 +26,7 @@ export const AddAccountButton = observer(
               <IconButton
                 size='sm'
                 variant='ghost'
-                colorScheme='gray'
+                colorScheme='grayModern'
                 aria-label='Account currency'
                 icon={<Plus className='size-4' />}
               />

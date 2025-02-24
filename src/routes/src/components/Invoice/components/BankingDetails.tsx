@@ -55,28 +55,32 @@ export const BankingDetails: FC<InvoiceHeaderProps> = ({
       : availableBankAccount?.accountNumber;
 
   return (
-    <div className='flex flex-col border-t border-gray-300 py-2'>
+    <div className='flex flex-col border-t border-grayModern-300 py-2'>
       <span className='text-xs font-semibold'>Bank transfer</span>
       <div className='flex justify-between'>
         <div className='flex flex-col'>
           <span className='text-xs font-medium'>Bank name</span>
-          <span className='text-xs text-gray-500'>
+          <span className='text-xs text-grayModern-500'>
             {availableBankAccount?.bankName || '-'}
           </span>
         </div>
         <div className='flex flex-col'>
           <span className='text-xs font-medium'>{bankDetails.label}</span>
-          <span className='text-xs text-gray-500'>{bankDetails.value}</span>
+          <span className='text-xs text-grayModern-500'>
+            {bankDetails.value}
+          </span>
         </div>
         <div className='flex flex-col'>
           <span className='text-xs font-medium'>{accountNumberLabel}</span>
-          <span className='text-xs text-gray-500'>
+          <span className='text-xs text-grayModern-500'>
             {accountNumberValue || '-'}
           </span>
         </div>
         <div className='flex flex-col'>
           <span className='text-xs font-medium'>Reference</span>
-          <span className='text-xs text-gray-500'>{invoiceNumber || '-'}</span>
+          <span className='text-xs text-grayModern-500'>
+            {invoiceNumber || '-'}
+          </span>
         </div>
       </div>
     </div>

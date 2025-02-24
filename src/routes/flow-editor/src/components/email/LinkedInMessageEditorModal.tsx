@@ -68,7 +68,7 @@ export const LinkedInMessageEditorModal = observer(
             <div className='flex justify-between bg-white pt-4 pb-2 mb-[60px] w-[570px] sticky top-0 z-[50]'>
               <div className='flex items-center text-sm'>
                 <span>{flow}</span>
-                <ChevronRight className='size-3 mx-1 text-gray-400' />
+                <ChevronRight className='size-3 mx-1 text-grayModern-400' />
                 <span className='mr-2 cursor-default'>
                   {data?.action === FlowActionType.LINKEDIN_MESSAGE
                     ? 'Send LinkedIn Message'

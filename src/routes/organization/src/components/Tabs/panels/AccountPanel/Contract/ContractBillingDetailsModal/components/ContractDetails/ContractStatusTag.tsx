@@ -13,8 +13,8 @@ export const ContractStatusTag = ({
 }) => {
   const statusColorScheme: Record<string, string> = {
     [ContractStatus.Live]: 'primary',
-    [ContractStatus.Draft]: 'gray',
-    [ContractStatus.Ended]: 'gray',
+    [ContractStatus.Draft]: 'grayModern',
+    [ContractStatus.Ended]: 'grayModern',
     [ContractStatus.Scheduled]: 'primary',
     [ContractStatus.OutOfContract]: 'warning',
   };

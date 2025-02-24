@@ -53,7 +53,7 @@ export const InvoicePreviewModal = observer(
                 <IconButton
                   size='xs'
                   variant='ghost'
-                  colorScheme='gray'
+                  colorScheme='grayModern'
                   aria-label='Close preview'
                   icon={<XClose color='text-inherit' />}
                   onClick={() => {

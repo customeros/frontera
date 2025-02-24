@@ -79,7 +79,7 @@ export const ReminderPostit = forwardRef<HTMLDivElement, ReminderPostitProps>(
             }}
           >
             {owner && (
-              <span className='text-xs text-gray-500 pl-4 font-normal pt-3'>
+              <span className='text-xs text-grayModern-500 pl-4 font-normal pt-3'>
                 {owner} added
               </span>
             )}

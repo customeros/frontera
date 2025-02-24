@@ -64,14 +64,14 @@ export const ARRForecast = observer(
             <div className='flex ml-5 w-full items-center gap-4 justify-between'>
               <div className='flex flex-col'>
                 <div className='flex items-center'>
-                  <h2 className='whitespace-nowrap font-semibold text-gray-700 mr-2'>
+                  <h2 className='whitespace-nowrap font-semibold text-grayModern-700 mr-2'>
                     ARR forecast
                   </h2>
                   <IconButton
                     size='xs'
                     variant='ghost'
                     aria-label='Help'
-                    icon={<HelpCircle className='text-gray-400' />}
+                    icon={<HelpCircle className='text-grayModern-400' />}
                     className='group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-linear'
                     onClick={(e) => {
                       e.stopPropagation();
@@ -85,8 +85,8 @@ export const ARRForecast = observer(
                 <h2
                   className={cn(
                     store.organizations.isLoading
-                      ? 'text-gray-400'
-                      : 'text-gray-700',
+                      ? 'text-grayModern-400'
+                      : 'text-grayModern-700',
                     'text-2xl font-semibold transition-opacity duration-250 ease-in',
                   )}
                 >
@@ -109,13 +109,13 @@ export const ARRForecast = observer(
           onConfirm={modal.onClose}
           confirmButtonLabel='Got it'
         >
-          <p className='text-sm mb-4 text-gray-700'>
+          <p className='text-sm mb-4 text-grayModern-700'>
             Annual Recurring Revenue (ARR) is the total amount of money you can
             expect to receive from
             <span className='font-medium mx-1'>{name ? name : `Unnamed`}</span>
             for the next 12 months.
           </p>
-          <p className='text-sm font-normal text-gray-700'>
+          <p className='text-sm font-normal text-grayModern-700'>
             It includes all renewals but excludes one-time and per use services.
             Renewals are discounted based on the renewal likelihood
           </p>

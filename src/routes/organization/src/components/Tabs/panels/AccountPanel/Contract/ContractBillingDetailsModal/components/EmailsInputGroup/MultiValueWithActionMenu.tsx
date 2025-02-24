@@ -104,7 +104,7 @@ export const MultiValueWithActionMenu = observer(
           className={cn(
             isContactWithoutEmail
               ? 'text-base [&_.multiValueClass]:data-[state=closed]:bg-warning-50 [&_.multiValueClass]:data-[state=closed]:text-warning-700 [&_.multiValueClass]:data-[state=closed]:border-warning-200 [&_.multiValueClass]:data-[state=open]:bg-warning-50 [&_.multiValueClass]:data-[state=open]:text-warning-700 [&_.multiValueClass]:data-[state=open]:border-warning-200'
-              : 'text-base [&_.multiValueClass]:data-[state=closed]:bg-gray-50 [&_.multiValueClass]:data-[state=closed]:text-gray-700 [&_.multiValueClass]:data-[state=closed]:border-gray-200 [&_.multiValueClass]:data-[state=open]:bg-primary-50 [&_.multiValueClass]:data-[state=open]:text-primary-700 [&_.multiValueClass]:data-[state=open]:last:border-primary-200',
+              : 'text-base [&_.multiValueClass]:data-[state=closed]:bg-grayModern-50 [&_.multiValueClass]:data-[state=closed]:text-grayModern-700 [&_.multiValueClass]:data-[state=closed]:border-grayModern-200 [&_.multiValueClass]:data-[state=open]:bg-primary-50 [&_.multiValueClass]:data-[state=open]:text-primary-700 [&_.multiValueClass]:data-[state=open]:last:border-primary-200',
           )}
         >
           <components.MultiValue {...rest} className='text-base min-h-3'>
@@ -118,14 +118,14 @@ export const MultiValueWithActionMenu = observer(
                 onPointerDown={() => {
                   copyToClipboard(rest?.data?.value, 'Email copied');
                 }}
-                className='flex justify-between items-center rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='flex justify-between items-center rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
               >
                 {rest?.data?.value}
-                <Copy01 className='size-3 text-gray-500 ml-2' />
+                <Copy01 className='size-3 text-grayModern-500 ml-2' />
               </MenuItem>
             ) : (
               <MenuItem
-                className='rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
                 onPointerDown={() => {
                   isContactInOrg &&
                     handleNavigateToContact(isContactInOrg.id, 'email');
@@ -136,7 +136,7 @@ export const MultiValueWithActionMenu = observer(
             )}
 
             <MenuItem
-              className='rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+              className='rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
               onPointerDown={() => {
                 const newValue = (
                   (rest?.selectProps?.value as Array<SelectOption>) ?? []
@@ -152,7 +152,7 @@ export const MultiValueWithActionMenu = observer(
                 onPointerDown={() => {
                   handleAddContact();
                 }}
-                className='rounded-md border border-transparent hover:bg-gray-50 hover:border-gray-100 focus:border-gray-200'
+                className='rounded-md border border-transparent hover:bg-grayModern-50 hover:bgrayModernr-grayModern-100 fgrayModern:border-grayModern-200'
               >
                 Add to people
               </MenuItem>

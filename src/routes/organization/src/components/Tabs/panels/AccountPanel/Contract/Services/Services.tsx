@@ -27,10 +27,10 @@ export const Services = ({
           <IconButton
             size='xs'
             variant='ghost'
-            colorScheme='gray'
+            colorScheme='grayModern'
             aria-label={'Add services'}
             data-test='org-account-add-services'
-            icon={<Plus className='text-gray-400' />}
+            icon={<Plus className='text-grayModern-400' />}
             onClick={() => {
               onModalOpen();
             }}

@@ -83,7 +83,10 @@ export const GeneralViewsSection = observer(
               icon={(isActive) => (
                 <Icon
                   name='building-07'
-                  className={cn('text-gray-500', isActive && 'text-gray-700')}
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
                 />
               )}
             />
@@ -101,8 +104,8 @@ export const GeneralViewsSection = observer(
                 <Icon
                   name='users-01'
                   className={cn(
-                    'size-4 min-w-4 text-gray-500',
-                    isActive && 'text-gray-700',
+                    'size-4 min-w-4 text-grayModern-500',
+                    isActive && 'text-grayModern-700',
                   )}
                 />
               )}
@@ -120,7 +123,10 @@ export const GeneralViewsSection = observer(
               icon={(isActive) => (
                 <Icon
                   name='coins-stacked-01'
-                  className={cn('text-gray-500', isActive && 'text-gray-700')}
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
                 />
               )}
             />
@@ -139,7 +145,10 @@ export const GeneralViewsSection = observer(
                 icon={(isActive) => (
                   <Icon
                     name='invoice'
-                    className={cn('text-gray-500', isActive && 'text-gray-700')}
+                    className={cn(
+                      'text-grayModern-500',
+                      isActive && 'text-grayModern-700',
+                    )}
                   />
                 )}
               />
@@ -159,7 +168,10 @@ export const GeneralViewsSection = observer(
                   strokeWidth={0}
                   name='signature'
                   fill='currentColor'
-                  className={cn('text-gray-500', isActive && 'text-gray-700')}
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
                 />
               )}
             />

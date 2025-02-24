@@ -124,7 +124,7 @@ export const NextFlowAction = observer(
         <div ref={itemRef}>
           <div
             data-test='flow-name'
-            className='flex items-center gap-2 px-1.5 bg-gray-100 rounded-md w-max overflow-hidden'
+            className='flex items-center gap-2 px-1.5 bg-grayModern-100 rounded-md w-max overflow-hidden'
           >
             {FLOW_ACTION_ICONS[nextActionNode.data.action]}
             <div className='text-sm truncate'>
