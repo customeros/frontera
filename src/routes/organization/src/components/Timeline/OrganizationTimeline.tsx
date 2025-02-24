@@ -4,21 +4,14 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useQueryClient } from '@tanstack/react-query';
-import { PaymentStatusSelect } from '@invoices/components/shared';
 import { setHours, setSeconds, setMinutes, setMilliseconds } from 'date-fns';
 
-import { Icon } from '@ui/media/Icon';
 import { DateTimeUtils } from '@utils/date';
 import { Button } from '@ui/form/Button/Button';
-import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
-import { Download02 } from '@ui/media/icons/Download02';
 import { Meeting, ExternalSystemType } from '@graphql/types';
 import { getGraphQLClient } from '@shared/util/getGraphQLClient';
-import { DownloadFile } from '@ui/media/DownloadFile/DownloadFile';
-import { renderStatusNode } from '@shared/components/Invoice/Cells';
 import { EmptyTimeline } from '@organization/components/Timeline/EmptyTimeline';
-import { InvoicePreviewModalContent } from '@shared/components/Invoice/InvoicePreviewModal';
 import { SlackStub } from '@organization/components/Timeline/PastZone/events/slack/SlackStub';
 import { IssueStub } from '@organization/components/Timeline/PastZone/events/issue/IssueStub';
 import { useTimelineRefContext } from '@organization/components/Timeline/context/TimelineRefContext';
@@ -35,6 +28,7 @@ import { useTimelineMeta } from './state';
 import { EmailStub, TimelineItem } from './PastZone/events';
 import { MeetingStub } from './PastZone/events/meeting/MeetingStub';
 import { useInfiniteGetTimelineQuery } from '../../graphql/getTimeline.generated';
+import { InvoicePreviewModal } from './PastZone/events/invoice/InvoicePreviewModal';
 import {
   TimelineEvent,
   LogEntryWithAliases,
@@ -396,66 +390,15 @@ interface InvoicePreviewProps {
 }
 
 export const InvoicePreview = ({ previewCard }: InvoicePreviewProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const invoiceNumber = searchParams?.get('preview');
-
-  const store = useStore();
-
-  const invoice = invoiceNumber
-    ? store.invoices.value.get(invoiceNumber)
-    : null;
 
   return (
     <div
       data-state={previewCard ? 'open' : 'closed'}
-      className='absolute top-10 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t border-b border-gray-200 w-[30vw] min-w-[400px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
+      className='absolute top-10 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t border-b border-gray-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
     >
-      <div className='flex flex-col justify-between items-center'>
-        <div className='flex justify-between items-center w-full mt-3'>
-          {invoice?.value.invoiceNumber ? (
-            <div className='ml-4'>
-              <PaymentStatusSelect
-                variant='invoice-preview'
-                invoiceNumber={invoice?.value.invoiceNumber ?? ''}
-              />
-            </div>
-          ) : (
-            <div className='flex items-center'>
-              {renderStatusNode(invoice?.value.status)}
-            </div>
-          )}
-          <div className=''>
-            {invoice?.value.metadata?.id && invoice?.value.invoiceNumber && (
-              <DownloadFile
-                variant='outline'
-                leftIcon={<Download02 />}
-                fileId={invoice?.value.metadata?.id}
-                fileName={`invoice-${invoice?.value.invoiceNumber}`}
-              />
-            )}
-            <IconButton
-              size='xs'
-              variant='ghost'
-              aria-label='close'
-              icon={<Icon name='x-close' />}
-              className='self-end ml-2 mt-1 mr-4'
-              onClick={() => {
-                const params = new URLSearchParams(
-                  searchParams?.toString() ?? '',
-                );
-
-                params.delete('preview');
-                setSearchParams(params);
-              }}
-            />
-          </div>
-        </div>
-
-        <InvoicePreviewModalContent
-          invoiceStore={invoice}
-          isFetching={store.invoices.isLoading}
-        />
-      </div>
+      <InvoicePreviewModal invoiceId={invoiceNumber ?? ''} />
     </div>
   );
 };

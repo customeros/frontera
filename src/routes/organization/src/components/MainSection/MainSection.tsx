@@ -9,7 +9,7 @@ export const MainSection = ({ children }: { children?: React.ReactNode }) => {
   return (
     <Card
       id='main-section'
-      className='flex h-full flex-grow flex-shrink border-none rounded-none flex-col overflow-hidden shadow-none relative bg-gray-25 min-w-[609px] p-0'
+      className='flex h-full flex-grow flex-shrink border-none rounded-none flex-col overflow-hidden shadow-none relative bg-white min-w-[609px] p-0'
     >
       <CardHeader className='px-6 pt-[6px] pb-2 flex items-center flex-row justify-between'>
         <h1 className='font-semibold text-[16px] text-gray-700'>Timeline</h1>

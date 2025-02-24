@@ -15,7 +15,7 @@ export const PreviewCard = ({ children, isInvoice }: PreviewCardProps) => {
       data-state={previewCard ? 'open' : 'closed'}
       className={cn(
         'data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t-0 border-b-0 border-gray-200  max-w-[400px] min-w-[400px] overflow-y-auto h-screen',
-        isInvoice && 'max-w-[700px] min-w-[700px]',
+        isInvoice && 'max-w-[600px] min-w-[600px]',
       )}
     >
       {children}
