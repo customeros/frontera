@@ -6,11 +6,10 @@ import { FinderTable } from '@finder/components/FinderTable';
 import { FinderFilters } from '@finder/components/FinderFilters/FinderFilters';
 
 import { cn } from '@ui/utils/cn';
+import { Icon } from '@ui/media/Icon';
 import { Button } from '@ui/form/Button/Button';
-import { Menu01 } from '@ui/media/icons/Menu01';
 import { useStore } from '@shared/hooks/useStore';
 import { ButtonGroup } from '@ui/form/ButtonGroup';
-import { Columns03 } from '@ui/media/icons/Columns03';
 import { TableIdType, TableViewType } from '@graphql/types';
 import { PreviewCard } from '@shared/components/PreviewCard';
 import { ViewSettings } from '@shared/components/ViewSettings';
@@ -39,17 +38,36 @@ export const ProspectsBoardPage = observer(() => {
       <div className='flex justify-between pr-4 border-b border-b-gray-200 bg-gray-25'>
         <Search />
 
-        <div className='flex items-center'>
+        <div className='flex items-center gap-2'>
+          <Button
+            size='xs'
+            colorScheme='primary'
+            leftIcon={<Icon name='plus' />}
+            onClick={() => {
+              store.ui.commandMenu.setType('ChooseOpportunityStage');
+              store.ui.commandMenu.setOpen(true);
+            }}
+          >
+            Create Opportunity
+          </Button>
           <ButtonGroup className='flex items-center w-[252px]'>
             <Button
               size='xs'
+              colorScheme='gray'
               dataTest='prospects-board-button'
               onClick={() => navigate('/prospects')}
               className={cn('px-4 w-full flex-1', {
                 selected: !showFinder,
               })}
+              leftIcon={
+                <Icon
+                  name='columns-03'
+                  className={cn(!showFinder && 'text-primary-700', {
+                    selected: !showFinder,
+                  })}
+                />
+              }
             >
-              <Columns03 />
               Board
             </Button>
             <Button
@@ -61,8 +79,15 @@ export const ProspectsBoardPage = observer(() => {
               onClick={() =>
                 navigate(`?show=finder&preset=${opportunitiesView?.id}`)
               }
+              leftIcon={
+                <Icon
+                  name='menu-01'
+                  className={cn(showFinder && 'text-primary-700', {
+                    selected: showFinder,
+                  })}
+                />
+              }
             >
-              <Menu01 />
               List
             </Button>
           </ButtonGroup>
@@ -81,20 +106,14 @@ export const ProspectsBoardPage = observer(() => {
                 />
               )}
             </div>
-            <div
-              className={cn({
-                'my-[1px]': !showFinder,
-              })}
-            >
-              <ViewSettings
-                type={TableViewType.Opportunities}
-                tableId={
-                  showFinder
-                    ? TableIdType.OpportunitiesRecords
-                    : TableIdType.Opportunities
-                }
-              />
-            </div>
+            <ViewSettings
+              type={TableViewType.Opportunities}
+              tableId={
+                showFinder
+                  ? TableIdType.OpportunitiesRecords
+                  : TableIdType.Opportunities
+              }
+            />
           </div>
           {showFinder && <FinderTable />}
           {!showFinder && <ProspectsBoard />}

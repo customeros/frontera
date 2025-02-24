@@ -47,4 +47,5 @@ export const getOpportunitiesSortFn = (columnId: string) =>
         return row.value.nextSteps;
       },
     )
+
     .otherwise(() => (_row: OpportunityStore) => false);
