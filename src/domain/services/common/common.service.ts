@@ -90,11 +90,15 @@ export class CommonService {
     return req;
   }
 
-  public async quickbooksOauthCallback(code: string, redirect_uri?: string) {
+  public async quickbooksOauthCallback(
+    code: string,
+    realmId: string,
+    redirect_uri?: string,
+  ) {
     const span = Tracer.span('CommonService.quickbooksOauthCallback');
 
     const req = await unwrap(
-      this.repository.quickbooksOauthCallback(code, redirect_uri),
+      this.repository.quickbooksOauthCallback(code, realmId, redirect_uri),
     );
 
     span.end();

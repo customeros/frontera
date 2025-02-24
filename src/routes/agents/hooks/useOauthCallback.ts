@@ -42,8 +42,17 @@ export const useOauthCallback = () => {
           );
         })
         .with('quickbooks', async () => {
+          const realmId = queryParams.get('realmId');
+
+          if (!realmId) {
+            console.error('No realmId found in query params');
+
+            return;
+          }
+
           return commonService.quickbooksOauthCallback(
             code,
+            realmId,
             `${import.meta.env.VITE_CLIENT_APP_URL}/agents`,
           );
         })

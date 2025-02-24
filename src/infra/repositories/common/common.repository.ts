@@ -78,11 +78,15 @@ export class CommonRepository {
     );
   }
 
-  async quickbooksOauthCallback(code: string, redirect_uri?: string) {
+  async quickbooksOauthCallback(
+    code: string,
+    realmId: string,
+    redirect_uri?: string,
+  ) {
     const redirectUri = redirect_uri ?? 'https://app.customeros.ai/settings';
 
     return this.transport.http.post(
-      `/internal/settings/quickbooks/oauth/callback?code=${code}&redirect_url=${redirectUri}`,
+      `/internal/settings/quickbooks/oauth/callback?code=${code}&redirect_url=${redirectUri}&realmId=${realmId}`,
     );
   }
 
