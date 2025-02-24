@@ -150,7 +150,7 @@ export const AddNewSku = observer(() => {
 
           <div className='flex flex-col'>
             <label htmlFor={'sku-price'} className='text-sm font-medium mb-1'>
-              Price
+              Default Price
             </label>
 
             <MaskedInput
@@ -159,7 +159,7 @@ export const AddNewSku = observer(() => {
               id='sku-price'
               variant='outline'
               dataTest='sku-price'
-              placeholder='Price per unit'
+              placeholder='Default Price per unit'
               onFocus={(e) => (e.target as HTMLInputElement).select()}
               className={cn({
                 'border-error-600 hover:!border-error-600 focus:!border-error-600 active:!border-error-600':
