@@ -160,7 +160,7 @@ export type AgentSaveInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   listeners?: InputMaybe<Array<AgentListenerSaveInput>>;
-  metric: Scalars['String']['input'];
+  metric?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<AgentType>;
   visible?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2775,7 +2775,6 @@ export type Mutation = {
   reminder_Create?: Maybe<Scalars['ID']['output']>;
   reminder_Update?: Maybe<Scalars['ID']['output']>;
   removeTag?: Maybe<Result>;
-  serviceLineItem_BulkUpdate: Array<Scalars['ID']['output']>;
   serviceLineItem_Delete: DeleteResponse;
   sku_Archive: Result;
   sku_Save: Sku;
@@ -3491,10 +3490,6 @@ export type MutationReminder_UpdateArgs = {
 
 export type MutationRemoveTagArgs = {
   input: RemoveTagInput;
-};
-
-export type MutationServiceLineItem_BulkUpdateArgs = {
-  input: ServiceLineItemBulkUpdateInput;
 };
 
 export type MutationServiceLineItem_DeleteArgs = {
@@ -4737,27 +4732,6 @@ export type ServiceLineItem = MetadataInterface & {
   sku?: Maybe<Sku>;
   skuId?: Maybe<Scalars['ID']['output']>;
   tax: Tax;
-};
-
-export type ServiceLineItemBulkUpdateInput = {
-  contractId: Scalars['ID']['input'];
-  invoiceNote?: InputMaybe<Scalars['String']['input']>;
-  serviceLineItems: Array<InputMaybe<ServiceLineItemBulkUpdateItem>>;
-};
-
-export type ServiceLineItemBulkUpdateItem = {
-  billed?: InputMaybe<BilledType>;
-  closeVersion?: InputMaybe<Scalars['Boolean']['input']>;
-  comments?: InputMaybe<Scalars['String']['input']>;
-  isRetroactiveCorrection?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  newVersion?: InputMaybe<Scalars['Boolean']['input']>;
-  price?: InputMaybe<Scalars['Float']['input']>;
-  quantity?: InputMaybe<Scalars['Int64']['input']>;
-  serviceLineItemId?: InputMaybe<Scalars['ID']['input']>;
-  serviceStarted?: InputMaybe<Scalars['Time']['input']>;
-  skuId?: InputMaybe<Scalars['ID']['input']>;
-  vatRate?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type ServiceLineItemCloseInput = {

@@ -20,6 +20,7 @@ export type AgentQuery = {
     metric: string;
     error?: string | null;
     color: string;
+    description: string;
     icon: string;
     isConfigured: boolean;
     listeners: Array<{

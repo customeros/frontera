@@ -98,7 +98,9 @@ export const ConfigPage = observer(() => {
               <h2 className='font-medium text-sm'>About this agent</h2>
               {agent?.value.scope && <Scope scope={agent.value.scope} />}
             </div>
-            <p className='pb-2 text-sm'>{agent?.value.goal ?? 'Unknown'}</p>
+            <p className='pb-2 text-sm'>
+              {agent?.value.description ?? 'Unknown'}
+            </p>
           </div>
 
           <h2 className='mb-2 font-medium text-sm'>It's goal is to</h2>

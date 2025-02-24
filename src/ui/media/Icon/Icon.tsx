@@ -237,7 +237,8 @@ export type IconName =
   | 'x'
   | 'upload-01'
   | 'info-square'
-  | 'menu-01';
+  | 'menu-01'
+  | 'check-circle';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;
