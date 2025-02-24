@@ -95,23 +95,11 @@ export const AgentsPage = observer(() => {
                   {agents
                     .filter((agent) => agent.value.visible)
                     .map((agent) => (
-                      <AgentCard
-                        id={agent.id}
-                        key={agent.id}
-                        icon={agent.value.icon}
-                        name={agent.value.name}
-                        colorMap={agent.colorMap}
-                        metric={agent.value.metric}
-                        defaultName={agent.defaultName}
-                        status={agent.value.isActive ? 'ON' : 'OFF'}
-                        hasError={
-                          !!agent.value.error || !agent.value.isConfigured
-                        }
-                      />
+                      <AgentCard id={agent.id} key={agent.id} />
                     ))}
-                  <div className='min-w-[372px] flex-1'></div>
-                  <div className='min-w-[372px] flex-1'></div>
-                  <div className='min-w-[372px] flex-1'></div>
+                  <div className='min-w-[372px] flex-1' />
+                  <div className='min-w-[372px] flex-1' />
+                  <div className='min-w-[372px] flex-1' />
                 </div>
               </ScrollAreaViewport>
               <ScrollAreaScrollbar orientation='vertical'>

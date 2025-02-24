@@ -145,10 +145,10 @@ export const AddContactsBulk = observer(() => {
         </div>
         <div
           className={cn(
-            'mt-4 border border-grayModern-200 rounded max-h-[336px]',
+            'mt-4 border border-grayModern-200 rounded max-h-[336px] focus-within:border-primary-600 transition-colors',
             {
-              'border-warning-400': data.length > 0 && hasInvalidData.length,
-              'border-error-600':
+              '!border-warning-400': data.length > 0 && hasInvalidData.length,
+              '!border-error-600':
                 showEmptyError || tooManyLines || loadingError,
             },
           )}

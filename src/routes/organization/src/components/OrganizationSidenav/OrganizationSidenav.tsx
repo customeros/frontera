@@ -123,22 +123,6 @@ export const OrganizationSidenav = observer(() => {
           onClick={handleItemClick('invoices')}
           icon={<Icon name='invoice' className='size-5' />}
         />
-        <SidenavItem
-          label='Success'
-          isActive={checkIsActive('success')}
-          dataTest='org-side-nav-item-success'
-          onClick={handleItemClick('success')}
-          icon={
-            <Icon
-              strokeWidth='2'
-              name='trophy-01'
-              className='size-5'
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            />
-          }
-        />
       </div>
       <div className='flex flex-col flex-grow justify-end'>
         {/* <NotificationCenter /> */}
