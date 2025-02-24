@@ -384,7 +384,25 @@ export const columns: Record<string, Column> = {
           );
         }
 
-        return <p className='text-gray-700 cursor-default truncate'>{value}</p>;
+        const numberValue =
+          typeof value === 'number' && !isNaN(value)
+            ? value
+            : parseFloat(value);
+
+        if (isNaN(numberValue)) {
+          return <p className='text-gray-400'>Not set</p>;
+        }
+
+        const formattedValue = numberValue.toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        });
+
+        return (
+          <p className='text-gray-700 cursor-default truncate'>
+            {formattedValue}
+          </p>
+        );
       },
       header: (props) => (
         <THead<HTMLInputElement>
