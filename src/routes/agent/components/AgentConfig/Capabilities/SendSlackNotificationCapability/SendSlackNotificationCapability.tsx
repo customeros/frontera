@@ -76,7 +76,7 @@ export const SendSlackNotificationCapability = observer(() => {
   }
 
   return (
-    <div>
+    <div className='px-4 py-3'>
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-sm font-medium '>
           {agent.getCapabilityName(
