@@ -119,10 +119,10 @@ export const AgentCard = observer(({ id }: AgentCardProps) => {
         {agent.value.metric && (
           <div className='flex items-center gap-2 bg-grayModern-50 w-full py-2 rounded-b-lg px-6'>
             <div className='flex items-center gap-2'>
-                <Icon
-                    name='check-circle'
-                    className='size-3 text-grayModern-500'
-                />
+              <Icon
+                name='check-circle'
+                className='size-3 text-grayModern-500'
+              />
               <p className='text-xs'>{agent.value.metric}</p>
             </div>
           </div>
