@@ -31,8 +31,8 @@ export const AuthPanel = observer(() => {
   };
 
   return (
-    <>
-      <div className='bg-grayModern-25 flex-col flex relative max-w-[550px] px-6 pb-4 pt-2 '>
+    <div className='border-r border-grayModern-200 h-full max-w-[550px]'>
+      <div className=' flex-col flex relative px-6 pb-4 pt-2'>
         <div className='flex gap-4 flex-col'>
           <div className='flex flex-col'>
             <h1
@@ -45,7 +45,7 @@ export const AuthPanel = observer(() => {
         </div>
       </div>
 
-      <div className='flex flex-col max-w-[550px] px-6 '>
+      <div className='flex flex-col px-6'>
         <div className='flex items-center gap-1'>
           <h2 className='text-grayModern-700 text-sm font-medium'>Email</h2>
           <div className='w-full border-b border-grayModern-100 mx-2' />
@@ -59,7 +59,7 @@ export const AuthPanel = observer(() => {
         <UsersLinked title='Outbound' tokenType='OUTBOUND' />
       </div>
 
-      <article className='flex-col flex relative max-w-[550px] '>
+      <article className='flex-col flex relative'>
         <div className='px-6 flex items-center w-full'>
           <div className='flex items-center gap-1'>
             <h2 className='text-grayModern-700 text-sm font-medium'>Slack</h2>
@@ -92,6 +92,6 @@ export const AuthPanel = observer(() => {
       </article>
 
       {/* <LinkedInSettings /> */}
-    </>
+    </div>
   );
 });
