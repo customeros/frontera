@@ -11,10 +11,12 @@ import 'dotenv/config';
 const PUBLIC_PATHS = [
   '/google-auth',
   '/callback/google-auth',
+  '/callback/google-auth-email-grant',
   '/azure-ad-auth',
   '/magic-link-auth',
   '/validate-magic-code',
   '/callback/azure-ad-auth',
+  '/callback/azure-ad-auth-email-grant',
 ];
 
 const headersMiddleware = (req, res, next) => {
@@ -71,7 +73,7 @@ const jwtMiddleware = (req, res, next) => {
 const oauth2Client = new google.auth.OAuth2(
   process.env.GMAIL_CLIENT_ID,
   process.env.GMAIL_CLIENT_SECRET,
-  `${process.env.VITE_MIDDLEWARE_API_URL}/callback/google-auth`,
+  `${process.env.VITE_MIDDLEWARE_API_URL}/callback/google-auth-email-grant`,
 );
 
 async function customerOsSignIn(
@@ -364,7 +366,7 @@ async function createServer() {
     }
   });
 
-  //add email account for sync
+  //add email account for email syncing
   app.use('/enable/google-sync', async (req, res) => {
     const scopes = [
       'openid',
@@ -412,7 +414,7 @@ async function createServer() {
     url.searchParams.append('response_type', 'code');
     url.searchParams.append(
       'redirect_uri',
-      `${process.env.VITE_MIDDLEWARE_API_URL}/callback/azure-ad-auth`,
+      `${process.env.VITE_MIDDLEWARE_API_URL}/callback/azure-ad-auth-email-grant`,
     );
     url.searchParams.append('sso_reload', 'true');
     url.searchParams.append('prompt', 'consent');
@@ -432,7 +434,7 @@ async function createServer() {
     res.json({ url: url.toString() });
   });
 
-  //login + add email account callback
+  //login callback
   app.use('/callback/google-auth', async (req, res) => {
     const { code, state } = req.query;
     const stateParsed = JSON.parse(atob(state));
@@ -610,6 +612,162 @@ async function createServer() {
       )}`;
 
       res.redirect(redirectURL);
+    } catch (err) {
+      console.error(err);
+      res.redirect(
+        `${process.env.VITE_CLIENT_APP_URL}/auth/failure?message=${err.message}`,
+      );
+    }
+  });
+
+  //add email account callback
+  app.use('/callback/google-auth-email-grant', async (req, res) => {
+    const { code, state } = req.query;
+    const stateParsed = JSON.parse(atob(state));
+
+    try {
+      const { tokens } = await oauth2Client.getToken(code);
+
+      oauth2Client.setCredentials(tokens);
+
+      const { access_token, refresh_token, expiry_date, scope } = tokens;
+
+      const profileRes = await google
+        .oauth2({
+          auth: oauth2Client,
+          version: 'v2',
+        })
+        .userinfo.get();
+
+      const loggedInEmail = stateParsed?.email ?? profileRes.data.email;
+
+      const loginResponsePromise = await customerOsSignIn({
+        tenant: stateParsed?.tenant ?? '',
+        loggedInEmail: loggedInEmail,
+        provider: 'google',
+        oAuthTokenForEmail: profileRes.data.email,
+        oAuthTokenType: stateParsed?.type ?? '',
+        oAuthToken: {
+          accessToken: access_token,
+          refreshToken: refresh_token,
+          expiresAt: expiry_date
+            ? new Date(expiry_date).toISOString()
+            : new Date().toISOString(),
+          scope,
+          providerAccountId: profileRes.data.id,
+          idToken: tokens.id_token,
+        },
+      });
+
+      await loginResponsePromise.json();
+
+      var redirectUrl = process.env.VITE_CLIENT_APP_URL + stateParsed.origin;
+
+      // Check if the origin already has the email parameter
+      const emailParamRegex = /[?&]email=([^&]*)/;
+      const emailParamMatch = stateParsed.origin.match(emailParamRegex);
+
+      if (emailParamMatch) {
+        // Replace existing email parameter with the new value
+        redirectUrl = redirectUrl.replace(emailParamRegex, (match, p1) => {
+          return match.replace(p1, profileRes.data.email);
+        });
+      } else {
+        // Add the email parameter
+        redirectUrl +=
+          (stateParsed.origin.includes('?') ? '&' : '?') +
+          'email=' +
+          profileRes.data.email;
+      }
+
+      res.redirect(redirectUrl);
+    } catch (err) {
+      console.error(err);
+      res.redirect(
+        `${process.env.VITE_CLIENT_APP_URL}/auth/failure?message=${err.message}`,
+      );
+    }
+  });
+  app.use('/callback/azure-ad-auth-email-grant', async (req, res) => {
+    const { code, state, error } = req.query;
+
+    if (error) {
+      console.error('azure-ad-login-error', error);
+
+      var error_description = '';
+
+      if (error === 'access_denied') {
+        error_description =
+          'You have canceled the login process. Please try again.';
+      } else if (error === 'consent_required') {
+        error_description =
+          'You have declined the consent. The consent is required to proceed. Please try again.';
+      }
+
+      res.redirect(
+        `${process.env.VITE_CLIENT_APP_URL}/auth/failure?message=${error_description}`,
+      );
+
+      return;
+    }
+
+    const stateParsed = JSON.parse(atob(state));
+
+    try {
+      const tokenReq = await getMicrosoftAccessToken(
+        code,
+        stateParsed.scope,
+        `${process.env.VITE_MIDDLEWARE_API_URL}/callback/azure-ad-auth-email-grant`,
+      );
+
+      const tokenRes = await tokenReq.json();
+
+      const { id_token, access_token, refresh_token, scope } = tokenRes;
+
+      console.error('tokenRes', tokenRes);
+
+      const profileReq = await fetchMicrosoftProfile(access_token);
+      const profileRes = await profileReq.json();
+
+      console.error('profileRes', profileRes);
+
+      const loggedInEmail = stateParsed?.mail ?? profileRes?.userPrincipalName;
+
+      await customerOsSignIn({
+        tenant: stateParsed?.tenant ?? '',
+        loggedInEmail: loggedInEmail,
+        provider: 'azure-ad',
+        oAuthTokenType: stateParsed?.type ?? '',
+        oAuthTokenForEmail: profileRes?.userPrincipalName,
+        oAuthToken: {
+          idToken: id_token,
+          accessToken: access_token,
+          refreshToken: refresh_token,
+          scope,
+          providerAccountId: profileRes.id,
+        },
+      });
+
+      var redirectUrl = process.env.VITE_CLIENT_APP_URL + stateParsed.origin;
+
+      // Check if the origin already has the email parameter
+      const emailParamRegex = /[?&]email=([^&]*)/;
+      const emailParamMatch = stateParsed.origin.match(emailParamRegex);
+
+      if (emailParamMatch) {
+        // Replace existing email parameter with the new value
+        redirectUrl = redirectUrl.replace(emailParamRegex, (match, p1) => {
+          return match.replace(p1, profileRes.mail);
+        });
+      } else {
+        // Add the email parameter
+        redirectUrl +=
+          (stateParsed.origin.includes('?') ? '&' : '?') +
+          'email=' +
+          profileRes.mail;
+      }
+
+      res.redirect(redirectUrl);
     } catch (err) {
       console.error(err);
       res.redirect(
