@@ -33,7 +33,7 @@ const inputClasses =
   'text-sm min-w-2.5 min-h-0 max-h-4 text-inherit underline hover:border-none focus:border-none border-none';
 
 const deleteButtonClasses =
-  'border-none bg-transparent shadow-none text-grayModern-400 pr-3 pl-4 py-2 -mx-4 absolute -right-7 top-0 bottom-0 invisible group-hover:visible hover:bg-transparent';
+  'border-none bg-transparent shadow-none text-grayModern-400 pr-3 pl-4 py-2 -mx-4 absolute right-1 top-0 bottom-0 invisible group-hover:visible hover:bg-transparent';
 
 const formatPrice = (price: number | undefined | string): string => {
   if (price === undefined || price === null) return '';
@@ -208,7 +208,7 @@ export const ProductItemEdit = observer(
     };
 
     return (
-      <div className='flex items-baseline justify-between group relative text-grayModern-500 '>
+      <div className='flex items-baseline justify-between group relative text-grayModern-500 pr-8 -mr-8'>
         <div className='flex items-baseline'>
           <MaskedResizableInput
             min={0}

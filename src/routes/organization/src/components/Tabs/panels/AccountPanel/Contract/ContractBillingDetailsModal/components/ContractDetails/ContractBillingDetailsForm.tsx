@@ -11,6 +11,7 @@ import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { Radio, RadioGroup } from '@ui/form/Radio';
 import { ModalBody } from '@ui/overlay/Modal/Modal';
+import { Tooltip } from '@ui/overlay/Tooltip/Tooltip.tsx';
 import { Divider } from '@ui/presentation/Divider/Divider';
 import { currencyOptions } from '@shared/util/currencyOptions';
 import { DatePickerUnderline } from '@ui/form/DatePicker/DatePickerUnderline';
@@ -29,7 +30,6 @@ import { Products } from '@organization/components/Tabs/panels/AccountPanel/Cont
 import { InlineSelect } from './InlineSelect';
 import { ContractUploader } from './ContractUploader';
 import { CommittedPeriodInput } from './CommittedPeriodInput';
-import { PaymentDetailsPopover } from './PaymentDetailsPopover';
 
 interface SubscriptionServiceModalProps {
   contractId: string;
@@ -101,7 +101,7 @@ export const ContractBillingDetailsForm = observer(
     return (
       <ModalBody className='flex flex-col flex-1 p-0'>
         <ul className='mb-2 list-disc ml-5'>
-          <li className='text-sm'>
+          <li className='text-sm mb-[1px]'>
             <div className='flex items-baseline'>
               <CommittedPeriodInput contractId={contractId} />
 
@@ -120,7 +120,7 @@ export const ContractBillingDetailsForm = observer(
               />
             </div>
           </li>
-          <li className='text-sm'>
+          <li className='text-sm mb-[1px]'>
             <div className='flex items-baseline'>
               Live until{' '}
               {renewalCalculatedDate
@@ -183,7 +183,7 @@ export const ContractBillingDetailsForm = observer(
               <Divider />
             </div>
             <ul className='mb-2 list-disc ml-5'>
-              <li className='text-sm'>
+              <li className='text-sm mb-[1px]'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap mr-1'>
                     Billing starts{' '}
@@ -205,7 +205,7 @@ export const ContractBillingDetailsForm = observer(
                   />
                 </div>
               </li>
-              <li className='text-sm'>
+              <li className='text-sm mb-[1px]'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap'>Invoices are sent</span>
                   <span className='z-20'>
@@ -235,7 +235,7 @@ export const ContractBillingDetailsForm = observer(
                   </span>
                 </div>
               </li>
-              <li className='text-sm'>
+              <li className='text-sm mb-[1px]'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>Customer has</span>
                   <div className='inline z-10'>
@@ -260,7 +260,7 @@ export const ContractBillingDetailsForm = observer(
                   <span className='whitespace-nowrap ml-0.5'>to pay</span>
                 </div>
               </li>
-              <li className='text-sm'>
+              <li className='text-sm mb-[1px]'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>Billing is </span>
                   <div>
@@ -314,38 +314,42 @@ export const ContractBillingDetailsForm = observer(
             </div>
 
             <div className='flex flex-col gap-2 mb-2'>
-              <div className='flex flex-col w-full justify-between items-start'>
-                <div className='flex  items-center justify-between w-full'>
-                  <PaymentDetailsPopover
-                    withNavigation
-                    agentId={cashflowAgent?.id}
-                    content={isStripeEnabled ? '' : ' Enable Stripe in the'}
-                  >
+              <Tooltip
+                align='start'
+                label={
+                  <>
+                    Enable Stripe in the{' '}
+                    <span className='underline'>Cashflow Guardian</span> agent
+                  </>
+                }
+              >
+                <div className='flex flex-col w-full justify-between items-start'>
+                  <div className='flex  items-center justify-between w-full'>
                     <div className='text-sm font-normal whitespace-nowrap'>
                       Checkout with Stripe (Card & ACH)
                     </div>
-                  </PaymentDetailsPopover>
 
-                  <Switch
-                    size='sm'
-                    name='payAutomatically'
-                    isInvalid={!isStripeEnabled}
-                    isChecked={
-                      !!contractStore?.tempValue?.billingDetails?.payOnline
-                    }
-                    onChange={(value) => {
-                      contractStore?.updateTemp((contract) => ({
-                        ...contract,
-                        billingDetails: {
-                          ...contract.billingDetails,
-                          payOnline: value,
-                          payAutomatically: value,
-                        },
-                      }));
-                    }}
-                  />
+                    <Switch
+                      size='sm'
+                      name='payAutomatically'
+                      isInvalid={!isStripeEnabled}
+                      isChecked={
+                        !!contractStore?.tempValue?.billingDetails?.payOnline
+                      }
+                      onChange={(value) => {
+                        contractStore?.updateTemp((contract) => ({
+                          ...contract,
+                          billingDetails: {
+                            ...contract.billingDetails,
+                            payOnline: value,
+                            payAutomatically: value,
+                          },
+                        }));
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              </Tooltip>
 
               {contractStore?.tempValue.billingDetails?.payOnline && (
                 <RadioGroup
@@ -373,37 +377,39 @@ export const ContractBillingDetailsForm = observer(
                 </RadioGroup>
               )}
 
-              <div className='flex w-full justify-between items-center'>
-                <PaymentDetailsPopover
-                  withNavigation
-                  agentId={cashflowAgent?.id}
-                  content={
-                    isBankPaymentEnabled ? '' : 'Enable bank transfer in the'
-                  }
-                >
+              <Tooltip
+                align='start'
+                label={
+                  <>
+                    Enable bank transfer in the{' '}
+                    <span className='underline'>Cashflow Guardian</span> agent
+                  </>
+                }
+              >
+                <div className='flex w-full justify-between items-center'>
                   <div className='font-normal text-sm whitespace-nowrap'>
                     Bank transfer
                   </div>
-                </PaymentDetailsPopover>
-                <Switch
-                  size='sm'
-                  name='canPayWithBankTransfer'
-                  isInvalid={!isBankPaymentEnabled}
-                  isChecked={
-                    !!contractStore?.tempValue?.billingDetails
-                      ?.canPayWithBankTransfer
-                  }
-                  onChange={(value) =>
-                    contractStore?.updateTemp((contract) => ({
-                      ...contract,
-                      billingDetails: {
-                        ...contract.billingDetails,
-                        canPayWithBankTransfer: value,
-                      },
-                    }))
-                  }
-                />
-              </div>
+                  <Switch
+                    size='sm'
+                    name='canPayWithBankTransfer'
+                    isInvalid={!isBankPaymentEnabled}
+                    isChecked={
+                      !!contractStore?.tempValue?.billingDetails
+                        ?.canPayWithBankTransfer
+                    }
+                    onChange={(value) =>
+                      contractStore?.updateTemp((contract) => ({
+                        ...contract,
+                        billingDetails: {
+                          ...contract.billingDetails,
+                          canPayWithBankTransfer: value,
+                        },
+                      }))
+                    }
+                  />
+                </div>
+              </Tooltip>
             </div>
           </>
         )}

@@ -1,4 +1,5 @@
 import { RootStore } from '@store/root';
+import { htmlToText } from 'html-to-text';
 import { action, computed, observable } from 'mobx';
 import { OrganizationService } from '@domain/services';
 
@@ -23,7 +24,7 @@ export class EditOrganizationNotesUsecase {
 
   @computed
   get defaultNote() {
-    return this.organization?.value?.notes ?? '';
+    return htmlToText(this.organization?.value?.notes ?? '').trim();
   }
 
   @action

@@ -123,7 +123,7 @@ export const UpcomingInvoices = ({
 
   return (
     <article className='w-full'>
-      <p className='text-sm font-semibold mb-1 flex'>
+      <p className='text-sm font-medium mb-1 flex'>
         <span className='whitespace-nowrap'>Next invoice</span>
         {isPaused && (
           <div className='flex w-full justify-between'>

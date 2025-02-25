@@ -36,7 +36,7 @@ export const InlineSelect = <T,>({
             className={cn(
               'underline ml-1 text-grayModern-500 hover:text-grayModern-700 focus:text-grayModern-700',
               {
-                'text-grayModern-400': !value,
+                'text-grayModern-400': value === null || value === undefined,
               },
             )}
           >

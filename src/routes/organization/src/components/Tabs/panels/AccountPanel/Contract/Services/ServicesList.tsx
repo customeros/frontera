@@ -110,7 +110,7 @@ export const ServicesList = observer(
         {groupedServicesByParentId?.subscription?.length > 0 && (
           <article className='mb-1'>
             <h1
-              className='font-semibold text-sm mb-1'
+              className='font-medium text-sm mb-1'
               data-test='account-panel-contract-subscription'
             >
               Current subscriptions
@@ -147,7 +147,7 @@ export const ServicesList = observer(
         {groupedServicesByParentId?.once?.length > 0 && (
           <article>
             <h1
-              className='font-semibold text-sm mb-1'
+              className='font-medium text-sm mb-1'
               data-test='account-panel-contract-one-time'
             >
               One-times for next invoice
