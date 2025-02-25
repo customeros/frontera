@@ -38,7 +38,7 @@ type ColorType =
 export class Agent extends Entity<AgentDatum> {
   @observable accessor value: AgentDatum = Agent.default();
   static defaultNameByType: { [key in AgentType]?: string } = {
-    [AgentType.WebVisitIdentifier]: 'Web visitor identifier',
+    [AgentType.WebVisitIdentifier]: 'Web Visitor Identifier',
     [AgentType.SupportSpotter]: 'Support spotter',
     [AgentType.IcpQualifier]: 'Icp qualifier',
     [AgentType.CampaignManager]: 'Outbound campaign manager',

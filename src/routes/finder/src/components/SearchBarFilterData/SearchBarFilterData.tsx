@@ -2,11 +2,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
-import { useTablePlaceholder } from '@finder/hooks/useTablePlaceholder.tsx';
+import { useTablePlaceholder } from '@finder/hooks/useTablePlaceholder';
 
 import { TableViewType } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
-import { SearchSm } from '@ui/media/icons/SearchSm';
 
 interface SearchBarFilterDataProps {
   dataTest?: string;
@@ -44,7 +43,6 @@ export const SearchBarFilterData = observer(
 
     return (
       <div className='flex flex-row items-center gap-1'>
-        <SearchSm className='size-5' />
         <div
           data-test={dataTest ? dataTest : ''}
           className={'font-medium flex items-center gap-1 break-keep w-max '}

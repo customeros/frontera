@@ -17,7 +17,7 @@ export const AvatarHeader = observer(() => {
         asChild
         side='bottom'
         align='center'
-        label='Create an organization'
+        label='Create a company'
         className={cn(enableFeature ? 'visible' : 'hidden')}
       >
         <IconButton

@@ -141,14 +141,12 @@ export const ContractRenewsModal = ({
             className='flex flex-col gap-1 text-base'
           >
             <Radio value={RenewContract.Now}>
-              <span className='mr-1'>Now</span>
+              <span>Now</span>
             </Radio>
 
             {timeToRenewal && (
               <Radio value={RenewContract.EndOfCurrentRenewalPeriod}>
-                <span className='ml-1'>
-                  End of current renewal period, {timeToRenewal}
-                </span>
+                <span>End of current renewal period, {timeToRenewal}</span>
               </Radio>
             )}
 

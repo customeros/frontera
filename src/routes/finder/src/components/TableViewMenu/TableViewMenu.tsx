@@ -7,6 +7,7 @@ import { TableViewType } from '@graphql/types';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
 import { Download02 } from '@ui/media/icons/Download02';
+import { Tooltip } from '@ui/overlay/Tooltip/Tooltip.tsx';
 
 export const TableViewMenu = observer(() => {
   const { downloadCSV } = useDownloadCsv();
@@ -28,13 +29,15 @@ export const TableViewMenu = observer(() => {
   }
 
   return (
-    <IconButton
-      size='xs'
-      variant='ghost'
-      className={'mr-3.5'}
-      onClick={downloadCSV}
-      aria-label={'Download csv'}
-      icon={<Download02 className='' />}
-    />
+    <Tooltip label='Download CSV'>
+      <IconButton
+        size='xs'
+        variant='ghost'
+        className={'mr-3.5'}
+        onClick={downloadCSV}
+        aria-label={'Download csv'}
+        icon={<Download02 className='' />}
+      />
+    </Tooltip>
   );
 });

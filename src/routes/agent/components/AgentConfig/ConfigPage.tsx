@@ -14,7 +14,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
   ScrollAreaScrollbar,
-} from '@ui/utils/ScrollArea/index';
+} from '@ui/utils/ScrollArea';
 
 import { Scope } from './Scope';
 import { goals, configs } from './config';

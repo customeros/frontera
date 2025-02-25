@@ -6,7 +6,6 @@ import { observer } from 'mobx-react-lite';
 
 import { Input } from '@ui/form/Input/Input';
 import { useStore } from '@shared/hooks/useStore';
-import { SearchSm } from '@ui/media/icons/SearchSm';
 import { InputGroup, LeftElement } from '@ui/form/InputGroup/InputGroup';
 
 export const Search = observer(() => {
@@ -57,7 +56,6 @@ export const Search = observer(() => {
     >
       <InputGroup className='relative w-full bg-transparent hover:border-transparent focus-within:border-transparent focus-within:hover:border-transparent gap-1'>
         <LeftElement className='ml-2 flex items-center gap-1'>
-          <SearchSm className='size-5' />
           <span
             data-test='opps-finder-count'
             className='text-nowrap font-medium'
