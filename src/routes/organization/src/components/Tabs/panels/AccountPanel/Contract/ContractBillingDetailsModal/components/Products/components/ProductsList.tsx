@@ -116,7 +116,7 @@ export const ProductsList = observer(
     return (
       <div className='flex flex-col'>
         {groupedServices.subscription.length !== 0 && (
-          <p className='text-sm font-medium mb-2'>Subscriptions</p>
+          <p className='text-sm font-medium mb-2 mt-1'>Subscriptions</p>
         )}
         {groupedServices.subscription
           .sort((a, b) => {
@@ -149,7 +149,7 @@ export const ProductsList = observer(
           ))}
 
         {groupedServices.once.length !== 0 && (
-          <p className='text-sm font-medium mb-2'>One-time</p>
+          <p className='text-sm font-medium mb-2 mt-1'>One-time</p>
         )}
         {groupedServices.once
           .sort((a, b) => {

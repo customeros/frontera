@@ -240,6 +240,7 @@ export type IconName =
   | 'menu-01'
   | 'file-02'
   | 'trash-01'
+  | 'grid-01'
   | 'check-circle';
 
 interface IconProps extends SVGAttributes<SVGElement> {
