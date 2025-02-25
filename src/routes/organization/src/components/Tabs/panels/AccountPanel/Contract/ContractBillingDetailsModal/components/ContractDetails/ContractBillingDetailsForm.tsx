@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Agent } from '@store/Agents/Agent.dto';
 import { ContractStore } from '@store/Contracts/Contract.store';
 
+import { Icon } from '@ui/media/Icon';
 import { Switch } from '@ui/form/Switch';
 import { DateTimeUtils } from '@utils/date';
 import { Button } from '@ui/form/Button/Button';
@@ -100,7 +101,7 @@ export const ContractBillingDetailsForm = observer(
 
     return (
       <ModalBody className='flex flex-col flex-1 p-0'>
-        <ul className='mb-2 list-disc ml-5'>
+        <ul className='list-disc ml-5'>
           <li className='text-sm mb-[1px]'>
             <div className='flex items-baseline'>
               <CommittedPeriodInput contractId={contractId} />
@@ -176,13 +177,17 @@ export const ContractBillingDetailsForm = observer(
         />
         {cashflowAgent?.isActive && (
           <>
-            <div className='flex relative items-center h-8 mb-1'>
-              <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
-                Billing policy
-              </p>
-              <Divider />
+            <Divider className='my-3' />
+
+            <div className='flex text-sm font-medium items-center mb-1'>
+              <Icon
+                name='invoice'
+                className='w-4 h-4 mr-2 text-grayModern-500'
+              />
+              Billing policy
             </div>
-            <ul className='mb-2 list-disc ml-5'>
+
+            <ul className='list-disc ml-5'>
               <li className='text-sm mb-[1px]'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap mr-1'>
@@ -306,11 +311,14 @@ export const ContractBillingDetailsForm = observer(
                 </div>
               </li>
             </ul>
-            <div className='flex relative items-center h-8 '>
-              <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
-                Payment options
-              </p>
-              <Divider />
+            <Divider className='my-3' />
+
+            <div className='flex text-sm font-medium items-center mb-1'>
+              <Icon
+                name='bank-note-01'
+                className='w-4 h-4 mr-2 text-grayModern-500'
+              />
+              Payment options
             </div>
 
             <div className='flex flex-col gap-2 mb-2'>

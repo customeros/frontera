@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 
+import { Icon } from '@ui/media/Icon';
 import { ContractStatus } from '@graphql/types';
 import { Divider } from '@ui/presentation/Divider/Divider';
 
@@ -16,11 +17,13 @@ export const Products = observer(
   ({ id, currency, contractStatus }: SubscriptionProductModalProps) => {
     return (
       <>
-        <div className='flex relative items-center h-8 '>
-          <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
+        <Divider className='my-3' />
+
+        <div className='flex relative justify-between items-center  text-sm font-medium'>
+          <p className='text-sm font-medium  flex items-center after:border-t-2 w-fit whitespace-nowrap mr-2 gap-x-2'>
+            <Icon name='grid-01' className='w-4 h-4 text-grayModern-500' />
             Products
           </p>
-          <Divider />
           <AddNewProductMenu contractId={id} />
         </div>
 

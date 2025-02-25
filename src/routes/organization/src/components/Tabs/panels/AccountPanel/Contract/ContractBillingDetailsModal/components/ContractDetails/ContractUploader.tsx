@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { cn } from '@ui/utils/cn.ts';
+import { Icon } from '@ui/media/Icon';
 import { Plus } from '@ui/media/icons/Plus.tsx';
 import { useStore } from '@shared/hooks/useStore';
 import { Delete } from '@ui/media/icons/Delete.tsx';
@@ -68,11 +69,13 @@ export const ContractUploader = observer(
 
     return (
       <div className='flex flex-col'>
-        <div className='flex relative items-center h-8 '>
-          <p className='text-sm text-grayModern-500 after:border-t-2 w-fit whitespace-nowrap mr-2'>
-            Contracts & documents
-          </p>
-          <Divider />
+        <Divider className='my-3' />
+
+        <div className='flex relative items-center justify-between '>
+          <div className='flex relative font-medium items-center text-sm'>
+            <Icon name='file-05' className='w-4 h-4 mr-2 text-grayModern-500' />
+            <p className='flex items-center'>Contracts & documents</p>
+          </div>
           <Tooltip
             hasArrow
             side='bottom'
@@ -94,7 +97,7 @@ export const ContractUploader = observer(
                 setFiles((prev) => [...prev, { file, refId }]);
               }}
               className={cn(
-                'p-1 rounded-md cursor-pointer ml-[5px] outline-none focus:outline-none',
+                'p-[2px] rounded-[4px] cursor-pointer ml-[5px] outline-none focus:outline-none',
                 loadingIds.length && 'opacity-50 pointer-events-none ',
                 outlineButton({ colorScheme: 'grayModern' }),
               )}
