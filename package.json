@@ -18,7 +18,8 @@
     "codegen:gqlnew": "graphql-codegen --require dotenv/config --config scripts/codegen-graphql-stores.ts",
     "codegen:gql": "npm run codegen:graphql && npm run codegen:gqlnew",
     "test:e2e": "playwright test",
-    "test:integration": "npx vitest"
+    "test:integration": "npx vitest --config vitest.config.integration.ts",
+    "test:unit": "npx vitest --config vitest.config.unit.ts"
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.25.9",
