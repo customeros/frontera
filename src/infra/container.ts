@@ -59,7 +59,17 @@ export function injectable<T extends Constructor>(
   target: T,
   _context: ClassDecoratorContext,
 ) {
-  container.register(target, target);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isSingleton = typeof (target as any)?.getInstance === 'function';
+
+  if (isSingleton) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const instance = (target as any)?.getInstance();
+
+    container.register(target, instance);
+  } else {
+    container.register(target, target);
+  }
 }
 
 export const container = new Container();
