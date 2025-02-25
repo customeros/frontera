@@ -21,7 +21,7 @@ export const ClassifyEmailThreads = observer(() => {
   if (!agent) return null;
 
   return (
-    <div>
+    <div className='px-4 py-3'>
       <div className='flex items-center justify-between mb-1'>
         <h2 className='text-sm font-medium '>
           {agent.getCapabilityName(CapabilityType.ClassifyEmail)}
@@ -45,7 +45,7 @@ export const ClassifyEmailThreads = observer(() => {
           id={'classify-email-threads'}
           name='classify-email-threads'
           onValueChange={(val: ClassifyEmailThreadsValue) =>
-            usecase.setValue(val)
+            usecase.execute(val)
           }
         >
           <Radio value={'AUTOMATICALLY'}>

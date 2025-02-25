@@ -14,12 +14,7 @@ export class ClassifyEmailThreadsUsecase {
   @observable accessor importEmailsError: string = '';
   constructor(private agentId: string) {
     this.execute = this.execute.bind(this);
-    this.setValue = this.setValue.bind(this);
-  }
-
-  @action
-  setValue(val: ClassifyEmailThreadsValue) {
-    this.value = val;
+    this.init();
   }
 
   @computed
@@ -84,9 +79,11 @@ export class ClassifyEmailThreadsUsecase {
     });
   }
 
-  async execute() {
+  async execute(value: ClassifyEmailThreadsValue) {
+    this.value = value;
+
     const span = Tracer.span('ClassifyEmailThreadsUsecase.execute', {
-      value: this.value,
+      value: value,
     });
     const agent = this.root.agents.getById(this.agentId);
 
@@ -101,7 +98,7 @@ export class ClassifyEmailThreadsUsecase {
     agent?.setCapabilityConfig(
       CapabilityType.ClassifyEmail,
       'importEmails',
-      this.value,
+      value,
     );
 
     const [res, err] = await this.service.saveAgent(agent);

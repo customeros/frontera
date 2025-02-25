@@ -8,7 +8,7 @@ import { AgentListenerEvent } from '@graphql/types';
 
 interface EmailConfig {
   email: string;
-  provider: 'google' | 'azure';
+  provider?: 'google' | 'azure';
 }
 
 export class NewEmailsUsecase {
@@ -20,6 +20,7 @@ export class NewEmailsUsecase {
   constructor(private agentId: string) {
     this.execute = this.execute.bind(this);
     this.setEmails = this.setEmails.bind(this);
+    this.init();
   }
 
   @action
@@ -92,8 +93,8 @@ export class NewEmailsUsecase {
     this.emails = this.emails.filter((e) => e.email !== email);
   }
 
-  addLink(email: string, provider: 'google' | 'azure') {
-    this.emails = [...this.emails, { email, provider }];
+  addLink(email: string) {
+    this.emails = [...this.emails, { email }];
   }
 
   async execute() {

@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMemo, useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
-import { OauthToken } from '@store/Settings/OauthTokenStore.store';
 import { NewEmailsUsecase } from '@domain/usecases/agents/listeners/new-emails.usecase';
 
 import { Icon } from '@ui/media/Icon';
@@ -17,22 +16,34 @@ export const NewEmails = observer(() => {
   const store = useStore();
   const { id } = useParams<{ id: string }>();
 
-  const tokens: OauthToken[] =
-    store.settings.oauthToken.tokens?.filter(
-      (token) => token.type === 'PERSONAL',
-    ) ?? [];
+  const agent = store.agents.getById(id ?? '');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const usecase = useMemo(() => {
     return new NewEmailsUsecase(id!);
   }, [id]);
 
-  const agent = store.agents.getById(id ?? '');
+  useEffect(() => {
+    const email = searchParams.get('email');
+
+    if (email) {
+      const isEmailLinked = usecase.emails.find((item) => item.email === email);
+
+      if (!isEmailLinked) {
+        usecase.addLink(email);
+        usecase.execute();
+      }
+
+      searchParams.delete('email');
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams, usecase]);
 
   if (!agent) return null;
 
-  if (!tokens.length) {
+  if (!usecase.emails.length) {
     return (
-      <div>
+      <div className='px-4 py-3'>
         <h2 className='text-sm font-medium mb-1'>
           {agent.getListenerName(AgentListenerEvent.NewEmail)}
         </h2>
@@ -41,7 +52,7 @@ export const NewEmails = observer(() => {
           agent to monitor
         </p>
 
-        <ConnectAccountMenu>
+        <ConnectAccountMenu usecase={usecase}>
           <Button size='sm' className='w-full' colorScheme='primary'>
             Connect accounts
           </Button>
@@ -51,12 +62,12 @@ export const NewEmails = observer(() => {
   }
 
   return (
-    <div>
+    <div className='px-4 py-3'>
       <div className='flex items-center justify-between mb-1'>
         <h2 className='text-sm font-medium'>
           {agent.getListenerName(AgentListenerEvent.NewEmail) ?? 'New Emails'}
         </h2>
-        <ConnectAccountMenu>
+        <ConnectAccountMenu usecase={usecase}>
           <Button
             size='xxs'
             variant='ghost'
@@ -79,12 +90,12 @@ export const NewEmails = observer(() => {
         </div>
       )}
       <div className='flex flex-col gap-2 mb-8'>
-        {tokens.map((token, idx) => {
+        {usecase.emails.map((data, idx) => {
           return (
             <ConnectedAccount
-              token={token}
               usecase={usecase}
-              key={`${token.email}_${idx}`}
+              email={data.email}
+              key={`${data.email}_${idx}`}
             />
           );
         })}
