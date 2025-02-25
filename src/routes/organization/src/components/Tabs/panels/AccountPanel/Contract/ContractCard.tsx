@@ -76,7 +76,7 @@ export const ContractCard = observer(
     }, []);
 
     return (
-      <Card className='px-4 py-3 w-full text-lg bg-grayModern-50 transition-all-0.2s-ease-out border border-grayModern-200 text-grayModern-700 '>
+      <Card className='px-4 py-3 w-full text-lg bg-grayModern-25 transition-all-0.2s-ease-out border border-grayModern-200 text-grayModern-700 '>
         <CardHeader
           role='button'
           className='p-0 w-full flex flex-col'
@@ -94,7 +94,7 @@ export const ContractCard = observer(
               onBlur={(e) => {
                 contractStore?.updateContractName(e.target.value);
               }}
-              className='font-semibold hover:border-none focus:border-none max-h-6 min-h-0 w-full overflow-hidden overflow-ellipsis border-0'
+              className='font-medium hover:border-none focus:border-none max-h-6 min-h-0 w-full overflow-hidden overflow-ellipsis border-0'
               onChange={(e) => {
                 contractStore?.update(
                   (prev) => ({

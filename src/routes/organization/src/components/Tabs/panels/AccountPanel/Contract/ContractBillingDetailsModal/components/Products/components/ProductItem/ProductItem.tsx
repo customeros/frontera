@@ -35,8 +35,9 @@ export const ProductItem: FC<ServiceItemProps> = observer(
     allowIndividualRestore,
   }) => {
     const isFutureVersion =
-      service?.tempValue?.serviceStarted &&
-      DateTimeUtils.isFuture(service?.tempValue?.serviceStarted);
+      (service?.tempValue?.serviceStarted &&
+        DateTimeUtils.isFuture(service?.tempValue?.serviceStarted)) ||
+      service.value.invoicingStatus === ServiceInvoicingStatus.Ready;
 
     const isDraft =
       contractStatus &&

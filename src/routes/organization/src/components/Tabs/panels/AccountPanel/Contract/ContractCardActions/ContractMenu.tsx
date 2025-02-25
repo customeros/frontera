@@ -1,12 +1,8 @@
 import { ReactNode } from 'react';
 
 import { cn } from '@ui/utils/cn';
-import { Edit03 } from '@ui/media/icons/Edit03';
+import { Icon } from '@ui/media/Icon';
 import { ContractStatus } from '@graphql/types';
-import { Trash01 } from '@ui/media/icons/Trash01.tsx';
-import { RefreshCw05 } from '@ui/media/icons/RefreshCw05';
-import { Divider } from '@ui/presentation/Divider/Divider';
-import { DotsVertical } from '@ui/media/icons/DotsVertical';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import {
   ContractStatusModalMode,
@@ -37,15 +33,17 @@ export const ContractMenu = ({
             `flex items-center max-h-5 p-1 hover:bg-grayModern-100 rounded`,
           )}
         >
-          <DotsVertical className='text-grayModern-400' />
+          {' '}
+          <Icon name='dots-vertical' className='text-grayModern-400' />
         </MenuButton>
         <MenuList align='end' side='bottom' className='p-0'>
           <MenuItem
             onClick={onOpenEditModal}
-            className='flex items-center text-base'
+            className='flex items-center'
             data-test='contract-menu-edit-contract'
           >
-            <Edit03 className='mr-1 text-grayModern-500' />
+            {' '}
+            <Icon name='edit-03' className='text-grayModern-500 mr-1' />
             Edit contract
           </MenuItem>
 
@@ -53,19 +51,21 @@ export const ContractMenu = ({
             <>
               {status === ContractStatus.Live && (
                 <MenuItem
-                  className='flex items-center text-base'
+                  className='flex items-center '
                   onClick={() =>
                     onStatusModalOpen(ContractStatusModalMode.Renew)
                   }
                 >
-                  <RefreshCw05 className='text-grayModern-500 mr-1' />
+                  <Icon
+                    name='refresh-ccw-02'
+                    className='text-grayModern-500 mr-1'
+                  />
                   Renew contract
                 </MenuItem>
               )}
-              <Divider className='my-0.5' />
               <MenuItem
+                className='flex items-center'
                 onClick={onHandleStatusChange}
-                className='flex items-center text-base'
               >
                 {statusContent}
               </MenuItem>
@@ -73,11 +73,11 @@ export const ContractMenu = ({
           )}
           {status == ContractStatus.Draft && (
             <MenuItem
-              className='flex items-center text-base'
+              className='flex items-center '
               data-test='contract-menu-delete-contract'
               onClick={() => onStatusModalOpen(ContractStatusModalMode.Delete)}
             >
-              <Trash01 className='mr-1 text-grayModern-500' />
+              <Icon name='trash-01' className='text-grayModern-500 mr-1' />
               Delete contract
             </MenuItem>
           )}

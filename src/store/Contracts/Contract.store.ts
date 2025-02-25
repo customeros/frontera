@@ -440,7 +440,7 @@ const defaultValue: Contract = {
     payOnline: false,
     payAutomatically: false,
     check: false,
-    dueDays: 30,
+    dueDays: 0,
   },
   committedPeriodInMonths: 1,
   contractEnded: '',

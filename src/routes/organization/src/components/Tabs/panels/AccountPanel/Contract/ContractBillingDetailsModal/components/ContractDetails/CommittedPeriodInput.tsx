@@ -97,7 +97,7 @@ export const CommittedPeriodInput = observer(
             size='sm'
             variant='ghost'
             onClick={handleFocus}
-            className='font-normal text-base p-0 mr-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline color-grayModern-500'
+            className='font-normal text-sm p-0 mr-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline color-grayModern-500'
           >
             {committedPeriodLabel}
           </Button>
