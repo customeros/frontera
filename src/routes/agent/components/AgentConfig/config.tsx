@@ -56,4 +56,5 @@ export const goals: GoalMap = {
   [AgentType.SupportSpotter]: ['Spot interactions where help might be needed'],
   [AgentType.MeetingKeeper]: ['Capture external meetings'],
   [AgentType.CashflowGuardian]: ['Get you paid'],
+  [AgentType.EmailKeeper]: ['Capture commercial email conversations'],
 };
