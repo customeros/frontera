@@ -28,8 +28,8 @@ export const ClassifyEmailThreads = observer(() => {
         </h2>
       </div>
       <p className='text-sm mb-4'>
-        Only commercial emails for Target or Customer companies will be
-        imported, excluding all with ‘confidential’ in the subject line
+        Import commercial emails for Target or Customer companies, excluding
+        those with ‘confidential’ in the subject line
       </p>
       {usecase.capabilityErrors && (
         <div className='bg-error-50 text-error-700 px-2 py-1 rounded-[4px] mb-4'>
