@@ -110,6 +110,9 @@ export const ServicesList = observer(
         {groupedServicesByParentId?.subscription?.length > 0 && (
           <article className='mb-1'>
             <h1
+              tabIndex={0}
+              role='button'
+              onClick={onModalOpen}
               className='font-medium text-sm mb-1'
               data-test='account-panel-contract-subscription'
             >
@@ -147,6 +150,9 @@ export const ServicesList = observer(
         {groupedServicesByParentId?.once?.length > 0 && (
           <article>
             <h1
+              tabIndex={0}
+              role='button'
+              onClick={onModalOpen}
               className='font-medium text-sm mb-1'
               data-test='account-panel-contract-one-time'
             >
