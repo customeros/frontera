@@ -1,3 +1,4 @@
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import { Icon } from '@ui/media/Icon';
@@ -6,6 +7,7 @@ import { User01 } from '@ui/media/icons/User01';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
+import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
 
 interface MailboxCellProps {
   mailbox: string;
@@ -14,13 +16,12 @@ interface MailboxCellProps {
 export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
   const store = useStore();
   const mailboxStore = store.mailboxes.value.get(mailbox);
-  const userId = mailboxStore?.value.userId;
 
-  const user = userId ? store.users.value.get(userId) : null;
+  console.log(toJS(store.users.value));
 
   return (
     <div className='flex gap-1 items-center group/mailbox'>
-      <Avatar
+      {/* <Avatar
         size='xs'
         textSize='xxs'
         variant='circle'
@@ -28,14 +29,14 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
         src={user?.value?.profilePhotoUrl ?? ''}
         className={'min-w-5 mr-2 border border-grayModern-200'}
         icon={<User01 className='text-grayModern-500 size-3' />}
-      />
+      /> */}
       <div className='flex items-center justify-center gap-1'>
         <span>{mailbox}</span>
 
         {mailboxStore?.value?.needsManualRefresh && (
           <Tooltip
             label={`Your conversations and meetings are no longer syncing because access to your ${
-              mailboxStore?.value?.provider === 'google'
+              mailboxStore?.value?.provider === MailboxProvider.Google
                 ? 'Google Workspace'
                 : 'Microsoft Outlook'
             } account has expired`}
@@ -49,7 +50,7 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
               icon={<Icon name='refresh-cw-01' />}
               onClick={() =>
                 store.settings.oauthToken.enableSync(
-                  mailboxStore?.value?.provider,
+                  mailboxStore?.value?.provider ?? '',
                 )
               }
             />
@@ -65,7 +66,7 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
           onClick={() =>
             store.settings.oauthToken.disableSync(
               mailboxStore?.value?.mailbox || '',
-              mailboxStore?.value?.provider,
+              mailboxStore?.value?.provider ?? '',
             )
           }
         />

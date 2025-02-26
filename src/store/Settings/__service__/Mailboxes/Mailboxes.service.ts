@@ -6,8 +6,8 @@ import { MailboxStore } from '@store/Settings/Mailbox.store';
 import BuyDomainsDocument from './buyDomains.graphql';
 import GetDomainsDocument from './getDomains.graphql';
 import { GetDomainsQuery } from './getDomains.generated';
-import GetMailboxesDocument from './getMailboxes.graphql';
-import { GetMailboxesQuery } from './getMailboxes.generated';
+import GetMailboxesDocument from './getMailboxesv2.graphql';
+import { MailboxesQuery } from './getMailboxesv2.generated';
 import ValidateDomainsDocument from './validateDomains.graphql';
 import GetPaymentIntentDocument from './getPaymentIntent.graphql';
 import MailstackSetUserDocument from './updateMailstackSetUser.graphql';
@@ -68,9 +68,7 @@ export class MailboxesService {
   }
 
   async getMailboxes() {
-    return this.transport.graphql.request<GetMailboxesQuery>(
-      GetMailboxesDocument,
-    );
+    return this.transport.graphql.request<MailboxesQuery>(GetMailboxesDocument);
   }
 
   async updateUser(payload: MailstackSetUserMutationVariables) {
