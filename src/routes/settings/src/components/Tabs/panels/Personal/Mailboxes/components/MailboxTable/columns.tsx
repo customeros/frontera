@@ -19,7 +19,7 @@ const columnHelper = createColumnHelper<ColumnDatum>();
 export const columns: Column[] = [
   columnHelper.accessor('mailbox', {
     id: 'mailbox',
-    minSize: 320,
+    minSize: 340,
     cell: (props) => <MailboxCell mailbox={props.getValue()} />,
     header: () => <p className='text-sm ml-8'>Mailboxes</p>,
     skeleton: () => null,

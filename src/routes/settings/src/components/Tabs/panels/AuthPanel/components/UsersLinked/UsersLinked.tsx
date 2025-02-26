@@ -40,18 +40,14 @@ export const UsersLinked = observer(
             <MenuList>
               <MenuItem
                 className='text-sm'
-                onClick={() =>
-                  store.settings.oauthToken.enableSync(tokenType, 'google')
-                }
+                onClick={() => store.settings.oauthToken.enableSync('google')}
               >
                 <Google className='mr-2' />
                 Google Workspace
               </MenuItem>
               <MenuItem
                 className='text-sm'
-                onClick={() =>
-                  store.settings.oauthToken.enableSync(tokenType, 'azure-ad')
-                }
+                onClick={() => store.settings.oauthToken.enableSync('azure-ad')}
               >
                 <Microsoft className='mr-2' />
                 Microsoft Outlook
@@ -111,10 +107,7 @@ export const UsersLinked = observer(
                       colorScheme='warning'
                       leftIcon={<RefreshCcw01 className='text-warning-500' />}
                       onClick={() =>
-                        store.settings.oauthToken.enableSync(
-                          tokenType,
-                          token.provider,
-                        )
+                        store.settings.oauthToken.enableSync(token.provider)
                       }
                     >
                       Re-allow

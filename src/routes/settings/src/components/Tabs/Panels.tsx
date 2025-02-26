@@ -2,7 +2,7 @@ import { AuthPanel } from './panels/AuthPanel';
 import { General } from './panels/Workspace/General';
 // import { BillingPanel } from './panels/BillingPanel';
 import { Products } from './panels/Workspace/Products';
-import { Mailboxes } from './panels/Workspace/Mailboxes';
+import { Mailboxes } from './panels/Personal/Mailboxes';
 import { ApiManager } from './panels/Workspace/ApiManager';
 import { TagsManager } from './panels/Workspace/TagsManager';
 // import { IntegrationsPanel } from './panels/IntegrationsPanel';
@@ -36,6 +36,6 @@ export const Panels = ({ tab }: PanelsProps) => {
       return <Products />;
 
     default:
-      return <AuthPanel />;
+      return <Mailboxes />;
   }
 };

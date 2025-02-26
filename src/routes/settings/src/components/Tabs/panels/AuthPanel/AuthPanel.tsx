@@ -45,6 +45,7 @@ export const AuthPanel = observer(() => {
         </div>
       </div>
 
+<<<<<<< Updated upstream
       <div className='flex flex-col px-6'>
         <div className='flex items-center gap-1'>
           <h2 className='text-grayModern-700 text-sm font-medium'>Email</h2>
@@ -60,6 +61,14 @@ export const AuthPanel = observer(() => {
       </div>
 
       <article className='flex-col flex relative'>
+=======
+      <div className='flex flex-col max-w-[550px] px-6 '>
+        <UsersLinked title='Team emails' tokenType='WORKSPACE' />
+      </div>
+
+      <article className='flex-col flex relative max-w-[550px] '>
+        <div className='border-t border-grayModern-200 mx-6 mb-4' />
+>>>>>>> Stashed changes
         <div className='px-6 flex items-center w-full'>
           <div className='flex items-center gap-1'>
             <h2 className='text-grayModern-700 text-sm font-medium'>Slack</h2>

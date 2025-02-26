@@ -14,7 +14,8 @@ export type LogoName =
   | 'grain'
   | 'fathom'
   | 'stripe'
-  | 'quickbooks';
+  | 'quickbooks'
+  | 'microsoft';
 interface LogoProps extends SVGAttributes<SVGElement> {
   name: LogoName;
   className?: string;
