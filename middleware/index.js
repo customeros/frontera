@@ -70,7 +70,13 @@ const jwtMiddleware = (req, res, next) => {
   }
 };
 
-const oauth2Client = new google.auth.OAuth2(
+const googleOauthLoginClient = new google.auth.OAuth2(
+  process.env.GMAIL_CLIENT_ID,
+  process.env.GMAIL_CLIENT_SECRET,
+  `${process.env.VITE_MIDDLEWARE_API_URL}/callback/google-auth`,
+);
+
+const googleOauthEmailClient = new google.auth.OAuth2(
   process.env.GMAIL_CLIENT_ID,
   process.env.GMAIL_CLIENT_SECRET,
   `${process.env.VITE_MIDDLEWARE_API_URL}/callback/google-auth-email-grant`,
@@ -265,7 +271,7 @@ async function createServer() {
   app.use('/google-auth', (req, res) => {
     const scopes = ['openid', 'email', 'profile'];
 
-    const url = oauth2Client.generateAuthUrl({
+    const url = googleOauthLoginClient.generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
       state: btoa(
@@ -377,7 +383,7 @@ async function createServer() {
       'https://www.googleapis.com/auth/calendar.readonly',
     ];
 
-    const url = oauth2Client.generateAuthUrl({
+    const url = googleOauthEmailClient.generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
       prompt: 'consent',
@@ -440,15 +446,15 @@ async function createServer() {
     const stateParsed = JSON.parse(atob(state));
 
     try {
-      const { tokens } = await oauth2Client.getToken(code);
+      const { tokens } = await googleOauthLoginClient.getToken(code);
 
-      oauth2Client.setCredentials(tokens);
+      googleOauthLoginClient.setCredentials(tokens);
 
       const { access_token, refresh_token, expiry_date, scope } = tokens;
 
       const profileRes = await google
         .oauth2({
-          auth: oauth2Client,
+          auth: googleOauthLoginClient,
           version: 'v2',
         })
         .userinfo.get();
@@ -626,15 +632,15 @@ async function createServer() {
     const stateParsed = JSON.parse(atob(state));
 
     try {
-      const { tokens } = await oauth2Client.getToken(code);
+      const { tokens } = await googleOauthEmailClient.getToken(code);
 
-      oauth2Client.setCredentials(tokens);
+      googleOauthEmailClient.setCredentials(tokens);
 
       const { access_token, refresh_token, expiry_date, scope } = tokens;
 
       const profileRes = await google
         .oauth2({
-          auth: oauth2Client,
+          auth: googleOauthEmailClient,
           version: 'v2',
         })
         .userinfo.get();
