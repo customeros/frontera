@@ -1,0 +1,11 @@
+query mailboxes {
+  mailstack_MailboxesV2 {
+    provider
+    mailbox
+    usedInFlows
+    rampUpRate
+    rampUpMax
+    rampUpCurrent
+    needsManualRefresh
+  }
+}

@@ -260,7 +260,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
 
   async bootstrap() {
     try {
-      const { mailstack_Mailboxes: mailboxes } =
+      const { mailstack_MailboxesV2: mailboxes } =
         await this.service.getMailboxes();
 
       this.load(mailboxes, {
