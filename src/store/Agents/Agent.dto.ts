@@ -44,6 +44,7 @@ export class Agent extends Entity<AgentDatum> {
     [AgentType.CampaignManager]: 'Outbound campaign manager',
     [AgentType.CashflowGuardian]: 'Cashflow guardian',
     [AgentType.MeetingKeeper]: 'Meeting keeper',
+    [AgentType.EmailKeeper]: 'Email keeper',
   };
 
   constructor(store: AgentStore, data: AgentDatum) {

@@ -85,8 +85,7 @@ export class OauthTokenStore {
       return;
     }
     this.isLoading = true;
-
-    this.root.settings.revokeAccess(
+    await this.root.settings.revokeAccess(
       {
         tenant: this.root.session.value.tenant,
         provider: provider,

@@ -101,5 +101,6 @@ export class AgentViewUsecase {
     [AgentType.MeetingKeeper]: AgentListenerEvent.NewMeetingRecording,
     [AgentType.CashflowGuardian]: CapabilityType.GenerateInvoice,
     [AgentType.CampaignManager]: CapabilityType.ManageCampaignExecution,
+    [AgentType.EmailKeeper]: AgentListenerEvent.NewEmail,
   };
 }
