@@ -40,7 +40,9 @@ export const ManageOnlinePayment = observer(() => {
   };
 
   useDidUpdate(() => {
-    usecase.toggleCapability(isStripeActive);
+    if (!isStripeActive) {
+      usecase.toggleCapability(false);
+    }
   }, [isStripeActive]);
 
   return (
@@ -50,11 +52,7 @@ export const ManageOnlinePayment = observer(() => {
         <Switch
           size='sm'
           isChecked={usecase.isEnabled}
-          onChange={
-            isStripeActive
-              ? usecase.toggleCapability
-              : handleOpenIntegrationAppModal
-          }
+          onChange={!isStripeActive ? () => {} : usecase.toggleCapability}
         />
       </div>
       <p className='text-sm mb-4'>

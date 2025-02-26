@@ -63,42 +63,40 @@ const AccountPanelComponent = observer(() => {
   }
 
   return (
-    <>
-      <OrganizationPanel
-        title='Account'
-        shouldBlockPanelScroll={isModalOpen}
-        actionItem={
-          <div className='flex items-center'>
-            <Tooltip label='Add new contract'>
-              <Button
-                size='xxs'
-                variant='outline'
-                colorScheme='primary'
-                onClick={handleCreate}
-                aria-label='Add new contract'
-                loadingText='Adding contract...'
-                isLoading={store.contracts.isLoading}
-                isDisabled={store.contracts.isLoading}
-                leftIcon={<Icon name='file-plus-02' />}
-                dataTest='org-account-nonempty-new-contract'
-                leftSpinner={
-                  <Spinner
-                    size='xs'
-                    label='Adding contract...'
-                    className='text-grayModern-500 fill-grayModern-700'
-                  />
-                }
-              >
-                Add
-              </Button>
-            </Tooltip>
-          </div>
-        }
-      >
-        <Contracts />
-        <Notes id={id} />
-      </OrganizationPanel>
-    </>
+    <OrganizationPanel
+      title='Account'
+      shouldBlockPanelScroll={isModalOpen}
+      actionItem={
+        <div className='flex items-center'>
+          <Tooltip label='Add new contract'>
+            <Button
+              size='xxs'
+              variant='outline'
+              colorScheme='primary'
+              onClick={handleCreate}
+              aria-label='Add new contract'
+              loadingText='Adding contract...'
+              isLoading={store.contracts.isLoading}
+              isDisabled={store.contracts.isLoading}
+              leftIcon={<Icon name='file-plus-02' />}
+              dataTest='org-account-nonempty-new-contract'
+              leftSpinner={
+                <Spinner
+                  size='xs'
+                  label='Adding contract...'
+                  className='text-grayModern-500 fill-grayModern-700'
+                />
+              }
+            >
+              Add
+            </Button>
+          </Tooltip>
+        </div>
+      }
+    >
+      <Contracts />
+      <Notes id={id} />
+    </OrganizationPanel>
   );
 });
 
