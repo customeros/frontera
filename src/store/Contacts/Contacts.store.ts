@@ -8,12 +8,13 @@ import {
   SortingDirection,
 } from '@shared/types/__generated__/graphql.types';
 
+import { TeamViews } from './__views__/Team.view';
+import { CustomView } from './__views__/Custom.view';
 import { Contact, ContactDatum } from './Contact.dto';
 import { ContactsView } from './__views__/Contacts.view';
 import { ContactService } from './__service__/Contacts.service';
 import { FlowContactsView } from './__views__/FlowContacts.view';
 import { TargetsContactsView } from './__views__/TargetsContacts.view';
-
 export class ContactsStore extends Store<ContactDatum, Contact> {
   private chunkSize = 500;
   private service = ContactService.getInstance();
@@ -30,6 +31,8 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     new ContactsView(this);
     new FlowContactsView(this);
     new TargetsContactsView(this);
+    new CustomView(this);
+    new TeamViews(this);
   }
 
   canLoadNext(preset: string) {

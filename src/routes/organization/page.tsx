@@ -50,18 +50,18 @@ export const OrganizationPage = observer(() => {
   return (
     <div className='flex flex-col h-full'>
       <div className='w-full bg-white border-b border-grayModern-200 px-3 min-h-[42px] flex items-center gap-2'>
-        <div className='flex items-center gap-1'>
+        <div className='flex items-center gap-2'>
           {src && imgStatus !== 'error' ? (
             <Image
               src={src}
-              width={24}
+              width={22}
               loading='lazy'
               decoding='async'
               alt={organization?.name}
               onError={() => setImgStatus('error')}
               onLoad={() => setImgStatus('loaded')}
               className={cn(
-                'size-4 rounded-[4px] border border-grayModern-200 object-contain',
+                'size-[22px] rounded-[4px] border border-grayModern-200 object-contain',
                 {
                   'opacity-0 size-0': imgStatus === 'loading',
                   'opacity-100': imgStatus === 'loaded',
@@ -69,7 +69,7 @@ export const OrganizationPage = observer(() => {
               )}
             />
           ) : (
-            <Icon name='building-06' className='size-4 text-grayModern-700' />
+            <Icon name='building-06' className='size-5 text-grayModern-700' />
           )}
           <h1 className='font-medium text-md'>{organization?.name}</h1>
         </div>

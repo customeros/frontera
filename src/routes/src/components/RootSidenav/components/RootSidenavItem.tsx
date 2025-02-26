@@ -1,42 +1,24 @@
-import { useState, ReactElement, MouseEventHandler } from 'react';
+import { ReactElement, MouseEventHandler } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
 import { cn } from '@ui/utils/cn';
-import { Icon } from '@ui/media/Icon';
-import { useStore } from '@shared/hooks/useStore';
 import { buttonSize } from '@ui/form/Button/Button';
 import { ghostButton } from '@ui/form/Button/Button.variants';
-import {
-  Menu,
-  MenuItem,
-  MenuList,
-  MenuButton,
-} from '@ui/overlay/Menu/Menu.tsx';
 
 interface SidenavItemProps {
-  id?: string;
   href?: string;
   label: string;
   dataTest?: string;
   isActive?: boolean;
   onClick?: () => void;
+
   rightElement?: ReactElement | null;
   icon: ((isActive: boolean) => ReactElement) | ReactElement;
 }
 
 export const RootSidenavItem = observer(
-  ({
-    label,
-    icon,
-    onClick,
-    isActive = false,
-    dataTest,
-    id,
-  }: SidenavItemProps) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const store = useStore();
-
+  ({ label, icon, onClick, isActive = false, dataTest }: SidenavItemProps) => {
     const handleClick: MouseEventHandler = (e) => {
       e.preventDefault();
       onClick?.();
@@ -47,24 +29,6 @@ export const RootSidenavItem = observer(
         ? ['font-medium', 'bg-grayModern-100']
         : ['font-normal', 'bg-transparent'],
     );
-
-    const handleAddToMyViews: MouseEventHandler<HTMLDivElement> = (e) => {
-      e.stopPropagation();
-
-      if (!id) {
-        store.ui.toastError(
-          `We were unable to add this view to favorites`,
-          'dup-view-error',
-        );
-
-        return;
-      }
-      store.ui.commandMenu.toggle('DuplicateView');
-      store.ui.commandMenu.setContext({
-        ids: [id],
-        entity: 'TableViewDef',
-      });
-    };
 
     return (
       <div
@@ -86,28 +50,6 @@ export const RootSidenavItem = observer(
           )}
         >
           {label}
-        </div>
-
-        <div
-          className={cn(
-            'justify-end opacity-0 w-0 group-hover:opacity-100 group-focus:opacity-100 group-hover:w-6 group-focus:w-6',
-            {
-              'opacity-100 w-6': isEditing,
-            },
-          )}
-        >
-          <Menu open={isEditing} onOpenChange={setIsEditing}>
-            <MenuButton className='min-w-6 h-5 rounded-md outline-none focus:outline-none text-grayModern-400 hovergrayModernt-grayModern-500 flex items-center'>
-              <Icon name='dots-vertical' className='text-inherit' />
-            </MenuButton>
-
-            <MenuList align='end' side='bottom'>
-              <MenuItem onClick={handleAddToMyViews}>
-                <Icon name='layers-two-01' className='text-grayModern-500' />
-                Save as...
-              </MenuItem>
-            </MenuList>
-          </Menu>
         </div>
       </div>
     );

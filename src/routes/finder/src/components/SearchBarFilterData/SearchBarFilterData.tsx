@@ -17,10 +17,9 @@ export const SearchBarFilterData = observer(
     const [searchParams] = useSearchParams();
     const preset = searchParams.get('preset');
     const tableView = store.tableViewDefs.getById(preset || '');
-    const tableViewName = tableView?.value.name;
 
     const { multi: multiResultPlaceholder, single: singleResultPlaceholder } =
-      useTablePlaceholder(tableViewName);
+      useTablePlaceholder(tableView?.value.tableId);
 
     const totalResults = match(tableView?.value.tableType)
       .returnType<number>()

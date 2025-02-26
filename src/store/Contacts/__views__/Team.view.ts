@@ -3,23 +3,23 @@ import { toJS, action, autorun } from 'mobx';
 
 import { TableViewType } from '@shared/types/__generated__/graphql.types';
 
-import type { Organization } from '../Organization.dto';
+import type { Contact } from '../Contact.dto';
 
-import { getOrganizationSortFn } from './sortFns';
-import { getOrganizationFilterFns } from './filterFns';
-import { OrganizationsStore } from '../Organizations.store';
+import { getContactSortFn } from './sortFns';
+import { getContactFilterFns } from './filterFns';
+import { ContactsStore } from '../Contacts.store';
 
-// TODO: Cache filtered and sorted results for faster subsequent access
-export class CustomView {
+export class TeamViews {
   private cachedCombos = new Map<string, string>();
   private cachedSearchCombos = new Map<string, string>();
 
-  constructor(private store: OrganizationsStore) {
+  constructor(private store: ContactsStore) {
     autorun(() => {
-      const customViewDefs = this.store.root.tableViewDefs.customPresets;
+      const teamViewDefs = this.store.root.tableViewDefs.teamPresets;
 
-      customViewDefs.forEach((viewDef) => {
-        if (viewDef.value.tableType !== TableViewType.Organizations) return;
+      teamViewDefs.forEach((viewDef) => {
+        if (viewDef.value.tableType !== TableViewType.Contacts) return;
+
         const preset = viewDef?.value.id;
         const combo = [
           viewDef.value?.defaultFilters,
@@ -37,13 +37,14 @@ export class CustomView {
     });
 
     autorun(() => {
-      const customViewDefs = this.store.root.tableViewDefs.customPresets;
+      const teamViewDefs = this.store.root.tableViewDefs.teamPresets;
 
       const dataSize = this.store.value.size;
       const dataVersion = this.store.version;
 
-      customViewDefs.forEach((viewDef) => {
-        if (viewDef.value.tableType !== TableViewType.Organizations) return;
+      teamViewDefs.forEach((viewDef) => {
+        if (viewDef.value.tableType !== TableViewType.Contacts) return;
+
         const preset = viewDef?.value.id;
         const combo = [
           viewDef.value?.defaultFilters,
@@ -71,17 +72,15 @@ export class CustomView {
 
     if (!viewDef) return;
 
-    const defaultFilters = getOrganizationFilterFns(
-      viewDef.getDefaultFilters(),
-    );
-    const activeFilters = getOrganizationFilterFns(viewDef.getFilters());
+    const defaultFilters = getContactFilterFns(viewDef.getDefaultFilters());
+    const activeFilters = getContactFilterFns(viewDef.getFilters());
     const sorting = JSON.parse(viewDef.value.sorting);
 
     this.store.setView(preset, (data) => {
       const columnId = sorting?.id as string;
       const isDesc = sorting?.desc as boolean;
 
-      const filteredIdsWithSortValues = (data as Organization[]).reduce(
+      const filteredIdsWithSortValues = (data as Contact[]).reduce(
         (acc, curr) => {
           if (!curr) return acc;
 
@@ -89,7 +88,7 @@ export class CustomView {
             defaultFilters.every((fn) => fn(curr)) &&
             activeFilters.every((fn) => fn(curr))
           ) {
-            const sortValue = getOrganizationSortFn(columnId)(curr);
+            const sortValue = getContactSortFn(columnId)(curr);
 
             acc.push({ record: curr, sortValue });
           }
@@ -97,8 +96,15 @@ export class CustomView {
           return acc;
         },
         [] as {
-          record: Organization;
-          sortValue: string | number | boolean | Date | null | undefined;
+          record: Contact;
+          sortValue:
+            | string
+            | number
+            | boolean
+            | Date
+            | null
+            | undefined
+            | (string | undefined)[];
         }[],
       );
 

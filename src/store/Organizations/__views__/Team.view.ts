@@ -1,13 +1,13 @@
 import { inPlaceSort } from 'fast-sort';
 import { toJS, action, autorun } from 'mobx';
 
+import { TableViewType } from '@shared/types/__generated__/graphql.types';
+
 import type { Organization } from '../Organization.dto';
 
-import { indexAndSearch } from './util';
 import { getOrganizationSortFn } from './sortFns';
 import { getOrganizationFilterFns } from './filterFns';
 import { OrganizationsStore } from '../Organizations.store';
-
 export class TeamViews {
   private cachedCombos = new Map<string, string>();
   private cachedSearchCombos = new Map<string, string>();
@@ -17,6 +17,8 @@ export class TeamViews {
       const teamViewDefs = this.store.root.tableViewDefs.teamPresets;
 
       teamViewDefs.forEach((viewDef) => {
+        if (viewDef.value.tableType !== TableViewType.Organizations) return;
+
         const preset = viewDef?.value.id;
         const combo = [
           viewDef.value?.defaultFilters,
@@ -40,13 +42,13 @@ export class TeamViews {
       const dataVersion = this.store.version;
 
       teamViewDefs.forEach((viewDef) => {
+        if (viewDef.value.tableType !== TableViewType.Organizations) return;
+
         const preset = viewDef?.value.id;
-        const searchTerm = this.store.getSearchTermByView(preset);
         const combo = [
           viewDef.value?.defaultFilters,
           viewDef.value?.filters,
           viewDef.value?.sorting,
-          searchTerm,
           JSON.stringify(toJS(viewDef.value.columns)),
           dataSize,
           dataVersion,
@@ -56,13 +58,13 @@ export class TeamViews {
 
         this.cachedCombos.set(preset, combo);
 
-        this.update(preset, searchTerm);
+        this.update(preset);
       });
     });
   }
 
   @action
-  public update = (preset: string, searchTerm?: string) => {
+  public update = (preset: string) => {
     if (!preset) return;
 
     const viewDef = this.store.root.tableViewDefs.getById(preset);
@@ -100,13 +102,9 @@ export class TeamViews {
         }[],
       );
 
-      let sorted = inPlaceSort(filteredIdsWithSortValues)
+      const sorted = inPlaceSort(filteredIdsWithSortValues)
         [isDesc ? 'desc' : 'asc']((entry) => entry.sortValue)
         .map((entry) => entry.record);
-
-      if (searchTerm) {
-        sorted = indexAndSearch(sorted, searchTerm);
-      }
 
       return sorted;
     });
