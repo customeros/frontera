@@ -51,7 +51,7 @@ export const InvoicesPanel = observer(() => {
   };
 
   return (
-    <OrganizationPanel title='Invoices'>
+    <OrganizationPanel title='Invoices' scrollable={false}>
       <div className='-ml-6 -mr-[33px]'>
         <Table<InvoiceStore>
           rowHeight={28}

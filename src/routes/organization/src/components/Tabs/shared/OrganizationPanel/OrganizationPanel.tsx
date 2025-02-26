@@ -10,13 +10,13 @@ import {
 } from '@ui/utils/ScrollArea';
 
 interface OrganizationPanelProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
+  title?: string;
   bgImage?: string;
   withFade?: boolean;
   isLoading?: boolean;
+  scrollable?: boolean;
   actionItem?: ReactNode;
   leftActionItem?: ReactNode;
-  bottomActionItem?: ReactNode;
   shouldBlockPanelScroll?: boolean; // fix for https://linear.app/customer-os/issue/COS-619/scrollbar-overlaps-the-renewal-modals-in-safari
 }
 
@@ -28,8 +28,8 @@ export const OrganizationPanel = ({
   leftActionItem,
   children,
   withFade = false,
+  scrollable = true,
   shouldBlockPanelScroll = false,
-  bottomActionItem,
   ...props
 }: OrganizationPanelProps) => {
   const [isMounted, setIsMounted] = useState(!withFade);
@@ -42,42 +42,47 @@ export const OrganizationPanel = ({
   return (
     <div
       style={{ backgroundImage: bgImage ? `url(${bgImage})` : '' }}
-      className={cn('flex flex-1 flex-col h-full p-0 bg-no-repeat bg-contain')}
+      className={cn('flex flex-col h-full p-0 bg-no-repeat bg-contain')}
       {...props}
     >
-      <div className='flex justify-between pt-[6px] pb-4 px-6'>
-        <div className='flex items-center relative'>
-          {leftActionItem && leftActionItem}
-          <span className='text-sm text-grayModern-700 font-medium'>
-            {title}
-          </span>
-          {isLoading && (
-            <Spinner
-              size='sm'
-              label='syncing'
-              className='text-grayModern-300grayModernl-grayModern-700 w-3 h-3 ml-1 absolute left-[-20px]'
-            />
-          )}
-        </div>
-
-        {actionItem && actionItem}
-      </div>
-      <ScrollAreaRoot>
-        <ScrollAreaViewport>
-          <div
-            className={cn(
-              isMounted ? 'opacity-100' : 'opacity-0',
-              'flex flex-col space-y-2 justify-stretch w-full h-full px-6 pb-8 transition-opacity duration-300 ease-in-out',
+      {title && (
+        <div className='flex justify-between pb-4 px-4 pt-3'>
+          <div className='flex items-center relative'>
+            {leftActionItem && leftActionItem}
+            <span className='text-sm text-grayModern-700 font-medium'>
+              {title}
+            </span>
+            {isLoading && (
+              <Spinner
+                size='sm'
+                label='syncing'
+                className='text-grayModern-300 fill-grayModern-700 w-3 h-3 ml-1 absolute left-[-20px]'
+              />
             )}
-          >
-            {children}
           </div>
-        </ScrollAreaViewport>
-        <ScrollAreaScrollbar orientation='vertical'>
-          <ScrollAreaThumb />
-        </ScrollAreaScrollbar>
-      </ScrollAreaRoot>
-      {bottomActionItem && bottomActionItem}
+
+          {actionItem && actionItem}
+        </div>
+      )}
+      {scrollable ? (
+        <ScrollAreaRoot>
+          <ScrollAreaViewport>
+            <div
+              className={cn(
+                isMounted ? 'opacity-100' : 'opacity-0',
+                'flex flex-col space-y-2 justify-start h-[calc(100vh-180px)] px-4 pb-8 transition-opacity duration-300 ease-in-out',
+              )}
+            >
+              {children}
+            </div>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation='vertical'>
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+        </ScrollAreaRoot>
+      ) : (
+        children
+      )}
     </div>
   );
 };

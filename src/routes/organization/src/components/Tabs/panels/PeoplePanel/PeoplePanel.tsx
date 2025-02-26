@@ -243,6 +243,8 @@ export const PeoplePanel = observer(() => {
           </div>
         ))}
 
+      <div className='pb-20'></div>
+
       {filteredContactsState && (
         <div className='text-center text-grayModern-500 mt-4 text-sm'>
           No matches found—looks like a ghost town in here
