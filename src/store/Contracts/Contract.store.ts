@@ -529,6 +529,7 @@ const CONTRACT_QUERY = gql`
         billingEmailBCC
       }
       upcomingInvoices {
+        invoiceNumber
         metadata {
           id
         }
