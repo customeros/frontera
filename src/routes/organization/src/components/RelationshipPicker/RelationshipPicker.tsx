@@ -66,10 +66,9 @@ export const RelationshipPicker = observer(() => {
   return (
     <div>
       <Menu>
-        <MenuButton asChild data-test={`organization-account-relationship`}>
+        <MenuButton data-test={`organization-account-relationship`}>
           <Tag
             size='md'
-            variant='subtle'
             colorScheme={
               selectedValue?.value === OrganizationRelationship.Customer
                 ? 'success'
@@ -91,34 +90,22 @@ export const RelationshipPicker = observer(() => {
           </Tag>
         </MenuButton>
         <MenuList align='start' className='min-w-[180px]'>
-          {relationshipOptions
-            .filter(
-              (option) =>
-                !(
-                  selectedValue?.label === 'Customer' &&
-                  option.label === 'Prospect'
-                ) &&
-                !(
-                  selectedValue?.label === 'Not a Fit' &&
-                  option.label === 'Prospect'
-                ),
-            )
-            .map((option) => (
-              <MenuItem
-                key={option.value}
-                onClick={() => handleSelect(option)}
-                data-test={`relationship-${option.value}`}
-                className={cn(
-                  selectedValue?.value === option.value && 'bg-grayModern-50',
-                )}
-              >
-                {iconMap[option.label as keyof typeof iconMap]}
-                {option.label}
-                {selectedValue?.value === option.value && (
-                  <Icon name='check' className='size-4' />
-                )}
-              </MenuItem>
-            ))}
+          {relationshipOptions.map((option) => (
+            <MenuItem
+              key={option.value}
+              onClick={() => handleSelect(option)}
+              data-test={`relationship-${option.value}`}
+              className={cn(
+                selectedValue?.value === option.value && 'bg-grayModern-50',
+              )}
+            >
+              {iconMap[option.label as keyof typeof iconMap]}
+              {option.label}
+              {selectedValue?.value === option.value && (
+                <Icon name='check' className='size-4' />
+              )}
+            </MenuItem>
+          ))}
         </MenuList>
       </Menu>
     </div>
