@@ -25,7 +25,7 @@ export const AvatarHeader = observer(() => {
           variant='ghost'
           aria-label='create organization'
           dataTest='create-organization-from-table'
-          icon={<Plus className='text-grayModern-400 size-5' />}
+          icon={<Plus className='text-grayModern-700 size-5' />}
           className={cn('size-6', enableFeature ? 'visible' : 'hidden')}
           onClick={() => {
             store.ui.commandMenu.setType('AddNewOrganization');

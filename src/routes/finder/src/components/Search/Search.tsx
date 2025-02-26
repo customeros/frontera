@@ -113,9 +113,13 @@ export const Search = observer(() => {
   const placeholder = match(tableType)
     .with(TableViewType.Flow, () => 'by flow name...')
     .with(TableViewType.Contacts, () => '')
-    .with(TableViewType.Contracts, () => 'by contract name...')
+    .with(TableViewType.Contracts, () =>
+      !store.ui.isSearching ? '/ to search' : 'by contract name...',
+    )
     .with(TableViewType.Organizations, () => '/ to search')
-    .with(TableViewType.Invoices, () => 'by contract name...')
+    .with(TableViewType.Invoices, () =>
+      !store.ui.isSearching ? '/ to search' : 'by contract name...',
+    )
     .with(TableViewType.Opportunities, () => 'by name, company or owner...')
     .otherwise(() => 'by company name...');
 
