@@ -38,7 +38,7 @@ export const CreateAgent = () => {
         </CommandItem>
         <CommandItem onSelect={() => usecase.execute(AgentType.EmailKeeper)}>
           <Icon name='mail-01' />
-          <span>Email keeper</span>
+          <span>Email Keeper</span>
         </CommandItem>
         <CommandItem onSelect={() => usecase.execute(AgentType.SupportSpotter)}>
           <Icon name='life-buoy-01' />

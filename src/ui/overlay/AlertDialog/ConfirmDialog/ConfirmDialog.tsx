@@ -22,7 +22,6 @@ interface ConfirmDeleteDialogProps {
   isLoading?: boolean;
   onClose: () => void;
   description?: string;
-  onCancel?: () => void;
   body?: React.ReactNode;
   hideCloseButton?: boolean;
   confirmButtonLabel: string;
@@ -41,7 +40,6 @@ export const ConfirmDialog = ({
   description,
   body,
   confirmButtonLabel,
-  onCancel,
   cancelButtonLabel = 'Cancel',
   loadingButtonLabel = 'Loading action...',
   colorScheme = 'primary',
@@ -55,11 +53,13 @@ export const ConfirmDialog = ({
         <AlertDialogOverlay>
           <AlertDialogContent className='rounded-xl '>
             <div className='flex items-start justify-between w-full'>
-              <p className='pb-0 font-semibold line-clamp-2'>{title}</p>
-              {!hideCloseButton && <AlertDialogCloseIconButton />}
+              <p className='font-semibold line-clamp-2'>{title}</p>
+              {!hideCloseButton && (
+                <AlertDialogCloseIconButton className='mt-[3px]' />
+              )}
             </div>
 
-            <AlertDialogHeader className='font-bold mt-4'>
+            <AlertDialogHeader className='font-bold'>
               {description && (
                 <p className='mt-1 text-sm text-grayModern-700 font-normal'>
                   {description}
@@ -76,7 +76,6 @@ export const ConfirmDialog = ({
                   isDisabled={isLoading}
                   colorScheme={'grayModern'}
                   className='bg-white w-full'
-                  onClick={onCancel ?? onClose}
                 >
                   {cancelButtonLabel}
                 </Button>

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { NewEmailsUsecase } from '@domain/usecases/agents/listeners/new-emails.usecase';
@@ -12,7 +12,6 @@ import { ConfirmDialog } from '@ui/overlay/AlertDialog/ConfirmDialog';
 export const ConnectedAccount = observer(
   ({ email, usecase }: { email: string; usecase: NewEmailsUsecase }) => {
     const { onOpen, onClose, open } = useDisclosure({ id: 'delete-field' });
-    const navigate = useNavigate();
 
     return (
       <div className='flex justify-between items-center group'>
@@ -42,8 +41,6 @@ export const ConnectedAccount = observer(
           isOpen={open}
           onClose={onClose}
           title='Remove this account?'
-          cancelButtonLabel='Go to Settings'
-          onCancel={() => navigate('/settings')}
           confirmButtonLabel='Remove from agent'
           onConfirm={() => {
             usecase.removeLink(email);
@@ -56,8 +53,13 @@ export const ConnectedAccount = observer(
                 Removing this account will only stop it from importing emails
                 with this agent.{' '}
               </p>
+              <br />
               <p className='text-sm'>
-                You can fully revoke its access in your workspace settings.{' '}
+                You can fully revoke its access in your{' '}
+                <Link to='/settings' className='underline'>
+                  workspace settings
+                </Link>
+                .
               </p>
             </>
           }

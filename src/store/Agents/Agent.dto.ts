@@ -39,12 +39,12 @@ export class Agent extends Entity<AgentDatum> {
   @observable accessor value: AgentDatum = Agent.default();
   static defaultNameByType: { [key in AgentType]?: string } = {
     [AgentType.WebVisitIdentifier]: 'Web Visitor Identifier',
-    [AgentType.SupportSpotter]: 'Support spotter',
-    [AgentType.IcpQualifier]: 'Icp qualifier',
-    [AgentType.CampaignManager]: 'Outbound campaign manager',
-    [AgentType.CashflowGuardian]: 'Cashflow guardian',
-    [AgentType.MeetingKeeper]: 'Meeting keeper',
-    [AgentType.EmailKeeper]: 'Email keeper',
+    [AgentType.SupportSpotter]: 'Support Spotter',
+    [AgentType.IcpQualifier]: 'Icp Qualifier',
+    [AgentType.CampaignManager]: 'Outbound Campaign Manager',
+    [AgentType.CashflowGuardian]: 'Cashflow Guardian',
+    [AgentType.MeetingKeeper]: 'Meeting Keeper',
+    [AgentType.EmailKeeper]: 'Email Keeper',
   };
 
   constructor(store: AgentStore, data: AgentDatum) {
