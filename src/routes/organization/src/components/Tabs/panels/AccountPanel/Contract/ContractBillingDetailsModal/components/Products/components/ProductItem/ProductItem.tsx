@@ -77,7 +77,7 @@ export const ProductItem: FC<ServiceItemProps> = observer(
           />
         )}
 
-        {type === 'one-time' && !!service.value.skuId && (
+        {type === 'one-time' && !!service.tempValue.skuId && (
           <>
             {!showEditView ? (
               <p className='text-xs text-grayModern-500'>
