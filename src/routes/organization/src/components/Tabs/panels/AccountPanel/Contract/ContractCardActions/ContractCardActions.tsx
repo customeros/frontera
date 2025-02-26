@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
+import { Icon } from '@ui/media/Icon';
 import { ContractStatus } from '@graphql/types';
-import { XSquare } from '@ui/media/icons/XSquare';
 import { DotLive } from '@ui/media/icons/DotLive';
-import { RefreshCw05 } from '@ui/media/icons/RefreshCw05';
 import { ContractEndModal } from '@organization/components/Tabs/panels/AccountPanel/Contract/ChangeContractStatusModals';
 import { ContractMenu } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractCardActions/ContractMenu';
 import { ContractStatusTag } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractCardActions/ContractStatusTag';
@@ -34,18 +33,28 @@ export const ContractCardActions = ({
 
     switch (status) {
       case ContractStatus.Live:
-        icon = <XSquare className='text-grayModern-500 mr-1' />;
+        icon = (
+          <Icon
+            name='x-square'
+            className='text-grayModern-500 group-hover:text-grayModern-700'
+          />
+        );
         text = 'End contract...';
         break;
       case ContractStatus.Draft:
       case ContractStatus.Ended:
         icon = (
-          <DotLive className='text-grayModern-500 mr-1 [&>*:nth-child(1)]grayModernl-grayModern-200 [&>*:nth-childgrayModern:stroke-grayModern-300 [&>*:ngrayModernhild(2)]:fill-grayModern-600 ' />
+          <DotLive className='text-gray-500 [&>*:nth-child(1)]:fill-grayModern-200 [&>*:nth-child(1)]:stroke-grayModern-300 [&>*:nth-child(2)]:fill-grayModern-600' />
         );
         text = 'Make live';
         break;
       case ContractStatus.OutOfContract:
-        icon = <RefreshCw05 className='text-grayModern-500 mr-2' />;
+        icon = (
+          <Icon
+            name='refresh-ccw-02'
+            className='text-grayModern-500 group-hover:text-grayModern-700'
+          />
+        );
         text = 'Renew contract';
         break;
       case ContractStatus.Scheduled:
