@@ -1,11 +1,8 @@
 import { observer } from 'mobx-react-lite';
 
 import { cn } from '@ui/utils/cn.ts';
+import { Icon } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
-import { XSquare } from '@ui/media/icons/XSquare';
-import { PlayCircle } from '@ui/media/icons/PlayCircle';
-import { PauseCircle } from '@ui/media/icons/PauseCircle';
-import { BracketsPlus } from '@ui/media/icons/BracketsPlus';
 import { DotsVertical } from '@ui/media/icons/DotsVertical';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 
@@ -43,10 +40,9 @@ export const ProductItemMenu = observer(
           >
             <DotsVertical className='text-grayModern-400' />
           </MenuButton>
-          <MenuList align='end' side='bottom' className='p-0'>
+          <MenuList align='end' side='bottom'>
             {allowAddModification ? (
               <MenuItem
-                className='flex items-center text-base'
                 onClick={() =>
                   contractLineItemsStore?.create({
                     id,
@@ -54,7 +50,10 @@ export const ProductItemMenu = observer(
                   })
                 }
               >
-                <BracketsPlus className='mr-2 text-grayModern-500' />
+                <Icon
+                  name={'brackets-plus'}
+                  className='text-grayModern-500 group-hover:text-grayModern-700'
+                />
                 Add modification
               </MenuItem>
             ) : (
@@ -62,18 +61,21 @@ export const ProductItemMenu = observer(
             )}
 
             {allowPausing ? (
-              <MenuItem
-                className='flex items-center text-base'
-                onClick={() => handlePauseService(!paused)}
-              >
+              <MenuItem onClick={() => handlePauseService(!paused)}>
                 {paused ? (
                   <>
-                    <PlayCircle className='mr-2 text-grayModern-500' />
+                    <Icon
+                      name={'play-circle'}
+                      className='text-grayModern-500 group-hover:text-grayModern-700'
+                    />
                     Resume this product
                   </>
                 ) : (
                   <>
-                    <PauseCircle className='mr-2 text-grayModern-500' />
+                    <Icon
+                      name={'pause-circle'}
+                      className='text-grayModern-500 group-hover:text-grayModern-700'
+                    />
                     Pause this product
                   </>
                 )}
@@ -82,11 +84,11 @@ export const ProductItemMenu = observer(
               <div />
             )}
 
-            <MenuItem
-              className='flex items-center text-base'
-              onClick={() => handleCloseService(true)}
-            >
-              <XSquare className='mr-2 text-grayModern-500' />
+            <MenuItem onClick={() => handleCloseService(true)}>
+              <Icon
+                name='x-square'
+                className='text-grayModern-500 group-hover:text-grayModern-700'
+              />
               End the service
             </MenuItem>
           </MenuList>

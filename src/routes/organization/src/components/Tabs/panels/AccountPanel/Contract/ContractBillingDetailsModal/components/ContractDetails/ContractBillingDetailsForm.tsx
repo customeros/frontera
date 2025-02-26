@@ -325,10 +325,9 @@ export const ContractBillingDetailsForm = observer(
               <Tooltip
                 align='start'
                 label={
-                  <>
-                    Enable Stripe in the{' '}
-                    <span className='underline'>Cashflow Guardian</span> agent
-                  </>
+                  isStripeEnabled
+                    ? ''
+                    : 'Enable Stripe in the Cashflow Guardian agent'
                 }
               >
                 <div className='flex flex-col w-full justify-between items-start'>
@@ -388,10 +387,9 @@ export const ContractBillingDetailsForm = observer(
               <Tooltip
                 align='start'
                 label={
-                  <>
-                    Enable bank transfer in the{' '}
-                    <span className='underline'>Cashflow Guardian</span> agent
-                  </>
+                  isBankPaymentEnabled
+                    ? ''
+                    : 'Enable bank transfer in the Cashflow Guardian agent'
                 }
               >
                 <div className='flex w-full justify-between items-center'>

@@ -33,17 +33,18 @@ export const ContractMenu = ({
             `flex items-center max-h-5 p-1 hover:bg-grayModern-100 rounded`,
           )}
         >
-          {' '}
           <Icon name='dots-vertical' className='text-grayModern-400' />
         </MenuButton>
-        <MenuList align='end' side='bottom' className='p-0'>
+        <MenuList align='end' side='bottom'>
           <MenuItem
+            className='group'
             onClick={onOpenEditModal}
-            className='flex items-center'
             data-test='contract-menu-edit-contract'
           >
-            {' '}
-            <Icon name='edit-03' className='text-grayModern-500 mr-1' />
+            <Icon
+              name='edit-03'
+              className='text-grayModern-500 group-hover:text-grayModern-700'
+            />
             Edit contract
           </MenuItem>
 
@@ -51,33 +52,33 @@ export const ContractMenu = ({
             <>
               {status === ContractStatus.Live && (
                 <MenuItem
-                  className='flex items-center '
+                  className='group'
                   onClick={() =>
                     onStatusModalOpen(ContractStatusModalMode.Renew)
                   }
                 >
                   <Icon
                     name='refresh-ccw-02'
-                    className='text-grayModern-500 mr-1'
+                    className='text-grayModern-500 group-hover:text-grayModern-700'
                   />
                   Renew contract
                 </MenuItem>
               )}
-              <MenuItem
-                className='flex items-center'
-                onClick={onHandleStatusChange}
-              >
+              <MenuItem onClick={onHandleStatusChange}>
                 {statusContent}
               </MenuItem>
             </>
           )}
           {status == ContractStatus.Draft && (
             <MenuItem
-              className='flex items-center '
+              className='group'
               data-test='contract-menu-delete-contract'
               onClick={() => onStatusModalOpen(ContractStatusModalMode.Delete)}
             >
-              <Icon name='trash-01' className='text-grayModern-500 mr-1' />
+              <Icon
+                name='trash-01'
+                className='text-grayModern-500 group-hover:text-grayModern-700'
+              />
               Delete contract
             </MenuItem>
           )}

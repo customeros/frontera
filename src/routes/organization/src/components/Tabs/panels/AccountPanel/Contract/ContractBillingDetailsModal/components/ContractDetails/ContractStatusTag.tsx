@@ -1,8 +1,8 @@
 import { DateTimeUtils } from '@utils/date.ts';
+import { Icon, IconName } from '@ui/media/Icon';
 import { ContractStatus } from '@graphql/types';
 import { SelectOption } from '@shared/types/SelectOptions.ts';
 import { Tag, TagLabel, TagLeftIcon } from '@ui/presentation/Tag';
-import { contractOptionIcon } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractCardActions/utils.tsx';
 
 export const ContractStatusTag = ({
   status,
@@ -37,15 +37,22 @@ export const ContractStatusTag = ({
   const selected = contractStatusOptions.find((e) => e.value === status);
 
   return (
-    <>
-      <Tag
-        colorScheme={statusColorScheme[status] as 'primary'}
-        className='flex items-center gap-1 whitespace-nowrap mx-0 px-1'
-      >
-        <TagLeftIcon className='m-0'>{icon}</TagLeftIcon>
+    <Tag colorScheme={statusColorScheme[status] as 'primary'}>
+      {icon && (
+        <TagLeftIcon>
+          <Icon name={icon} />
+        </TagLeftIcon>
+      )}
 
-        <TagLabel>{selected?.label}</TagLabel>
-      </Tag>
-    </>
+      <TagLabel>{selected?.label}</TagLabel>
+    </Tag>
   );
+};
+const contractOptionIcon: Record<ContractStatus, IconName | null> = {
+  [ContractStatus.Draft]: 'edit-03',
+  [ContractStatus.Ended]: 'x-square',
+  [ContractStatus.Live]: 'dot-live-primary',
+  [ContractStatus.OutOfContract]: 'pause-circle',
+  [ContractStatus.Scheduled]: 'clock',
+  [ContractStatus.Undefined]: null,
 };
