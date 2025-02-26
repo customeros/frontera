@@ -60,7 +60,8 @@ export const Search = observer(() => {
             data-test='opps-finder-count'
             className='text-nowrap font-medium'
           >
-            {store.ui.searchCount} opportunities:
+            {store.ui.searchCount}{' '}
+            {store.ui.searchCount === 1 ? 'opportunity' : 'opportunities'}:
           </span>
         </LeftElement>
         <Input
