@@ -48,7 +48,7 @@ export const OrganizationPanel = ({
       <div className='flex justify-between pt-[6px] pb-4 px-6'>
         <div className='flex items-center relative'>
           {leftActionItem && leftActionItem}
-          <span className='text-[16px] text-grayModern-700 font-semibold'>
+          <span className='text-sm text-grayModern-700 font-medium'>
             {title}
           </span>
           {isLoading && (

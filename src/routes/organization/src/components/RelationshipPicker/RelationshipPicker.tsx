@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { relationshipOptions } from '@finder/components/Columns/organizations/Cells/relationship/util';
 
 import { cn } from '@ui/utils/cn';
+import { Icon } from '@ui/media/Icon';
 import { Spinner } from '@ui/feedback/Spinner';
 import { useStore } from '@shared/hooks/useStore';
 import { Seeding } from '@ui/media/icons/Seeding';
@@ -23,7 +24,7 @@ const iconMap = {
   'Former Customer': <BrokenHeart />,
 };
 
-export const RelationshipButton = observer(() => {
+export const RelationshipPicker = observer(() => {
   const id = useParams()?.id as string;
   const store = useStore();
   const organization = store.organizations.value.get(id);
@@ -32,10 +33,10 @@ export const RelationshipButton = observer(() => {
     (option) => option.value === organization?.value?.relationship,
   );
 
-  const spinnerColors =
+  const spinnerFill =
     selectedValue?.value === OrganizationRelationship.Customer
-      ? 'text-success-500 fill-succes-700'
-      : 'text-grayModern-400 fill-grayModern-700';
+      ? 'text-success-300 fill-success-500'
+      : 'text-grayModern-300 fill-grayModern-500';
 
   const iconTag = iconMap[selectedValue?.label as keyof typeof iconMap];
 
@@ -67,27 +68,21 @@ export const RelationshipButton = observer(() => {
       <Menu>
         <MenuButton asChild data-test={`organization-account-relationship`}>
           <Tag
-            size={'sm'}
-            variant='outline'
+            size='md'
+            variant='subtle'
             colorScheme={
               selectedValue?.value === OrganizationRelationship.Customer
                 ? 'success'
                 : 'grayModern'
             }
-            className={cn(
-              selectedValue?.value === OrganizationRelationship.Customer
-                ? 'text-success-500'
-                : 'text-grayModern-500',
-              'rounded-full py-0.5 cursor-pointer',
-            )}
           >
-            <TagLeftIcon>
+            <TagLeftIcon
+              className={
+                store.organizations.isLoading ? cn(spinnerFill) : undefined
+              }
+            >
               {store.organizations.isLoading ? (
-                <Spinner
-                  size='sm'
-                  label='Organization loading'
-                  className={cn(spinnerColors)}
-                />
+                <Spinner size='xs' label='Organization loading' />
               ) : (
                 iconTag
               )}
@@ -95,7 +90,7 @@ export const RelationshipButton = observer(() => {
             <TagLabel>{selectedValue?.label ?? 'Relationship'}</TagLabel>
           </Tag>
         </MenuButton>
-        <MenuList className='min-w-[280px]'>
+        <MenuList align='start' className='min-w-[180px]'>
           {relationshipOptions
             .filter(
               (option) =>
@@ -113,9 +108,15 @@ export const RelationshipButton = observer(() => {
                 key={option.value}
                 onClick={() => handleSelect(option)}
                 data-test={`relationship-${option.value}`}
+                className={cn(
+                  selectedValue?.value === option.value && 'bg-grayModern-50',
+                )}
               >
                 {iconMap[option.label as keyof typeof iconMap]}
                 {option.label}
+                {selectedValue?.value === option.value && (
+                  <Icon name='check' className='size-4' />
+                )}
               </MenuItem>
             ))}
         </MenuList>

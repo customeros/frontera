@@ -37,7 +37,7 @@ export const Spinner = ({ label, className, size }: SpinnerOptions) => {
         viewBox='0 0 100 101'
         xmlns='http://www.w3.org/2000/svg'
         className={twMerge(
-          `${className}inline animate-spin `,
+          `${className} inline animate-spin `,
           spinnerSize({ className, size }),
         )}
       >

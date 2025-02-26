@@ -1,6 +1,6 @@
 import { Virtuoso } from 'react-virtuoso';
 import { FC, useMemo, useEffect, useCallback } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useQueryClient } from '@tanstack/react-query';
@@ -88,6 +88,7 @@ export const OrganizationTimeline = observer(() => {
   );
   const id = useParams()?.id as string;
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { virtuosoRef } = useTimelineRefContext();
   const [timelineMeta, setTimelineMeta] = useTimelineMeta();
   const client = getGraphQLClient();
@@ -379,7 +380,15 @@ export const OrganizationTimeline = observer(() => {
       />
       <TimelineEventPreviewModal invalidateQuery={invalidateQuery} />
       {invoicesTab && invoicePreview && (
-        <InvoicePreview previewCard={Boolean(invoicePreview)} />
+        <InvoicePreview
+          previewCard={Boolean(invoicePreview)}
+          onClose={() => {
+            const params = new URLSearchParams(window.location.search);
+
+            params.delete('preview');
+            navigate(`?${params.toString()}`, { replace: true });
+          }}
+        />
       )}
     </>
   );
@@ -387,18 +396,22 @@ export const OrganizationTimeline = observer(() => {
 
 interface InvoicePreviewProps {
   previewCard: boolean;
+  onClose?: () => void;
 }
 
-export const InvoicePreview = ({ previewCard }: InvoicePreviewProps) => {
+export const InvoicePreview = ({
+  previewCard,
+  onClose,
+}: InvoicePreviewProps) => {
   const [searchParams] = useSearchParams();
   const invoiceNumber = searchParams?.get('preview');
 
   return (
     <div
       data-state={previewCard ? 'open' : 'closed'}
-      className='absolute top-10 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
+      className='absolute top-10 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-82px)] overflow-y-auto z-10 bg-white '
     >
-      <InvoicePreviewModal invoiceId={invoiceNumber ?? ''} />
+      <InvoicePreviewModal onClose={onClose} invoiceId={invoiceNumber ?? ''} />
     </div>
   );
 };

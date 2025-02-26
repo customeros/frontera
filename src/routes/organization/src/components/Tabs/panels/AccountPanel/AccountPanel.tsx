@@ -2,16 +2,15 @@ import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 
+import { Icon } from '@ui/media/Icon';
 import { Currency } from '@graphql/types';
-import { Plus } from '@ui/media/icons/Plus';
 import { DateTimeUtils } from '@utils/date.ts';
+import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { Spinner } from '@ui/feedback/Spinner/Spinner';
-import { IconButton } from '@ui/form/IconButton/IconButton';
 import { OrganizationPanel } from '@organization/components/Tabs';
 import { Contracts } from '@organization/components/Tabs/panels/AccountPanel/Contracts/Contracts';
-import { RelationshipButton } from '@organization/components/Tabs/panels/AccountPanel/RelationshipButton';
 
 import { Notes } from './Notes';
 import { EmptyContracts } from './EmptyContracts';
@@ -70,31 +69,29 @@ const AccountPanelComponent = observer(() => {
         shouldBlockPanelScroll={isModalOpen}
         actionItem={
           <div className='flex items-center'>
-            <Tooltip label='Create new contract'>
-              <IconButton
-                size='xs'
-                variant='ghost'
-                onClick={() => handleCreate()}
-                aria-label='Create new contract'
-                className='text-grayModern-500 mr-1'
+            <Tooltip label='Add new contract'>
+              <Button
+                size='xxs'
+                variant='outline'
+                colorScheme='primary'
+                onClick={handleCreate}
+                aria-label='Add new contract'
+                loadingText='Adding contract...'
                 isLoading={store.contracts.isLoading}
                 isDisabled={store.contracts.isLoading}
+                leftIcon={<Icon name='file-plus-02' />}
                 dataTest='org-account-nonempty-new-contract'
-                icon={
-                  store.contracts.isLoading ? (
-                    <Spinner
-                      size='sm'
-                      label='Creating contract...'
-                      className='text-grayModern-500grayModernl-grayModern-700'
-                    />
-                  ) : (
-                    <Plus />
-                  )
+                leftSpinner={
+                  <Spinner
+                    size='xs'
+                    label='Adding contract...'
+                    className='text-grayModern-500 fill-grayModern-700'
+                  />
                 }
-              />
+              >
+                Add
+              </Button>
             </Tooltip>
-
-            <RelationshipButton />
           </div>
         }
       >

@@ -241,7 +241,9 @@ export type IconName =
   | 'file-02'
   | 'trash-01'
   | 'grid-01'
-  | 'check-circle';
+  | 'check-circle'
+  | 'building-06'
+  | 'file-plus-02';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

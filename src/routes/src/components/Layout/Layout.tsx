@@ -6,7 +6,6 @@ import { SettingsSidenav } from '@settings/components/SettingsSidenav';
 import { PageLayout } from '@shared/components/PageLayout';
 import { CommandMenu } from '@shared/components/CommandMenu';
 import { RootSidenav } from '@shared/components/RootSidenav/RootSidenav';
-import { OrganizationSidenav } from '@organization/components/OrganizationSidenav';
 
 import { SplashScreen } from '../SplashScreen/SplashScreen';
 
@@ -36,9 +35,9 @@ export const Layout = () => {
       P.string.startsWith('/flow-editor'),
       P.string.startsWith('/welcome'),
       P.string.startsWith('/agents'),
+      P.string.startsWith('/organization'),
       () => <RootSidenav />,
     )
-    .with(P.string.startsWith('/organization'), () => <OrganizationSidenav />)
     .with(P.string.startsWith('/settings'), () => <SettingsSidenav />)
     .otherwise(() => null);
 
@@ -52,6 +51,7 @@ export const Layout = () => {
       P.string.startsWith('/customer-map'),
       P.string.startsWith('/welcome'),
       P.string.startsWith('/agents'),
+      P.string.startsWith('/organization'),
       () => true,
     )
     .otherwise(() => false);
