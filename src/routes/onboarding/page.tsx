@@ -144,7 +144,7 @@ export const OnboardingPage = observer(() => {
       </div>
       <div className='h-full'>
         {ui.showShortcutsPanel && (
-          <PreviewCard>
+          <PreviewCard className='h-screen'>
             <ShortcutsPanel />
           </PreviewCard>
         )}
