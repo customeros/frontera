@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useDebounce } from 'rooks';
 import { useLocalStorage } from 'usehooks-ts';
 
+// @deprecated
 export const useSearchPersistence = () => {
   const [searchParams] = useSearchParams();
   const [lastSearchForPreset, setLastSearchForPreset] = useLocalStorage<{

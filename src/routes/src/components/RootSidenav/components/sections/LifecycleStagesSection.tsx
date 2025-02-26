@@ -101,7 +101,6 @@ export const LifecycleStagesSection = observer(
 
               return (
                 <RootSidenavItem
-                  id={view.value.id}
                   key={view.value.id}
                   label={view.value.name}
                   dataTest={`side-nav-item-${view.value.name}`}

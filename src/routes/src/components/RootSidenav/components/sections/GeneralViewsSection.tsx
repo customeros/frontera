@@ -71,7 +71,6 @@ export const GeneralViewsSection = observer(
             <RootSidenavItem
               label='Companies'
               dataTest={`side-nav-item-all-orgs`}
-              id={allOrganizationsView?.[0]?.value?.id}
               isActive={checkIsActive('finder', {
                 preset: allOrganizationsActivePreset,
               })}
@@ -92,7 +91,6 @@ export const GeneralViewsSection = observer(
             />
             <RootSidenavItem
               label='Contacts'
-              id={allContactsView?.value?.id}
               dataTest={`side-nav-item-all-contacts`}
               onClick={() =>
                 handleItemClick(`finder?preset=${allContactsView?.value?.id}`)
@@ -113,7 +111,6 @@ export const GeneralViewsSection = observer(
             <RootSidenavItem
               label='Opportunities'
               isActive={isOpportinitiesActive}
-              id={opportunitiesView?.value?.id}
               dataTest={`side-nav-item-opportunities`}
               onClick={() =>
                 handleItemClick(
@@ -133,8 +130,6 @@ export const GeneralViewsSection = observer(
             {upcomingInvoices && (
               <RootSidenavItem
                 label='Invoices'
-                id={upcomingInvoices.value.id}
-                key={upcomingInvoices.value.id}
                 dataTest={`side-nav-item-${upcomingInvoices.value.name}`}
                 onClick={() =>
                   handleItemClick(`finder?preset=${upcomingInvoices.value.id}`)
@@ -155,7 +150,6 @@ export const GeneralViewsSection = observer(
             )}
             <RootSidenavItem
               label='Contracts'
-              id={contractsView?.value?.id}
               dataTest={`side-nav-item-all-contracts`}
               onClick={() =>
                 handleItemClick(`finder?preset=${contractsView?.value?.id}`)

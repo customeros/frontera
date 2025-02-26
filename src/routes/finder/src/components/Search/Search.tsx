@@ -1,11 +1,10 @@
+import { useRef, startTransition } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useRef, useEffect, startTransition } from 'react';
 
 import { match } from 'ts-pattern';
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
 import { TableViewMenu } from '@finder/components/TableViewMenu/TableViewMenu';
-import { useSearchPersistence } from '@finder/components/Search/useSearchPersistance.ts';
 import { CreateSequenceButton } from '@finder/components/Search/CreateSequenceButton.tsx';
 import { TableViewsToggleNavigation } from '@finder/components/TableViewsToggleNavigation';
 import { SearchBarFilterData } from '@finder/components/SearchBarFilterData/SearchBarFilterData';
@@ -35,29 +34,6 @@ export const Search = observer(() => {
   const [searchParams, setSearchParams] = useSearchParams();
   const preset = searchParams.get('preset');
   const timeoutRef = useRef<NodeJS.Timeout>();
-
-  const { lastSearchForPreset } = useSearchPersistence();
-
-  useEffect(() => {
-    setSearchParams(
-      (prev) => {
-        if (preset && lastSearchForPreset?.[preset]) {
-          prev.set('search', lastSearchForPreset[preset]);
-        } else {
-          prev.delete('search');
-        }
-
-        return prev;
-      },
-      { replace: true },
-    );
-    preset &&
-      store.organizations.setSearchTerm(lastSearchForPreset?.[preset], preset);
-
-    if (preset && inputRef?.current) {
-      inputRef.current.value = lastSearchForPreset[preset] ?? '';
-    }
-  }, [preset]);
 
   const tableViewDef = store.tableViewDefs.getById(preset || '');
 
