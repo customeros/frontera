@@ -25,7 +25,6 @@ export const featureIconVariant = cva(
         moss: [],
         greenLight: [],
         violet: [],
-        white: [],
         fuchsia: [],
         blue: [],
         yellow: [],
@@ -95,7 +94,12 @@ export const featureIconVariant = cva(
           'bg-blueDark-100 ring-blueDark-50 ring-offset-blueDark-100 text-blueDark-600',
         ],
       },
-
+      {
+        colorScheme: 'indigo',
+        className: [
+          'bg-indigo-100 ring-indigo-50 ring-offset-indigo-100 text-indigo-600',
+        ],
+      },
       {
         colorScheme: 'teal',
         className: [
@@ -112,6 +116,12 @@ export const featureIconVariant = cva(
         colorScheme: 'blue',
         className: [
           'bg-blue-100 ring-blue-50 ring-offset-blue-100 text-blue-600',
+        ],
+      },
+      {
+        colorScheme: 'blueLight',
+        className: [
+          'bg-blueLight-100 ring-blueLight-50 ring-offset-blueLight-100 text-blueLight-600',
         ],
       },
       {
@@ -154,6 +164,12 @@ export const featureIconVariant = cva(
         colorScheme: 'cyan',
         className: [
           'bg-cyan-100 ring-cyan-50 ring-offset-cyan-100 text-cyan-600',
+        ],
+      },
+      {
+        colorScheme: 'pink',
+        className: [
+          'bg-pink-100 ring-pink-50 ring-offset-pink-100 text-pink-600',
         ],
       },
     ],

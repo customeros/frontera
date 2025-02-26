@@ -68,18 +68,18 @@ export const PeoplePanel = observer(() => {
       }
       actionItem={
         !!contacts.length && (
-          <IconButton
-            size='xs'
+          <Button
+            size='xxs'
             variant='outline'
+            colorScheme='primary'
             aria-label='Add contact'
-            className='text-grayModern-500'
             dataTest={'org-people-add-contact'}
-            icon={<UsersPlus className='text-grayModern-500' />}
-            spinner={
+            leftIcon={<UsersPlus className='' />}
+            leftSpinner={
               <Spinner
                 size='sm'
                 label='adding'
-                className='text-grayModern-300grayModernl-grayModern-400'
+                className='text-grayModern-300 filll-grayModern-400'
               />
             }
             onClick={() => {
@@ -93,7 +93,7 @@ export const PeoplePanel = observer(() => {
             }}
           >
             Add
-          </IconButton>
+          </Button>
         )
       }
     >

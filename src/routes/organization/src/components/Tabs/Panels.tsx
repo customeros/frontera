@@ -4,7 +4,6 @@ import { OrganizationDetails } from '@shared/components/OrganizationDetails';
 
 import { PeoplePanel } from './panels/PeoplePanel';
 import { AccountPanel } from './panels/AccountPanel';
-import { SuccessPanel } from './panels/SuccessPanel';
 import { InvoicesPanel } from './panels/InvoicesPanel';
 
 interface PanelsProps {
@@ -17,8 +16,6 @@ export const Panels = ({ tab }: PanelsProps) => {
   switch (tab) {
     case 'account':
       return <AccountPanel />;
-    case 'success':
-      return <SuccessPanel />;
     case 'people':
       return <PeoplePanel />;
     case 'invoices':

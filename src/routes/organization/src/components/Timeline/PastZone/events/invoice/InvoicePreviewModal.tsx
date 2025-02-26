@@ -16,10 +16,11 @@ import {
 
 interface InvoicePreviewModalProps {
   invoiceId?: string;
+  onClose?: () => void;
 }
 
 export const InvoicePreviewModal = observer(
-  ({ invoiceId }: InvoicePreviewModalProps) => {
+  ({ invoiceId, onClose }: InvoicePreviewModalProps) => {
     const { modalContent } = useTimelineEventPreviewStateContext();
     const { closeModal } = useTimelineEventPreviewMethodsContext();
     const event = modalContent as Pick<InvoiceWithId, 'id' | '__typename'>;
@@ -59,6 +60,7 @@ export const InvoicePreviewModal = observer(
                   onClick={() => {
                     closeModal();
                     invoiceId && store.ui.setShowPreviewCard(false);
+                    onClose?.();
                   }}
                 />
               </Tooltip>

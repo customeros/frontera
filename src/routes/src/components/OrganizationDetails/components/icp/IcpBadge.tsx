@@ -117,7 +117,7 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
   const showSpinner = popoverState.type === 'profiling';
 
   return (
-    <Popover open={open} modal={true} onOpenChange={setOpen}>
+    <Popover modal open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
         <Tag className='ml-4' variant='subtle' colorScheme={data.colorScheme}>
           {data.icon && (

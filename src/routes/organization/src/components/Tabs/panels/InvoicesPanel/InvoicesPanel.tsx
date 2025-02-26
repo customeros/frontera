@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useKey } from 'rooks';
 import { observer } from 'mobx-react-lite';
@@ -13,6 +13,7 @@ import { OrganizationPanel } from '@organization/components/Tabs/shared/Organiza
 
 export const InvoicesPanel = observer(() => {
   const id = useParams()?.id as string;
+  const navigate = useNavigate();
   const tableRef = useRef(null);
   const [focusedRow, setFocusedRow] = useState<string | null>(null);
 
@@ -22,6 +23,10 @@ export const InvoicesPanel = observer(() => {
     .filter(
       (e) => e?.value?.organization?.metadata?.id === id && !e.value.dryRun,
     );
+
+  useKey('Space', () => {
+    onPressSpace();
+  });
 
   if (!store.invoices.isLoading && invoices.length === 0) {
     return (
@@ -42,13 +47,8 @@ export const InvoicesPanel = observer(() => {
       params.set('preview', focusedRow);
     }
 
-    window.history.pushState({}, '', `?${params.toString()}`);
-    window.dispatchEvent(new Event('popstate'));
+    navigate(`?${params.toString()}`, { replace: true });
   };
-
-  useKey('Space', () => {
-    onPressSpace();
-  });
 
   return (
     <OrganizationPanel title='Invoices'>

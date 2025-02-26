@@ -91,8 +91,8 @@ export const OrganizationDetails = observer(
     );
 
     return (
-      <div className='flex pt-[6px] px-6 w-full h-full flex-1 bg-white  rounded-2xl'>
-        <div className='flex h-full flex-col max-w-[495px]  overflow-visible w-full'>
+      <div className='flex pt-[6px] px-6 w-full h-full flex-1 bg-white rounded-2xl'>
+        <div className='flex h-full flex-col max-w-[495px] overflow-visible w-full'>
           {isEnriching && (
             <div className='flex items-center justify-start gap-2 border-[1px] text-sm border-grayModern-100 bg-grayModern-50 rounded-[4px] py-1 px-2 '>
               <Spinner
@@ -106,11 +106,11 @@ export const OrganizationDetails = observer(
           )}
 
           <div className='flex items-center justify-between'>
-            <p className='font-semibold text-base -mt-1 overflow-hidden overflow-ellipsis'>
+            <p className='text-sm overflow-hidden overflow-ellipsis font-medium'>
               {organization?.value?.name ?? ''}
             </p>
 
-            <div className='flex justify-between items-start h-full gap-x-2 mt-[11px]'>
+            <div className='flex justify-between items-start h-full gap-x-2'>
               {organization.value?.referenceId && (
                 <div className='ml-4'>
                   <Tooltip asChild={false} label={'Copy ID'}>

@@ -1,8 +1,7 @@
 import { Button } from '@ui/form/Button/Button';
 import { File02 } from '@ui/media/icons/File02';
 import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
-import { RelationshipButton } from '@organization/components/Tabs/panels/AccountPanel/RelationshipButton';
-import { OrganizationPanel } from '@organization/components/Tabs/shared/OrganizationPanel/OrganizationPanel';
+import { OrganizationPanel } from '@organization/components/Tabs/shared';
 
 interface EmptyContractsProps {
   isPending: boolean;
@@ -16,7 +15,7 @@ export const EmptyContracts = ({
   isPending,
 }: EmptyContractsProps) => {
   return (
-    <OrganizationPanel title='Account' actionItem={<RelationshipButton />}>
+    <OrganizationPanel title='Account'>
       <article className='my-4 w-full flex flex-col items-center'>
         <FeaturedIcon size='lg' className='mb-4' colorScheme='primary'>
           <File02 className='size-4' />

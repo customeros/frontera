@@ -1,11 +1,6 @@
-import { useParams } from 'react-router-dom';
-
-import { UserPresence } from '@shared/components/UserPresence';
 import { Card, CardHeader, CardContent } from '@ui/presentation/Card/Card';
 
 export const MainSection = ({ children }: { children?: React.ReactNode }) => {
-  const organizationId = useParams()?.id as string;
-
   return (
     <Card
       id='main-section'
@@ -15,7 +10,6 @@ export const MainSection = ({ children }: { children?: React.ReactNode }) => {
         <h1 className='font-semibold text-[16px] text-grayModern-700'>
           Timeline
         </h1>
-        <UserPresence channelName={`organization_presence:${organizationId}`} />
       </CardHeader>
       <CardContent className='p-0 flex flex-col flex-1'>{children}</CardContent>
     </Card>
