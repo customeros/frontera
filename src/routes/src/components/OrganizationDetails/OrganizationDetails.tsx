@@ -91,8 +91,8 @@ export const OrganizationDetails = observer(
     );
 
     return (
-      <div className='flex pt-[6px] px-6 w-full h-full flex-1 bg-white rounded-2xl'>
-        <div className='flex h-full flex-col max-w-[495px] overflow-visible w-full'>
+      <div className='flex h-full flex-1 bg-white pt-3'>
+        <div className='flex h-full flex-col overflow-visible w-full'>
           {isEnriching && (
             <div className='flex items-center justify-start gap-2 border-[1px] text-sm border-grayModern-100 bg-grayModern-50 rounded-[4px] py-1 px-2 '>
               <Spinner
@@ -139,8 +139,8 @@ export const OrganizationDetails = observer(
                   size='xxs'
                   variant='ghost'
                   aria-label='close preview company'
-                  icon={<Icon name='x-close' className='size-4' />}
                   onClick={() => store.ui.setShowPreviewCard(false)}
+                  icon={<Icon name='x-close' className='size-[14px]' />}
                 />
               )}
             </div>
@@ -148,10 +148,10 @@ export const OrganizationDetails = observer(
 
           <Domains id={id} />
 
-          <div className='flex flex-col w-full flex-1 items-start justify-start gap-3 mt-2'>
+          <div className='flex flex-col w-full flex-1 items-start justify-start gap-3 mt-2 pb-20'>
             {!!organization?.value?.description && (
               <TruncatedText
-                maxLines={7}
+                maxLines={100}
                 className='text-sm'
                 data-test='org-about-description'
                 text={organization.value.description}
@@ -175,7 +175,7 @@ export const OrganizationDetails = observer(
               }}
             />
 
-            <div className='flex items-center justify-center w-full '>
+            <div className='flex items-center justify-center w-full'>
               <div
                 data-test='org-about-relationship'
                 className='flex-2 flex items-center'
@@ -307,7 +307,7 @@ export const OrganizationDetails = observer(
           {organization?.value.customerOsId && (
             <Tooltip label='Copy ID'>
               <span
-                className='py-3 w-fit text-grayModern-400 cursor-pointer text-sm'
+                className='py-3 w-full text-grayModern-400 cursor-pointer text-sm absolute bottom-0 left-4 bg-white'
                 onClick={() =>
                   copyToClipboard(
                     organization.value?.customerOsId ?? '',

@@ -127,7 +127,9 @@ export const FinderPage = observer(() => {
               )}
               {tableViewDef?.value.tableType === TableViewType.Organizations &&
                 store.ui.focusRow && (
-                  <OrganizationDetails id={store.ui.focusRow} />
+                  <div className='px-4'>
+                    <OrganizationDetails id={store.ui.focusRow} />
+                  </div>
                 )}
 
               {tableViewDef?.value.tableType === TableViewType.Invoices &&

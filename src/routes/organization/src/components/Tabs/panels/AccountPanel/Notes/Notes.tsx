@@ -17,7 +17,7 @@ export const Notes = observer(({ id }: NotesProps) => {
   );
 
   return (
-    <article className=''>
+    <article className='pb-20'>
       <div className='flex items-center gap-2 mt-6 mb-1'>
         <Icon name='file-02' />
         <h1 className='text-sm font-medium'>Account notes</h1>

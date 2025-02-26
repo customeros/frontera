@@ -5,6 +5,7 @@ import { OrganizationDetails } from '@shared/components/OrganizationDetails';
 import { PeoplePanel } from './panels/PeoplePanel';
 import { AccountPanel } from './panels/AccountPanel';
 import { InvoicesPanel } from './panels/InvoicesPanel';
+import { OrganizationPanel } from './shared/OrganizationPanel';
 
 interface PanelsProps {
   tab: string;
@@ -21,6 +22,10 @@ export const Panels = ({ tab }: PanelsProps) => {
     case 'invoices':
       return <InvoicesPanel />;
     default:
-      return id ? <OrganizationDetails id={id} /> : null;
+      return id ? (
+        <OrganizationPanel>
+          <OrganizationDetails id={id} />
+        </OrganizationPanel>
+      ) : null;
   }
 };

@@ -58,9 +58,9 @@ export const TopNav = observer(() => {
   if (!organization) return null;
 
   return (
-    <div className='w-full flex gap-2 justify-start border-b border-grayModern-200 px-3 py-2'>
+    <div className='w-full flex gap-2 justify-start border-b border-grayModern-200 px-2 py-2'>
       <Button
-        size='xxs'
+        size='xs'
         onClick={handleItemClick('about')}
         className='transition-colors duration-7000 border'
         variant={checkIsActive('about') ? 'outline' : 'ghost'}
@@ -68,7 +68,7 @@ export const TopNav = observer(() => {
         About
       </Button>
       <Button
-        size='xxs'
+        size='xs'
         onClick={handleItemClick('people')}
         className='transition-colors duration-7000 border'
         variant={checkIsActive('people') ? 'outline' : 'ghost'}
@@ -76,7 +76,7 @@ export const TopNav = observer(() => {
         People
       </Button>
       <Button
-        size='xxs'
+        size='xs'
         onClick={handleItemClick('account')}
         className='transition-colors duration-7000 border'
         variant={checkIsActive('account') ? 'outline' : 'ghost'}
@@ -84,7 +84,7 @@ export const TopNav = observer(() => {
         Account
       </Button>
       <Button
-        size='xxs'
+        size='xs'
         onClick={handleItemClick('invoices')}
         className='transition-colors duration-7000 border'
         variant={checkIsActive('invoices') ? 'outline' : 'ghost'}
