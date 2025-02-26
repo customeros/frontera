@@ -100,7 +100,6 @@ export const SettingsSidenav = observer(() => {
               checkIsActive={checkIsActive}
               handleItemClick={handleItemClick}
             />
-
             {/* <SidenavItem
               label='Accounts'
               dataTest='settings-accounts'
