@@ -139,8 +139,8 @@ export const UpcomingInvoices = ({
       <div>
         {data?.upcomingInvoices.map((invoice: Invoice) => (
           <UpcomingInvoice
-            id={invoice?.metadata?.id}
-            key={invoice?.metadata?.id}
+            id={invoice?.invoiceNumber}
+            key={invoice?.invoiceNumber}
             contractId={data?.metadata?.id}
           />
         ))}

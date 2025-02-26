@@ -313,7 +313,7 @@ export const ContractDetailsModal = observer(
             },
           )}
         >
-          <ModalHeader className='p-0 font-semibold flex'>
+          <ModalHeader className='p-0 flex'>
             <Input
               name='contractName'
               ref={contractNameInputRef}

@@ -152,6 +152,7 @@ const CONTRACTS_QUERY = gql`
           canPayWithCard
         }
         upcomingInvoices {
+          invoiceNumber
           metadata {
             id
           }

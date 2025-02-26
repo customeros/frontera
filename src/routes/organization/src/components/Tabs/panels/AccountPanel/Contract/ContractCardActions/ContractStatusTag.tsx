@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
 
 import { DateTimeUtils } from '@utils/date';
+import { Icon, IconName } from '@ui/media/Icon';
 import { ContractStatus } from '@graphql/types';
 import { SelectOption } from '@shared/types/SelectOptions';
 import { Tag, TagLabel, TagLeftIcon } from '@ui/presentation/Tag/Tag';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
-
-import { contractOptionIcon } from './utils';
 
 interface ContractStatusSelectProps {
   status: ContractStatus;
@@ -21,6 +20,14 @@ const statusColorScheme: Record<string, string> = {
   [ContractStatus.Ended]: 'grayModern',
   [ContractStatus.Scheduled]: 'primary',
   [ContractStatus.OutOfContract]: 'warning',
+};
+const contractOptionIcon: Record<ContractStatus, IconName | null> = {
+  [ContractStatus.Draft]: 'edit-03',
+  [ContractStatus.Ended]: 'x-square',
+  [ContractStatus.Live]: 'dot-live-primary',
+  [ContractStatus.OutOfContract]: 'pause-circle',
+  [ContractStatus.Scheduled]: 'clock',
+  [ContractStatus.Undefined]: null,
 };
 
 export const ContractStatusTag = ({
@@ -52,23 +59,19 @@ export const ContractStatusTag = ({
     <>
       <Menu>
         <MenuButton disabled={status === ContractStatus.Scheduled}>
-          <Tag
-            colorScheme={statusColorScheme[status] as 'primary'}
-            className='flex items-center gap-1 whitespace-nowrap mx-0 px-1'
-          >
-            <TagLeftIcon className='m-0'>{icon}</TagLeftIcon>
+          <Tag colorScheme={statusColorScheme[status] as 'primary'}>
+            {icon && (
+              <TagLeftIcon>
+                <Icon name={icon} />
+              </TagLeftIcon>
+            )}
 
             <TagLabel>{selected?.label}</TagLabel>
           </Tag>
         </MenuButton>
 
         <MenuList align='end' side='bottom'>
-          <MenuItem
-            onClick={onHandleStatusChange}
-            className='flex items-center text-base'
-          >
-            {statusContent}
-          </MenuItem>
+          <MenuItem onClick={onHandleStatusChange}>{statusContent}</MenuItem>
         </MenuList>
       </Menu>
     </>

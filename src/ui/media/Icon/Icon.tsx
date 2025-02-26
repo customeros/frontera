@@ -243,6 +243,9 @@ export type IconName =
   | 'grid-01'
   | 'check-circle'
   | 'building-06'
+  | 'pause-circle'
+  | 'x-square'
+  | 'brackets-plus'
   | 'file-plus-02';
 
 interface IconProps extends SVGAttributes<SVGElement> {
