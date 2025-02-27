@@ -166,7 +166,7 @@ export const EditSku = observer(() => {
                   mask: Number,
                   scale: 2,
                   lazy: true,
-                  min: 0,
+                  min: -Math.pow(10, 10),
                   radix: '.',
                   placeholderChar: '#',
                   thousandsSeparator: ',',
