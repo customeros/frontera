@@ -6,39 +6,25 @@ import { DisconnectSlackChannelUsecase } from '@domain/usecases/agents/capabilit
 import { Icon } from '@ui/media/Icon';
 import { Button } from '@ui/form/Button/Button.tsx';
 import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog';
-import {
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
-} from '@ui/overlay/Menu/Menu.tsx';
 
 export const DisconnectSlackMenu = observer(() => {
   const usecase = useMemo(() => new DisconnectSlackChannelUsecase(), []);
 
   return (
     <>
-      <Menu>
-        <MenuButton asChild>
-          <Button size='xxs' variant='ghost'>
-            <Icon stroke={'none'} name={'dot-live-success'} />
-            {'Connected'}
-          </Button>
-        </MenuButton>
-        <MenuList>
-          <MenuItem
-            onClick={() => {
-              usecase.toggleConfirmationDialog(true);
-            }}
-          >
-            <Icon name='link-broken-02' className='text-grayModern-500' />
-            Disconnect Slack
-          </MenuItem>
-        </MenuList>
-      </Menu>
+      <Button
+        size='xxs'
+        variant='ghost'
+        onClick={() => {
+          usecase.toggleConfirmationDialog(true);
+        }}
+      >
+        <Icon stroke={'none'} name={'dot-live-success'} />
+        {'Connected'}
+      </Button>
       <ConfirmDeleteDialog
         hideCloseButton
-        colorScheme='primary'
+        colorScheme='error'
         isOpen={usecase.isOpen}
         label={`Disconnect Slack?`}
         confirmButtonLabel='Disconnect'

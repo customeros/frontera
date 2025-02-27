@@ -44,7 +44,7 @@ export const ContractStatusTag = ({
         </TagLeftIcon>
       )}
 
-      <TagLabel>{selected?.label}</TagLabel>
+      <TagLabel className='whitespace-nowrap'>{selected?.label}</TagLabel>
     </Tag>
   );
 };

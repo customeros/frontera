@@ -54,14 +54,14 @@ export const AgentCard = observer(({ id }: AgentCardProps) => {
       onMouseEnter={() => handleStateChange(true)}
       onMouseLeave={() => handleStateChange(false)}
       className={cn(
-        ' min-w-[372px] flex-1 rounded-lg flex items-center gap-2 ring-0 border cursor-pointer group hover:bg-white hover:shadow-lg flex-col transition-all ring-grayModern-200 hover:ring-1',
+        'min-w-[372px] flex-1 rounded-lg flex items-center gap-2 ring-0 border cursor-pointer group hover:bg-white hover:shadow-lg flex-col transition-all ring-grayModern-200 hover:ring-1',
         ring,
       )}
     >
-      <div className='flex flex-col w-full'>
+      <div className='flex flex-col flex-1 w-full h-[stretch]'>
         <div
           className={cn(
-            'flex items-center justify-between gap-2 w-full px-3 pt-3 pb-2',
+            'flex items-center justify-between gap-2 w-full flex-1 px-3 pt-3 pb-2 h-full',
             {
               'pb-3': !agent.value.metric,
             },
