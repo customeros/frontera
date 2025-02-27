@@ -8,7 +8,7 @@ import { AgentListenerEvent } from '@graphql/types';
 
 interface EmailConfig {
   email: string;
-  provider?: 'google' | 'azure';
+  provider?: 'google' | 'azure-ad' | 'mailstack';
 }
 
 export class NewEmailsUsecase {
@@ -93,8 +93,8 @@ export class NewEmailsUsecase {
     this.emails = this.emails.filter((e) => e.email !== email);
   }
 
-  addLink(email: string) {
-    this.emails = [...this.emails, { email }];
+  addLink(email: string, provider?: 'google' | 'azure-ad' | 'mailstack') {
+    this.emails = [...this.emails, { email, provider }];
   }
 
   async execute() {

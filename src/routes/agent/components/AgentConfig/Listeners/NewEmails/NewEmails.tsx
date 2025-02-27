@@ -27,14 +27,20 @@ export const NewEmails = observer(() => {
     const email = searchParams.get('email');
 
     if (email) {
+      const provider = searchParams.get('provider');
       const isEmailLinked = usecase.emails.find((item) => item.email === email);
 
       if (!isEmailLinked) {
-        usecase.addLink(email);
+        if (provider && (provider === 'google' || provider === 'azure-ad')) {
+          usecase.addLink(email, provider);
+        } else {
+          usecase.addLink(email);
+        }
         usecase.execute();
       }
 
       searchParams.delete('email');
+      searchParams.delete('provider');
       setSearchParams(searchParams);
     }
   }, [searchParams, setSearchParams, usecase]);
