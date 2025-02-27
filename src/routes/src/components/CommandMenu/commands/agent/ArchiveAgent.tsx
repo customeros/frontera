@@ -48,7 +48,7 @@ export const ArchiveAgent = observer(() => {
       <article className='relative w-full p-6 flex flex-col border-b border-b-grayModern-100 cursor-default'>
         <div className='flex justify-between'>
           <h1 className='text-base font-semibold'>
-            Archive {usecase.agent?.value.name ?? ''}
+            Archive {usecase.agent?.value.name ?? ''}?
           </h1>
           <div>
             <CommandCancelIconButton onClose={handleClose} />

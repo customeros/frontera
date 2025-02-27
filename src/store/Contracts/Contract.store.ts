@@ -180,12 +180,24 @@ export class ContractStore implements Store<Contract> {
       })
 
       .with(['approved', ...P.array()], () => {
-        const payload = makePayload<ContractRenewalInput>(operation);
-
         this.service
           .updateContract({
             input: {
-              ...payload,
+              serviceStarted: this.value.serviceStarted,
+              contractId: this.id,
+              patch: true,
+            },
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.invalidate();
+            }, 600);
+          });
+      })
+      .with(['serviceStarted', ...P.array()], () => {
+        this.service
+          .updateContract({
+            input: {
               serviceStarted: this.value.serviceStarted,
               contractId: this.id,
               patch: true,
