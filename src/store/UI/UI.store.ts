@@ -23,6 +23,7 @@ export class UIStore {
   activeConfirmation: string | null = null;
   movedIcpOrganization: number = 0;
   focusRow: string | null = null;
+  isEditingDefaultFilters: boolean = false;
   showShortcutsPanel: boolean = false;
   showPreviewCard: boolean = false;
   emailAdress: string = '';
@@ -132,6 +133,10 @@ export class UIStore {
 
   setEmailAdress(value: string) {
     this.emailAdress = value;
+  }
+
+  setIsEditingDefaultFilters(value: boolean) {
+    this.isEditingDefaultFilters = value;
   }
 
   purgeLocalData() {

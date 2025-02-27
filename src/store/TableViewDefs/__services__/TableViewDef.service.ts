@@ -103,7 +103,6 @@ export class TableViewDefsService {
         'tableId',
         'isPreset',
         'isShared',
-        'defaultFilters',
       ),
     };
 
