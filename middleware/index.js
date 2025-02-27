@@ -685,6 +685,7 @@ async function createServer() {
           'email=' +
           profileRes.data.email;
       }
+      redirectUrl += '&provider=google';
 
       res.redirect(redirectUrl);
     } catch (err) {
@@ -772,6 +773,7 @@ async function createServer() {
           'email=' +
           profileRes.mail;
       }
+      redirectUrl += '&provider=azure-ad';
 
       res.redirect(redirectUrl);
     } catch (err) {

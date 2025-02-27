@@ -1,15 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import { useRef, useState, ReactNode, useEffect, useCallback } from 'react';
+import { useRef, useState, ReactNode, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { NewEmailsUsecase } from '@domain/usecases/agents/listeners/new-emails.usecase';
 
-import { Icon } from '@ui/media/Icon';
 import { Combobox } from '@ui/form/Combobox';
 import { Google } from '@ui/media/logos/Google';
 import { useStore } from '@shared/hooks/useStore';
 import { Microsoft } from '@ui/media/icons/Microsoft';
-import logoCustomerOs from '@shared/assets/customer-os-small.png';
+// import logoCustomerOs from '@shared/assets/customer-os-small.png';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 
@@ -23,7 +21,7 @@ export const ConnectAccountMenu = observer(
   }) => {
     const [isMailboxPopoverOpen, setIsMailboxPopoverOpen] = useState(false);
     const store = useStore();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const iconPickerTriggerRef = useRef<HTMLButtonElement>(null);
     const shouldOpenIconPickerRef = useRef(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -57,10 +55,10 @@ export const ConnectAccountMenu = observer(
       return !usecase.emails.some((item) => item.email === mailboxAddress);
     });
 
-    const handleMailboxPopoverOpen = useCallback(() => {
-      shouldOpenIconPickerRef.current = true;
-      setMenuOpen(false);
-    }, []);
+    // const handleMailboxPopoverOpen = useCallback(() => {
+    //   shouldOpenIconPickerRef.current = true;
+    //   setMenuOpen(false);
+    // }, []);
 
     return (
       <div className='flex items-center'>
@@ -86,29 +84,29 @@ export const ConnectAccountMenu = observer(
               Microsoft Outlook
             </MenuItem>
 
-            <MenuItem
-              className='text-sm'
-              onClick={() =>
-                userMailboxes.length
-                  ? handleMailboxPopoverOpen()
-                  : navigate('/settings?tab=mailboxes&view=buy')
-              }
-            >
-              {userMailboxes.length ? (
-                <img
-                  width={16}
-                  height={16}
-                  alt='CustomerOS'
-                  src={logoCustomerOs}
-                />
-              ) : (
-                <Icon name={'plus'} />
-              )}
+            {/*<MenuItem*/}
+            {/*  className='text-sm'*/}
+            {/*  onClick={() =>*/}
+            {/*    userMailboxes.length*/}
+            {/*      ? handleMailboxPopoverOpen()*/}
+            {/*      : navigate('/settings?tab=mailboxes&view=buy')*/}
+            {/*  }*/}
+            {/*>*/}
+            {/*  {userMailboxes.length ? (*/}
+            {/*    <img*/}
+            {/*      width={16}*/}
+            {/*      height={16}*/}
+            {/*      alt='CustomerOS'*/}
+            {/*      src={logoCustomerOs}*/}
+            {/*    />*/}
+            {/*  ) : (*/}
+            {/*    <Icon name={'plus'} />*/}
+            {/*  )}*/}
 
-              {userMailboxes.length
-                ? 'CustomerOS mailboxes'
-                : 'Buy new mailboxes'}
-            </MenuItem>
+            {/*  {userMailboxes.length*/}
+            {/*    ? 'CustomerOS mailboxes'*/}
+            {/*    : 'Buy new mailboxes'}*/}
+            {/*</MenuItem>*/}
           </MenuList>
         </Menu>
         <Popover
@@ -128,7 +126,7 @@ export const ConnectAccountMenu = observer(
                 value: e.value.mailbox,
               }))}
               onChange={({ value }) => {
-                usecase.addLink(value);
+                usecase.addLink(value, 'mailstack');
                 usecase.execute();
                 setIsMailboxPopoverOpen(false);
               }}
