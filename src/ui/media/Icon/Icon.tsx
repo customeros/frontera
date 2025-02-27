@@ -246,7 +246,8 @@ export type IconName =
   | 'pause-circle'
   | 'x-square'
   | 'brackets-plus'
-  | 'file-plus-02';
+  | 'file-plus-02'
+  | 'filter-lines';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

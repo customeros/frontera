@@ -63,8 +63,10 @@ export const FinderFilters = observer(
         helperText: helperTextMap[c.columnType],
       })) ?? [];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const filters = tableViewDef?.getFilters()?.AND as any | undefined;
+    const filters = store.ui.isEditingDefaultFilters
+      ? tableViewDef?.getDefaultFilters()?.AND
+      : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (tableViewDef?.getFilters()?.AND as any | undefined);
 
     if (tableId === TableIdType.Contacts) {
       columns.push({
@@ -80,7 +82,7 @@ export const FinderFilters = observer(
 
     // tableViewDef?.removeFilters();
 
-    return (
+    return !store.ui.isEditingDefaultFilters ? (
       <Filters
         columns={columns}
         filters={flattenedFilters}
@@ -94,6 +96,27 @@ export const FinderFilters = observer(
         }}
         onFilterSelect={(filter, getFilterOperators) => {
           tableViewDef?.appendFilter({
+            property: filter?.filterAccesor || '',
+            value: undefined,
+            active: false,
+            operation: getFilterOperators(filter?.filterAccesor ?? '')[0] || '',
+          });
+        }}
+      />
+    ) : (
+      <Filters
+        columns={columns}
+        filters={flattenedFilters}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        filterTypes={filterTypes as any}
+        onClearFilter={(filter, idx) =>
+          tableViewDef?.removeDefaultFilter(filter.property, idx)
+        }
+        setFilters={(filter: FilterItem, index: number) => {
+          tableViewDef?.setDefaultFilter(filter, index);
+        }}
+        onFilterSelect={(filter, getFilterOperators) => {
+          tableViewDef?.appendDefaultFilter({
             property: filter?.filterAccesor || '',
             value: undefined,
             active: false,

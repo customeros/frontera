@@ -141,6 +141,10 @@ export class TableViewDef extends Entity<TableViewDefDatum> {
     }
   }
 
+  public getNumberOfDefaultFilters() {
+    return this.getDefaultFilters()?.AND?.length ?? 0;
+  }
+
   public getSorting() {
     try {
       return match(this.value.sorting)
@@ -194,7 +198,7 @@ export class TableViewDef extends Entity<TableViewDefDatum> {
     }
 
     this.draft();
-    this.value.filters = JSON.stringify(draft);
+    this.value.defaultFilters = JSON.stringify(draft);
     this.commit();
   }
 
@@ -262,6 +266,25 @@ export class TableViewDef extends Entity<TableViewDefDatum> {
   }
 
   @action
+  public removeDefaultFilter(id: string, index?: number) {
+    const draft = this.getDefaultFilters();
+
+    if (draft) {
+      if (index !== undefined) {
+        draft.AND?.splice(index, 1);
+      } else {
+        draft.AND = (draft.AND as Filter[])?.filter(
+          (f) => f.filter?.property !== id,
+        );
+      }
+
+      this.draft();
+      this.value.defaultFilters = JSON.stringify(draft);
+      this.commit();
+    }
+  }
+
+  @action
   public removeFilters() {
     this.draft();
     this.value.filters = JSON.stringify({ AND: [] });
@@ -307,6 +330,27 @@ export class TableViewDef extends Entity<TableViewDefDatum> {
 
     this.draft();
     this.value.filters = JSON.stringify(draft);
+    this.commit();
+  }
+
+  @action
+  public setDefaultFilter(filter: FilterItem, index: number) {
+    const draft = this.getDefaultFilters();
+
+    if (!draft) {
+      this.appendDefaultFilter({ ...filter, active: true });
+
+      return;
+    }
+
+    if (draft.AND && draft.AND[index]) {
+      draft.AND[index].filter = filter;
+    } else {
+      draft.AND?.push({ filter });
+    }
+
+    this.draft();
+    this.value.defaultFilters = JSON.stringify(draft);
     this.commit();
   }
 
@@ -393,6 +437,10 @@ export class TableViewDef extends Entity<TableViewDefDatum> {
 
   public hasFilters() {
     return this.getFilters()?.AND?.length > 0;
+  }
+
+  public hasDefaultFilters() {
+    return this.getDefaultFilters()?.AND?.length > 0;
   }
 
   public static default(
