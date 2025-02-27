@@ -20,7 +20,7 @@ export const ContactJobExperience = observer(
     const timeAtOrg = startedAt ? timeAt(startedAt, orgName ?? '') : null;
 
     return timeAtOrg ? (
-      <div className='flex items-center cursor-not-allowed text-sm'>
+      <div className='flex items-center cursor-default text-sm'>
         <GitTimeline className='text-grayModern-500' />
         <p className='ml-4 first-letter:capitalize'>{timeAtOrg}</p>
       </div>

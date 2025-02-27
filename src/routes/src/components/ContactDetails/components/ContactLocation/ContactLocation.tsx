@@ -29,7 +29,7 @@ export const ContactLocation = observer(
       : null;
 
     return countryA2 ? (
-      <div className='flex items-center cursor-not-allowed max-h-5'>
+      <div className='flex items-center cursor-default max-h-5'>
         <div className='mb-1'>{flag}</div>
         <div className={cn('flex items-center', countryA3 && 'gap-1')}>
           {countryA3 && <span className='ml-4 text-sm'>{countryA3}</span>}
