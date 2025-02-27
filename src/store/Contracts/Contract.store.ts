@@ -183,6 +183,7 @@ export class ContractStore implements Store<Contract> {
         this.service
           .updateContract({
             input: {
+              approved: true,
               serviceStarted: this.value.serviceStarted,
               contractId: this.id,
               patch: true,
@@ -284,7 +285,6 @@ export class ContractStore implements Store<Contract> {
             check: this.value?.billingDetails?.check,
           },
           billingEnabled: this.value.billingEnabled,
-
           contractId: this.id,
           patch: true,
         },
