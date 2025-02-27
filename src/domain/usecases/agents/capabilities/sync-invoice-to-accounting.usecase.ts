@@ -8,6 +8,8 @@ import { CommonService } from '@domain/services/common/common.service';
 
 import { CapabilityType } from '@graphql/types';
 
+type AccountingMethod = 'cash' | 'accrual';
+
 export class SyncInvoiceToAccountingUsecase {
   @inject(AgentService) private agentService!: AgentService;
   @inject(CommonService) private commonService!: CommonService;
@@ -18,6 +20,7 @@ export class SyncInvoiceToAccountingUsecase {
   @observable accessor isConnecting = false;
   @observable accessor isRevokeOpen = false;
   @observable accessor isRevoking = false;
+  @observable accessor accountingMethod: AccountingMethod = 'cash';
 
   constructor(private agentId: string) {
     this.init = this.init.bind(this);
@@ -25,6 +28,7 @@ export class SyncInvoiceToAccountingUsecase {
     this.dispose = this.dispose.bind(this);
     this.toggleEnabled = this.toggleEnabled.bind(this);
     this.toggleRevokeOpen = this.toggleRevokeOpen.bind(this);
+    this.toggleAccountingMethod = this.toggleAccountingMethod.bind(this);
   }
 
   @computed
@@ -115,6 +119,43 @@ export class SyncInvoiceToAccountingUsecase {
     }
 
     span.end();
+  }
+
+  @action
+  public async toggleAccountingMethod() {
+    const span = Tracer.span(
+      'SyncInvoiceToAccountingUsecase.toggleAccountingMethod',
+      {
+        accountingMethod: this.accountingMethod,
+      },
+    );
+
+    this.accountingMethod =
+      this.accountingMethod === 'cash' ? 'accrual' : 'cash';
+
+    this.agent?.setCapabilityConfig(
+      CapabilityType.SyncInvoiceToAccounting,
+      'accountingMethodAccrual',
+      this.accountingMethod === 'accrual',
+    );
+
+    const [res, err] = await this.agentService.saveAgent(this.agent!);
+
+    if (err) {
+      console.error(
+        'SyncInvoiceToAccountingUsecase.toggleAccountingMethod: Error saving agent',
+        err,
+      );
+    }
+
+    if (res) {
+      this.agent?.put(res.agent_Save);
+      this.init();
+    }
+
+    span.end({
+      accountingMethod: this.accountingMethod,
+    });
   }
 
   @action
@@ -209,7 +250,9 @@ export class SyncInvoiceToAccountingUsecase {
       return;
     }
 
-    const config = Agent.parseConfig<'quickbooks'>(this.capability.config);
+    const config = Agent.parseConfig<'quickbooks' | 'accountingMethodAccrual'>(
+      this.capability.config,
+    );
 
     if (!config) {
       console.error('SyncInvoiceToAccountingUsecase.init: Config is required');
@@ -226,9 +269,11 @@ export class SyncInvoiceToAccountingUsecase {
 
       return;
     }
-
     this.store.settings.oauthToken.loadQuickbooksStatus();
     this.isEnabled = this.capability.active;
+    this.accountingMethod = config.accountingMethodAccrual.value
+      ? 'accrual'
+      : 'cash';
 
     span.end({
       isQuickbooksConnected: this.isQuickbooksConnected,
