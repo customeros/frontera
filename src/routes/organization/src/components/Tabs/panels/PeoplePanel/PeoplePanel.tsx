@@ -6,17 +6,17 @@ import { differenceInCalendarMonths } from 'date-fns';
 import { SearchSortContact } from '@domain/usecases/contact-details/search-sort-contacts.usecase';
 
 import { Input } from '@ui/form/Input';
-import { FeaturedIcon } from '@ui/media/Icon';
 import { Button } from '@ui/form/Button/Button';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
-import { Users02 } from '@ui/media/icons/Users02';
+import { Icon, FeaturedIcon } from '@ui/media/Icon';
 import { SearchSm } from '@ui/media/icons/SearchSm';
 import { UsersPlus } from '@ui/media/icons/UsersPlus';
 import { Spinner } from '@ui/feedback/Spinner/Spinner';
 import { ChevronExpand } from '@ui/media/icons/ChevronExpand';
 import { ChevronCollapse } from '@ui/media/icons/ChevronCollapse';
 import { ContactDetails } from '@shared/components/ContactDetails';
+import HalfCirclePattern from '@shared/assets/HalfCirclePattern.tsx';
 import { OrganizationPanel } from '@organization/components/Tabs/shared/OrganizationPanel/OrganizationPanel';
 
 import { SortOptionsMenu } from './components/SortOptionsMenu';
@@ -55,6 +55,55 @@ export const PeoplePanel = observer(() => {
   }, []);
 
   if (!contacts) return null;
+
+  if (!contacts?.length) {
+    return (
+      <div className='flex justify-center'>
+        <div className='flex flex-col h-full w-full max-w-[448px]'>
+          <div className='flex relative'>
+            <FeaturedIcon
+              size='lg'
+              colorScheme='grayModern'
+              className='absolute top-[26%] justify-self-center right-0 left-0'
+            >
+              <Icon name='users-02' />
+            </FeaturedIcon>
+            <HalfCirclePattern />
+          </div>
+          <div className='flex flex-col text-center items-center translate-y-[-212px]'>
+            <p className='text-grayModern-700 text-md font-semibold mb-1'>
+              Assemble the team
+            </p>
+            <p className='text-sm my-1 max-w-[360px] text-center'>
+              Start by adding people that work at {organization?.value.name},
+              and keep track of everyone from decision-makers to day-to-day
+              collaborators.
+            </p>
+            <Button
+              size='sm'
+              variant='outline'
+              loadingText='Adding'
+              colorScheme={'primary'}
+              className='text-sm mt-6 w-fit'
+              dataTest='org-people-add-someone'
+              isDisabled={store.contacts.isLoading}
+              onClick={() => {
+                store.ui.commandMenu.setType('AddSingleContact');
+                store.ui.commandMenu.setContext({
+                  ids: [id],
+                  entity: 'Organization',
+                  property: 'contacts',
+                });
+                store.ui.commandMenu.setOpen(true);
+              }}
+            >
+              Add someone
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <OrganizationPanel
@@ -97,44 +146,6 @@ export const PeoplePanel = observer(() => {
         )
       }
     >
-      {!contacts.length && (
-        <div className='flex flex-col items-center mt-4 max-w-[495px]'>
-          <div className='border-1 border-grayModern-200 p-3 rounded-md mb-6 mt-5'>
-            <FeaturedIcon colorScheme='grayModern'>
-              <Users02 className='text-grayModern-700 size-6' />
-            </FeaturedIcon>
-          </div>
-          <span className='text-grayModern-700 font-medium'>
-            Assemble the team
-          </span>
-          <span className='text-grayModern-700 mt-1 mb-6 text-center text-sm'>
-            Start by adding people that work at {organization?.value.name}, and
-            keep track of everyone from decision-makers to day-to-day
-            collaborators.
-          </span>
-          <div>
-            <Button
-              variant='outline'
-              loadingText='Adding'
-              colorScheme={'primary'}
-              dataTest='org-people-add-someone'
-              isDisabled={store.contacts.isLoading}
-              onClick={() => {
-                store.ui.commandMenu.setType('AddSingleContact');
-                store.ui.commandMenu.setContext({
-                  ids: [id],
-                  entity: 'Organization',
-                  property: 'contacts',
-                });
-                store.ui.commandMenu.setOpen(true);
-              }}
-            >
-              Add someone
-            </Button>
-          </div>
-        </div>
-      )}
-
       {contacts.length > 0 && (
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>

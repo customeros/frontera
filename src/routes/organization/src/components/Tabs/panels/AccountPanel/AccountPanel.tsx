@@ -56,9 +56,11 @@ const AccountPanelComponent = observer(() => {
 
   if (!organizationStore?.contracts?.length) {
     return (
-      <EmptyContracts isPending={isCreating} onCreate={handleCreate}>
-        <Notes id={id} />
-      </EmptyContracts>
+      <EmptyContracts
+        isPending={isCreating}
+        onCreate={handleCreate}
+        companyName={organization?.name ?? ''}
+      />
     );
   }
 

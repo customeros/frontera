@@ -31,7 +31,7 @@ export const InvoicesPanel = observer(() => {
   if (!store.invoices.isLoading && invoices.length === 0) {
     return (
       <div className='flex justify-center'>
-        <EmptyState />
+        <EmptyState companyName={store.organizations.getById(id)?.name ?? ''} />
       </div>
     );
   }

@@ -59,7 +59,7 @@ export const featureIconVariant = cva(
       {
         colorScheme: 'grayModern',
         className: [
-          'bg-grayModern-100 ring-grayModern-50 ring-offset-grayModern-100 text-grayModern-600',
+          'bg-grayModern-100 ring-grayModern-50 ring-offset-grayModern-100 text-grayModern-500',
         ],
       },
       {
