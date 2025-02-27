@@ -141,7 +141,9 @@ export const ContactDetails = observer(
           )}
         >
           <div
-            style={{ paddingBottom: !isExpanded && isExpandble ? '0' : '8px' }}
+            style={{
+              paddingBottom: !isExpanded && isExpandble ? '0px' : '8px',
+            }}
           >
             {!isExpandble && (
               <div className='flex items-center justify-between pb-3 -mt-[9px]'>
@@ -217,7 +219,7 @@ export const ContactDetails = observer(
                             variant='ghost'
                             icon={<Mail01 />}
                             aria-label='send-email'
-                            className='opacity-0 mt-[3px]'
+                            className='opacity-0 group-hover/card:opacity-100'
                             onClick={(e) => {
                               dispatchEvent({
                                 email: email,
@@ -232,8 +234,8 @@ export const ContactDetails = observer(
                             size='xxs'
                             variant='ghost'
                             icon={<LinkedInSolid02 />}
-                            className='opacity-0 mt-[3px]'
                             aria-label='navigate-to-linkedin'
+                            className='opacity-0 group-hover/card:opacity-100'
                             onClick={(e) => {
                               window.open(
                                 linkedInProfile,
@@ -255,7 +257,7 @@ export const ContactDetails = observer(
                           <Spinner
                             size='sm'
                             label='finding email'
-                            className='text-grayModern-400grayModernl-grayModern-700 mr-2 group-hover/card:opacity-100 opacity-0'
+                            className='text-grayModern-400 fill-grayModern-700 mr-2 group-hover/card:opacity-100 opacity-0'
                           />
                         </Tooltip>
                       )}
@@ -282,7 +284,7 @@ export const ContactDetails = observer(
                   {!isExpanded && isExpandble ? (
                     <p
                       className={cn(
-                        'text-sm line-clamp-1 cursor-default',
+                        'text-sm line-clamp-1 cursor-default ',
                         !findPrimaryJobRole?.jobTitle && 'text-grayModern-400',
                         !isExpanded && 'cursor-pointer',
                       )}
