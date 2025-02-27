@@ -11,6 +11,11 @@ on:
         description: 'Version to deploy (e.g., v1.2.3)'
         required: true
         type: string
+      deploy_middleware:
+        description: 'Deploy middleware component'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   deploy:
@@ -43,10 +48,28 @@ jobs:
             echo "version=${{ steps.workflow_data.outputs.next_version }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Trigger Frontera App Workflow
+      - name: Set deploy_middleware flag
+        id: set_deploy_middleware
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "deploy_middleware=${{ inputs.deploy_middleware }}" >> $GITHUB_OUTPUT
+          else
+            echo "deploy_middleware=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger Frontera App Deployment
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.FE_TESTS_GITHUB_TOKEN }}
           repository: customeros/cloud
           event-type: deploy-frontera-app
+          client-payload: '{"version": "${{ steps.set_version.outputs.version }}"}'
+
+      - name: Trigger Middleware Deployment
+        if: steps.set_deploy_middleware.outputs.deploy_middleware == 'true'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.FE_TESTS_GITHUB_TOKEN }}
+          repository: customeros/cloud
+          event-type: deploy-frontera-middleware
           client-payload: '{"version": "${{ steps.set_version.outputs.version }}"}'

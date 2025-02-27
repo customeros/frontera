@@ -9,6 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   FRONTERA_PROD_IMAGE_NAME: ${{ github.repository }}/prod
+  MIDDLEWARE_IMAGE_NAME: ${{ github.repository }}/middleware
   DOCKER_BUILDKIT: 1
 
 permissions:
@@ -173,6 +174,20 @@ jobs:
             "VITE_REALTIME_WS_PATH=${{ secrets.PROD_VITE_REALTIME_WS_PATH }}"
             "VITE_REALTIME_WS_API_KEY=${{ secrets.PROD_VITE_REALTIME_WS_API_KEY }}"
             "VITE_STRIPE_PUBLIC_KEY=${{ secrets.PROD_VITE_STRIPE_PUBLIC_KEY }}"
+
+      # Build and push middleware image with the new version tag
+      - name: Build and push middleware image
+        if: steps.generate_version.outputs.should_release == 'true'
+        uses: docker/build-push-action@v6.13.0
+        with:
+          context: middleware/
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ steps.generate_version.outputs.next_version }}
+          cache-from: |
+            type=gha,scope=frontera-build
+            type=gha,scope=middleware-build-${{ github.job }}
+          cache-to: |
+            type=gha,mode=max,scope=middleware-build-${{ github.job }}
 
       # Save outputs for the deploy workflow
       - name: Save workflow outputs
