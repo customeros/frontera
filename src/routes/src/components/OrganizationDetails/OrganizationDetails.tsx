@@ -151,7 +151,7 @@ export const OrganizationDetails = observer(
           <div className='flex flex-col w-full flex-1 items-start justify-start gap-3 mt-2 pb-20'>
             {!!organization?.value?.description && (
               <TruncatedText
-                maxLines={100}
+                maxLines={7}
                 className='text-sm'
                 data-test='org-about-description'
                 text={organization.value.description}
@@ -307,7 +307,7 @@ export const OrganizationDetails = observer(
           {organization?.value.customerOsId && (
             <Tooltip label='Copy ID'>
               <span
-                className='py-3 w-full text-grayModern-400 cursor-pointer text-sm absolute bottom-0 left-4 bg-white'
+                className='pt-3 w-full text-grayModern-400 cursor-pointer text-sm absolute bottom-0 bg-white'
                 onClick={() =>
                   copyToClipboard(
                     organization.value?.customerOsId ?? '',

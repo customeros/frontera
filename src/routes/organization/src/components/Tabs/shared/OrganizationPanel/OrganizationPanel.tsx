@@ -70,7 +70,7 @@ export const OrganizationPanel = ({
             <div
               className={cn(
                 isMounted ? 'opacity-100' : 'opacity-0',
-                'flex flex-col space-y-2 justify-start h-[calc(100vh-180px)] px-4 pb-8 transition-opacity duration-300 ease-in-out',
+                'flex flex-col space-y-2 justify-start h-[calc(100vh-78px)] px-4 pb-8 transition-opacity duration-300 ease-in-out',
               )}
             >
               {children}
