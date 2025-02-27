@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
 import { FinderTable } from '@finder/components/FinderTable';
-import { FiltersContainer } from '@finder/components/FiltersContainer/FitlersContainer';
+import { FiltersContainer } from '@finder/components/FiltersContainer';
 
 import { useStore } from '@shared/hooks/useStore';
 import { PreviewCard } from '@shared/components/PreviewCard';
