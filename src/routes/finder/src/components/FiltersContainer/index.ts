@@ -1,1 +1,1 @@
-export * from './FiltersContainer';
+export * from './FitlersContainer';
