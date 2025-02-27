@@ -82,11 +82,16 @@ export const Header = observer(() => {
                   className={cn(
                     'flex items-center rounded-sm p-0.5 bg-grayModern-100',
                     bg,
+                    {
+                      [bg?.replace('group-hover:', '')]: showIconPicker,
+                    },
                   )}
                 >
                   <Icon
                     name={agent.value.icon as IconName}
-                    className={cn('size-4 text-grayModern-500', iconColor)}
+                    className={cn('size-4', iconColor, {
+                      [iconColor?.replace('group-hover:', '')]: showIconPicker,
+                    })}
                   />
                 </div>
               )}
