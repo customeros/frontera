@@ -188,7 +188,7 @@ export const AddNewSku = observer(() => {
                   mask: Number,
                   scale: 2,
                   lazy: false,
-                  min: 0,
+                  min: -Math.pow(10, 10),
                   radix: '.',
                   placeholderChar: '#',
                   thousandsSeparator: ',',
