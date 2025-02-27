@@ -29,7 +29,11 @@ export const ConfigPage = observer(() => {
   const agent = id ? store.agents.getById(id) : null;
 
   const usecase = useMemo(
-    () => new AgentViewUsecase(id ?? '', queryParams.get('cid')),
+    () =>
+      new AgentViewUsecase(
+        id ?? '',
+        queryParams.get('cid') ?? queryParams.get('lid'),
+      ),
     [id],
   );
 
@@ -103,7 +107,7 @@ export const ConfigPage = observer(() => {
             </p>
           </div>
 
-          <h2 className='mb-2 font-medium text-sm'>It's goal is to</h2>
+          <h2 className='mb-2 font-medium text-sm'>Its goal is to</h2>
           <ul className='space-y-1 mb-4'>
             {agent &&
               goals[agent?.value.type]?.map((goal) => (
