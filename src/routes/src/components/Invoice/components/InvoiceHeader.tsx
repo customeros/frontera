@@ -7,8 +7,6 @@ import { Image } from '@ui/media/Image/Image';
 import { InvoiceStatus } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
 
-import previewStamp from '../assets/preview-stamp.png';
-
 type InvoiceHeaderProps = {
   invoiceNumber: string;
   status?: InvoiceStatus | null;
@@ -25,15 +23,7 @@ export const InvoiceHeader: FC<InvoiceHeaderProps> = observer(
         <div className='flex flex-1 justify-between items-center'>
           <div className='flex items-center'>
             <h1 className='text-3xl font-bold'>Invoice</h1>
-            {isPreview && (
-              <img
-                width={95}
-                height={35}
-                src={previewStamp}
-                alt='Preview Stamp'
-                className='absolute left-[6.5rem] top-2 rotate-[-10deg]'
-              />
-            )}
+
             {status && !isPreview && (
               <div className='ml-4 mt-1'>
                 <Tag variant='outline' colorScheme='grayModern'>
