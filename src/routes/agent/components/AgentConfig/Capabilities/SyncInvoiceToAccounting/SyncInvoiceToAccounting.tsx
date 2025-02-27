@@ -4,11 +4,13 @@ import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { SyncInvoiceToAccountingUsecase } from '@domain/usecases/agents/capabilities/sync-invoice-to-accounting.usecase';
 
+import { cn } from '@ui/utils/cn';
 import { Logo } from '@ui/media/Logo';
 import { Icon } from '@ui/media/Icon';
 import { Switch } from '@ui/form/Switch';
 import { Spinner } from '@ui/feedback/Spinner';
 import { Button } from '@ui/form/Button/Button';
+import { ButtonGroup } from '@ui/form/ButtonGroup';
 import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog';
 
 export const SyncInvoiceToAccounting = observer(() => {
@@ -52,31 +54,59 @@ export const SyncInvoiceToAccounting = observer(() => {
         </Button>
       )}
       {usecase.isQuickbooksConnected && (
-        <div className='flex items-center gap-2 justify-between'>
-          <div className='flex items-center gap-2'>
-            <Logo name='quickbooks' className='size-5' />
-            <p className='text-sm font-medium'>Quickbooks</p>
+        <>
+          <div className='flex items-center gap-2 justify-between'>
+            <div className='flex items-center gap-2'>
+              <Logo name='quickbooks' className='size-5' />
+              <p className='text-sm font-medium'>Quickbooks</p>
+            </div>
+
+            <div className='flex items-center gap-1'>
+              <Button
+                size='xxs'
+                variant='ghost'
+                isLoading={usecase.isRevoking}
+                loadingText='Disconnecting...'
+                onClick={usecase.toggleRevokeOpen}
+                rightSpinner={
+                  <Spinner
+                    label='Disconnecting...'
+                    className='text-primary-300 fill-primary-700 size-3'
+                  />
+                }
+              >
+                <Icon stroke='none' name='dot-live-success' />
+                <p className='text-xs font-medium'>Connected</p>
+              </Button>
+            </div>
           </div>
 
-          <div className='flex items-center gap-1'>
-            <Button
-              size='xxs'
-              variant='ghost'
-              isLoading={usecase.isRevoking}
-              loadingText='Disconnecting...'
-              onClick={usecase.toggleRevokeOpen}
-              rightSpinner={
-                <Spinner
-                  label='Disconnecting...'
-                  className='text-primary-300 fill-primary-700 size-3'
-                />
-              }
-            >
-              <Icon stroke='none' name='dot-live-success' />
-              <p className='text-xs font-medium'>Connected</p>
-            </Button>
+          <div className='mt-3 flex justify-between'>
+            <div className='flex justify-center gap-2 items-center pl-7'>
+              <label className='text-sm font-medium'>Accounting method</label>
+            </div>
+            <ButtonGroup className='w-fit'>
+              <Button
+                size='xxs'
+                onClick={usecase.toggleAccountingMethod}
+                className={cn(
+                  usecase.accountingMethod === 'cash' && 'selected',
+                )}
+              >
+                Cash basis
+              </Button>
+              <Button
+                size='xxs'
+                onClick={usecase.toggleAccountingMethod}
+                className={cn(
+                  usecase.accountingMethod === 'accrual' && 'selected',
+                )}
+              >
+                Accrual
+              </Button>
+            </ButtonGroup>
           </div>
-        </div>
+        </>
       )}
 
       <ConfirmDeleteDialog
