@@ -116,24 +116,24 @@ export const ContractEndModal = observer(
       >
         <ModalOverlay className='z-50' />
         <ModalContent className='rounded-2xl z-[999]'>
-          <ModalHeader className='pb-3'>
-            <h2 className='text-lg mt-2 font-semibold'>
+          <ModalHeader className='pb-1'>
+            <h2 className='text-base font-semibold'>
               End {organizationName}’s contract?
             </h2>
           </ModalHeader>
-          <ModalBody className='flex flex-col gap-3'>
-            <p className='text-base'>
+          <ModalBody className='flex flex-col gap-1'>
+            <p className='text-sm mb-2'>
               Ending this contract{' '}
               <span className='font-medium mr-1'>will close the renewal</span>
               and set the
               <span className='font-medium ml-1'>ARR to zero.</span>
             </p>
-            <p className='text-base'>Let’s end it:</p>
+            <p className='text-sm'>Let’s end it:</p>
 
             <RadioGroup
               value={value}
+              className='flex flex-col gap-1 text-sm'
               onValueChange={handleChangeEndsOnOption}
-              className='flex flex-col gap-1 text-base'
             >
               <Radio value={EndContract.Now}>
                 <span className='mr-1'>Now</span>
@@ -171,7 +171,7 @@ export const ContractEndModal = observer(
           </ModalBody>
           <ModalFooter className='p-6 flex'>
             <Button
-              size='lg'
+              size='sm'
               variant='outline'
               className='w-full'
               colorScheme='grayModern'
@@ -180,7 +180,7 @@ export const ContractEndModal = observer(
               Cancel
             </Button>
             <Button
-              size='lg'
+              size='sm'
               variant='outline'
               colorScheme='error'
               className='ml-3 w-full'

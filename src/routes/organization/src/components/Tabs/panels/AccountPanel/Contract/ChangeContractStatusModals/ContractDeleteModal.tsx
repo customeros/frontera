@@ -6,8 +6,6 @@ import { observer } from 'mobx-react-lite';
 import { cn } from '@ui/utils/cn';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
-import { Trash01 } from '@ui/media/icons/Trash01.tsx';
-import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
 
 interface ContractStartModalProps {
   contractId: string;
@@ -36,11 +34,7 @@ export const ContractDeleteModal = observer(
         >
           <div>
             <div>
-              <FeaturedIcon size='lg' colorScheme='error'>
-                <Trash01 className='text-error-600' />
-              </FeaturedIcon>
-
-              <h1 className={cn('text-lg font-semibold  mt-5 mb-1')}>
+              <h1 className={cn('text-base font-semibold')}>
                 Delete this contract?
               </h1>
             </div>
@@ -53,7 +47,7 @@ export const ContractDeleteModal = observer(
 
           <div className='mt-6 flex'>
             <Button
-              size='lg'
+              size='sm'
               variant='outline'
               onClick={onClose}
               className='w-full'
@@ -61,7 +55,7 @@ export const ContractDeleteModal = observer(
               Cancel
             </Button>
             <Button
-              size='lg'
+              size='sm'
               variant='outline'
               colorScheme='error'
               className='ml-3 w-full'

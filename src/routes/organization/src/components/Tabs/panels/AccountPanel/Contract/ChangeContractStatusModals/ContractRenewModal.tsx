@@ -8,8 +8,6 @@ import { Button } from '@ui/form/Button/Button';
 import { ContractStatus } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
 import { Radio, RadioGroup } from '@ui/form/Radio/Radio';
-import { RefreshCw05 } from '@ui/media/icons/RefreshCw05';
-import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
 import { DatePickerUnderline } from '@ui/form/DatePicker/DatePickerUnderline';
 
 interface ContractEndModalProps {
@@ -110,14 +108,8 @@ export const ContractRenewsModal = ({
     <>
       <div>
         <div>
-          {!contractStore?.tempValue?.upcomingInvoices?.length && (
-            <FeaturedIcon size='lg' colorScheme='primary'>
-              <RefreshCw05 className='text-primary-600' />
-            </FeaturedIcon>
-          )}
-
           <h1
-            className={cn('text-lg font-semibold  mb-1', {
+            className={cn('text-base font-semibold  mb-2', {
               'mt-4': !contractStore?.tempValue?.upcomingInvoices?.length,
             })}
           >
@@ -127,7 +119,7 @@ export const ContractRenewsModal = ({
           </h1>
         </div>
 
-        <p className='flex flex-col mb-3 text-base'>
+        <p className='flex flex-col mb-3 text-sm'>
           Renewing this contract will extend it with another{' '}
           {getCommittedPeriodLabel(
             contractStore?.tempValue.committedPeriodInMonths,
@@ -137,8 +129,8 @@ export const ContractRenewsModal = ({
         {!renewsToday && (
           <RadioGroup
             value={value}
+            className='flex flex-col gap-1 text-sm'
             onValueChange={handleChangeEndsOnOption}
-            className='flex flex-col gap-1 text-base'
           >
             <Radio value={RenewContract.Now}>
               <span>Now</span>
@@ -173,7 +165,7 @@ export const ContractRenewsModal = ({
 
       <div className='flex'>
         <Button
-          size='lg'
+          size='sm'
           variant='outline'
           onClick={onClose}
           className='w-full'
@@ -182,7 +174,7 @@ export const ContractRenewsModal = ({
           Cancel
         </Button>
         <Button
-          size='lg'
+          size='sm'
           variant='outline'
           colorScheme='primary'
           className='ml-3 w-full'
