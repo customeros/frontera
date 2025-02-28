@@ -57,7 +57,7 @@ export const ProductCard = observer(
       : null;
 
     const isClosed =
-      !!liveServices?.length &&
+      liveServices?.length === 0 &&
       liveServices.every((service) => service?.tempValue?.closed);
 
     const handleCloseChange = (closed: boolean) => {
@@ -108,7 +108,9 @@ export const ProductCard = observer(
               },
             )}
           >
-            {sku?.value?.name || thisGroupLineItems?.[0]?.value?.description}
+            {sku?.value?.name ||
+              thisGroupLineItems?.[0]?.value?.description ||
+              'Unnamed product'}
           </p>
 
           <div className='flex items-baseline'>
