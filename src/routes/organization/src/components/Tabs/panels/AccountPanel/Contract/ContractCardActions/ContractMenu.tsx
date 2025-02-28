@@ -69,19 +69,17 @@ export const ContractMenu = ({
               </MenuItem>
             </>
           )}
-          {status == ContractStatus.Draft && (
-            <MenuItem
-              className='group'
-              data-test='contract-menu-delete-contract'
-              onClick={() => onStatusModalOpen(ContractStatusModalMode.Delete)}
-            >
-              <Icon
-                name='trash-01'
-                className='text-grayModern-500 group-hover:text-grayModern-700'
-              />
-              Delete contract
-            </MenuItem>
-          )}
+          <MenuItem
+            className='group'
+            data-test='contract-menu-delete-contract'
+            onClick={() => onStatusModalOpen(ContractStatusModalMode.Delete)}
+          >
+            <Icon
+              name='trash-01'
+              className='text-grayModern-500 group-hover:text-grayModern-700'
+            />
+            Archive contract
+          </MenuItem>
         </MenuList>
       </Menu>
     </>
