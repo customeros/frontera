@@ -247,8 +247,11 @@ export type IconName =
   | 'x-square'
   | 'brackets-plus'
   | 'file-plus-02'
-  | 'filter-lines';
-
+  | 'filter-lines'
+  | 'clock-fast-forward'
+  | 'slash-circle-01'
+  | 'info-circle'
+  | 'refresh-cw-02';
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;
   className?: string;

@@ -28,15 +28,16 @@ export const PaymentStatusSelect = observer(
     const invoiceStatus = invoice?.value?.status;
     const Status = renderStatusNode(invoiceStatus) ?? <>{invoiceStatus}</>;
     const isPaid = invoiceStatus === InvoiceStatus.Paid;
+    const isProcessing = invoiceStatus === InvoiceStatus.PaymentProcessing;
 
-    if (!invoice) return;
+    if (!invoice) return null;
 
     return (
       <Menu>
         <MenuButton
           asChild
           onClick={(e) => e.stopPropagation()}
-          disabled={invoiceStatus === InvoiceStatus.Scheduled}
+          disabled={invoiceStatus === InvoiceStatus.Scheduled || isProcessing}
         >
           {cloneElement(Status, {
             className: cn(
