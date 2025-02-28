@@ -225,7 +225,7 @@ export const OrganizationTableActions = observer(
                 <div className='bg-grayModern-700 px-3 py-2 rounded-s-lg'>
                   <p
                     onClick={clearSelection}
-                    className='flex text-grayModern-25 text-sm font-semibold text-nowrap leading-5 outline-dashed outline-1 rounded-[2px] ougrayModerne-grayModern-400 pl-2 prgrayModernover:bg-grayModern-800 transition-colors cursor-pointer'
+                    className='flex text-grayModern-25 text-sm font-semibold text-nowrap leading-5 outline-dashed outline-1 rounded-[2px] outline-grayModern-400 pl-2 pr-1 hover:bg-grayModern-800 transition-colors cursor-pointer'
                   >
                     {`${selectCount} selected`}
                     <span className='ml-1 inline-flex items-center'>
