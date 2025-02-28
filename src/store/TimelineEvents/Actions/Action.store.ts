@@ -3,7 +3,7 @@ import { RootStore } from '@store/root';
 import { Operation } from '@store/types';
 import { makeAutoObservable } from 'mobx';
 import { Transport } from '@infra/transport';
-import { UserStore } from '@store/Users/User.store';
+import { User } from '@store/Users/User.dto';
 import { Store, makeAutoSyncable } from '@store/store';
 
 import { Action, ActionType, DataSource } from '@graphql/types';
@@ -52,7 +52,8 @@ export class ActionStore implements Store<Action> {
       source: DataSource.Openline,
       __typename: 'Action',
       content: '',
-      createdBy: UserStore.getDefaultValue(),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      createdBy: User.default() as any,
       metadata: '',
     };
   }

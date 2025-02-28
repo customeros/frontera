@@ -1,4 +1,4 @@
-import type { UserStore } from '@store/Users/User.store';
+import type { User } from '@store/Users/User.dto';
 import type { GetOrganizationsByIdsQuery } from '@infra/repositories/organization/queries/getOrganizationsByIds.generated';
 import type { SaveOrganizationMutationVariables } from '@infra/repositories/organization/mutations/saveOrganization.generated';
 
@@ -54,7 +54,7 @@ export class Organization extends Entity<OrganizationDatum> {
   }
 
   @computed
-  get owner(): UserStore | null {
+  get owner(): User | null {
     if (!this.value.owner) return null;
     const user = this.store.root.users.value.get(
       this.value?.owner.id as string,

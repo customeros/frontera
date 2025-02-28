@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { ArchiveSkuUsecase } from '@domain/usecases/settings-products/archive-sku.usecase';
+import { ArchiveSkuUsecase } from '@domain/usecases/settings/products/archive-sku.usecase';
 
 import { cn } from '@ui/utils/cn';
 import { Edit03 } from '@ui/media/icons/Edit03';

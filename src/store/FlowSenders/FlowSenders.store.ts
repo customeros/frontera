@@ -8,7 +8,7 @@ import { FlowSendersService } from '@store/FlowSenders/__service__';
 import { GroupStore, makeAutoSyncableGroup } from '@store/group-store';
 import { FlowSenderStore } from '@store/FlowSenders/FlowSender.store.ts';
 
-import { FlowSender } from '@graphql/types';
+import { User, FlowSender } from '@graphql/types';
 
 export class FlowSendersStore implements GroupStore<FlowSender> {
   version = 0;
@@ -44,7 +44,7 @@ export class FlowSendersStore implements GroupStore<FlowSender> {
     const tempId = newFlowSender.id;
 
     newFlowSender.value.flow = flow?.value;
-    newFlowSender.value.user = user?.value;
+    newFlowSender.value.user = user?.value as User;
 
     let serverId = '';
 

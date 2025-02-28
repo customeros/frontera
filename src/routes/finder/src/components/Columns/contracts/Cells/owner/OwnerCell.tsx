@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { cn } from '@ui/utils/cn';
 import { useStore } from '@shared/hooks/useStore';
 import { SelectOption } from '@shared/types/SelectOptions';
+import { User } from '@shared/types/__generated__/graphql.types';
 import { Select, getContainerClassNames } from '@ui/form/Select/Select';
 
 interface OwnerProps {
@@ -59,7 +60,7 @@ export const OwnerCell = observer(({ id }: OwnerProps) => {
       if (!option || !option?.value) {
         value.owner = null;
       } else {
-        value.owner = targetOwner?.value;
+        value.owner = targetOwner?.value as User;
       }
 
       return value;

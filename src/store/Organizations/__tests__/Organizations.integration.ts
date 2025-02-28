@@ -1,6 +1,7 @@
 import { it, expect, describe } from 'vitest';
 import { Transport } from '@infra/transport.ts';
 import { VitestHelper } from '@store/vitest-helper.ts';
+import { UserRepository } from '@infra/repositories/user';
 import { OrganizationRepository } from '@infra/repositories/organization';
 
 import {
@@ -11,7 +12,6 @@ import {
   OpportunityRenewalLikelihood,
 } from '@graphql/types';
 
-import { UserService } from '../../Users/User.service';
 import { ContractService } from '../../Contracts/Contract.service';
 import { ContractLineItemService } from '../../ContractLineItems/ContractLineItem.service';
 
@@ -19,7 +19,7 @@ const transport = new Transport();
 const organizationRepository = OrganizationRepository.getInstance();
 const contractService = ContractService.getInstance(transport);
 const contractLineItemsService = ContractLineItemService.getInstance(transport);
-const userService = UserService.getInstance(transport);
+const userService = new UserRepository();
 
 describe('organizationRepository - Integration Tests', () => {
   it('gets organizations', async () => {

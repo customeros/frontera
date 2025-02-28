@@ -3,7 +3,7 @@ import { RootStore } from '@store/root';
 import { Operation } from '@store/types';
 import { makeAutoObservable } from 'mobx';
 import { Transport } from '@infra/transport';
-import { UserStore } from '@store/Users/User.store';
+import { User } from '@store/Users/User.dto';
 import { Store, makeAutoSyncable } from '@store/store';
 
 import { Note, DataSource } from '@graphql/types';
@@ -51,7 +51,8 @@ const defaultValue: Note = {
   source: DataSource.Openline,
   __typename: 'Note',
   content: '',
-  createdBy: UserStore.getDefaultValue(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createdBy: User.default() as any,
   includes: [],
   sourceOfTruth: DataSource.Openline,
   updatedAt: new Date().toISOString(),

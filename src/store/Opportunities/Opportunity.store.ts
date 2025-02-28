@@ -4,7 +4,7 @@ import { Channel } from 'phoenix';
 import { P, match } from 'ts-pattern';
 import { Operation } from '@store/types';
 import { Transport } from '@infra/transport';
-import { UserStore } from '@store/Users/User.store';
+import { User } from '@store/Users/User.dto';
 import { Store, makeAutoSyncable } from '@store/store';
 import { runInAction, makeAutoObservable } from 'mobx';
 import { makeAutoSyncableGroup } from '@store/group-store';
@@ -302,7 +302,8 @@ const makeDefaultValue = (): Opportunity => ({
   maxAmount: 0,
   name: '',
   nextSteps: '',
-  owner: UserStore.getDefaultValue(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  owner: User.default() as any,
   stageLastUpdated: '',
   renewalAdjustedRate: 0,
   renewalApproved: false,
