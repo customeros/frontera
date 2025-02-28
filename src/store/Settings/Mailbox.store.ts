@@ -1,13 +1,15 @@
 import { RootStore } from '@store/root';
 import { Syncable } from '@store/syncable';
 import { Transport } from '@infra/transport';
-import { action, override, computed, makeObservable } from 'mobx';
+import { action, override, makeObservable } from 'mobx';
+
+import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
 
 import { MailboxesService } from './__service__/Mailboxes/Mailboxes.service';
-import { GetMailboxesQuery } from './__service__/Mailboxes/getMailboxes.generated';
+import { MailboxesQuery } from './__service__/Mailboxes/getMailboxes.generated';
 
 export type Mailbox = NonNullable<
-  GetMailboxesQuery['mailstack_Mailboxes'][number]
+  MailboxesQuery['mailstack_Mailboxes'][number]
 >;
 
 export class MailboxStore extends Syncable<Mailbox> {
@@ -28,14 +30,7 @@ export class MailboxStore extends Syncable<Mailbox> {
       getId: override,
       invalidate: action,
       getChannelName: override,
-      user: computed,
     });
-  }
-
-  get user() {
-    if (!this.value.userId) return null;
-
-    return this.root.users.value.get(this.value.userId) ?? null;
   }
 
   getId() {
@@ -52,14 +47,13 @@ export class MailboxStore extends Syncable<Mailbox> {
 
   static getDefaultValue(): Mailbox {
     return {
-      domain: '',
-      mailbox: crypto.randomUUID(),
-      userId: '',
-      rampUpMax: 0,
+      provider: MailboxProvider.Google,
+      mailbox: '',
+      usedInFlows: false,
       rampUpRate: 0,
+      rampUpMax: 0,
       rampUpCurrent: 0,
-      scheduledEmails: 0,
-      currentFlowIds: [],
+      needsManualRefresh: false,
     };
   }
 }

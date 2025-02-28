@@ -2461,26 +2461,6 @@ export type LogEntryUpdateInput = {
 
 export type Mailbox = {
   __typename?: 'Mailbox';
-  created: Scalars['Time']['output'];
-  currentFlowIds?: Maybe<Array<Scalars['ID']['output']>>;
-  domain: Scalars['String']['output'];
-  mailbox: Scalars['String']['output'];
-  rampUpCurrent: Scalars['Int']['output'];
-  rampUpMax: Scalars['Int']['output'];
-  rampUpRate: Scalars['Int']['output'];
-  scheduledEmails: Scalars['Int64']['output'];
-  usedInFlows: Scalars['Boolean']['output'];
-  userId?: Maybe<Scalars['ID']['output']>;
-};
-
-export enum MailboxProvider {
-  Google = 'GOOGLE',
-  Mailstack = 'MAILSTACK',
-  Microsoft = 'MICROSOFT',
-}
-
-export type MailboxV2 = {
-  __typename?: 'MailboxV2';
   mailbox: Scalars['String']['output'];
   needsManualRefresh: Scalars['Boolean']['output'];
   provider: MailboxProvider;
@@ -2489,6 +2469,12 @@ export type MailboxV2 = {
   rampUpRate: Scalars['Int']['output'];
   usedInFlows: Scalars['Boolean']['output'];
 };
+
+export enum MailboxProvider {
+  Google = 'GOOGLE',
+  Mailstack = 'MAILSTACK',
+  Microsoft = 'MICROSOFT',
+}
 
 export type MarkdownEvent = {
   __typename?: 'MarkdownEvent';
@@ -2737,7 +2723,6 @@ export type Mutation = {
   logEntry_Update: Scalars['ID']['output'];
   mailstack_GetPaymentIntent: GetPaymentIntent;
   mailstack_RegisterBuyDomainsWithMailboxes: Result;
-  mailstack_SetUser: Result;
   meeting_AddNewLocation: Meeting;
   meeting_AddNote: Meeting;
   meeting_Create: Meeting;
@@ -3277,11 +3262,6 @@ export type MutationMailstack_RegisterBuyDomainsWithMailboxesArgs = {
   redirectWebsite?: InputMaybe<Scalars['String']['input']>;
   test: Scalars['Boolean']['input'];
   usernames: Array<Scalars['String']['input']>;
-};
-
-export type MutationMailstack_SetUserArgs = {
-  mailbox: Scalars['String']['input'];
-  userId: Scalars['ID']['input'];
 };
 
 export type MutationMeeting_AddNewLocationArgs = {
@@ -4355,7 +4335,6 @@ export type Query = {
   mailstack_DomainPurchaseSuggestions: Array<Scalars['String']['output']>;
   mailstack_Domains: Array<Scalars['String']['output']>;
   mailstack_Mailboxes: Array<Mailbox>;
-  mailstack_MailboxesV2: Array<MailboxV2>;
   mailstack_UniqueUsernames: Array<Scalars['String']['output']>;
   meeting: Meeting;
   opportunities_LinkedToOrganizations: OpportunityPage;

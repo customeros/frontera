@@ -2,11 +2,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 
-import { Plus } from '@ui/media/icons/Plus';
+import { Icon } from '@ui/media/Icon';
+import { Logo } from '@ui/media/Logo';
 import { Table } from '@ui/presentation/Table';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
+import { Microsoft } from '@ui/media/logos/Microsoft';
 import { LinkExternal01 } from '@ui/media/icons/LinkExternal01';
+import { Menu, MenuList, MenuItem, MenuButton } from '@ui/overlay/Menu/Menu';
 
 import { columns } from './columns';
 
@@ -34,15 +37,40 @@ export const MailboxTable = observer(() => {
             Jump to flows
           </Button>
         </div>
-        <Button
-          size='xs'
-          onClick={goToBuy}
-          leftIcon={<Plus />}
-          colorScheme='primary'
-          dataTest='new-mailboxes'
-        >
-          New mailboxes
-        </Button>
+
+        <Menu>
+          <MenuButton asChild>
+            <Button
+              size='xs'
+              colorScheme='primary'
+              leftIcon={<Icon name='plus' />}
+            >
+              Mailboxes
+            </Button>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={goToBuy}>
+              <div className='flex items-center gap-2'>
+                <Icon name='plus' className='mr-2' />
+                Buy new mailboxes
+              </div>
+            </MenuItem>
+            <MenuItem
+              className='text-sm'
+              onClick={() => store.settings.oauthToken.enableSync('google')}
+            >
+              <Logo name='google' className='mr-1 size-5' />
+              Google Workspace
+            </MenuItem>
+            <MenuItem
+              className='text-sm'
+              onClick={() => store.settings.oauthToken.enableSync('azure-ad')}
+            >
+              <Microsoft className='mr-2' />
+              Microsoft Outlook
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </div>
 
       <Table

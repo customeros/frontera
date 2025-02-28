@@ -251,7 +251,9 @@ export type IconName =
   | 'clock-fast-forward'
   | 'slash-circle-01'
   | 'info-circle'
-  | 'refresh-cw-02';
+  | 'refresh-cw-02'
+  | 'refresh-cw-01';
+
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;
   className?: string;

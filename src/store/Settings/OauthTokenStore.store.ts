@@ -64,14 +64,14 @@ export class OauthTokenStore {
     }
   }
 
-  async enableSync(tokenType: string, provider: string) {
+  async enableSync(provider: string) {
     if (this.root.demoMode) {
       return;
     }
 
     try {
       const { data } = await this.transport.http.get<{ url: string }>(
-        `/enable/${provider}-sync?origin=${window.location.pathname}${window.location.search}&type=${tokenType}`,
+        `/enable/${provider}-sync?origin=${window.location.pathname}${window.location.search}`,
       );
 
       window.location.href = data.url;

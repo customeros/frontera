@@ -3,18 +3,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { cn } from '@ui/utils/cn';
 import { Image } from '@ui/media/Image/Image';
-import { Link01 } from '@ui/media/icons/Link01';
-// import { Receipt } from '@ui/media/icons/Receipt';
 import { useStore } from '@shared/hooks/useStore';
-// import { Dataflow03 } from '@ui/media/icons/Dataflow03';
 import { IconButton } from '@ui/form/IconButton/IconButton';
 import { ArrowNarrowLeft } from '@ui/media/icons/ArrowNarrowLeft';
-import { SidenavItem } from '@shared/components/RootSidenav/components/SidenavItem';
 import { useKeyboardNavigation } from '@shared/components/RootSidenav/hooks/useKeyboardNavigation';
 
 import { WorkspaceSection } from './components';
+import { PersonalSection } from './components/PersonalSection';
 import logoCustomerOs from '../../../../src/assets/customer-os-small.png';
 
 export const SettingsSidenav = observer(() => {
@@ -24,7 +20,7 @@ export const SettingsSidenav = observer(() => {
 
   const [lastActivePosition, setLastActivePosition] = useLocalStorage(
     `customeros-player-last-position`,
-    { ['settings']: 'oauth', root: 'finder' },
+    { ['settings']: 'mailboxes', root: 'finder' },
   );
 
   const hasCampaign = searchParams?.get('campaign') || false;
@@ -100,7 +96,11 @@ export const SettingsSidenav = observer(() => {
               checkIsActive={checkIsActive}
               handleItemClick={handleItemClick}
             />
-            <SidenavItem
+            <PersonalSection
+              checkIsActive={checkIsActive}
+              handleItemClick={handleItemClick}
+            />
+            {/* <SidenavItem
               label='Accounts'
               dataTest='settings-accounts'
               onClick={handleItemClick('oauth')}
@@ -115,7 +115,8 @@ export const SettingsSidenav = observer(() => {
                   )}
                 />
               }
-            />
+            /> */}
+
             {/* <FieldsSection
           checkIsActive={checkIsActive}
           handleItemClick={handleItemClick}

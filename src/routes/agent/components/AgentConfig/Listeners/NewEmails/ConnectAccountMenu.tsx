@@ -25,13 +25,6 @@ export const ConnectAccountMenu = observer(
     const iconPickerTriggerRef = useRef<HTMLButtonElement>(null);
     const shouldOpenIconPickerRef = useRef(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const currentUser = store.users
-      .toArray()
-      .find((e) =>
-        e.value.emails?.some((d) =>
-          d.email?.includes(store.session.value.profile.email ?? ''),
-        ),
-      );
 
     useEffect(() => {
       if (shouldOpenIconPickerRef.current && !menuOpen) {
@@ -45,15 +38,7 @@ export const ConnectAccountMenu = observer(
       }
     }, [menuOpen]);
 
-    const userMailboxes = store.mailboxes.toArray().filter((mailbox) => {
-      if (mailbox.value.userId !== currentUser?.value.id) {
-        return false;
-      }
-
-      const mailboxAddress = mailbox.value.mailbox;
-
-      return !usecase.emails.some((item) => item.email === mailboxAddress);
-    });
+    const userMailboxes = store.mailboxes.toArray();
 
     // const handleMailboxPopoverOpen = useCallback(() => {
     //   shouldOpenIconPickerRef.current = true;
@@ -67,18 +52,14 @@ export const ConnectAccountMenu = observer(
           <MenuList align='center' className='w-[230px]'>
             <MenuItem
               className='text-sm'
-              onClick={() =>
-                store.settings.oauthToken.enableSync('PERSONAL', 'google')
-              }
+              onClick={() => store.settings.oauthToken.enableSync('google')}
             >
               <Google />
               Google Workspace
             </MenuItem>
             <MenuItem
               className='text-sm'
-              onClick={() =>
-                store.settings.oauthToken.enableSync('PERSONAL', 'azure-ad')
-              }
+              onClick={() => store.settings.oauthToken.enableSync('azure-ad')}
             >
               <Microsoft />
               Microsoft Outlook
