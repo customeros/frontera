@@ -27,7 +27,6 @@ export const FiltersContainer = observer(() => {
   const tableViewType = tableViewDef?.value.tableType;
 
   const tableType = tableViewDef?.value?.tableType;
-  const isPreset = tableViewDef?.value?.isPreset;
   const filters = tableViewDef?.getFilters()?.AND?.length > 0;
 
   const handleAddToMyViews: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -77,36 +76,40 @@ export const FiltersContainer = observer(() => {
           store.ui.isEditingDefaultFilters && 'bg-grayModern-50',
         )}
       >
+        {tableViewDef?.hasFilters() && !store.ui.isEditingDefaultFilters && (
+          <>
+            <Button
+              size='xs'
+              variant='ghost'
+              onClick={() => tableViewDef?.removeFilters()}
+            >
+              Clear
+            </Button>
+            {filters && (
+              <Button size='xs' onClick={handleAddToMyViews}>
+                Save to...
+              </Button>
+            )}
+            <Divider className='rotate-90 w-5 mx-[-6px]' />
+          </>
+        )}
         {tableViewDef?.hasDefaultFilters() &&
           !store.ui.isEditingDefaultFilters && (
             <>
               <Button
                 size='xs'
+                variant='ghost'
+                colorScheme='grayModern'
                 onClick={() => store.ui.setIsEditingDefaultFilters(true)}
                 leftIcon={<Icon className='size-4' name='filter-lines' />}
               >
                 {tableViewDef.getNumberOfDefaultFilters()} default
               </Button>
-              <Divider className='rotate-90 w-5 mx-[-6px]' />
             </>
           )}
 
         {!store.ui.isEditingDefaultFilters && (
           <>
-            {tableViewDef?.hasFilters() && (
-              <Button
-                size='xs'
-                variant='ghost'
-                onClick={() => tableViewDef?.removeFilters()}
-              >
-                Clear
-              </Button>
-            )}
-            {isPreset && filters && (
-              <Button size='xs' onClick={handleAddToMyViews}>
-                Save to...
-              </Button>
-            )}
             {filters && <Divider className='rotate-90 w-5 mx-[-6px]' />}
             {tableViewType && (
               <ViewSettings tableId={tableId} type={tableViewType} />
