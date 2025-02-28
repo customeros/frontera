@@ -65,7 +65,7 @@ export const Header = observer(() => {
   };
 
   return (
-    <div className='w-full border-b border-b-grayModern-200 px-3 py-[6px] flex justify-between items-center'>
+    <div className='w-full border-b border-b-grayModern-200 px-3 py-[5px] flex justify-between items-center'>
       <div className='flex items-center gap-1'>
         <Link
           to='/agents'
