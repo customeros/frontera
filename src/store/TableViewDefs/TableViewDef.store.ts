@@ -227,6 +227,9 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
   ) => {
     const favoritePreset = this.getById(id)?.getPayloadToCopy();
 
+    const favoriteDefaultFilters = this.getById(id)?.getDefaultFilters().AND;
+    const favoriteFilters = this.getById(id)?.getFilters().AND;
+
     const newTableViewDef = new TableViewDef(
       this,
       TableViewDef.default({
@@ -241,7 +244,9 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
         isPreset: false,
         isShared,
         filters: '',
-        defaultFilters: favoritePreset?.filters || '',
+        defaultFilters: JSON.stringify({
+          AND: [...favoriteDefaultFilters, ...favoriteFilters],
+        }),
       }),
     );
 

@@ -197,7 +197,7 @@ export const ContactDetails = observer(
                           dataTest='org-people-contact-name'
                           onFocus={(e) => e.target.select()}
                           onKeyDown={(e) => e.stopPropagation()}
-                          className='placeholder:font-medium font-medium min-w-[60px] w-[200px]'
+                          className='placeholder:font-medium font-medium min-w-[60px] w-[300px]'
                           onBlur={() => {
                             contactDetails.changeContactName();
                           }}
