@@ -1,3 +1,4 @@
+import { Profile } from './panels/Personal/Profile';
 import { General } from './panels/Workspace/General';
 // import { BillingPanel } from './panels/BillingPanel';
 import { Products } from './panels/Workspace/Products';
@@ -32,6 +33,8 @@ export const Panels = ({ tab }: PanelsProps) => {
       return <Mailboxes />;
     case 'products':
       return <Products />;
+    case 'profile':
+      return <Profile />;
 
     default:
       return <Mailboxes />;

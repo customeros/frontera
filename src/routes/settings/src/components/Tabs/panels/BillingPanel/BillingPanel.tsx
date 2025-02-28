@@ -14,7 +14,6 @@ import {
   TenantSettingsQuery,
   useTenantSettingsQuery,
 } from '@settings/graphql/getTenantSettings.generated';
-import { ToggleCustomerBillingUsecase } from '@domain/usecases/settings-billing-profiles/toggle-customer-billing.usecase.ts';
 import { BankTransferSelectionContextProvider } from '@settings/components/Tabs/panels/BillingPanel/context/BankTransferSelectionContext';
 
 import { cn } from '@ui/utils/cn';
@@ -35,7 +34,6 @@ import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog
 
 import { TenantBillingPanelDetailsForm } from './components';
 import { TenantBillingDetailsDto } from './TenantBillingProfile.dto';
-const toggleBillingUsecase = new ToggleCustomerBillingUsecase();
 
 export const BillingPanel = observer(() => {
   const store = useStore();
@@ -58,7 +56,7 @@ export const BillingPanel = observer(() => {
     },
   });
   const tenantSettingsData = store.settings.tenant.value;
-  const { open: isOpen, onOpen, onClose } = useDisclosure();
+  const { open: isOpen, onClose } = useDisclosure();
 
   const updateTenantSettingsMutation = useUpdateTenantSettingsMutation(client, {
     onMutate: ({ input: { ...newSettings } }) => {
@@ -281,14 +279,7 @@ export const BillingPanel = observer(() => {
     setDefaultValues(defaultValues);
   }, [defaultValues]);
 
-  const handleToggleInvoices = () => {
-    if (!tenantSettingsData?.billingEnabled) {
-      toggleBillingUsecase.execute(true);
-
-      return;
-    }
-    onOpen();
-  };
+  const handleToggleInvoices = () => {};
 
   const billingEnabledStyle = tenantSettingsData?.billingEnabled
     ? 'opacity-0'
@@ -385,12 +376,10 @@ export const BillingPanel = observer(() => {
         isOpen={isOpen}
         hideCloseButton
         onClose={onClose}
+        onConfirm={() => {}}
         confirmButtonLabel='Disable'
         label='Disable Customer billing?'
         isLoading={updateTenantSettingsMutation.isPending}
-        onConfirm={() => {
-          toggleBillingUsecase.execute(false);
-        }}
         body='Disabling Customer billing will stop the sending of invoices, and prevent customers from being able to pay.'
       />
     </div>

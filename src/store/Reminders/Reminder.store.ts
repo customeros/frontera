@@ -4,7 +4,6 @@ import { RootStore } from '@store/root';
 import { Operation } from '@store/types';
 import { addDays } from 'date-fns/addDays';
 import { Transport } from '@infra/transport';
-import { UserStore } from '@store/Users/User.store';
 import { runInAction, makeAutoObservable } from 'mobx';
 import { Store, makeAutoSyncable } from '@store/store';
 
@@ -88,5 +87,4 @@ const getDefaultValue = (): Reminder => ({
     seconds: 0,
     milliseconds: 0,
   }).toISOString(),
-  owner: UserStore.getDefaultValue(),
 });
