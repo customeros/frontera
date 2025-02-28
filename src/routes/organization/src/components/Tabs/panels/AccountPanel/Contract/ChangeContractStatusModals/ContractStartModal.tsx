@@ -6,9 +6,7 @@ import { cn } from '@ui/utils/cn';
 import { DateTimeUtils } from '@utils/date';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
-import { DotLive } from '@ui/media/icons/DotLive';
 import { Invoice, ContractStatus } from '@graphql/types';
-import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
 import { formatCurrency } from '@utils/getFormattedCurrencyNumber';
 import { DatePickerUnderline } from '@ui/form/DatePicker/DatePickerUnderline';
 
@@ -77,17 +75,7 @@ export const ContractStartModal = ({
       >
         <div>
           <div>
-            {!nextInvoice && (
-              <FeaturedIcon size='lg' colorScheme='primary'>
-                <DotLive className='text-primary-600' />
-              </FeaturedIcon>
-            )}
-
-            <h1
-              className={cn('text-lg font-semibold  mb-1', {
-                'mt-4': !nextInvoice,
-              })}
-            >
+            <h1 className={cn('text-base font-semibold  mb-2')}>
               {status === ContractStatus.OutOfContract
                 ? 'Renew contract'
                 : 'Make this contract live?'}
@@ -139,9 +127,9 @@ export const ContractStartModal = ({
           </div>
         </div>
 
-        <div className='mt-6 flex'>
+        <div className='mt-4 flex'>
           <Button
-            size='lg'
+            size='sm'
             variant='outline'
             onClick={onClose}
             className='w-full'
@@ -149,7 +137,7 @@ export const ContractStartModal = ({
             Not now
           </Button>
           <Button
-            size='lg'
+            size='sm'
             variant='outline'
             colorScheme='primary'
             className='ml-3 w-full'
