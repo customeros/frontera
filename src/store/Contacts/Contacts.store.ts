@@ -563,39 +563,6 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     }
   }
 
-  async remove(id: string) {
-    const organizationId = this.value.get(id)?.organizationId;
-
-    try {
-      runInAction(() => {
-        if (organizationId) {
-          const organization = this.root.organizations.getById(organizationId);
-
-          const foundIdx = organization?.value?.contacts.findIndex(
-            (c) => c === id,
-          );
-
-          if (typeof foundIdx === 'number' && foundIdx > -1) {
-            organization?.draft();
-            organization?.value?.contacts.splice(foundIdx, 1);
-            organization?.commit({ syncOnly: true });
-          }
-        }
-        this.value.delete(id);
-      });
-
-      await this.service.deleteContact({ contactId: id });
-    } catch (e) {
-      runInAction(() => {
-        this.error = (e as Error)?.message;
-      });
-    } finally {
-      runInAction(() => {
-        this.sync({ action: 'DELETE', ids: [id] });
-      });
-    }
-  }
-
   async softDelete(id: string) {
     const organizationId = this.value.get(id)?.organizationId;
 
@@ -629,6 +596,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
       runInAction(() => {
         this.sync({ action: 'DELETE', ids: [id] });
         this.root.organizations.invalidate(organizationId || '');
+        this.refreshCurrentView();
       });
     }
   }
