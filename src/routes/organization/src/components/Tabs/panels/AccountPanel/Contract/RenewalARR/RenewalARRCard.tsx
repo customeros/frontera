@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { cn } from '@ui/utils/cn';
 import { DateTimeUtils } from '@utils/date';
@@ -24,14 +25,23 @@ import { getRenewalLikelihoodLabel } from '../../utils';
 interface RenewalARRCardProps {
   hasEnded: boolean;
   startedAt: string;
+  contractId: string;
   opportunityId: string;
   currency?: string | null;
-  contractId?: string | null;
 }
 export const RenewalARRCard = observer(
-  ({ startedAt, hasEnded, opportunityId, currency }: RenewalARRCardProps) => {
+  ({
+    startedAt,
+    hasEnded,
+    opportunityId,
+    currency,
+    contractId,
+  }: RenewalARRCardProps) => {
     const store = useStore();
     const id = useParams()?.id as string;
+    const contractStore = store.contracts.value.get(
+      contractId,
+    ) as ContractStore;
 
     const opportunityStore = store.opportunities.value.get(opportunityId);
     const opportunity = opportunityStore?.value;
@@ -68,17 +78,15 @@ export const RenewalARRCard = observer(
       modal.onClose();
     };
 
-    const formattedMaxAmount = formatCurrency(
-      opportunity?.maxAmount ?? 0,
-      2,
-      currency || 'USD',
-    );
-    const formattedAmount = formatCurrency(
-      hasEnded ? 0 : opportunity?.amount ?? 0,
-      2,
-      currency || 'USD',
-    );
+    const maxAmountValue = Number(opportunity?.maxAmount ?? 0);
+    const formattedMaxAmount = !isNaN(maxAmountValue)
+      ? formatCurrency(maxAmountValue, 2, currency || 'USD')
+      : formatCurrency(0, 2, currency || 'USD');
 
+    const amountValue = Number(hasEnded ? 0 : opportunity?.amount ?? 0);
+    const formattedAmount = !isNaN(amountValue)
+      ? formatCurrency(amountValue, 2, currency || 'USD')
+      : formatCurrency(0, 2, currency || 'USD');
     const hasRewenewChanged = formattedMaxAmount !== formattedAmount;
 
     const hasRenewalLikelihoodZero =
@@ -172,7 +180,11 @@ export const RenewalARRCard = observer(
               </div>
 
               <div>
-                <p className='font-semibold'>
+                <p
+                  className={cn('font-semibold', {
+                    'animate-pulse': contractStore?.isLoading,
+                  })}
+                >
                   {opportunity?.renewalLikelihood ===
                   OpportunityRenewalLikelihood.ZeroRenewal
                     ? 0
@@ -180,7 +192,11 @@ export const RenewalARRCard = observer(
                 </p>
 
                 {hasRewenewChanged && (
-                  <p className='text-sm text-right line-through'>
+                  <p
+                    className={cn('text-sm text-right line-through', {
+                      'animate-pulse': contractStore?.isLoading,
+                    })}
+                  >
                     {formattedMaxAmount}
                   </p>
                 )}
