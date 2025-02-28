@@ -24,11 +24,9 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
         src={user?.value?.profilePhotoUrl ?? ''}
         className={'min-w-5 mr-2 border border-grayModern-200'}
         icon={<User01 className='text-grayModern-500 size-3' />}
-<<<<<<< HEAD
       />
->>>>>>> 381a3e8 (wip)
-=======
-      /> */}
+    
+     */}
       <div className='flex items-center justify-center gap-1'>
         <span>{mailbox}</span>
 
