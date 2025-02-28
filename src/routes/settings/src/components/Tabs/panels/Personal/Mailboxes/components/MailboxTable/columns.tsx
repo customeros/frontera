@@ -4,8 +4,7 @@ import { ColumnDef as ColumnDefinition } from '@tanstack/react-table';
 
 import { createColumnHelper } from '@ui/presentation/Table';
 
-import { UserCell, MailboxCell } from './cells';
-import { SenderHeader } from './header/SenderHeader';
+import { MailboxCell } from './cells';
 import { RampUpCurrentHeader } from './header/RampUpCurrentHeader';
 
 type ColumnDatum = Mailbox;
