@@ -41,10 +41,9 @@ export const UpcomingInvoices = ({
     ) {
       return true;
     }
+
     const hasAllRequiredFields = [
-      data?.billingDetails?.addressLine1,
-      data?.billingDetails?.postalCode,
-      data?.billingDetails?.locality,
+      data?.billingDetails?.billingEmail,
       data?.billingDetails?.organizationLegalName,
     ].every((field) => !!field);
 
