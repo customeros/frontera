@@ -83,8 +83,8 @@ export const General = () => {
         <p className='text-grayModern-700  font-semibold'>General</p>
         <div className='flex flex-col'>
           <div className='flex justify-between items-center'>
-            <p className='text-sm text-grayModern-900 w-fit whitespace-nowrap font-semibold'>
-              Workspace logo & name
+            <p className='text-sm text-grayModern-900 w-fit whitespace-nowrap font-medium'>
+              Workspace logo
             </p>
           </div>
 
@@ -108,7 +108,7 @@ export const General = () => {
                 </p>
               </div>
             ) : (
-              <div className='flex  flex-1 items-center justify-between min-h-5 pt-2'>
+              <div className='flex flex-col items-start gap-4 justify-between min-h-5 pt-2'>
                 {!store.settings.tenant.value?.workspaceLogo && !file && (
                   <Tooltip
                     hasArrow
@@ -162,14 +162,16 @@ export const General = () => {
                     className='max-h-16 animate-pulseOpacity'
                   />
                 )}
-
-                <Input
-                  variant='unstyled'
-                  value={name || ''}
-                  className='ml-2.5 flex-2'
-                  placeholder='Workspace name'
-                  onChange={(e) => handleNameChange(e.target.value)}
-                />
+                <div>
+                  <label className='font-medium text-sm'>Company name</label>
+                  <Input
+                    size='xs'
+                    variant='outline'
+                    value={name || ''}
+                    placeholder='Workspace name'
+                    onChange={(e) => handleNameChange(e.target.value)}
+                  />
+                </div>
               </div>
             )}
           </FileDropUploader>
