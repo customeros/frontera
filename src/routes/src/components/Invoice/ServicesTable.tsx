@@ -128,6 +128,14 @@ export function ServicesTable({
                           )}
                       </div>
                     )}
+                    {isGenerated &&
+                      service?.contractLineItem?.billingCycle ===
+                        BilledType.Once &&
+                      !!service?.contractLineItem?.description?.length && (
+                        <p className='text-xs text-grayModern-500'>
+                          {service?.contractLineItem?.description}
+                        </p>
+                      )}
                   </div>
                 </div>
                 <div className='w-1/6 flex justify-end text-sm text-grayModern-500 leading-5'>
