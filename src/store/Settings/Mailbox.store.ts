@@ -6,10 +6,10 @@ import { action, override, makeObservable } from 'mobx';
 import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
 
 import { MailboxesService } from './__service__/Mailboxes/Mailboxes.service';
-import { MailboxesQuery } from './__service__/Mailboxes/getMailboxesv2.generated';
+import { MailboxesQuery } from './__service__/Mailboxes/getMailboxes.generated';
 
 export type Mailbox = NonNullable<
-  MailboxesQuery['mailstack_MailboxesV2'][number]
+  MailboxesQuery['mailstack_Mailboxes'][number]
 >;
 
 export class MailboxStore extends Syncable<Mailbox> {

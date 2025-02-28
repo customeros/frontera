@@ -1,12 +1,11 @@
-query getMailboxes {
+query mailboxes {
   mailstack_Mailboxes {
-    domain
+    provider
     mailbox
-    userId
+    usedInFlows
     rampUpRate
     rampUpMax
     rampUpCurrent
-    scheduledEmails
-    currentFlowIds
+    needsManualRefresh
   }
 }

@@ -59,13 +59,6 @@ export class GraphqlService {
 
         return await this.contactService.mutateOperation(operation, store);
       })
-      .with('Mailboxes', async () => {
-        const store = this.getStore(operation, 'mailboxes');
-
-        if (!store) return;
-
-        return await this.mailboxService.mutateOperation(operation, store);
-      })
       .with('TableViewDefs', async () => {
         const store = this.getStore(operation, 'tableViewDefs');
 

@@ -24,13 +24,13 @@ export const columns: Column[] = [
     header: () => <p className='text-sm ml-8'>Mailboxes</p>,
     skeleton: () => null,
   }),
-  columnHelper.accessor('mailbox', {
-    id: 'user',
-    minSize: 200,
-    cell: (props) => <UserCell id={props.getValue()} />,
-    header: SenderHeader,
-    skeleton: () => null,
-  }),
+  // columnHelper.accessor('mailbox', {
+  //   id: 'user',
+  //   minSize: 200,
+  //   cell: (props) => <UserCell id={props.getValue()} />,
+  //   header: SenderHeader,
+  //   skeleton: () => null,
+  // }),
   columnHelper.accessor('rampUpCurrent', {
     id: 'rampUpCurrent',
     minSize: 200,
@@ -45,13 +45,13 @@ export const columns: Column[] = [
   //   header: () => <p className='text-sm'>Status</p>,
   //   skeleton: () => null,
   // }),
-  columnHelper.accessor('scheduledEmails', {
-    id: 'scheduledEmail',
-    minSize: 128,
-    cell: (props) => <p>{props.getValue()}</p>,
-    header: () => <p className='text-sm'>Scheduled Emails</p>,
-    skeleton: () => null,
-  }),
+  // columnHelper.accessor('scheduledEmails', {
+  //   id: 'scheduledEmail',
+  //   minSize: 128,
+  //   cell: (props) => <p>{props.getValue()}</p>,
+  //   header: () => <p className='text-sm'>Scheduled Emails</p>,
+  //   skeleton: () => null,
+  // }),
   // columnHelper.accessor('currentFlowIds', {
   //   id: 'currentFlowIds',
   //   minSize: 128,

@@ -13,10 +13,6 @@ query global_Cache {
       firstName
       lastName
       mailboxes
-      mailboxesV2 {
-        userId
-        mailbox
-      }
       onboarding {
         showOnboardingPage
         onboardingInboundStepCompleted
