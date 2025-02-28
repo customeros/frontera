@@ -156,6 +156,7 @@ export type AgentListenerSaveInput = {
 export type AgentSaveInput = {
   capabilities?: InputMaybe<Array<CapabilitySaveInput>>;
   color?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   icon?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2472,6 +2473,23 @@ export type Mailbox = {
   userId?: Maybe<Scalars['ID']['output']>;
 };
 
+export enum MailboxProvider {
+  Google = 'GOOGLE',
+  Mailstack = 'MAILSTACK',
+  Microsoft = 'MICROSOFT',
+}
+
+export type MailboxV2 = {
+  __typename?: 'MailboxV2';
+  mailbox: Scalars['String']['output'];
+  needsManualRefresh: Scalars['Boolean']['output'];
+  provider: MailboxProvider;
+  rampUpCurrent: Scalars['Int']['output'];
+  rampUpMax: Scalars['Int']['output'];
+  rampUpRate: Scalars['Int']['output'];
+  usedInFlows: Scalars['Boolean']['output'];
+};
+
 export type MarkdownEvent = {
   __typename?: 'MarkdownEvent';
   content?: Maybe<Scalars['String']['output']>;
@@ -2612,6 +2630,7 @@ export type Mutation = {
   admin_addWorkspaceAccess: Scalars['Boolean']['output'];
   admin_removeWorkspaceAccess: Scalars['Boolean']['output'];
   admin_switchCurrentWorkspace: Scalars['Boolean']['output'];
+  admin_tenant_AddDomainAsWorkspace: Scalars['Boolean']['output'];
   admin_tenant_hardDelete: Scalars['Boolean']['output'];
   agent_Delete: Scalars['Boolean']['output'];
   agent_Save: Agent;
@@ -2791,6 +2810,7 @@ export type Mutation = {
   tenant_UpdateBillingProfile: TenantBillingProfile;
   tenant_UpdateSettings: TenantSettings;
   tenant_UpdateSettingsOpportunityStage: ActionResponse;
+  user_Update: User;
   user_UpdateOnboardingDetails: User;
 };
 
@@ -2810,6 +2830,10 @@ export type MutationAdmin_RemoveWorkspaceAccessArgs = {
 
 export type MutationAdmin_SwitchCurrentWorkspaceArgs = {
   switchToTenant: Scalars['String']['input'];
+};
+
+export type MutationAdmin_Tenant_AddDomainAsWorkspaceArgs = {
+  domain: Scalars['String']['input'];
 };
 
 export type MutationAdmin_Tenant_HardDeleteArgs = {
@@ -3554,6 +3578,10 @@ export type MutationTenant_UpdateSettingsArgs = {
 
 export type MutationTenant_UpdateSettingsOpportunityStageArgs = {
   input: TenantSettingsOpportunityStageConfigurationInput;
+};
+
+export type MutationUser_UpdateArgs = {
+  input?: InputMaybe<UserUpdateInput>;
 };
 
 export type MutationUser_UpdateOnboardingDetailsArgs = {
@@ -4327,6 +4355,7 @@ export type Query = {
   mailstack_DomainPurchaseSuggestions: Array<Scalars['String']['output']>;
   mailstack_Domains: Array<Scalars['String']['output']>;
   mailstack_Mailboxes: Array<Mailbox>;
+  mailstack_MailboxesV2: Array<MailboxV2>;
   mailstack_UniqueUsernames: Array<Scalars['String']['output']>;
   meeting: Meeting;
   opportunities_LinkedToOrganizations: OpportunityPage;
@@ -5367,20 +5396,9 @@ export type UserParticipant = {
 };
 
 export type UserUpdateInput = {
-  /**
-   * The first name of the customerOS user.
-   * **Required**
-   */
-  firstName: Scalars['String']['input'];
   id: Scalars['ID']['input'];
-  /**
-   * The last name of the customerOS user.
-   * **Required**
-   */
-  lastName: Scalars['String']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
   profilePhotoUrl?: InputMaybe<Scalars['String']['input']>;
-  timezone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type WebsiteCheckDetails = {

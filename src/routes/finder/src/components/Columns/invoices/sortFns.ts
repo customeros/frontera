@@ -14,9 +14,10 @@ export const getInvoicesSortFn = (columnId: string) =>
           .with(InvoiceStatus.OnHold, () => 2)
           .with(InvoiceStatus.Scheduled, () => 3)
           .with(InvoiceStatus.Void, () => 4)
-          .with(InvoiceStatus.Paid, () => 5)
-          .with(InvoiceStatus.Due, () => 6)
-          .with(InvoiceStatus.Overdue, () => 7)
+          .with(InvoiceStatus.PaymentProcessing, () => 5)
+          .with(InvoiceStatus.Paid, () => 6)
+          .with(InvoiceStatus.Due, () => 7)
+          .with(InvoiceStatus.Overdue, () => 8)
           .otherwise(() => null),
     )
 

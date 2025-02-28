@@ -1,8 +1,5 @@
-import { Clock } from '@ui/media/icons/Clock';
+import { Icon } from '@ui/media/Icon';
 import { InvoiceStatus } from '@graphql/types';
-import { InfoCircle } from '@ui/media/icons/InfoCircle';
-import { CheckCircle } from '@ui/media/icons/CheckCircle';
-import { SlashCircle01 } from '@ui/media/icons/SlashCircle01';
 import { ClockFastForward } from '@ui/media/icons/ClockFastForward';
 import { Tag, TagLabel, TagLeftIcon } from '@ui/presentation/Tag/Tag';
 
@@ -17,6 +14,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       return (
         <Tag variant='outline' colorScheme='grayModern'>
           <TagLeftIcon>
+            <Icon name='clock-fast-forward' />
             <ClockFastForward />
           </TagLeftIcon>
           <TagLabel>Draft</TagLabel>
@@ -26,7 +24,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       return (
         <Tag variant='outline' colorScheme='success'>
           <TagLeftIcon>
-            <CheckCircle />
+            <Icon name='check-circle' />
           </TagLeftIcon>
           <TagLabel>Paid</TagLabel>
         </Tag>
@@ -35,7 +33,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       return (
         <Tag variant='outline' colorScheme='primary'>
           <TagLeftIcon>
-            <Clock />
+            <Icon name='clock' />
           </TagLeftIcon>
           <TagLabel>Due</TagLabel>
         </Tag>
@@ -44,7 +42,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       return (
         <Tag variant='outline' colorScheme='grayModern'>
           <TagLeftIcon>
-            <SlashCircle01 />
+            <Icon name='slash-circle-01' />
           </TagLeftIcon>
           <TagLabel>Voided</TagLabel>
         </Tag>
@@ -53,7 +51,7 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       return (
         <Tag variant='outline' colorScheme='grayModern'>
           <TagLeftIcon>
-            <ClockFastForward />
+            <Icon name='clock-fast-forward' />
           </TagLeftIcon>
           <TagLabel>Scheduled</TagLabel>
         </Tag>
@@ -62,9 +60,18 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
       return (
         <Tag variant='outline' colorScheme='warning'>
           <TagLeftIcon>
-            <InfoCircle />
+            <Icon name='info-circle' />
           </TagLeftIcon>
           <TagLabel>Overdue</TagLabel>
+        </Tag>
+      );
+    case InvoiceStatus.PaymentProcessing:
+      return (
+        <Tag variant='outline' colorScheme='grayModern'>
+          <TagLeftIcon>
+            <Icon name='clock-fast-forward' />
+          </TagLeftIcon>
+          <TagLabel>Processing</TagLabel>
         </Tag>
       );
     default:

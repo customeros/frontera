@@ -125,6 +125,7 @@ export const getFilterTypes = () => {
         { label: 'Scheduled', id: InvoiceStatus.Scheduled },
         { label: 'Void', id: InvoiceStatus.Void },
         { label: 'Overdue', id: InvoiceStatus.Overdue },
+        { label: 'Processing', id: InvoiceStatus.PaymentProcessing },
         { label: 'Paid', id: InvoiceStatus.Paid },
       ],
     },
