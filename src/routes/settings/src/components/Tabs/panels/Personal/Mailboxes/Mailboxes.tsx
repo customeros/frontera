@@ -6,14 +6,16 @@ import { observer } from 'mobx-react-lite';
 import { cn } from '@ui/utils/cn';
 import { useStore } from '@shared/hooks/useStore';
 import { ChevronRight } from '@ui/media/icons/ChevronRight';
+import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
 
 import { MailboxTable } from './components/MailboxTable';
 import { CheckoutPage } from './components/CheckoutPage';
 import { CheckoutCard } from './components/CheckoutCard';
 import { BaseBundleCard } from './components/BaseBundleCard';
-import { EmptyMailboxes } from './components/EmptyMailboxes';
 import { AddDomainsCard } from './components/AddDomainsCard';
 import { UsersCard } from './components/UsersCard/UsersCard';
+import { EmptyMailboxes } from './components/EmptyMailboxes';
+import { EmptyMailstack } from './components/EmptyMailstack';
 import { RedirectUrlCard } from './components/RedirectUrlCard';
 import { ExtendedBundleCard } from './components/ExtendedBundleCard';
 
@@ -24,7 +26,12 @@ export const Mailboxes = observer(() => {
   const campaign = searchParams.get('campaign');
   const campaignParam = campaign ? `&campaign=${campaign}` : '';
 
-  const hasMailboxes = store.mailboxes.value.size > 0;
+  const hasMailstack =
+    store.mailboxes
+      .toArray()
+      .filter((v) => v.value.provider === MailboxProvider.Mailstack).length > 0;
+
+  const hasMailboxes = store.mailboxes.toArray().length > 0;
 
   const goBuy = () => {
     if (campaign) return;
@@ -60,7 +67,17 @@ export const Mailboxes = observer(() => {
   }, [showMailboxes]);
 
   if (!hasMailboxes && showMailboxes) {
-    return <EmptyMailboxes onUpdate={goBuy} />;
+    return (
+      <EmptyMailboxes
+        buyMailboxes={goBuy}
+        onGoogleSync={() => store.settings.oauthToken.enableSync('google')}
+        onAzureSync={() => store.settings.oauthToken.enableSync('azure-ad')}
+      />
+    );
+  }
+
+  if (!hasMailstack) {
+    return <EmptyMailstack onUpdate={goBuy} />;
   }
 
   if (showMailboxes) {

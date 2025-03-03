@@ -252,7 +252,8 @@ export type IconName =
   | 'slash-circle-01'
   | 'info-circle'
   | 'refresh-cw-02'
-  | 'refresh-cw-01';
+  | 'refresh-cw-01'
+  | 'inbox-01';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;
