@@ -80,7 +80,7 @@ export const AddNewProductMenu = observer(
                 contractId,
                 skuId: newValue?.sku.id,
                 price: newValue?.sku.value.price,
-                serviceStarted: new Date(Date.now() + 86400000).toISOString(),
+                serviceStarted: new Date().toISOString(),
               });
               setIsOpen(false);
             }}
