@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
@@ -18,6 +18,7 @@ import {
 
 export const SettingsSection = observer(() => {
   const store = useStore();
+  const location = useLocation();
   const navigate = useNavigate();
   const debuggerFlag = useFeatureIsOn('debugger');
   const { open, onOpen, onClose, onToggle } = useDisclosure();
@@ -45,16 +46,18 @@ export const SettingsSection = observer(() => {
   return (
     <div className='flex justify-between items-center px-2'>
       <div className='flex items-center gap-x-2'>
-        <Tooltip label='Settings'>
-          <IconButton
-            size={'xs'}
-            variant='ghost'
-            aria-label={'Settings'}
-            dataTest={'settings-button'}
-            icon={<Icon name={'settings-02'} />}
-            onClick={() => navigate('/settings')}
-          />
-        </Tooltip>
+        {!location.pathname.includes('settings') && (
+          <Tooltip label='Settings'>
+            <IconButton
+              size={'xs'}
+              variant='ghost'
+              aria-label={'Settings'}
+              dataTest={'settings-button'}
+              icon={<Icon name={'settings-02'} />}
+              onClick={() => navigate('/settings/?tab=mailboxes')}
+            />
+          </Tooltip>
+        )}
 
         <Menu>
           <Tooltip label='Help me'>
@@ -77,6 +80,7 @@ export const SettingsSection = observer(() => {
               className='group'
               data-test='help-item-settings'
               onClick={() => store.ui.setShortcutsPanel(true)}
+              disabled={location.pathname.includes('settings')}
             >
               <div
                 data-test='logo-settings'
