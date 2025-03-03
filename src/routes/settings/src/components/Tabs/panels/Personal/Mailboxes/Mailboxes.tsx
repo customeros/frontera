@@ -76,7 +76,7 @@ export const Mailboxes = observer(() => {
     );
   }
 
-  if (!hasMailstack) {
+  if (!hasMailstack && !showBuyFlow) {
     return <EmptyMailstack onUpdate={goBuy} />;
   }
 
