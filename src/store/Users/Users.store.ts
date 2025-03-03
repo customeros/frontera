@@ -1,46 +1,19 @@
-import { Channel } from 'phoenix';
+import { runInAction } from 'mobx';
+import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
-import { GroupOperation } from '@store/types';
-import { UserService } from '@store/Users/User.service.ts';
-import { computed, runInAction, makeAutoObservable } from 'mobx';
-import { GroupStore, makeAutoSyncableGroup } from '@store/group-store';
+import { User, UserDatum } from '@store/Users/User.dto';
+import { UserRepository } from '@infra/repositories/user/user.repository';
 
-import { User } from '@graphql/types';
-
-import { UserStore } from './User.store';
-
-export class UsersStore implements GroupStore<User> {
-  channel?: Channel | undefined;
-  error: string | null = null;
-  history: GroupOperation[] = [];
-  isBootstrapped: boolean = false;
-  isLoading: boolean = false;
-  version: number = 0;
-  totalElements: number = 0;
-  value: Map<string, UserStore> = new Map();
-  sync = makeAutoSyncableGroup.sync;
-  load = makeAutoSyncableGroup.load<User>();
-  subscribe = makeAutoSyncableGroup.subscribe;
-  private service: UserService;
+export class UsersStore extends Store<UserDatum, User> {
+  private repository = UserRepository.getInstance();
 
   constructor(public root: RootStore, public transport: Transport) {
-    this.service = UserService.getInstance(transport);
-    makeAutoSyncableGroup(this, {
-      channelName: 'Users',
-      ItemStore: UserStore,
-      getItemId: (user) => user.id,
+    super(root, transport, {
+      name: 'Users',
+      getId: (data) => data?.id,
+      factory: User,
     });
-    makeAutoObservable(this, {
-      usersWithoutBotsAndInternal: computed,
-      tenantUsers: computed,
-    });
-  }
-
-  get usersWithoutBotsAndInternal() {
-    return this.toComputedArray((users) =>
-      users.filter((user) => !user.value.bot && !user.value.internal),
-    );
   }
 
   get tenantUsers() {
@@ -51,22 +24,36 @@ export class UsersStore implements GroupStore<User> {
     );
   }
 
+  get usersWithoutBotsAndInternal() {
+    return this.toComputedArray((users) =>
+      users.filter((user) => !user.value.bot && !user.value.internal),
+    );
+  }
+
   async bootstrap() {
     if (this.isBootstrapped || this.isLoading) return;
 
     try {
       this.isLoading = true;
 
-      const { users } = await this.service.getUsers({
+      const { users } = await this.repository.getUsers({
         pagination: {
           limit: 1000,
           page: 0,
         },
       });
 
-      this.load(users.content);
-
       runInAction(() => {
+        users.content.forEach((user) => {
+          const foundUser = this.value.get(user.id);
+
+          if (foundUser) {
+            Object.assign(foundUser.value, user);
+          } else {
+            this.value.set(user.id, new User(this, user));
+          }
+        });
+
         this.isBootstrapped = true;
         this.totalElements = users.totalElements;
       });
@@ -81,11 +68,17 @@ export class UsersStore implements GroupStore<User> {
     }
   }
 
-  toArray() {
-    return Array.from(this.value.values());
-  }
+  async getCurrentUser() {
+    try {
+      const { user_Current } = await this.repository.getCurrentUser();
 
-  toComputedArray(compute: (arr: UserStore[]) => UserStore[]) {
-    return compute(this.toArray());
+      runInAction(() => {
+        this.root.session.value.profile.id = user_Current.id;
+      });
+    } catch (error) {
+      console.error('Failed to get current user:', error);
+
+      return null;
+    }
   }
 }

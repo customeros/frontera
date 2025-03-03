@@ -92,14 +92,15 @@ export const SettingsSidenav = observer(() => {
           </div>
 
           <div className='flex flex-col space-y-2 w-full'>
-            <WorkspaceSection
-              checkIsActive={checkIsActive}
-              handleItemClick={handleItemClick}
-            />
             <PersonalSection
               checkIsActive={checkIsActive}
               handleItemClick={handleItemClick}
             />
+            <WorkspaceSection
+              checkIsActive={checkIsActive}
+              handleItemClick={handleItemClick}
+            />
+
             {/* <SidenavItem
               label='Accounts'
               dataTest='settings-accounts'

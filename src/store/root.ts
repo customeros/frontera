@@ -7,11 +7,11 @@ import { UIStore } from './UI/UI.store';
 import { MailStore } from './Mail/Mail.store';
 import { TagsStore } from './Tags/Tags.store';
 import { WindowManager } from './window-manager';
-import { UsersStore } from './Users/Users.store';
 import { FilesStore } from './Files/Files.store';
 import { FlowsStore } from './Flows/Flows.store';
 import { AgentStore } from './Agents/Agent.store';
 import { TransactionService } from './transaction';
+import { UsersStore } from './Users/Users.store.ts';
 import { CommonStore } from './Common/Common.store';
 import { SessionStore } from './Session/Session.store';
 import { SettingsStore } from './Settings/Settings.store';
@@ -141,6 +141,7 @@ export class RootStore {
       this.invoices.bootstrap(),
       this.contracts.bootstrap(),
       this.externalSystemInstances.bootstrap(),
+
       this.users.bootstrap(),
       this.flows.bootstrap(),
       this.flowEmailVariables.bootstrap(),

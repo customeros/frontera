@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { useKey } from 'rooks';
 import { CommandGroup } from 'cmdk';
 import { observer } from 'mobx-react-lite';
-import { SwitchWorkspaceUsecase } from '@domain/usecases/settings-impersonate/switch-workspace.usecase.ts';
+import { SwitchWorkspaceUsecase } from '@domain/usecases/settings/impersonate/switch-workspace.usecase';
 
 import { Icon } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';

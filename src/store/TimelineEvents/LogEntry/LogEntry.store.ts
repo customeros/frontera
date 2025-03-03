@@ -4,7 +4,7 @@ import { RootStore } from '@store/root';
 import { Operation } from '@store/types';
 import { Transport } from '@infra/transport';
 import { rdiffResult } from 'recursive-diff';
-import { UserStore } from '@store/Users/User.store';
+import { User } from '@store/Users/User.dto';
 import { runInAction, makeAutoObservable } from 'mobx';
 import { Store, makeAutoSyncable } from '@store/store';
 
@@ -160,5 +160,6 @@ const defaultValue: LogEntry = {
   startedAt: new Date().toISOString(),
   content: '',
   contentType: '',
-  createdBy: UserStore.getDefaultValue(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createdBy: User.default() as any,
 };

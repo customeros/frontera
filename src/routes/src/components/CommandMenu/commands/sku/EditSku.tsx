@@ -2,7 +2,7 @@ import { useRef, useMemo, useEffect } from 'react';
 
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
-import { EditSkuUsecase } from '@domain/usecases/settings-products/edit-sku.usecase.ts';
+import { EditSkuUsecase } from '@domain/usecases/settings/products/edit-sku.usecase';
 
 import { cn } from '@ui/utils/cn.ts';
 import { Input } from '@ui/form/Input';

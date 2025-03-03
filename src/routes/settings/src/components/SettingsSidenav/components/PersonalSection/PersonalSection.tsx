@@ -21,15 +21,15 @@ export const PersonalSection = ({
       </div>
       <div className='ml-[23px]'>
         <SidenavItem
+          label='Profile'
+          isActive={checkIsActive('profile')}
+          onClick={handleItemClick('profile')}
+        />
+        <SidenavItem
           label='Mailboxes'
           isActive={checkIsActive('mailboxes')}
           onClick={handleItemClick('mailboxes')}
         />
-        {/* <SidenavItem
-          label='LinkedIn'
-          isActive={checkIsActive('linkedin')}
-          onClick={handleItemClick('linkedin')}
-        /> */}
       </div>
     </div>
   );

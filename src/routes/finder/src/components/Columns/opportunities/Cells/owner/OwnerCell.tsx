@@ -54,7 +54,7 @@ export const OwnerCell = observer(({ id, owner }: OwnerProps) => {
       if (!option || !option?.value) {
         value.owner = null;
       } else {
-        value.owner = targetOwner?.value;
+        value.owner = targetOwner?.value as User;
       }
 
       return value;

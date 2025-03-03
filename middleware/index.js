@@ -495,7 +495,10 @@ async function createServer() {
           access_token,
           refresh_token,
           integrations_token,
-          profile: profileRes.data,
+          profile: {
+            ...profileRes.data,
+            id: loginResponse.userId,
+          },
         },
         process.env.JWT_SECRET,
         {
@@ -586,7 +589,7 @@ async function createServer() {
         new URLSearchParams(stateParsed?.origin).get('campaign') ?? '';
 
       const profile = {
-        id: profileRes?.id,
+        id: profileRes?.userId,
         name: profileRes?.displayName ?? '',
         email: loggedInEmail,
         locale: '',
@@ -603,7 +606,7 @@ async function createServer() {
           access_token,
           refresh_token,
           integrations_token,
-          profile: profile,
+          profile,
         },
         process.env.JWT_SECRET,
         {

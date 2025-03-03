@@ -1,0 +1,21 @@
+query getUsers($pagination: Pagination!, $where: Filter) {
+  users(pagination: $pagination, where: $where) {
+    content {
+      id
+      firstName
+      lastName
+      name
+      profilePhotoUrl
+      mailboxes
+      bot
+      internal
+      test
+      timezone
+      hasLinkedInToken
+      emails {
+        email
+      }
+    }
+    totalElements
+  }
+}
