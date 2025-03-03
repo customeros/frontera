@@ -134,7 +134,7 @@ export const General = () => {
                         isLoading && 'opacity-50 pointer-events-none',
                       )}
                     >
-                      <ImagePlus className='size-6' />
+                      <ImagePlus className='size-6 cursor-pointer' />
                     </FileUploadTrigger>
                   </Tooltip>
                 )}
@@ -142,7 +142,7 @@ export const General = () => {
                 {store.settings.tenant.value?.workspaceLogo && !file && (
                   <div className='relative max-h-16 w-fit group'>
                     <Image
-                      className='h-10'
+                      className='h-10 rounded-md'
                       src={store.settings.tenant.value?.workspaceLogo}
                     />
                     <IconButton
@@ -159,13 +159,13 @@ export const General = () => {
                 {!store.settings.tenant.value?.workspaceLogo && file && (
                   <Image
                     src={`${URL.createObjectURL(file)}`}
-                    className='max-h-16 animate-pulseOpacity'
+                    className='max-h-16 animate-pulseOpacity rounded-md'
                   />
                 )}
                 <div>
                   <label className='font-medium text-sm'>Company name</label>
                   <Input
-                    size='xs'
+                    size='sm'
                     variant='outline'
                     value={name || ''}
                     placeholder='Workspace name'

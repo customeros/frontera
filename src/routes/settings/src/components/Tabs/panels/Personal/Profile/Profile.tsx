@@ -118,7 +118,7 @@ export const Profile = observer(() => {
                         hasLoaded && 'opacity-50 pointer-events-none',
                       )}
                     >
-                      <ImagePlus className='size-6' />
+                      <ImagePlus className='size-6 cursor-pointer' />
                     </FileUploadTrigger>
                   </Tooltip>
                 )}
@@ -155,7 +155,7 @@ export const Profile = observer(() => {
                     First & last name
                   </label>
                   <Input
-                    size='xs'
+                    size='sm'
                     variant='outline'
                     value={usecase.userName || ''}
                     placeholder='First & last name'
