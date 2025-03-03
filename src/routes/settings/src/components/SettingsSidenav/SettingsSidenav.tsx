@@ -8,6 +8,7 @@ import { useStore } from '@shared/hooks/useStore';
 import { IconButton } from '@ui/form/IconButton/IconButton';
 import { ArrowNarrowLeft } from '@ui/media/icons/ArrowNarrowLeft';
 import { useKeyboardNavigation } from '@shared/components/RootSidenav/hooks/useKeyboardNavigation';
+import { SettingsSection } from '@shared/components/RootSidenav/components/sections/SettingsSection';
 
 import { WorkspaceSection } from './components';
 import { PersonalSection } from './components/PersonalSection';
@@ -91,69 +92,25 @@ export const SettingsSidenav = observer(() => {
             </p>
           </div>
 
-          <div className='flex flex-col space-y-2 w-full'>
-            <PersonalSection
-              checkIsActive={checkIsActive}
-              handleItemClick={handleItemClick}
-            />
-            <WorkspaceSection
-              checkIsActive={checkIsActive}
-              handleItemClick={handleItemClick}
-            />
-
-            {/* <SidenavItem
-              label='Accounts'
-              dataTest='settings-accounts'
-              onClick={handleItemClick('oauth')}
-              isActive={checkIsActive('oauth') || !searchParams?.get('tab')}
-              icon={
-                <Link01
-                  className={cn(
-                    checkIsActive('oauth')
-                      ? 'text-grayModern-700'
-                      : 'text-grayModern-500',
-                    'size-5',
-                  )}
-                />
-              }
-            /> */}
+          <div className='flex flex-col space-y-2 w-full justify-between h-full'>
+            <div>
+              <PersonalSection
+                checkIsActive={checkIsActive}
+                handleItemClick={handleItemClick}
+              />
+              <WorkspaceSection
+                checkIsActive={checkIsActive}
+                handleItemClick={handleItemClick}
+              />
+            </div>
 
             {/* <FieldsSection
           checkIsActive={checkIsActive}
           handleItemClick={handleItemClick}
         /> */}
-            {/* <SidenavItem
-              label='Customer billing'
-              isActive={checkIsActive('billing')}
-              onClick={handleItemClick('billing')}
-              icon={
-                <Receipt
-                  className={cn(
-                    checkIsActive('billing')
-                      ? 'text-grayModern-700'
-                      : 'text-grayModern-500',
-                    'size-5',
-                  )}
-                />
-              }
-            /> */}
-            {/* <SidenavItem
-              label='Integrations'
-              isActive={checkIsActive('integrations')}
-              onClick={handleItemClick('integrations')}
-              icon={
-                <Dataflow03
-                  className={cn(
-                    checkIsActive('integrations')
-                      ? 'text-grayModern-700'
-                      : 'text-grayModern-500',
-                  )}
-                />
-              }
-            /> */}
           </div>
-          <div className='flex flex-col space-y-1 flex-grow justify-end'>
-            {/* <NotificationCenter /> */}
+          <div className='pb-4 ml-[20px]'>
+            <SettingsSection />
           </div>
         </>
       )}

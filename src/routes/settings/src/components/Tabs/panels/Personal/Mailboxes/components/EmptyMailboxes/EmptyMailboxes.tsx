@@ -1,96 +1,69 @@
-import { FeaturedIcon } from '@ui/media/Icon';
+import { Icon } from '@ui/media/Icon';
+import { Logo } from '@ui/media/Logo';
 import { Button } from '@ui/form/Button/Button';
-import { Sale03 } from '@ui/media/icons/Sale03';
-import { Inbox01 } from '@ui/media/icons/Inbox01';
-import { CheckCircle } from '@ui/media/icons/CheckCircle';
-import { ChevronRight } from '@ui/media/icons/ChevronRight';
+import { Microsoft } from '@ui/media/icons/Microsoft';
+import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
+import HalfCirclePattern from '@shared/assets/HalfCirclePattern';
+import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 
 interface EmptyMailboxesProps {
-  onUpdate: () => void;
+  onAzureSync: () => void;
+  onGoogleSync: () => void;
+  buyMailboxes: () => void;
 }
 
-export const EmptyMailboxes = ({ onUpdate }: EmptyMailboxesProps) => {
-  const handleButtonClick = () => {
-    onUpdate();
-  };
-
+export const EmptyMailboxes = ({
+  onAzureSync,
+  onGoogleSync,
+  buyMailboxes,
+}: EmptyMailboxesProps) => {
   return (
-    <div className=' border-r-[1px] max-w-[418px] h-full'>
-      <div className='flex flex-col pl-6 pr-5 pt-10'>
-        <FeaturedIcon colorScheme='grayModern'>
-          <Inbox01 />
-        </FeaturedIcon>
-        <div className='mt-4 gap-1'>
-          <p className='font-medium'>Outbound mailboxes in 3 minutes</p>
-          <p className='text-sm mt-2'>
-            Set up your outbound email in minutes. Fully automated, secure, and
-            built to scale—send 10,000+ emails per month with professional-grade
-            tools that do the hard work for you.
-          </p>
-          <p className='text-sm font-medium pt-3 mb-1'>
-            The Starter bundle gives you:
-          </p>
-          <div className='px-3 gap-1'>
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>20 mailboxes</span>
-            </div>
-
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>Automatic email setup</span>
-            </div>
-
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>
-                Built-in DKIM, DMARC, and SPF protection
-              </span>
-            </div>
-
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>Email and domain forwarding</span>
-            </div>
-
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>Custom domain tracking</span>
-            </div>
-
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>
-                Continuous mailbox reputation monitoring
-              </span>
-            </div>
-
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>
-                Automated sequences with CustomerOS Flows
-              </span>
-            </div>
-          </div>
+    <div className='overflow-y-auto h-full'>
+      <div className='flex flex-col h-full w-full max-w-[500px] border-r-[1px]'>
+        <div className='flex relative'>
+          <FeaturedIcon
+            size='lg'
+            colorScheme='grayModern'
+            className='absolute top-[26%] justify-self-center right-0 left-0'
+          >
+            <Icon name='inbox-01' />
+          </FeaturedIcon>
+          <HalfCirclePattern />
         </div>
+        <div className='flex flex-col text-center items-center translate-y-[-212px]'>
+          <h1 className='text-md font-semibold mb-1'>Add workspace accounts</h1>
+          <p className='text-sm max-w-[352px] mb-6 '>
+            Add your workspace accounts to sync contacts and send emails—or buy
+            CustomerOS mailboxes to power your outbound messaging.
+          </p>
 
-        <div className='flex items-center py-2 px-3 border rounded-md border-grayModern-200 mt-4'>
-          <Sale03 className='text-grayModern-500 mr-2' />
-          <span className='text-sm'>
-            Get the <span className='font-medium'>Starter bundle</span> for{' '}
-            <span className='text-success-500 font-medium'>$199.99/month</span>
-          </span>
+          <Menu>
+            <MenuButton asChild>
+              <Button size='sm' colorScheme='primary'>
+                Add an account
+              </Button>
+            </MenuButton>
+            <MenuList side='bottom' align='center'>
+              <MenuItem className='text-sm' onClick={onGoogleSync}>
+                <Logo name='google' className='mr-1 size-5' />
+                Google Workspace
+              </MenuItem>
+              <MenuItem className='text-sm' onClick={onAzureSync}>
+                <Microsoft className='mr-2' />
+                Microsoft Outlook
+              </MenuItem>
+            </MenuList>
+          </Menu>
+
+          <Button
+            size='sm'
+            variant='ghost'
+            className='mt-3'
+            onClick={buyMailboxes}
+          >
+            Buy CustomerOS mailboxes
+          </Button>
         </div>
-
-        <Button
-          className='mt-5 mx-3'
-          colorScheme='primary'
-          dataTest='set-up-mailboxes'
-          onClick={handleButtonClick}
-          rightIcon={<ChevronRight />}
-        >
-          Set up your mailboxes
-        </Button>
       </div>
     </div>
   );
