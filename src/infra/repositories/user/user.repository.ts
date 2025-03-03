@@ -2,6 +2,7 @@ import { Transport } from '@infra/transport';
 
 import GetUsersDocument from './quaries/getUsers.graphql';
 import UpdateUserDocument from './mutations/user_update.graphql';
+import GetCurrentUserDocument from './quaries/getCurrentUser.graphql';
 import {
   GetUsersQuery,
   GetUsersQueryVariables,
@@ -10,6 +11,10 @@ import {
   UserUpdateMutation,
   UserUpdateMutationVariables,
 } from './mutations/user_update.generated';
+import {
+  GetCurrentUserQuery,
+  GetCurrentUserQueryVariables,
+} from './quaries/getCurrentUser.generated';
 
 export class UserRepository {
   static instance: UserRepository | null = null;
@@ -37,5 +42,12 @@ export class UserRepository {
       UserUpdateMutation,
       UserUpdateMutationVariables
     >(UpdateUserDocument, payload);
+  }
+
+  async getCurrentUser(): Promise<GetCurrentUserQuery> {
+    return this.transport.graphql.request<
+      GetCurrentUserQuery,
+      GetCurrentUserQueryVariables
+    >(GetCurrentUserDocument);
   }
 }

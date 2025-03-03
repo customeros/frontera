@@ -1,17 +1,27 @@
-import { action, computed } from 'mobx';
 import { RootStore } from '@store/root';
 import { injectable } from '@infra/container';
+import { action, computed, observable } from 'mobx';
 import { UsersService } from '@domain/services/users/users.service';
 
 @injectable
 export class SettingsProfileUseCase {
   private usersService = new UsersService();
   private root = RootStore.getInstance();
+  @observable private accessor userId: string = '';
 
-  constructor(private readonly userId: string) {
+  constructor() {
     this.updateUserName = this.updateUserName.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.init = this.init.bind(this);
     this.updateUserProfilePhotoUrl = this.updateUserProfilePhotoUrl.bind(this);
+  }
+
+  async init() {
+    const user = await this.usersService.getCurrentUser();
+
+    if (!user) return;
+
+    this.userId = user.user_Current.id;
   }
 
   @computed

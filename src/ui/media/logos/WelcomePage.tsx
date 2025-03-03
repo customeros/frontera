@@ -44,9 +44,9 @@ export const WelcomePage = (props: SVGProps<SVGSVGElement>) => (
         height='130.19'
         id='filter0_dd_632_3973'
         filterUnits='userSpaceOnUse'
-        color-interpolation-filters='sRGB'
+        colorInterpolationFilters='sRGB'
       >
-        <feFlood flood-opacity='0' result='BackgroundImageFix' />
+        <feFlood floodOpacity='0' result='BackgroundImageFix' />
         <feColorMatrix
           type='matrix'
           in='SourceAlpha'
@@ -108,8 +108,8 @@ export const WelcomePage = (props: SVGProps<SVGSVGElement>) => (
         id='paint0_linear_632_3973'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stop-color='#E9D7FE' />
-        <stop offset='1' stop-color='#F1E6FF' />
+        <stop stopColor='#E9D7FE' />
+        <stop offset='1' stopColor='#F1E6FF' />
       </linearGradient>
       <linearGradient
         x1='76.0004'
@@ -119,8 +119,8 @@ export const WelcomePage = (props: SVGProps<SVGSVGElement>) => (
         id='paint1_linear_632_3973'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stop-color='#E9D7FE' />
-        <stop offset='1' stop-color='#F4EBFF' />
+        <stop stopColor='#E9D7FE' />
+        <stop offset='1' stopColor='#F4EBFF' />
       </linearGradient>
     </defs>
   </svg>

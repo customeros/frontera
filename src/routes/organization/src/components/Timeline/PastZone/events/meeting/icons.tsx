@@ -21,9 +21,9 @@ export const MeetingIcon = () => {
           id='paint0_linear_5861_1986'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#F04438' />
-          <stop offset='0.208333' stop-color='#FF7B72' />
-          <stop offset='1' stop-color='#F1463A' />
+          <stop stopColor='#F04438' />
+          <stop offset='0.208333' stopColor='#FF7B72' />
+          <stop offset='1' stopColor='#F1463A' />
         </linearGradient>
       </defs>
     </svg>

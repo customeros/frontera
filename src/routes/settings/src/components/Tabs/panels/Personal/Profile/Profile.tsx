@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { SettingsProfileUseCase } from '@domain/usecases/settings/profile/settings-profile.usecase';
 
 import { cn } from '@ui/utils/cn';
-import { X } from '@ui/media/icons/X';
+import { Icon } from '@ui/media/Icon';
 import { Input } from '@ui/form/Input';
 import { Image } from '@ui/media/Image/Image';
 import { IconButton } from '@ui/form/IconButton';
@@ -29,27 +29,21 @@ export const Profile = observer(() => {
   const store = useStore();
 
   const [file, setFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   const [isDragging, setIsDragging] = useState(false);
   const [_triggerRender, setTriggerRender] = useState(false);
 
-  const usecase = useMemo(
-    () => new SettingsProfileUseCase(store.session.value.profile.id),
-    [store.session.value.profile.id],
-  );
+  const usecase = useMemo(() => new SettingsProfileUseCase(), []);
 
-  const handelLoad = () => setIsLoading(true);
-  const clearLoad = () => setIsLoading(false);
+  useEffect(() => {
+    if (store.session.isAuthenticated) {
+      usecase.init();
+    }
+  }, [store.session.isAuthenticated]);
 
   const handleError = (_refId: number, error: string) => {
-    clearLoad();
-    setFile(null);
     toastError(error, 'upload-file');
-  };
-
-  const handleLoadEnd = () => {
-    setFile(null);
-    clearLoad();
   };
 
   const handleTenantLogoUpdate = (_refId: number, res: unknown) => {
@@ -57,16 +51,17 @@ export const Profile = observer(() => {
 
     usecase.updateUserProfilePhotoUrl(id);
     usecase.updateUser();
-
-    clearLoad();
   };
 
   const handleTenantLogoRemove = () => {
     usecase.updateUserProfilePhotoUrl('');
     usecase.updateUser();
-    setFile(null);
     setTriggerRender((prev) => !prev);
   };
+
+  const imageSrc =
+    (file ? `${URL.createObjectURL(file)}` : undefined) ??
+    usecase.userProfilePhotoUrl;
 
   return (
     <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full'>
@@ -83,10 +78,9 @@ export const Profile = observer(() => {
             onChange={setFile}
             apiBaseUrl='/files'
             onError={handleError}
-            onLoadStart={handelLoad}
-            onLoadEnd={handleLoadEnd}
             onDragOverChange={setIsDragging}
             onSuccess={handleTenantLogoUpdate}
+            onLoadEnd={() => setHasLoaded(true)}
             endpointOptions={{
               fileKeyName: 'file',
               uploadUrl: '',
@@ -105,16 +99,15 @@ export const Profile = observer(() => {
                     hasArrow
                     align='start'
                     side='bottom'
-                    label='Upload a square logo no bigger than 1MB'
+                    label='Upload a logo no bigger than 1MB'
                   >
                     <FileUploadTrigger
                       onChange={setFile}
                       apiBaseUrl='/files'
-                      name='logoUploader'
                       onError={handleError}
-                      onLoadStart={handelLoad}
-                      onLoadEnd={handleLoadEnd}
+                      name='company-logo-uploader'
                       onSuccess={handleTenantLogoUpdate}
+                      onLoadEnd={() => setHasLoaded(true)}
                       endpointOptions={{
                         fileKeyName: 'file',
                         uploadUrl: '',
@@ -122,7 +115,7 @@ export const Profile = observer(() => {
                       className={cn(
                         outlineButton({ colorScheme: 'grayModern' }),
                         'hover:bg-grayModern-100 p-1 rounded-md cursor-pointergrayModernt-grayModern-500',
-                        isLoading && 'opacity-50 pointer-events-none',
+                        hasLoaded && 'opacity-50 pointer-events-none',
                       )}
                     >
                       <ImagePlus className='size-6' />
@@ -130,29 +123,33 @@ export const Profile = observer(() => {
                   </Tooltip>
                 )}
 
-                {usecase.userProfilePhotoUrl && !file && (
+                {imageSrc && (
                   <div className='relative max-h-16 w-fit group'>
                     <Image
-                      className='h-10 rounded-full'
-                      src={usecase.userProfilePhotoUrl}
+                      src={imageSrc}
+                      className={cn(
+                        'h-12 rounded-full',
+                        (file || !usecase.userProfilePhotoUrl) &&
+                          'grayscale filter blur-sm rounded-full',
+                        hasLoaded &&
+                          'grayscale-0 blur-none animate-fadeOutFilteredGrayscale rounded-full',
+                      )}
                     />
                     <IconButton
                       size='xxs'
-                      icon={<X />}
                       variant='outline'
+                      icon={<Icon name='x' />}
                       aria-label='Remove Logo'
-                      onClick={handleTenantLogoRemove}
                       className='absolute bg-white bg-opacity-50 -top-[9px] -right-[10px] rounded-full size-5 opacity-0 group-hover:opacity-100'
+                      onClick={() => {
+                        handleTenantLogoRemove();
+                        setFile(null);
+                        setHasLoaded(false);
+                      }}
                     />
                   </div>
                 )}
 
-                {!usecase.userProfilePhotoUrl && file && (
-                  <Image
-                    src={`${URL.createObjectURL(file)}`}
-                    className='max-h-16 animate-pulseOpacity'
-                  />
-                )}
                 <div>
                   <label className='font-medium text-sm'>
                     First & last name

@@ -141,6 +141,7 @@ export class RootStore {
       this.invoices.bootstrap(),
       this.contracts.bootstrap(),
       this.externalSystemInstances.bootstrap(),
+
       this.users.bootstrap(),
       this.flows.bootstrap(),
       this.flowEmailVariables.bootstrap(),

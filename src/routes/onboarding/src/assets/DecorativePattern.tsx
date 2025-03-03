@@ -2234,7 +2234,7 @@ export const DecorativePattern = (props: SVGProps<SVGSVGElement>) => (
         gradientTransform='translate(384 768) rotate(-90) scale(768 400.776)'
       >
         <stop />
-        <stop stop-opacity='0' offset='0.958333' />
+        <stop stopOpacity='0' offset='0.958333' />
       </radialGradient>
     </defs>
   </svg>

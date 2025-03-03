@@ -2702,6 +2702,7 @@ export type Mutation = {
   flow_On: Flow;
   interactionEvent_LinkAttachment: Result;
   invoice_Pay: Invoice;
+  invoice_RegeneratePdf: Invoice;
   invoice_Simulate: Array<InvoiceSimulate>;
   invoice_Update: Invoice;
   invoice_Void: Invoice;
@@ -2791,6 +2792,7 @@ export type Mutation = {
   tag_Create: Tag;
   tag_Delete?: Maybe<Result>;
   tag_Update?: Maybe<Tag>;
+  task_Save: Task;
   tenant_AddBillingProfile: TenantBillingProfile;
   tenant_UpdateBillingProfile: TenantBillingProfile;
   tenant_UpdateSettings: TenantSettings;
@@ -3179,6 +3181,10 @@ export type MutationInvoice_PayArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type MutationInvoice_RegeneratePdfArgs = {
+  id: Scalars['ID']['input'];
+};
+
 export type MutationInvoice_SimulateArgs = {
   input: InvoiceSimulateInput;
 };
@@ -3542,6 +3548,10 @@ export type MutationTag_DeleteArgs = {
 
 export type MutationTag_UpdateArgs = {
   input: TagUpdateInput;
+};
+
+export type MutationTask_SaveArgs = {
+  input: TaskInput;
 };
 
 export type MutationTenant_AddBillingProfileArgs = {
@@ -4359,6 +4369,7 @@ export type Query = {
   /** @deprecated Use tags_ByEntityType */
   tags: Array<Tag>;
   tags_ByEntityType: Array<Tag>;
+  tasks: Array<Task>;
   tenant: Scalars['String']['output'];
   tenantBillingProfile: TenantBillingProfile;
   tenantBillingProfiles: Array<TenantBillingProfile>;
@@ -4371,6 +4382,7 @@ export type Query = {
   ui_organizations_search: OrganizationSearchResult;
   user: User;
   user_ByEmail: User;
+  user_Current: User;
   users: UserPage;
   version: Scalars['Float']['output'];
 };
@@ -4998,6 +5010,39 @@ export type TagUpdateInput = {
   id: Scalars['ID']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type Task = {
+  __typename?: 'Task';
+  asignees: Array<Scalars['ID']['output']>;
+  context: Scalars['String']['output'];
+  createdAt: Scalars['Time']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  dueAt: Scalars['Time']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  opportunityId?: Maybe<Scalars['ID']['output']>;
+  ownerId: Scalars['ID']['output'];
+  status: TaskStatus;
+  updatedAt: Scalars['Time']['output'];
+};
+
+export type TaskInput = {
+  asignees?: InputMaybe<Array<Scalars['ID']['input']>>;
+  context?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  dueAt?: InputMaybe<Scalars['Time']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  opportunityId?: InputMaybe<Scalars['ID']['input']>;
+  ownerId?: InputMaybe<Scalars['ID']['input']>;
+  status?: InputMaybe<TaskStatus>;
+};
+
+export enum TaskStatus {
+  Done = 'DONE',
+  InProgress = 'IN_PROGRESS',
+  Todo = 'TODO',
+}
 
 export type Tax = {
   __typename?: 'Tax';

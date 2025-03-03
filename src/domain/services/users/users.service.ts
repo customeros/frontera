@@ -34,4 +34,16 @@ export class UsersService {
 
     this.store.ui.toastSuccess('User updated', 'user-updated');
   }
+
+  public async getCurrentUser() {
+    const [res, err] = await unwrap(this.usersRepo.getCurrentUser());
+
+    if (err) {
+      console.error(err);
+
+      return;
+    }
+
+    return res;
+  }
 }

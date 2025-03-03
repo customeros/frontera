@@ -67,4 +67,18 @@ export class UsersStore extends Store<UserDatum, User> {
       });
     }
   }
+
+  async getCurrentUser() {
+    try {
+      const { user_Current } = await this.repository.getCurrentUser();
+
+      runInAction(() => {
+        this.root.session.value.profile.id = user_Current.id;
+      });
+    } catch (error) {
+      console.error('Failed to get current user:', error);
+
+      return null;
+    }
+  }
 }
