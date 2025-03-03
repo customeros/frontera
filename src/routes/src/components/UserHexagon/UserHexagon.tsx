@@ -51,15 +51,17 @@ const ClippedImage = ({
 }) => {
   return (
     <Tooltip hasArrow label={name}>
-      <div className='flex size-7 items-center justify-center rounded-full '>
+      <div className='flex size-7 items-center justify-center rounded-full relative'>
         <Image
           src={url}
           aria-label={name}
-          className={`rounded-full w-[28px] h-[28px] border`}
           style={{
             borderColor: color,
           }}
+          className={`rounded-full size-[28px] border aspect-square object-cover`}
         />
+
+        <div className='absolute size-[7px] ring-[2px] ring-white bg-success-500 rounded-full right-0.5 bottom-[-1px] z-[3]'></div>
       </div>
     </Tooltip>
   );

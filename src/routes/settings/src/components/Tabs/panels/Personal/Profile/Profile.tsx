@@ -128,7 +128,7 @@ export const Profile = observer(() => {
                     <Image
                       src={imageSrc}
                       className={cn(
-                        'h-12 rounded-full',
+                        'size-12 rounded-full aspect-square object-cover',
                         (file || !usecase.userProfilePhotoUrl) &&
                           'grayscale filter blur-sm rounded-full',
                         hasLoaded &&
