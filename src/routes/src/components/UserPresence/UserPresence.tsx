@@ -10,7 +10,7 @@ export const UserPresence = ({ channelName }: UserPresenceProps) => {
   const { presentUsers, currentUserId } = useChannel(channelName);
 
   return (
-    <div className='flex'>
+    <div className='flex gap-1'>
       {presentUsers.map((user, idx) => {
         return (
           <UserHexagon

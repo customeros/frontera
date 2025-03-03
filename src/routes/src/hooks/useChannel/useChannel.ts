@@ -36,18 +36,16 @@ export const useChannel = (channelName: string) => {
 
   const store = useStore();
 
-  const user = store?.globalCache?.value?.user;
-  const user_id = user?.id;
-  const username = (() => {
-    if (!user) return;
-    const fullName = [user?.firstName, user?.lastName].join(' ').trim();
-    const email = user?.emails?.[0]?.email;
-
-    return fullName || email;
-  })();
+  const user_id = store?.session.value?.profile?.id ?? '';
+  const user = store?.users?.getById(user_id);
+  const username = user?.name || user?.value?.emails?.[0]?.email;
 
   useEffect(() => {
     if (!socket || !user_id) return;
+
+    if (channel?.state === 'joined') {
+      channel.leave();
+    }
 
     const phoenixChannel = socket?.channel(channelName, {
       user_id,
@@ -74,7 +72,7 @@ export const useChannel = (channelName: string) => {
     return () => {
       phoenixChannel.leave();
     };
-  }, [setPresence, socket, user_id]);
+  }, [setPresence, socket, user_id, username]);
 
   return { channel, presence, presentUsers, currentUserId: user_id };
 };
