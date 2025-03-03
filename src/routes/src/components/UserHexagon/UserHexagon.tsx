@@ -22,7 +22,7 @@ export const UserHexagon = observer(
 
     return (
       <Tooltip hasArrow label={name}>
-        <div className='flex w-[26px] h-[28px] items-center justify-center cursor-default'>
+        <div className='flex size-7 items-center justify-center cursor-default'>
           <svg
             width='26'
             height='28'
@@ -36,14 +36,17 @@ export const UserHexagon = observer(
           >
             <path
               stroke='currentColor'
+              className='rounded-full'
               fill={isCurrent ? 'currentColor' : '#FCFCFD'}
-              d='M11.25 1.58771C12.3329 0.962498 13.6671 0.962498 14.75 1.58771L22.8744 6.27831C23.9573 6.90353 24.6244 8.05897 24.6244 9.3094V18.6906C24.6244 19.941 23.9573 21.0965 22.8744 21.7217L14.75 26.4123C13.6671 27.0375 12.3329 27.0375 11.25 26.4123L3.12564 21.7217C2.04274 21.0965 1.37564 19.941 1.37564 18.6906V9.3094C1.37564 8.05897 2.04274 6.90353 3.12564 6.27831L11.25 1.58771Z'
             />
           </svg>
 
           <p
-            className='text-sm z-[2]'
-            style={{ color: isCurrent ? 'white' : color }}
+            className='text-sm z-[2] rounded-full size-7 flex items-center justify-center'
+            style={{
+              color: isCurrent ? 'white' : color,
+              backgroundColor: isCurrent ? color : 'white',
+            }}
           >
             {getInitials(name)}
           </p>
@@ -64,33 +67,13 @@ const ClippedImage = ({
 }) => {
   return (
     <Tooltip hasArrow label={name}>
-      <div
-        className='flex w-[28px] h-[29px] items-center justify-center'
-        style={{
-          background: color,
-          clipPath: `polygon(
-            50% 0%,
-            100% 25%,
-            100% 75%, 
-            50% 100%,
-            0% 75%,
-            0% 25%
-        )`,
-        }}
-      >
+      <div className='flex size-7 items-center justify-center rounded-full '>
         <Image
           src={url}
           aria-label={name}
-          className={`w-[26px] h-[27px]`}
+          className={`rounded-full w-[28px] h-[28px] border`}
           style={{
-            clipPath: `polygon(
-              50% 0%,
-              100% 25%,
-              100% 75%,
-              50% 100%,
-              0% 75%,
-              0% 25%
-          )`,
+            borderColor: color,
           }}
         />
       </div>
