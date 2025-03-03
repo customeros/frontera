@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
+import { CreateAgentUsecase } from '@domain/usecases/agents/create-agent.usecase';
 
 import { Icon } from '@ui/media/Icon';
 import { AgentType } from '@graphql/types';
@@ -26,10 +28,22 @@ export const EmptyState = observer(
       AgentType.CashflowGuardian,
     )?.value;
 
+    const navigateToAgent = (id: string) => {
+      navigate(`/agents/${id}`);
+    };
+
+    const usecase = useMemo(() => new CreateAgentUsecase(navigateToAgent), []);
+
+    const handleAgentNavigation = () => {
+      if (!cashflowAgent) {
+        return usecase.execute(AgentType.CashflowGuardian);
+      }
+
+      return navigate(`/agents/${cashflowAgent.id}`);
+    };
+
     const navigateToAccount = () => {
       const urlSearchParams = new URLSearchParams(searchParams?.toString());
-
-      urlSearchParams.set('tab', 'account');
 
       setLastActivePosition({
         ...lastActivePosition,
@@ -77,6 +91,10 @@ export const EmptyState = observer(
 
                   return;
                 }
+              }
+
+              if (!cashflowAgent) {
+                handleAgentNavigation();
               }
 
               if (cashflowAgent?.isActive) {
