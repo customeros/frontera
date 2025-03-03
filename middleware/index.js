@@ -105,6 +105,30 @@ async function customerOsSignIn(
   }
 }
 
+async function getCurrentUser(email, tenant) {
+  return fetch(`${process.env.CUSTOMER_OS_API_PATH + '/query'}`, {
+    method: 'POST',
+    headers: {
+      'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
+      'X-Openline-USERNAME': email,
+      'X-Openline-TENANT': tenant,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      operationName: 'getCurrentUser',
+      query: `
+      query getCurrentUser {
+        user_Current {
+          id
+          name
+          profilePhotoUrl
+        }
+      }
+      `,
+    }),
+  });
+}
+
 function fetchMagicLink(email) {
   return fetch(`${process.env.CUSTOMER_OS_API_PATH + '/rml'}`, {
     method: 'POST',
@@ -461,6 +485,13 @@ async function createServer() {
 
       const loggedInEmail = stateParsed?.email ?? profileRes.data.email;
 
+      const currentUserReq = await getCurrentUser(
+        loggedInEmail,
+        stateParsed?.tenant ?? '',
+      );
+
+      const currentUserRes = await currentUserReq.json();
+
       const loginResponsePromise = await customerOsSignIn({
         tenant: stateParsed?.tenant ?? '',
         loggedInEmail: loggedInEmail,
@@ -497,7 +528,9 @@ async function createServer() {
           integrations_token,
           profile: {
             ...profileRes.data,
-            id: loginResponse.userId,
+            id: currentUserRes.data.user_Current.id,
+            name: currentUserRes.data.user_Current.name,
+            profilePhotoUrl: currentUserRes.data.user_Current.profilePhotoUrl,
           },
         },
         process.env.JWT_SECRET,
@@ -809,6 +842,13 @@ async function createServer() {
       }),
     });
 
+    const currentUserReq = await getCurrentUser(
+      req.session.profile.email,
+      req.query.tenant,
+    );
+
+    const currentUserRes = await currentUserReq.json();
+
     const switchTenantResponse = await resp.json();
 
     if (resp.status !== 200) {
@@ -825,7 +865,12 @@ async function createServer() {
         access_token: req.session.access_token,
         refresh_token: req.session.refresh_token,
         integrations_token: req.session.integrations_token, //TODO we need to fetch a new integration app token for this tenant
-        profile: req.session.profile,
+        profile: {
+          ...req.session.profile,
+          id: currentUserRes.data.user_Current.id,
+          name: currentUserRes.data.user_Current.name,
+          profilePhotoUrl: currentUserRes.data.user_Current.profilePhotoUrl,
+        },
       },
       process.env.JWT_SECRET,
       {

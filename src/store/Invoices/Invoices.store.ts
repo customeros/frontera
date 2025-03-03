@@ -30,8 +30,7 @@ export class InvoicesStore extends SyncableGroup<Invoice, InvoiceStore> {
     });
 
     when(
-      () =>
-        this.isBootstrapped && this.totalElements > 0 && !this.root.demoMode,
+      () => this.isBootstrapped && this.totalElements > 0,
       async () => {
         await this.bootstrapRest();
       },
@@ -63,6 +62,7 @@ export class InvoicesStore extends SyncableGroup<Invoice, InvoiceStore> {
       this.load(invoices.content as Invoice[], {
         getId: (data) => data.invoiceNumber, // this change is intentional, preview id changes between updates and number stays stable
       });
+
       runInAction(() => {
         this.isBootstrapped = true;
         this.totalElements = invoices.totalElements;

@@ -22,34 +22,18 @@ export const UserHexagon = observer(
 
     return (
       <Tooltip hasArrow label={name}>
-        <div className='flex size-7 items-center justify-center cursor-default'>
-          <svg
-            width='26'
-            height='28'
-            fill='none'
-            color={color}
-            viewBox='0 0 26 28'
-            xmlns='http://www.w3.org/2000/svg'
-            style={{
-              position: 'absolute',
-            }}
-          >
-            <path
-              stroke='currentColor'
-              className='rounded-full'
-              fill={isCurrent ? 'currentColor' : '#FCFCFD'}
-            />
-          </svg>
-
+        <div className='flex relative size-7 items-center justify-center cursor-default'>
           <p
             className='text-sm z-[2] rounded-full size-7 flex items-center justify-center'
             style={{
               color: isCurrent ? 'white' : color,
               backgroundColor: isCurrent ? color : 'white',
+              border: !isCurrent ? `1px solid ${color}` : 'none',
             }}
           >
             {getInitials(name)}
           </p>
+          <div className='absolute size-[7px] ring-[2px] ring-white bg-success-500 rounded-full right-0.5 bottom-[-1px] z-[3]'></div>
         </div>
       </Tooltip>
     );
