@@ -58,7 +58,7 @@ export const TopNav = observer(() => {
   if (!organization) return null;
 
   return (
-    <div className='w-full flex gap-2 justify-start border-b border-grayModern-200 px-2 py-2'>
+    <div className='w-full flex gap-2 justify-start items-center border-b border-grayModern-200 px-2 py-2'>
       <Button
         size='xs'
         onClick={handleItemClick('about')}

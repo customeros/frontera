@@ -143,7 +143,7 @@ export const MeetingPreviewModal = ({
           {event.name}
         </p>
         <div className='flex gap-1'>
-          <Tooltip label='Copy link'>
+          <Tooltip asChild label='Copy link'>
             <IconButton
               size='xs'
               variant='ghost'
@@ -152,7 +152,7 @@ export const MeetingPreviewModal = ({
               onClick={() => copy(window.location.href, 'Link copied')}
             />
           </Tooltip>
-          <Tooltip label='Close'>
+          <Tooltip asChild label='Close'>
             <IconButton
               size='xs'
               variant='ghost'

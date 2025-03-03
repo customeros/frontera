@@ -38,30 +38,26 @@ export const TimelineEventPreviewHeader = ({
 
           <div className='flex justify-end items-baseline'>
             {children}
-            <Tooltip side='bottom' asChild={false} label={copyLabel}>
-              <div>
-                <IconButton
-                  size='xs'
-                  variant='ghost'
-                  className='mr-1'
-                  aria-label={copyLabel}
-                  colorScheme='grayModern'
-                  icon={<Link01 className='text-grayModern-500' />}
-                  onClick={() => copy(window.location.href, 'Link copied')}
-                />
-              </div>
+            <Tooltip side='bottom' label={copyLabel}>
+              <IconButton
+                size='xs'
+                variant='ghost'
+                className='mr-1'
+                aria-label={copyLabel}
+                colorScheme='grayModern'
+                icon={<Link01 className='text-grayModern-500' />}
+                onClick={() => copy(window.location.href, 'Link copied')}
+              />
             </Tooltip>
             <Tooltip label='Close' side='bottom' aria-label='close'>
-              <div>
-                <IconButton
-                  size='xs'
-                  variant='ghost'
-                  onClick={onClose}
-                  colorScheme='grayModern'
-                  aria-label='Close preview'
-                  icon={<XClose className='text-grayModern-500' />}
-                />
-              </div>
+              <IconButton
+                size='xs'
+                variant='ghost'
+                onClick={onClose}
+                colorScheme='grayModern'
+                aria-label='Close preview'
+                icon={<XClose className='text-grayModern-500' />}
+              />
             </Tooltip>
           </div>
         </div>
