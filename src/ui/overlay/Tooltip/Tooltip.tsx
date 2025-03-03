@@ -30,7 +30,6 @@ export const Tooltip = ({
   defaultOpen,
   onOpenChange,
   delayDuration = 500,
-  asChild = true,
 }: TooltipProps) => {
   if (!label) return children;
 
@@ -42,7 +41,7 @@ export const Tooltip = ({
         onOpenChange={onOpenChange}
         delayDuration={delayDuration}
       >
-        <RadixTooltip.Trigger asChild={asChild} tabIndex={tabIndex}>
+        <RadixTooltip.Trigger asChild tabIndex={tabIndex}>
           {children}
         </RadixTooltip.Trigger>
         <RadixTooltip.Portal

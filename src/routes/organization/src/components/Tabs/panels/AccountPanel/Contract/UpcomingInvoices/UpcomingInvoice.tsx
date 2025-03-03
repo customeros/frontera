@@ -1,4 +1,5 @@
 import { toZonedTime } from 'date-fns-tz';
+import { addDays } from 'date-fns/addDays';
 import { observer } from 'mobx-react-lite';
 
 import { Contract } from '@graphql/types';
@@ -41,6 +42,19 @@ export const UpcomingInvoice = observer(
     );
     const autoRenewal = contract?.autoRenew;
 
+    const invoicePeriodStart = toZonedTime(
+      invoice?.invoicePeriodStart,
+      'UTC',
+    ).toUTCString();
+    const invoicePeriodEnd = toZonedTime(
+      invoice?.invoicePeriodEnd,
+      'UTC',
+    ).toUTCString();
+
+    const nextInvoiceDate = invoice?.postpaid
+      ? toZonedTime(addDays(new Date(invoicePeriodEnd), 1), 'UTC').toUTCString()
+      : invoicePeriodStart;
+
     return (
       <div
         tabIndex={0}
@@ -55,17 +69,17 @@ export const UpcomingInvoice = observer(
         <div className='whitespace-nowrap text-grayModern-500 underline'>
           {formatCurrency(invoice.amountDue, 2, invoice?.currency)} on{' '}
           {DateTimeUtils.format(
-            toZonedTime(invoice?.invoicePeriodStart, 'UTC').toUTCString(),
+            nextInvoiceDate,
             DateTimeUtils.defaultFormatShortString,
           )}{' '}
           (
           {DateTimeUtils.format(
-            toZonedTime(invoice?.invoicePeriodStart, 'UTC').toUTCString(),
+            invoicePeriodStart,
             DateTimeUtils.dateDayAndMonth,
           )}{' '}
           -{' '}
           {DateTimeUtils.format(
-            toZonedTime(invoice?.invoicePeriodStart, 'UTC').toUTCString(),
+            invoicePeriodEnd,
             DateTimeUtils.defaultFormatShortString,
           )}
           )

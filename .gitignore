@@ -28,6 +28,7 @@ dist-ssr
 .env.development
 .env.production
 .env.dev
+.env.prod
 .env
 /test-results/
 /playwright-report/
