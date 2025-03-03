@@ -2,6 +2,7 @@ query getInvoices($pagination: Pagination!, $where: Filter, $sort: [SortBy!]) {
   invoices(pagination: $pagination, where: $where, sort: $sort) {
     content {
       issued
+      postpaid
       metadata {
         id
         created

@@ -1,6 +1,7 @@
 query Invoice($number: String!) {
   invoice_ByNumber(number: $number) {
     issued
+    postpaid
     metadata {
       id
       created
