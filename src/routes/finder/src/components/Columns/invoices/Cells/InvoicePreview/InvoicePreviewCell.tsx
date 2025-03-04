@@ -31,7 +31,7 @@ export const InvoicePreviewCell = ({ value }: { value: string }) => {
     >
       <span className='truncate'>{value}</span>
       <div>
-        <Eye className='opacity-0 group-hover:opacity-100 transition-opacity text-grayModern-400 size-4' />
+        <Eye className='hidden group-hover:flex transition-opacity text-grayModern-400 size-4' />
       </div>
     </div>
   );

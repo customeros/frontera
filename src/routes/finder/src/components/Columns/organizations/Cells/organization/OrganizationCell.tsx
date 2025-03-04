@@ -54,7 +54,7 @@ export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
         variant='ghost'
         aria-label='preview company'
         icon={<Eye className='text-grayModern-500' />}
-        className='opacity-0 group-hover/orgName:opacity-100 cursor-pointer'
+        className='hidden group-hover/orgName:flex cursor-pointer'
         onClick={() => {
           if (store.ui.showPreviewCard && store.ui.focusRow === id) {
             store.ui.setShowPreviewCard(false);
