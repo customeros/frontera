@@ -66,12 +66,44 @@ export const EmptyState = observer(
         </div>
         <div className='flex flex-col text-center items-center translate-y-[-212px]'>
           <p className='text-grayModern-700 text-md font-semibold mb-1'>
-            No upcoming invoices
+            No paper trails yet
           </p>
           <p className='text-sm my-1 max-w-[360px] text-center'>
-            {cashflowAgent?.isActive
-              ? `Invoices sent to ${companyName} will appear here once processed by the Cashflow Guardian agent. To send invoices, add products to this company’s contract and complete their billing details.`
-              : `To start sending invoices, enable the Cashflow Guardian agent, add products to ${companyName}’s contract, and complete their billing details.`}
+            {cashflowAgent?.isActive ? (
+              <>
+                <p>
+                  Invoices sent to {companyName} will appear here once processed
+                  by the{' '}
+                  <span
+                    onClick={handleAgentNavigation}
+                    className='cursor-pointer underline'
+                  >
+                    Cashflow Guardian
+                  </span>{' '}
+                  agent.
+                </p>
+
+                <p>
+                  To send invoices, add products to this company’s contract and
+                  complete their billing details.
+                </p>
+              </>
+            ) : (
+              <>
+                <span>To start sending invoices, enable the </span>
+                <span
+                  onClick={handleAgentNavigation}
+                  className='cursor-pointer underline'
+                >
+                  Cashflow Guardian
+                </span>
+                <span>
+                  {' '}
+                  agent, add products to {companyName}'s contract, and complete
+                  their billing details.
+                </span>
+              </>
+            )}
           </p>
           <Button
             variant='outline'
