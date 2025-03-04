@@ -35,7 +35,7 @@ export const ContractDeleteModal = observer(
           <div>
             <div>
               <h1 className={cn('text-base font-semibold')}>
-                Delete this contract?
+                Archive this contract?
               </h1>
             </div>
             <div className='flex flex-col'>

@@ -75,7 +75,7 @@ export const ContractMenu = ({
             onClick={() => onStatusModalOpen(ContractStatusModalMode.Delete)}
           >
             <Icon
-              name='trash-01'
+              name='archive'
               className='text-grayModern-500 group-hover:text-grayModern-700'
             />
             Archive contract
