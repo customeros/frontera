@@ -20,6 +20,7 @@ export class SyncInvoiceToAccountingUsecase {
   @observable accessor isConnecting = false;
   @observable accessor isRevokeOpen = false;
   @observable accessor isRevoking = false;
+  @observable accessor isAccountingMethodInfoOpen = false;
   @observable accessor accountingMethod: AccountingMethod = 'cash';
 
   constructor(private agentId: string) {
@@ -29,6 +30,8 @@ export class SyncInvoiceToAccountingUsecase {
     this.toggleEnabled = this.toggleEnabled.bind(this);
     this.toggleRevokeOpen = this.toggleRevokeOpen.bind(this);
     this.toggleAccountingMethod = this.toggleAccountingMethod.bind(this);
+    this.toggleAccountingMethodInfo =
+      this.toggleAccountingMethodInfo.bind(this);
   }
 
   @computed
@@ -67,6 +70,11 @@ export class SyncInvoiceToAccountingUsecase {
     span.end({
       isRevokeOpen: this.isRevokeOpen,
     });
+  }
+
+  @action
+  public toggleAccountingMethodInfo() {
+    this.isAccountingMethodInfoOpen = !this.isAccountingMethodInfoOpen;
   }
 
   @action

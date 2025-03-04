@@ -10,7 +10,10 @@ import { Icon } from '@ui/media/Icon';
 import { Switch } from '@ui/form/Switch';
 import { Spinner } from '@ui/feedback/Spinner';
 import { Button } from '@ui/form/Button/Button';
+import { IconButton } from '@ui/form/IconButton';
 import { ButtonGroup } from '@ui/form/ButtonGroup';
+import { Divider } from '@ui/presentation/Divider';
+import { InfoDialog } from '@ui/overlay/AlertDialog/InfoDialog';
 import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog';
 
 export const SyncInvoiceToAccounting = observer(() => {
@@ -80,10 +83,17 @@ export const SyncInvoiceToAccounting = observer(() => {
               </Button>
             </div>
           </div>
-
+          <Divider className='my-4' />
           <div className='mt-3 flex justify-between'>
-            <div className='flex justify-center gap-2 items-center pl-7'>
+            <div className='flex justify-center gap-2 items-center'>
               <label className='text-sm font-medium'>Accounting method</label>
+              <IconButton
+                size='xxs'
+                variant='ghost'
+                aria-label='info'
+                icon={<Icon name='help-circle' />}
+                onClick={usecase.toggleAccountingMethodInfo}
+              />
             </div>
             <ButtonGroup className='w-fit'>
               <Button
@@ -123,6 +133,32 @@ export const SyncInvoiceToAccounting = observer(() => {
             workspace. This means that any part of the app that relies on it,
             including agent capabilities, will stop working.
           </p>
+        }
+      />
+      <InfoDialog
+        confirmButtonLabel='Got it'
+        label='Accounting methods 101'
+        isOpen={usecase.isAccountingMethodInfoOpen}
+        onClose={usecase.toggleAccountingMethodInfo}
+        onConfirm={usecase.toggleAccountingMethodInfo}
+        body={
+          <div className='space-y-4'>
+            <div>
+              <p className='text-sm'>
+                The accounting method determines how revenue is recognized when
+                syncing invoices to your accounting system.
+              </p>
+            </div>
+
+            <div>
+              <p className='text-sm'>
+                The <span className='font-medium'>‘Cash Basis’ </span> method
+                records revenue when payment is received, while{' '}
+                <span className='font-medium'>‘Accrual’ </span> records it when
+                the service is provided.
+              </p>
+            </div>
+          </div>
         }
       />
     </div>
