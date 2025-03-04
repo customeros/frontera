@@ -38,6 +38,12 @@ export const Mailboxes = observer(() => {
     navigate('/settings?tab=mailboxes&view=buy');
   };
 
+  const goToOutbound = () => {
+    if (campaign) return;
+    navigate('/settings?tab=mailboxes&view=outbound');
+    store.mailboxes.resetBuyFlow();
+  };
+
   const goToMailboxes = () => {
     if (campaign) return;
     navigate('/settings?tab=mailboxes');
@@ -48,6 +54,7 @@ export const Mailboxes = observer(() => {
     store.mailboxes.baseBundle.size + store.mailboxes.extendedBundle.size;
 
   const showBuyFlow = searchParams.get('view') === 'buy';
+  const showOutbound = searchParams.get('view') === 'outbound';
   const showCheckout = searchParams.get('view') === 'checkout';
   const showMailboxes = !searchParams.get('view');
 
@@ -69,14 +76,14 @@ export const Mailboxes = observer(() => {
   if (!hasMailboxes && showMailboxes) {
     return (
       <EmptyMailboxes
-        buyMailboxes={goBuy}
+        buyMailboxes={goToOutbound}
         onGoogleSync={() => store.settings.oauthToken.enableSync('google')}
         onAzureSync={() => store.settings.oauthToken.enableSync('azure-ad')}
       />
     );
   }
 
-  if (!hasMailstack && !showBuyFlow) {
+  if (showOutbound && !hasMailstack) {
     return <EmptyMailstack onUpdate={goBuy} />;
   }
 

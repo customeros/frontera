@@ -18,7 +18,7 @@ export const MailboxTable = observer(() => {
   const navigate = useNavigate();
   const flowsPreset = store.tableViewDefs.flowsPreset;
 
-  const goToBuy = () => navigate('/settings?tab=mailboxes&view=buy');
+  const goToBuy = () => navigate('/settings?tab=mailboxes&view=outbound');
 
   const data = store.mailboxes.toArray().map((v) => v.value);
 
