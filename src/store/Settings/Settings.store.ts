@@ -115,7 +115,7 @@ export class SettingsStore {
       this.isLoading = true;
 
       const res = await this.transport.http.post(
-        '/internal/settings/revoke',
+        '/internal/settings/slack/revoke',
         payload,
       );
 
