@@ -140,7 +140,7 @@ export const ContractEndModal = observer(
               </Radio>
               {timeToNextInvoice && (
                 <Radio value={EndContract.EndOfCurrentBillingPeriod}>
-                  <span className='ml-1'>
+                  <span>
                     End of current billing period, {timeToNextInvoice}
                   </span>
                 </Radio>
@@ -148,7 +148,7 @@ export const ContractEndModal = observer(
 
               {timeToRenewal && (
                 <Radio value={EndContract.EndOfCurrentRenewalPeriod}>
-                  <span className='ml-1'>End of renewal, {timeToRenewal}</span>
+                  <span>End of renewal, {timeToRenewal}</span>
                 </Radio>
               )}
 
