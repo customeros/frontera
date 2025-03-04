@@ -4,6 +4,8 @@ import { Transport } from '@infra/transport';
 import { runInAction, makeAutoObservable } from 'mobx';
 import { CommonRepository } from '@infra/repositories/common';
 
+import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
+
 export type OauthToken = {
   type: string;
   email: string;
@@ -108,7 +110,8 @@ export class OauthTokenStore {
   }
 
   private onDisableError(err: Error, provider: string) {
-    const providerLabel = provider === 'google' ? 'Google' : 'Microsoft 365';
+    const providerLabel =
+      provider === MailboxProvider.Google ? 'Google' : 'Microsoft 365';
 
     this.error = err.message;
     this.isLoading = false;
