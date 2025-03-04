@@ -109,7 +109,7 @@ export const SettingsSidenav = observer(() => {
           handleItemClick={handleItemClick}
         /> */}
           </div>
-          <div className='pb-4 ml-[20px]'>
+          <div className='pb-4'>
             <SettingsSection />
           </div>
         </>
