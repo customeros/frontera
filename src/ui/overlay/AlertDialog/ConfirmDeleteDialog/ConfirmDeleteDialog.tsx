@@ -62,13 +62,13 @@ export const ConfirmDeleteDialog = ({
             </div>
             <AlertDialogHeader className='font-bold'>
               {description && (
-                <p className='mt-1 text-sm text-grayModern-700 font-normal'>
+                <div className='mt-1 text-sm text-grayModern-700 font-normal'>
                   {description}
-                </p>
+                </div>
               )}
             </AlertDialogHeader>
 
-            {body && <AlertDialogBody>{body}</AlertDialogBody>}
+            {body && <AlertDialogBody asChild>{body}</AlertDialogBody>}
             <AlertDialogFooter>
               <AlertDialogCloseButton>
                 <Button
