@@ -99,7 +99,7 @@ export class Slack {
     const span = Tracer.span('Slack.disableSync');
 
     this.isLoading = true;
-    this.root.settings.revokeAccess('slack', {
+    this.root.settings.revokeAccessSlack('slack', {
       onSuccess: () => {
         this.enabled = false;
         this.isLoading = false;

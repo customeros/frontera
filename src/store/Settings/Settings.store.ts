@@ -104,6 +104,32 @@ export class SettingsStore {
     ]);
   }
 
+  async revokeAccessSlack(
+    payload: unknown,
+    options?: {
+      onError?: (err: Error) => void;
+      onSuccess?: (res: unknown) => void;
+    },
+  ) {
+    try {
+      this.isLoading = true;
+
+      const res = await this.transport.http.post(
+        '/internal/settings/slack/revoke',
+        payload,
+      );
+
+      if (res) {
+        options?.onSuccess?.(res);
+      }
+    } catch (err) {
+      this.error = (err as Error)?.message;
+      options?.onError?.(err as Error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
   async revokeAccess(
     payload: unknown,
     options?: {
