@@ -1,3 +1,4 @@
+import { UTCDate } from '@date-fns/utc';
 import { format, toZonedTime } from 'date-fns-tz';
 import { differenceInDays } from 'date-fns/differenceInDays';
 import { differenceInHours } from 'date-fns/differenceInHours';
@@ -39,10 +40,13 @@ export type ReturnDifference =
   | [1, 'year', string, 'months']
   | [number, 'years', string, 'months'];
 
+/**
+ * @deprecated Use date-fns imports directly instead
+ */
 export class DateTimeUtils {
   private static defaultFormatString = "EEE dd MMM - HH'h' mm zzz"; // Output: "Wed 08 Mar - 14h30CET"
   public static dateWithFullMonth = 'd MMMM yyyy'; // Output: "1 August 2024"
-  public static defaultFormatShortString = 'dd MMM ’yy'; // Output: "1 Aug '24"
+  public static defaultFormatShortString = 'd MMM ’yy'; // Output: "1 Aug '24"
   public static dateWithHour = 'd MMM yyyy • HH:mm'; // Output: "19 Jun 2023 • 14:34"
   public static date = 'd MMM yyyy'; // Output: "19 Jun 2023"
   public static dateWithAbreviatedMonth = 'd MMM yyyy'; // Output: "1 Aug 2024"
@@ -63,8 +67,15 @@ export class DateTimeUtils {
     return new Date(new Date(date).toUTCString());
   }
 
-  public static format(date: string | number, formatString?: string): string {
+  public static format(
+    date: string | number | Date | UTCDate,
+    formatString?: string,
+  ): string {
     const formatStr = formatString || this.defaultFormatString;
+
+    if (date instanceof UTCDate || date instanceof Date) {
+      return date ? format(date, formatStr) : '';
+    }
 
     return date ? format(this.getDate(date), formatStr) : '';
   }

@@ -1,9 +1,9 @@
-import { toZonedTime } from 'date-fns-tz';
+import { format } from 'date-fns-tz';
+import { UTCDate } from '@date-fns/utc';
 import { addDays } from 'date-fns/addDays';
 import { observer } from 'mobx-react-lite';
 
 import { Contract } from '@graphql/types';
-import { DateTimeUtils } from '@utils/date';
 import { useStore } from '@shared/hooks/useStore';
 import { formatCurrency } from '@utils/getFormattedCurrencyNumber';
 import { useTimelineEventPreviewMethodsContext } from '@organization/components/Timeline/shared/TimelineEventPreview/context/TimelineEventPreviewContext';
@@ -42,17 +42,11 @@ export const UpcomingInvoice = observer(
     );
     const autoRenewal = contract?.autoRenew;
 
-    const invoicePeriodStart = toZonedTime(
-      invoice?.invoicePeriodStart,
-      'UTC',
-    ).toUTCString();
-    const invoicePeriodEnd = toZonedTime(
-      invoice?.invoicePeriodEnd,
-      'UTC',
-    ).toUTCString();
+    const invoicePeriodStart = new UTCDate(invoice?.invoicePeriodStart);
+    const invoicePeriodEnd = new UTCDate(invoice?.invoicePeriodEnd);
 
     const nextInvoiceDate = invoice?.postpaid
-      ? toZonedTime(addDays(new Date(invoicePeriodEnd), 1), 'UTC').toUTCString()
+      ? new UTCDate(addDays(invoicePeriodEnd, 1))
       : invoicePeriodStart;
 
     return (
@@ -68,21 +62,9 @@ export const UpcomingInvoice = observer(
         </div>
         <div className='whitespace-nowrap text-grayModern-500 underline'>
           {formatCurrency(invoice.amountDue, 2, invoice?.currency)} on{' '}
-          {DateTimeUtils.format(
-            nextInvoiceDate,
-            DateTimeUtils.defaultFormatShortString,
-          )}{' '}
-          (
-          {DateTimeUtils.format(
-            invoicePeriodStart,
-            DateTimeUtils.dateDayAndMonth,
-          )}{' '}
-          -{' '}
-          {DateTimeUtils.format(
-            invoicePeriodEnd,
-            DateTimeUtils.defaultFormatShortString,
-          )}
-          )
+          {format(nextInvoiceDate, 'd MMM ’yy')} (
+          {format(invoicePeriodStart, 'd MMM')} -{' '}
+          {format(invoicePeriodEnd, 'd MMM ’yy')})
         </div>
       </div>
     );
