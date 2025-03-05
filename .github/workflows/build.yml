@@ -16,7 +16,7 @@ env:
   DOCKER_BUILDKIT: 1
 
 permissions:
-  contents: write  # Updated to write for release creation
+  contents: write  # Updated to write for release creation.
   packages: write
 
 jobs:
