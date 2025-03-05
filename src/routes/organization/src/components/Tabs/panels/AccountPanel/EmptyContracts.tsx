@@ -28,7 +28,7 @@ export const EmptyContracts = ({
           <HalfCirclePattern />
         </div>
         <div className='flex flex-col text-center items-center translate-y-[-212px]'>
-          <h1 className='text-md font-semibold mb-1'>Draft a new contract</h1>
+          <h1 className='text-md font-semibold mb-1'>No signatures yet</h1>
           <p className='text-sm mt-1 text-center max-w-[360px]'>
             Add a contract to track your business relationship with{' '}
             {companyName}

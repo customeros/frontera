@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
-import { useLocalStorage } from 'usehooks-ts';
 import { CreateAgentUsecase } from '@domain/usecases/agents/create-agent.usecase';
 
 import { Icon } from '@ui/media/Icon';
@@ -17,12 +16,6 @@ export const EmptyState = observer(
   ({ companyName, id }: { id: string; companyName: string }) => {
     const store = useStore();
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const [lastActivePosition, setLastActivePosition] = useLocalStorage(
-      `customeros-player-last-position`,
-      { [id as string]: 'tab=invoices' },
-    );
 
     const cashflowAgent = store.agents.getFirstAgentByType(
       AgentType.CashflowGuardian,
@@ -43,13 +36,7 @@ export const EmptyState = observer(
     };
 
     const navigateToAccount = () => {
-      const urlSearchParams = new URLSearchParams(searchParams?.toString());
-
-      setLastActivePosition({
-        ...lastActivePosition,
-        [id as string]: urlSearchParams.toString(),
-      });
-      setSearchParams(urlSearchParams);
+      navigate(`/organization/${id}?tab=account`);
     };
 
     return (
@@ -82,8 +69,7 @@ export const EmptyState = observer(
                   </span>{' '}
                   agent.
                 </p>
-
-                <p>
+                <p className='mt-4'>
                   To send invoices, add products to this company’s contract and
                   complete their billing details.
                 </p>

@@ -69,20 +69,24 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
             />
           </Tooltip>
         )}
-        <IconButton
-          size='xxs'
-          variant='ghost'
-          colorScheme='grayModern'
-          aria-label='unlink mailbox'
-          icon={<Icon name='link-broken-02' />}
-          className='opacity-0 group-hover/mailbox:opacity-100'
-          onClick={() =>
-            store.settings.oauthToken.disableSync(
-              mailboxStore?.value?.mailbox || '',
-              mailboxStore?.value?.provider ?? '',
-            )
-          }
-        />
+        <Tooltip label='Unlink this account'>
+          <div>
+            <IconButton
+              size='xxs'
+              variant='ghost'
+              colorScheme='grayModern'
+              aria-label='unlink mailbox'
+              icon={<Icon name='link-broken-02' />}
+              className='opacity-0 group-hover/mailbox:opacity-100'
+              onClick={() =>
+                store.settings.oauthToken.disableSync(
+                  mailboxStore?.value?.mailbox || '',
+                  mailboxStore?.value?.provider ?? '',
+                )
+              }
+            />
+          </div>
+        </Tooltip>
       </div>
     </div>
   );

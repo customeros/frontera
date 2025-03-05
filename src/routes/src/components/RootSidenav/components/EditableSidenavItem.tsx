@@ -55,7 +55,7 @@ export const EditableSideNavItem = observer(
         className={cn(
           buttonSize({ size: 'sm' }),
           (ghostButton({ colorScheme: 'grayModern' }),
-          `flex w-full justify-start items-center gap-2 px-3 text-grayModern-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-grayModern-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md ${dynamicClasses}`),
+          `flex w-full justify-start items-center gap-2 px-3 text-grayModern-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-grayModern-700  group border border-transparent focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md  ${dynamicClasses}`),
         )}
       >
         <div className='mt-[-1px]'>

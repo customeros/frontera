@@ -16,7 +16,7 @@ export const SortOptionsMenu = observer(
     const sortDirection = searchSortContact.getSortDirection();
 
     return (
-      <div className='flex'>
+      <div className='flex items-center gap-1'>
         <IconButton
           size='xs'
           variant='ghost'

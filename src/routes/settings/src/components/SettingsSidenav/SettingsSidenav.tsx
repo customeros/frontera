@@ -58,7 +58,7 @@ export const SettingsSidenav = observer(() => {
   );
 
   return (
-    <div className='px-2 pt-[6px] h-full w-[200px] bg-white flex flex-col relative border-r border-grayModern-200'>
+    <div className='pt-[6px] h-full w-[200px] bg-white flex flex-col relative border-r border-grayModern-200'>
       {hasCampaign ? (
         <div className='flex gap-2 items-center mb-4 pl-[10px] pt-[2px]'>
           <Image
@@ -92,8 +92,8 @@ export const SettingsSidenav = observer(() => {
             </p>
           </div>
 
-          <div className='flex flex-col space-y-2 w-full justify-between h-full'>
-            <div>
+          <div className='flex flex-col w-full justify-between h-full'>
+            <div className='flex flex-col space-y-5'>
               <PersonalSection
                 checkIsActive={checkIsActive}
                 handleItemClick={handleItemClick}

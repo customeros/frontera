@@ -176,7 +176,7 @@ export const ContactDetails = observer(
                 </div>
                 <div className='flex flex-col w-full ml-2'>
                   <div className='flex justify-between group/action-buttons min-w-max'>
-                    <div className='flex justify-start gap-4 h-full '>
+                    <div className='flex justify-start items-center gap-4 h-full '>
                       {!isExpanded && isExpandble ? (
                         <span
                           className={cn(
