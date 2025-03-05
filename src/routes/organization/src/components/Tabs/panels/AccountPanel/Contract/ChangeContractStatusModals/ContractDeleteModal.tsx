@@ -40,7 +40,7 @@ export const ContractDeleteModal = observer(
             </div>
             <div className='flex flex-col'>
               <p className='text-sm mt-3'>
-                Are you sure you want to delete this contract?
+                Are you sure you want to archive this contract?
               </p>
             </div>
           </div>
@@ -62,7 +62,7 @@ export const ContractDeleteModal = observer(
               onClick={handleDeleteContract}
               dataTest='contract-card-confirm-contract-deletion'
             >
-              Delete contract
+              Archive contract
             </Button>
           </div>
         </div>
