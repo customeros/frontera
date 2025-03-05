@@ -1,0 +1,76 @@
+name: Deploy Frontera App
+
+on:
+  workflow_run:
+    workflows: ["Create Release"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., v1.2.3)'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Download workflow data
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v4
+        with:
+          name: workflow-data
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read workflow data
+        id: workflow_data
+        if: github.event_name == 'workflow_run'
+        run: |
+          next_version=$(cat workflow-data.json | jq -r .next_version)
+          echo "next_version=${next_version}" >> $GITHUB_OUTPUT
+
+      - name: Set version
+        id: set_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ steps.workflow_data.outputs.next_version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout K8s manifests repository
+        uses: actions/checkout@v4
+        with:
+          repository: customeros/cloud
+          token: ${{ secrets.CONFIG_REPO_PAT }}
+          path: cloud-repo
+
+      - name: Install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Update image versions in kustomization
+        working-directory: ./cloud-repo
+        run: |
+          cd k8s-manifests/overlays/production
+          
+          # Update both image tags
+          kustomize edit set image ghcr.io/customeros/frontera/prod:${{ steps.set_version.outputs.version }}
+          kustomize edit set image ghcr.io/customeros/frontera/middleware:${{ steps.set_version.outputs.version }}
+          
+          # Set up Git with the PAT for authentication
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          
+          # Use PAT for authentication
+          git remote set-url origin https://x-access-token:${{ secrets.CONFIG_REPO_PAT }}@github.com/customeros/cloud.git
+          
+          git add .
+          git commit -m "Update frontera-app and middleware to ${{ steps.set_version.outputs.version }}"
+          git push
