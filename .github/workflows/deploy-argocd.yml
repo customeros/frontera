@@ -1,4 +1,4 @@
-name: Deploy Frontera App
+name: Deploy Frontera App to Argo
 
 on:
   workflow_run:
