@@ -159,7 +159,7 @@ export const PeoplePanel = observer(() => {
               onChange={(e) => searchSortContact.setSearch(e.target.value)}
             />
           </div>
-          <div className='flex items-center'>
+          <div className='flex items-center gap-1'>
             <SortOptionsMenu searchSortContact={searchSortContact} />
             <IconButton
               size='xs'
