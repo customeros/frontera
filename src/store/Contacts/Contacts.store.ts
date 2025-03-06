@@ -302,6 +302,9 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     input?: ContactInput,
   ) {
     let serverId: string | undefined;
+    const viewDefPreset =
+      this.root.tableViewDefs.getActivePreset() ||
+      this.root.tableViewDefs.contactsPreset;
 
     try {
       const { contact_CreateForOrganization } =
@@ -325,6 +328,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
         this.sync({ action: 'APPEND', ids: [serverId] });
         this.totalElements++;
         this.version++;
+        this.availableCounts.set(viewDefPreset!, this.totalElements);
       });
     } catch (e) {
       runInAction(() => {
@@ -565,6 +569,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
 
   async softDelete(id: string) {
     const organizationId = this.value.get(id)?.organizationId;
+    const viewDefPrest = this.root.tableViewDefs.getActivePreset() ?? '';
 
     try {
       runInAction(() => {
@@ -585,6 +590,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
         this.value.delete(id);
         this.version++;
         this.totalElements--;
+        this.availableCounts.set(viewDefPrest, this.totalElements);
       });
 
       await this.service.archiveContact({ contactId: id });
