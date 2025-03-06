@@ -6,10 +6,9 @@ import { Tag, TagLabel } from '@ui/presentation/Tag';
 
 interface ContactCardProps {
   tags: TagType[];
-  isHovered?: boolean;
 }
 
-export const TagsCell = ({ tags, isHovered }: ContactCardProps) => {
+export const TagsCell = ({ tags }: ContactCardProps) => {
   return (
     <>
       {!tags?.length && (
@@ -22,7 +21,7 @@ export const TagsCell = ({ tags, isHovered }: ContactCardProps) => {
             {tags.map((e) => {
               return (
                 <div key={e.metadata.id} className='flex w-fit'>
-                  <TagDisplay id={e.metadata.id} isHovered={isHovered} />
+                  <TagDisplay id={e.metadata.id} />
                 </div>
               );
             })}
@@ -33,27 +32,23 @@ export const TagsCell = ({ tags, isHovered }: ContactCardProps) => {
   );
 };
 
-export const TagDisplay = observer(
-  ({ id, isHovered }: { id: string; isHovered?: boolean }) => {
-    const store = useStore();
-    const tag = store.tags.getById(id);
+export const TagDisplay = observer(({ id }: { id: string }) => {
+  const store = useStore();
+  const tag = store.tags.getById(id);
 
-    return (
-      <>
-        <Tag
-          variant='subtle'
-          className={'mr-1'}
-          style={{
-            maxWidth: isHovered ? '80px' : '100px',
-          }}
-          colorScheme={
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (tag?.value?.colorCode as unknown as any) ?? 'grayModern'
-          }
-        >
-          <TagLabel className={'truncate'}>{tag?.tagName}</TagLabel>
-        </Tag>
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <Tag
+        variant='subtle'
+        title={tag?.tagName}
+        className='mr-1 max-w-[120px]'
+        colorScheme={
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (tag?.value?.colorCode as unknown as any) ?? 'grayModern'
+        }
+      >
+        <TagLabel className={'truncate'}>{tag?.tagName}</TagLabel>
+      </Tag>
+    </>
+  );
+});
