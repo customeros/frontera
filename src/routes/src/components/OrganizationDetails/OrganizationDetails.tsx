@@ -307,7 +307,7 @@ export const OrganizationDetails = observer(
           {organization?.value.customerOsId && (
             <Tooltip label='Copy ID'>
               <span
-                className='pt-3 w-full text-grayModern-400 cursor-pointer text-sm absolute bottom-0 bg-white'
+                className='pt-3  text-grayModern-400 cursor-pointer text-sm absolute bottom-0 bg-white'
                 onClick={() =>
                   copyToClipboard(
                     organization.value?.customerOsId ?? '',
