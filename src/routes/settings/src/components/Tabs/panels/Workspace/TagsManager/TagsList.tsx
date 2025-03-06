@@ -1,4 +1,4 @@
-import { useState, createRef, useEffect } from 'react';
+import { useState, createRef } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { TagDatum, TagStore } from '@store/Tags/Tag.store';
@@ -17,9 +17,9 @@ import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog
 import { TagColorPicker } from './TagColorPicker';
 
 const entityTypes = {
-  [EntityType.Organization]: { label: 'Company' },
-  [EntityType.Contact]: { label: 'Contact' },
-  [EntityType.LogEntry]: { label: 'Log entry' },
+  [EntityType.Organization]: { label: 'companies' },
+  [EntityType.Contact]: { label: 'contacts' },
+  [EntityType.LogEntry]: { label: 'log entries' },
 };
 
 export const TagList = observer(
@@ -47,13 +47,6 @@ export const TagList = observer(
       null,
     );
     const { open: isOpen, onOpen, onClose } = useDisclosure();
-
-    useEffect(() => {
-      if (editingTag && inputRef.current) {
-        inputRef.current.focus();
-        inputRef.current.select();
-      }
-    }, [editingTag]);
 
     const handleDeleteTag = (tagId: string) => {
       const tag = store.tags.value.get(tagId);
@@ -185,12 +178,13 @@ export const TagList = observer(
               variant='unstyled'
               placeholder='Enter new tag name...'
               className=' placeholder:text-sm text-sm bg-white'
-              onBlur={(e) => {
-                e.stopPropagation();
-              }}
               onChange={(e) => {
                 setNewTag(e.target.value);
                 e.stopPropagation();
+              }}
+              onBlur={(e) => {
+                e.stopPropagation();
+                handleNewTagSubmit(entityType);
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -230,11 +224,9 @@ export const TagList = observer(
                           size='xxs'
                           ref={inputRef}
                           variant='unstyled'
-                          className='mb-[3px] bg-white '
                           defaultValue={editingTag?.name}
+                          className='mb-[3px] bg-white ml-4 '
                           onFocus={(e) => {
-                            e.target.select();
-
                             if (!newTag) {
                               setNewTag(e.target.value);
                             }
