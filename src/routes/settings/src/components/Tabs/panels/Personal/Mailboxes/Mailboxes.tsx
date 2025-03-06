@@ -28,7 +28,7 @@ export const Mailboxes = observer(() => {
 
   const hasMailstack =
     store.mailboxes
-      .toArray()
+      ?.toArray()
       .filter((v) => v.value.provider === MailboxProvider.Mailstack).length > 0;
 
   const hasMailboxes = store.mailboxes.toArray().length > 0;
