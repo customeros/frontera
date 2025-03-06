@@ -34,6 +34,7 @@ export class DevtoolsStore {
     'organizations',
     'tableViewDefs',
     'tags',
+    'tasks',
   ];
 
   constructor() {}

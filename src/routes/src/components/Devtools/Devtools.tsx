@@ -41,6 +41,7 @@ type StoreReturnType =
   | RootStore['jobRoles']
   | RootStore['tags']
   | RootStore['agents']
+  | RootStore['tasks']
   | RootStore['common']
   | null;
 
@@ -121,6 +122,7 @@ export const Devtools = observer(
       .with('jobRoles', () => store.jobRoles)
       .with('tags', () => store.tags)
       .with('agents', () => store.agents)
+      .with('tasks', () => store.tasks)
       .with('common.slackChannels', () => store.common)
       .otherwise(() => null);
 
@@ -143,6 +145,7 @@ export const Devtools = observer(
         .with('jobRoles', () => get(entity, 'value', {}))
         .with('tags', () => get(entity, 'value', {}))
         .with('agents', () => get(entity, 'value', {}))
+        .with('tasks', () => get(entity, 'value', {}))
         .with('common.slackChannels', () => entity)
         .otherwise(() => entity);
 
@@ -157,6 +160,7 @@ export const Devtools = observer(
         .with('jobRoles', () => get(entity, 'value.jobTitle', 'Unnamed'))
         .with('tags', () => get(entity, 'value.name', 'Unnamed'))
         .with('agents', () => get(entity, 'value.name', 'Unnamed'))
+        .with('tasks', () => get(entity, 'value.subject', 'Unnamed'))
         .with('common.slackChannels', () => get(entity, 'name', 'Unnamed'))
         .otherwise(() => 'Unnamed');
 

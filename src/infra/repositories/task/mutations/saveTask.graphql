@@ -1,0 +1,13 @@
+mutation saveTask($input: TaskInput!) {
+  task_Save(input: $input) {
+    id
+    subject
+    description
+    status
+    assignees
+    authorId
+    dueAt
+    createdAt
+    updatedAt
+  }
+}

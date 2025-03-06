@@ -12,6 +12,7 @@ import {
   TableIdType,
 } from '@shared/types/__generated__/graphql.types';
 
+import { getTasksFilterTypes } from './filterTypes/tasks';
 import { getFilterTypes as getFilterTypeForFlows } from '../Columns/flows/filterTypes';
 import { getFilterTypes as getFilterTypesForContacts } from '../Columns/contacts/filterTypes';
 import { getFilterTypes as getFilterTypesForContracts } from '../Columns/contracts/filterTypes';
@@ -39,6 +40,7 @@ export const FinderFilters = observer(
       .with(TableIdType.Contracts, () => getFilterTypesForContracts)
       .with(TableIdType.FlowActions, () => getFilterTypeForFlows)
       .with(TableIdType.FlowContacts, () => getFilterTypesForContacts)
+      .with(TableIdType.Tasks, () => getTasksFilterTypes)
       .otherwise(() => getFilterTypesForOrganizations);
 
     const [searchParams] = useSearchParams();
