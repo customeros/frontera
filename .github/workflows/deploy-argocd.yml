@@ -11,6 +11,11 @@ on:
         description: 'Version to deploy (e.g., v1.2.3)'
         required: true
         type: string
+      environments:
+        description: 'Environments to deploy to (comma-separated, e.g., production,dev)'
+        required: false
+        default: 'production,dev'
+        type: string
 
 jobs:
   deploy:
@@ -43,6 +48,15 @@ jobs:
             echo "version=${{ steps.workflow_data.outputs.next_version }}" >> $GITHUB_OUTPUT
           fi
 
+      - name: Parse environments
+        id: parse_environments
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "environments=${{ inputs.environments }}" >> $GITHUB_OUTPUT
+          else
+            echo "environments=production,dev" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout K8s manifests repository
         uses: actions/checkout@v4
         with:
@@ -58,12 +72,6 @@ jobs:
       - name: Update image versions in kustomization
         working-directory: ./cloud-repo
         run: |
-          cd k8s-manifests/overlays/production
-          
-          # Update both image tags
-          kustomize edit set image ghcr.io/customeros/frontera/prod:${{ steps.set_version.outputs.version }}
-          kustomize edit set image ghcr.io/customeros/frontera/middleware:${{ steps.set_version.outputs.version }}
-          
           # Set up Git with the PAT for authentication
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
@@ -71,6 +79,25 @@ jobs:
           # Use PAT for authentication
           git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_TRIGGER_GITHUB_TOKEN }}@github.com/customeros/cloud.git
           
-          git add .
-          git commit -m "Update frontera-app and middleware to ${{ steps.set_version.outputs.version }}"
+          # Iterate through environments and update images
+          IFS=',' read -ra ENVS <<< "${{ steps.parse_environments.outputs.environments }}"
+          for env in "${ENVS[@]}"; do
+            echo "Updating images for $env environment"
+            if [ -d "k8s-manifests/overlays/$env" ]; then
+              cd k8s-manifests/overlays/$env
+          
+              # Update both image tags
+              kustomize edit set image ghcr.io/customeros/frontera/prod:${{ steps.set_version.outputs.version }}
+              kustomize edit set image ghcr.io/customeros/frontera/middleware:${{ steps.set_version.outputs.version }}
+          
+              cd -
+          
+              git add k8s-manifests/overlays/$env
+            else
+              echo "Directory k8s-manifests/overlays/$env does not exist!"
+            fi
+          done
+          
+          # Commit and push changes
+          git commit -m "Update frontera-app and middleware to ${{ steps.set_version.outputs.version }} in multiple environments"
           git push
