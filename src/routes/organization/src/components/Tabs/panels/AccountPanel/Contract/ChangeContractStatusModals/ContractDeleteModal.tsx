@@ -24,6 +24,8 @@ export const ContractDeleteModal = observer(
 
       onClose();
     };
+    const contractName =
+      store.contracts.value.get(contractId)?.value.contractName;
 
     return (
       <>
@@ -35,13 +37,8 @@ export const ContractDeleteModal = observer(
           <div>
             <div>
               <h1 className={cn('text-base font-semibold')}>
-                Archive this contract?
+                Archive {contractName}?
               </h1>
-            </div>
-            <div className='flex flex-col'>
-              <p className='text-sm mt-3'>
-                Are you sure you want to archive this contract?
-              </p>
             </div>
           </div>
 

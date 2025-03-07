@@ -5,7 +5,6 @@ import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { EditOrganizationTagUsecase } from '@domain/usecases/organization-details/edit-organization-tag.usecase';
 import { SaveOrganizationRelationshipAndStageUsecase } from '@domain/usecases/organization-details/save-organization-relationship-and-stage.usecase';
 
-import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { flags } from '@ui/media/flags';
 import { Spinner } from '@ui/feedback/Spinner';
@@ -176,51 +175,6 @@ export const OrganizationDetails = observer(
             />
 
             <div className='flex items-center justify-center w-full'>
-              <div
-                data-test='org-about-relationship'
-                className='flex-2 flex items-center'
-              >
-                <Menu>
-                  <Tooltip align='start' label='Relationship'>
-                    <MenuButton
-                      data-test='org-about-relationship'
-                      className='min-h-[20px] text-md outline-none focus:outline-none items-center'
-                    >
-                      {
-                        iconMap[
-                          (selectedRelationshipOption?.label ??
-                            'unknown') as keyof typeof iconMap
-                        ]
-                      }
-                      {''}
-                      <span
-                        className={cn(
-                          'ml-3 text-sm',
-                          !selectedRelationshipOption?.label &&
-                            'text-grayModern-400',
-                        )}
-                      >
-                        {selectedRelationshipOption?.label ?? 'Relationship'}
-                      </span>
-                    </MenuButton>
-                  </Tooltip>
-                  <MenuList side='bottom' align='start'>
-                    {relationshipOptions.map((option) => (
-                      <MenuItem
-                        key={option.value}
-                        onClick={() => {
-                          saveRelationshipAndStageUsecase.execute({
-                            relationship: option.value,
-                          });
-                        }}
-                      >
-                        {iconMap[option.label as keyof typeof iconMap]}
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Menu>
-              </div>
               {selectedRelationshipOption?.value !==
                 OrganizationRelationship.Customer && (
                 <div

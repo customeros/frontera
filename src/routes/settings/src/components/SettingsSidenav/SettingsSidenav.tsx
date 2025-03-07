@@ -74,7 +74,7 @@ export const SettingsSidenav = observer(() => {
         </div>
       ) : (
         <>
-          <div className='flex gap-2 items-center mb-4'>
+          <div className='flex gap-[1.5px] items-center mb-4 ml-[13px]'>
             <IconButton
               size='xs'
               variant='ghost'

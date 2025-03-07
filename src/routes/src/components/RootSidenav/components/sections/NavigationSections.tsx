@@ -28,7 +28,7 @@ export const NavigationSections = ({
   const showCustomerMap = useFeatureIsOn('show-customer-map');
 
   return (
-    <div className='px-2 pt-2.5 gap-4 overflow-y-auto overflow-hidden flex flex-col flex-1'>
+    <div className='px-2  gap-4 overflow-y-auto overflow-hidden flex flex-col flex-1'>
       <div className='flex flex-col'>
         {showCustomerMap && (
           <SidenavItem

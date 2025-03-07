@@ -69,6 +69,7 @@ export const RelationshipPicker = observer(() => {
         <MenuButton asChild data-test={`organization-account-relationship`}>
           <Tag
             size='md'
+            variant='subtle'
             className='cursor-pointer'
             colorScheme={
               selectedValue?.value === OrganizationRelationship.Customer

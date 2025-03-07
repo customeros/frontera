@@ -116,7 +116,7 @@ export const EditableSideNavItem = observer(
                 }}
               >
                 <Icon name='layers-two-01' className='text-grayModern-500' />
-                Save as...
+                Save to...
               </MenuItem>
               <MenuItem
                 onClick={(e) => {
