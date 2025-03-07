@@ -53,24 +53,25 @@ export const PaymentStatusSelect = observer(
           align='center'
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
-          {invoiceStatus !== InvoiceStatus.Void && (
-            <MenuItem
-              disabled={isPaid}
-              onClick={() => {
-                invoice.value.status = InvoiceStatus.Void;
-                invoice?.commit();
-              }}
-            >
-              <div className='flex gap-2 items-center'>
-                <SlashCircle01
-                  className={cn(
-                    isPaid ? 'text-grayModern-400' : 'text-grayModern-500',
-                  )}
-                />
-                <span>Void</span>
-              </div>
-            </MenuItem>
-          )}
+          {invoiceStatus !== InvoiceStatus.Void &&
+            invoiceStatus !== InvoiceStatus.Paid && (
+              <MenuItem
+                disabled={isPaid}
+                onClick={() => {
+                  invoice.value.status = InvoiceStatus.Void;
+                  invoice?.commit();
+                }}
+              >
+                <div className='flex gap-2 items-center'>
+                  <SlashCircle01
+                    className={cn(
+                      isPaid ? 'text-grayModern-400' : 'text-grayModern-500',
+                    )}
+                  />
+                  <span>Void</span>
+                </div>
+              </MenuItem>
+            )}
           {invoiceStatus !== InvoiceStatus.Paid && (
             <MenuItem
               onClick={() => {
