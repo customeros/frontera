@@ -194,21 +194,29 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
   };
 
   public async validateBuy({ onSuccess }: { onSuccess?: () => void }) {
-    // sync validations
-    const validators = [this.validateRedirectUrl(), this.validateUsernames()];
+    // Mark fields as dirty first to ensure errors are shown
+    this.dirty.forEach((_, k) => this.dirty.set(k, true));
 
-    const valid = validators.every(Boolean);
+    // Run sync validations after marking fields as dirty
+    const redirectUrlValid = this.validateRedirectUrl();
+    const usernamesValid = this.validateUsernames();
 
-    // set fields as dirty so we force show any errors on submit
-    // assuming the user never touched the fields
-    runInAction(() => {
-      this.dirty.forEach((_, k) => this.dirty.set(k, true));
-    });
+    // Check if all validations passed
+    if (!redirectUrlValid || !usernamesValid) {
+      return;
+    }
 
-    if (!valid) return;
-
-    // async validations
-    await this.validateDomains({ onSuccess });
+    // Only proceed with async validations if sync validations passed
+    try {
+      // async validations
+      await this.validateDomains({ onSuccess });
+    } catch (error) {
+      // Handle any unexpected errors during domain validation
+      runInAction(() => {
+        this.error =
+          error instanceof Error ? error.message : 'Validation failed';
+      });
+    }
   }
 
   async bootstrap() {
@@ -259,6 +267,12 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
     runInAction(() => {
       this.domain = domain;
     });
+
+    if (domain === '') {
+      this.dirty.set('username1', false);
+      this.dirty.set('username2', false);
+      this.dirty.set('redirectUrl', false);
+    }
   }
 
   public setRedirectUrl(url: string) {
