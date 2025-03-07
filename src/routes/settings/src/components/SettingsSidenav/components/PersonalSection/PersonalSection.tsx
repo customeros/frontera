@@ -19,7 +19,7 @@ export const PersonalSection = ({
         <Icon name='user-01' className='w-4 h-4 text-grayModern-500' />
         <span className='text-sm  text-grayModern-700'>Personal</span>
       </div>
-      <div className='ml-[31px]'>
+      <div className='ml-[31px] pr-2'>
         <SidenavItem
           label='Profile'
           isActive={checkIsActive('profile')}

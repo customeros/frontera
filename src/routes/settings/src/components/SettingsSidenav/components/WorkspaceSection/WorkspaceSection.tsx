@@ -19,7 +19,7 @@ export const WorkspaceSection = ({
         <Building03 className='w-4 h-4 text-grayModern-500' />
         <span className='text-sm  text-grayModern-700'>Workspace</span>
       </div>
-      <div className='ml-[31px]'>
+      <div className='ml-[31px] pr-2'>
         <SidenavItem
           label='General'
           isActive={checkIsActive('general')}

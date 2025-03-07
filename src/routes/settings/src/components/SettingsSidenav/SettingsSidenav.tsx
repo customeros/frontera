@@ -58,7 +58,7 @@ export const SettingsSidenav = observer(() => {
   );
 
   return (
-    <div className='pt-[6px] h-full w-[200px] bg-white flex flex-col relative border-r border-grayModern-200'>
+    <div className='pt-[5px] h-full w-[200px] bg-white flex flex-col relative border-r border-grayModern-200'>
       {hasCampaign ? (
         <div className='flex gap-2 items-center mb-4 pl-[10px] pt-[2px]'>
           <Image
@@ -74,7 +74,7 @@ export const SettingsSidenav = observer(() => {
         </div>
       ) : (
         <>
-          <div className='flex gap-[1.5px] items-center mb-4 ml-[13px]'>
+          <div className='flex gap-[1.5px] items-center mb-[13px] ml-[13px]'>
             <IconButton
               size='xs'
               variant='ghost'
