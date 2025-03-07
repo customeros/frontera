@@ -11,13 +11,12 @@ import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
 import { MailboxTable } from './components/MailboxTable';
 import { CheckoutPage } from './components/CheckoutPage';
 import { CheckoutCard } from './components/CheckoutCard';
-import { BaseBundleCard } from './components/BaseBundleCard';
 import { AddDomainsCard } from './components/AddDomainsCard';
 import { UsersCard } from './components/UsersCard/UsersCard';
 import { EmptyMailboxes } from './components/EmptyMailboxes';
 import { EmptyMailstack } from './components/EmptyMailstack';
 import { RedirectUrlCard } from './components/RedirectUrlCard';
-import { ExtendedBundleCard } from './components/ExtendedBundleCard';
+import { DomainBundleCard } from './components/DomainBundleCard';
 
 export const Mailboxes = observer(() => {
   const store = useStore();
@@ -50,8 +49,7 @@ export const Mailboxes = observer(() => {
     store.mailboxes.resetBuyFlow();
   };
 
-  const noOfDomains =
-    store.mailboxes.baseBundle.size + store.mailboxes.extendedBundle.size;
+  const noOfDomains = store.mailboxes.domainBundle.size;
 
   const showBuyFlow = searchParams.get('view') === 'buy';
   const showOutbound = searchParams.get('view') === 'outbound';
@@ -123,10 +121,13 @@ export const Mailboxes = observer(() => {
             </div>
             {noOfDomains > 0 && (
               <div className='pb-[12px] pt-[8px] px-6 flex flex-col h-full border-r-[1px]'>
-                <p className='mb-4 font-semibold'>Checkout</p>
+                <div className='flex items-center justify-between mb-4'>
+                  <p className='font-semibold'>Checkout </p>
+                  <p className='font-medium text-sm'>{noOfDomains} x $18.99</p>
+                </div>
                 <div className='flex flex-col gap-2'>
-                  {!hasMailboxes && <BaseBundleCard />}
-                  {(hasMailboxes || noOfDomains >= 5) && <ExtendedBundleCard />}
+                  {/* {!hasMailboxes && <BaseBundleCard />} */}
+                  <DomainBundleCard />
                   {noOfDomains > 0 && <CheckoutCard />}
                 </div>
               </div>
@@ -164,15 +165,10 @@ export const Mailboxes = observer(() => {
                     Add new
                   </span>
                   <ChevronRight className='mt-0.5 text-grayModern-400 size-3' />
-                  <span className='font-semibold'>Checkout</span>
+                  <p className='font-semibold'>Checkout </p>
                 </div>
                 <div className='flex flex-col gap-2'>
-                  {!hasMailboxes && (
-                    <BaseBundleCard readonly defaultExpanded={false} />
-                  )}
-                  {(hasMailboxes || noOfDomains >= 5) && (
-                    <ExtendedBundleCard readonly defaultExpanded={false} />
-                  )}
+                  <DomainBundleCard readonly defaultExpanded={false} />
                   {noOfDomains > 0 && (
                     <CheckoutCard showTotal hideCheckoutButton />
                   )}
