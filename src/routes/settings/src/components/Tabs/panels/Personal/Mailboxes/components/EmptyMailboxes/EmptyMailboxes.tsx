@@ -30,7 +30,7 @@ export const EmptyMailboxes = ({
           </FeaturedIcon>
           <HalfCirclePattern />
         </div>
-        <div className='flex flex-col text-center items-center translate-y-[-212px]'>
+        <div className='flex flex-col text-center items-center translate-y-[-235px]'>
           <h1 className='text-md font-semibold mb-1'>Add workspace accounts</h1>
           <p className='text-sm max-w-[352px] mb-6 '>
             Add your workspace accounts to sync contacts and send emails—or buy

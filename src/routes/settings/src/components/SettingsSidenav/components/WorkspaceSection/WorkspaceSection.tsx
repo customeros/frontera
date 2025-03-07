@@ -15,11 +15,11 @@ export const WorkspaceSection = ({
 }: WorkspaceSectionProps) => {
   return (
     <div className='flex flex-col gap-2'>
-      <div className='flex items-center gap-2 px-3'>
+      <div className='flex items-center gap-2 px-5'>
         <Building03 className='w-4 h-4 text-grayModern-500' />
         <span className='text-sm  text-grayModern-700'>Workspace</span>
       </div>
-      <div className='ml-[23px]'>
+      <div className='ml-[31px]'>
         <SidenavItem
           label='General'
           isActive={checkIsActive('general')}
