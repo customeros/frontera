@@ -4,5 +4,4 @@ export const sideNavSelectors = {
   sideNavItemCustomersSelected:
     'div[data-test="side-nav-item-Customers"] div[aria-selected="true"]',
   sideNavLogoMenu: 'button[data-test="logo-menu"]',
-  sideNavLogoMenux: 'button[data-test="logo-menux"]',
 };
