@@ -1,8 +1,9 @@
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
 import { relationshipOptions } from '@finder/components/Columns/organizations/Cells/relationship/util';
+import { SaveOrganizationRelationshipAndStageUsecase } from '@domain/usecases/organization-details/save-organization-relationship-and-stage.usecase';
 
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
@@ -10,11 +11,11 @@ import { Spinner } from '@ui/feedback/Spinner';
 import { useStore } from '@shared/hooks/useStore';
 import { Seeding } from '@ui/media/icons/Seeding';
 import { BrokenHeart } from '@ui/media/icons/BrokenHeart';
+import { OrganizationRelationship } from '@graphql/types';
 import { SelectOption } from '@shared/types/SelectOptions.ts';
 import { ActivityHeart } from '@ui/media/icons/ActivityHeart';
 import { MessageXCircle } from '@ui/media/icons/MessageXCircle';
 import { Tag, TagLabel, TagLeftIcon } from '@ui/presentation/Tag';
-import { OrganizationStage, OrganizationRelationship } from '@graphql/types';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 
 const iconMap = {
@@ -28,7 +29,10 @@ export const RelationshipPicker = observer(() => {
   const id = useParams()?.id as string;
   const store = useStore();
   const organization = store.organizations.value.get(id);
-
+  const usecase = useMemo(
+    () => new SaveOrganizationRelationshipAndStageUsecase(id),
+    [id],
+  );
   const selectedValue = relationshipOptions.find(
     (option) => option.value === organization?.value?.relationship,
   );
@@ -44,23 +48,10 @@ export const RelationshipPicker = observer(() => {
     if (!organization) return;
 
     organization.value.relationship = option.value;
-    organization.value.stage = match(option.value)
-      .with(OrganizationRelationship.Prospect, () => OrganizationStage.Lead)
-      .with(
-        OrganizationRelationship.Customer,
-        () => OrganizationStage.InitialValue,
-      )
-      .with(
-        OrganizationRelationship.NotAFit,
-        () => OrganizationStage.Unqualified,
-      )
-      .with(
-        OrganizationRelationship.FormerCustomer,
-        () => OrganizationStage.Target,
-      )
-      .otherwise(() => undefined);
 
-    organization.commit();
+    usecase.execute({ relationship: option.value });
+
+    organization.commit({ syncOnly: true });
   };
 
   return (
