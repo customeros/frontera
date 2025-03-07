@@ -358,6 +358,11 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
     return Array.from(this.value.values());
   }
 
+  removeMailbox(mailbox: string) {
+    this.value.delete(mailbox);
+    this.sync({ action: 'DELETE', ids: [mailbox] });
+  }
+
   toComputedArray<T extends MailboxesStore>(
     compute: (arr: MailboxStore[]) => T[],
   ) {

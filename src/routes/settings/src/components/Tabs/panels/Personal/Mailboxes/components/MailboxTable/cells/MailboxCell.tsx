@@ -78,12 +78,13 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
               aria-label='unlink mailbox'
               icon={<Icon name='link-broken-02' />}
               className='opacity-0 group-hover/mailbox:opacity-100'
-              onClick={() =>
+              onClick={() => {
                 store.settings.oauthToken.disableSync(
                   mailboxStore?.value?.mailbox || '',
                   mailboxStore?.value?.provider ?? '',
-                )
-              }
+                );
+                store.mailboxes.removeMailbox(mailbox);
+              }}
             />
           </div>
         </Tooltip>

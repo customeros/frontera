@@ -1,15 +1,18 @@
+import { useNavigate } from 'react-router-dom';
+
 import { FeaturedIcon } from '@ui/media/Icon';
 import { Button } from '@ui/form/Button/Button';
 import { Sale03 } from '@ui/media/icons/Sale03';
 import { Inbox01 } from '@ui/media/icons/Inbox01';
 import { CheckCircle } from '@ui/media/icons/CheckCircle';
 import { ChevronRight } from '@ui/media/icons/ChevronRight';
-
 interface EmptyMailboxesProps {
   onUpdate: () => void;
 }
 
 export const EmptyMailstack = ({ onUpdate }: EmptyMailboxesProps) => {
+  const navigate = useNavigate();
+
   const handleButtonClick = () => {
     onUpdate();
   };
@@ -85,6 +88,15 @@ export const EmptyMailstack = ({ onUpdate }: EmptyMailboxesProps) => {
           rightIcon={<ChevronRight />}
         >
           Set up your mailboxes
+        </Button>
+        <Button
+          variant='ghost'
+          className='mt-2 mx-3'
+          onClick={() => {
+            navigate('/settings?tab=mailboxes');
+          }}
+        >
+          Not now
         </Button>
       </div>
     </div>

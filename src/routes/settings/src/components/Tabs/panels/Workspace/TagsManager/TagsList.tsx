@@ -177,7 +177,7 @@ export const TagList = observer(
               value={newTag}
               variant='unstyled'
               placeholder='Enter new tag name...'
-              className=' placeholder:text-sm text-sm bg-white'
+              className=' placeholder:text-sm text-sm bg-white w-full'
               onChange={(e) => {
                 setNewTag(e.target.value);
                 e.stopPropagation();
@@ -218,14 +218,14 @@ export const TagList = observer(
                   />
                   <div className='flex flex-grow '>
                     {editingTag?.id === tag.value.metadata.id ? (
-                      <div className='ml-2 overflow-hidden'>
+                      <div className='w-full mr-4'>
                         <Input
                           autoFocus
                           size='xxs'
                           ref={inputRef}
                           variant='unstyled'
                           defaultValue={editingTag?.name}
-                          className='mb-[3px] bg-white ml-4 '
+                          className='mb-[3px] bg-white w-full ml-2 mr-2'
                           onFocus={(e) => {
                             if (!newTag) {
                               setNewTag(e.target.value);
