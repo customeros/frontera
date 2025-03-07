@@ -8,10 +8,7 @@ import { Card, CardHeader, CardContent } from '@ui/presentation/Card/Card';
 export const RedirectUrlCard = observer(() => {
   const store = useStore();
   const dirty = store.mailboxes.dirty.get('redirectUrl') || false;
-  const hasDomains =
-    store.mailboxes.value.size > 0
-      ? store.mailboxes.extendedBundle.size > 0
-      : store.mailboxes.baseBundle.size > 0;
+  const hasDomains = store.mailboxes.domainBundle.size > 0;
 
   if (!hasDomains) return null;
 

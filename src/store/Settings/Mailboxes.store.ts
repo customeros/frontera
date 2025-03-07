@@ -18,15 +18,13 @@ import { MailboxesService } from './__service__/Mailboxes/Mailboxes.service';
 export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
   private service: MailboxesService;
   domain: string = '';
-  baseBundle: Set<string> = new Set();
-  extendedBundle: Set<string> = new Set();
+  domainBundle: Set<string> = new Set();
   invalidDomains: string[] = [];
   domainSuggestions: string[] = [];
   redirectUrl: string = '';
   usernames: [string, string] = ['', ''];
   invalidUsernames: [string, string] = ['', ''];
   invalidRedirectUrl: string = '';
-  invalidBaseBundle: string = '';
   invalidDomain: string = '';
   dirty = new Map([
     ['username1', false],
@@ -41,8 +39,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
     makeObservable<MailboxesStore>(this, {
       channelName: override,
       domain: observable,
-      baseBundle: observable,
-      extendedBundle: observable,
+      domainBundle: observable,
       invalidDomains: observable,
       domainSuggestions: observable,
       usernames: observable,
@@ -53,7 +50,6 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
       usernamesCount: computed,
       invalidRedirectUrl: observable,
       invalidUsernames: observable,
-      invalidBaseBundle: observable,
       totalAmount: computed,
       invalidDomain: observable,
       dirty: observable,
@@ -69,7 +65,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
   }
 
   get domainCount() {
-    return this.baseBundle.size + this.extendedBundle.size;
+    return this.domainBundle.size;
   }
 
   get mailboxesCount() {
@@ -80,17 +76,12 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
   }
 
   get totalAmount() {
-    const baseBundlePrice = this.value.size > 0 ? 0 : 199.99;
-
     // multiply by 100 to convert to cents (required by stripe)
-    return parseFloat(
-      ((baseBundlePrice + this.extendedBundle.size * 18.99) * 100).toFixed(2),
-    );
+    return parseFloat((this.domainBundle.size * 18.99 * 100).toFixed(2));
   }
 
   public resetBuyFlow() {
-    this.baseBundle.clear();
-    this.extendedBundle.clear();
+    this.domainBundle.clear();
     this.usernames = ['', ''];
     this.domain = '';
     this.invalidDomains = [];
@@ -98,7 +89,6 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
     this.redirectUrl = '';
     this.invalidRedirectUrl = '';
     this.invalidUsernames = ['', ''];
-    this.invalidBaseBundle = '';
     this.invalidDomain = '';
     this.dirty.clear();
   }
@@ -111,35 +101,25 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
 
   public selectDomain(domain: string) {
     runInAction(() => {
-      if (this.value.size === 0 && this.baseBundle.size < 5) {
-        this.baseBundle.add(domain);
-      } else {
-        this.extendedBundle.add(domain);
-      }
+      this.domainBundle.add(domain);
 
       this.domainSuggestions = this.domainSuggestions.filter(
         (d) => d !== domain,
       );
-
-      this.invalidBaseBundle = '';
     });
   }
 
   public removeDomain(domain: string) {
     runInAction(() => {
-      const newSet = new Set([...this.baseBundle, ...this.extendedBundle]);
+      const newSet = new Set([...this.domainBundle]);
 
       newSet.delete(domain);
       this.domainSuggestions.push(domain);
 
       const newArr = Array.from(newSet);
 
-      if (this.value.size === 0) {
-        this.baseBundle = new Set(newArr.splice(0, 5));
-      }
-      this.extendedBundle = new Set(newArr);
+      this.domainBundle = new Set(newArr);
 
-      this.invalidBaseBundle = '';
       this.invalidDomains = this.invalidDomains.filter((d) => d !== domain);
     });
   }
@@ -199,29 +179,6 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
     return valid;
   };
 
-  public validateBaseBundle = () => {
-    let valid = false;
-
-    runInAction(() => {
-      const count = this.baseBundle.size;
-
-      if (count < 5) {
-        this.invalidBaseBundle = `Please add ${5 - count} more ${
-          5 - count > 1 ? 'domains' : 'domain'
-        }`;
-
-        valid = false;
-
-        return;
-      }
-
-      this.invalidBaseBundle = '';
-      valid = true;
-    });
-
-    return valid;
-  };
-
   public validateUsernames = () => {
     runInAction(() => {
       this.invalidUsernames = this.usernames.map((v, i, arr) => {
@@ -239,10 +196,6 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
   public async validateBuy({ onSuccess }: { onSuccess?: () => void }) {
     // sync validations
     const validators = [this.validateRedirectUrl(), this.validateUsernames()];
-
-    if (this.value.size === 0) {
-      validators.push(this.validateBaseBundle());
-    }
 
     const valid = validators.every(Boolean);
 
@@ -288,7 +241,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
 
       runInAction(() => {
         this.domainSuggestions = mailstack_DomainPurchaseSuggestions.filter(
-          (d) => !this.baseBundle.has(d) && !this.extendedBundle.has(d),
+          (d) => !this.domainBundle.has(d),
         );
       });
     } catch (err) {
@@ -324,7 +277,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
     try {
       const { mailstack_GetPaymentIntent } =
         await this.service.getPaymentIntent({
-          domains: [...this.baseBundle, ...this.extendedBundle],
+          domains: [...this.domainBundle],
           amount: this.totalAmount,
           usernames: this.usernames.filter((v) => v !== ''),
         });
@@ -348,7 +301,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
       });
 
       const response = await this.service.validateDomains({
-        domains: [...this.baseBundle, ...this.extendedBundle],
+        domains: [...this.domainBundle],
       });
 
       runInAction(() => {
@@ -379,7 +332,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
       await this.service.buyDomains({
         test: false,
         paymentIntentId,
-        domains: [...this.baseBundle, ...this.extendedBundle],
+        domains: [...this.domainBundle],
         amount: this.totalAmount,
         username: this.usernames.filter((v) => v !== ''),
         redirectWebsite: this.redirectUrl,

@@ -13,10 +13,7 @@ export const UsersCard = observer(() => {
   const store = useStore();
   const { open, onOpen, onClose } = useDisclosure();
   const [error1, error2] = store.mailboxes.invalidUsernames;
-  const hasDomains =
-    store.mailboxes.value.size > 0
-      ? store.mailboxes.extendedBundle.size > 0
-      : store.mailboxes.baseBundle.size > 0;
+  const hasDomains = store.mailboxes.domainBundle.size > 0;
 
   const dirty = store.mailboxes.dirty;
   const isUsername1Dirty = dirty.get('username1') || false;
@@ -29,7 +26,9 @@ export const UsersCard = observer(() => {
       <Card className='py-2 px-3 bg-white'>
         <CardHeader className='flex flex-col'>
           <div className='flex items-end gap-1 pb-1'>
-            <span className='font-medium text-sm '>Add 2 usernames</span>
+            <span className='font-medium text-sm '>
+              Add 2 usernames for yourself
+            </span>
             <IconButton
               size='xxs'
               variant='ghost'
@@ -47,7 +46,7 @@ export const UsersCard = observer(() => {
           <Input
             size='sm'
             variant='outline'
-            placeholder='E.g. john'
+            placeholder='E.g. melinda'
             value={store.mailboxes.usernames[0]}
             dataTest='settings-mailboxes-first-username'
             invalid={isUsername1Dirty && error1.length > 0}
@@ -88,7 +87,7 @@ export const UsersCard = observer(() => {
           <Input
             size='sm'
             variant='outline'
-            placeholder='E.g. melinda'
+            placeholder='E.g. melinda.davis'
             value={store.mailboxes.usernames[1]}
             dataTest='settings-mailboxes-second-username'
             invalid={isUsername2Dirty && error2.length > 0}

@@ -28,14 +28,9 @@ export const EmptyMailstack = ({ onUpdate }: EmptyMailboxesProps) => {
             tools that do the hard work for you.
           </p>
           <p className='text-sm font-medium pt-3 mb-1'>
-            The Starter bundle gives you:
+            With CustomerOS mailboxes, you get:
           </p>
           <div className='px-3 gap-1'>
-            <div className='flex items-center gap-2 py-1'>
-              <CheckCircle className='text-success-500' />
-              <span className='text-sm'>20 mailboxes</span>
-            </div>
-
             <div className='flex items-center gap-2 py-1'>
               <CheckCircle className='text-success-500' />
               <span className='text-sm'>Automatic email setup</span>
@@ -77,8 +72,8 @@ export const EmptyMailstack = ({ onUpdate }: EmptyMailboxesProps) => {
         <div className='flex items-center py-2 px-3 border rounded-md border-grayModern-200 mt-4'>
           <Sale03 className='text-grayModern-500 mr-2' />
           <span className='text-sm'>
-            Get the <span className='font-medium'>Starter bundle</span> for{' '}
-            <span className='text-success-500 font-medium'>$199.99/month</span>
+            Start with 2 mailboxes for{' '}
+            <span className='text-success-500 font-medium'>$18.99/month</span>
           </span>
         </div>
 
