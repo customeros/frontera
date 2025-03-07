@@ -47,11 +47,7 @@ export const RelationshipPicker = observer(() => {
   const handleSelect = (option: SelectOption<OrganizationRelationship>) => {
     if (!organization) return;
 
-    organization.value.relationship = option.value;
-
     usecase.execute({ relationship: option.value });
-
-    organization.commit({ syncOnly: true });
   };
 
   return (
