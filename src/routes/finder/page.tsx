@@ -8,13 +8,11 @@ import { FiltersContainer } from '@finder/components/FiltersContainer';
 
 import { useStore } from '@shared/hooks/useStore';
 import { PreviewCard } from '@shared/components/PreviewCard';
-import { ContactDetails } from '@shared/components/ContactDetails';
-import { TableViewType } from '@shared/types/__generated__/graphql.types';
-import { OrganizationDetails } from '@shared/components/OrganizationDetails';
 import { ShortcutsPanel } from '@shared/components/PreviewCard/components/ShortcutsPanel';
-import { InvoicePreviewModal } from '@organization/components/Timeline/PastZone/events/invoice/InvoicePreviewModal';
 
 import { Search } from './src/components/Search';
+import { PreviewPanel } from './src/components/PreviewPanel';
+import { usePreviewPanel } from './src/hooks/usePreviewPanel';
 
 export const FinderPage = observer(() => {
   const store = useStore();
@@ -43,7 +41,7 @@ export const FinderPage = observer(() => {
       });
   }, [preset]);
 
-  const tableViewDef = store.tableViewDefs.getById(preset || '');
+  usePreviewPanel();
 
   return (
     <div className='flex w-full items-start h-full '>
@@ -57,31 +55,7 @@ export const FinderPage = observer(() => {
             <FinderTable />
           </div>
 
-          {store.ui.showPreviewCard && !store.ui.isSearching && (
-            <PreviewCard
-              isInvoice={
-                tableViewDef?.value.tableType === TableViewType.Invoices
-              }
-            >
-              {tableViewDef?.value.tableType === TableViewType.Contacts && (
-                <ContactDetails
-                  isExpandble={false}
-                  id={String(store.ui.focusRow)}
-                />
-              )}
-              {tableViewDef?.value.tableType === TableViewType.Organizations &&
-                store.ui.focusRow && (
-                  <div className='px-4'>
-                    <OrganizationDetails id={store.ui.focusRow} />
-                  </div>
-                )}
-
-              {tableViewDef?.value.tableType === TableViewType.Invoices &&
-                store.ui.focusRow && (
-                  <InvoicePreviewModal invoiceId={store.ui.focusRow} />
-                )}
-            </PreviewCard>
-          )}
+          <PreviewPanel />
 
           {store.ui.showShortcutsPanel && (
             <PreviewCard>

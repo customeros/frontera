@@ -15,6 +15,7 @@ export type GetInvoicesQuery = {
     content: Array<{
       __typename?: 'Invoice';
       issued: any;
+      postpaid: boolean;
       invoiceUrl: string;
       invoiceNumber: string;
       invoicePeriodStart: any;
@@ -72,7 +73,7 @@ export type GetInvoicesQuery = {
         taxDue: number;
         total: number;
         price: number;
-        description?: string | null;
+        description: string;
         metadata: {
           __typename?: 'Metadata';
           id: string;

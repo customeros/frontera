@@ -134,6 +134,12 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
     );
   }
 
+  get tasksPreset() {
+    return this.toArray().find(
+      (t) => t.value.tableId === TableIdType.Tasks && t.value.isPreset,
+    )?.value.id;
+  }
+
   public getById(id: string) {
     const tableViewDefStore = this.value.get(id);
 

@@ -6,12 +6,12 @@ import { TableViewDefStore } from '@store/TableViewDefs/TableViewDef.store';
 import { TableViewDef, TableViewType } from '@graphql/types';
 
 import { getFlowColumnsConfig } from '../Columns/flows';
+import { getTasksColumnsConfig } from '../Columns/tasks';
 import { getContactColumnsConfig } from '../Columns/contacts';
 import { getInvoiceColumnsConfig } from '../Columns/invoices';
 import { getContractColumnsConfig } from '../Columns/contracts';
 import { getOpportunityColumnsConfig } from '../Columns/opportunities';
 import { getOrganizationColumnsConfig } from '../Columns/organizations';
-
 interface ComputeFinderColumnsOptions {
   tableType: TableViewType;
   currentPreset: string | null;
@@ -54,6 +54,7 @@ export const computeFinderColumns = (
     getInvoiceColumnsConfig,
   );
   const flowsColumns = parseColumns('flowsPreset', getFlowColumnsConfig);
+  const tasksColumns = parseColumns('tasksPreset', getTasksColumnsConfig);
 
   return match(tableType)
     .with(TableViewType.Organizations, () =>
@@ -98,6 +99,11 @@ export const computeFinderColumns = (
       match(currentPreset)
         .with(store.tableViewDefs.flowsPreset ?? '', () => flowsColumns)
         .otherwise(() => getFlowColumnsConfig(tableViewDef)),
+    )
+    .with(TableViewType.Tasks, () =>
+      match(currentPreset)
+        .with(store.tableViewDefs.tasksPreset ?? '', () => tasksColumns)
+        .otherwise(() => getTasksColumnsConfig(tableViewDef)),
     )
     .otherwise(() => []);
 };

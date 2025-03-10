@@ -1,0 +1,14 @@
+query tasks($ids: [ID!]) {
+  tasks(ids: $ids) {
+    id
+    subject
+    description
+    assignees
+    authorId
+    status
+    opportunityIds
+    dueAt
+    createdAt
+    updatedAt
+  }
+}

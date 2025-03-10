@@ -164,30 +164,6 @@ export const ContactTableActions = observer(
       },
     });
 
-    useKeyBindings(
-      {
-        Space: (e) => {
-          e.stopPropagation();
-          e.preventDefault();
-
-          if (store.ui.showPreviewCard && focusedId) {
-            if (focusedId === store.ui.focusRow) {
-              store.ui.setShowPreviewCard(false);
-
-              return;
-            }
-
-            store.ui.setFocusRow(focusedId);
-
-            return;
-          }
-
-          store.ui.setShowPreviewCard(true);
-        },
-      },
-      { when: !!focusedId },
-    );
-
     if (!selectCount && !targetId) return null;
 
     return (

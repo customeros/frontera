@@ -229,7 +229,7 @@ export const ListFilter = ({
       <PopoverContent
         side='bottom'
         align='start'
-        className='py-1 min-w-[254px]'
+        className='pt-0 min-w-[254px]'
       >
         <Combobox
           escapeClearsValue

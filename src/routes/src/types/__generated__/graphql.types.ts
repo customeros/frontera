@@ -565,6 +565,15 @@ export enum ColumnViewType {
   OrganizationsUpdatedDate = 'ORGANIZATIONS_UPDATED_DATE',
   OrganizationsWebsite = 'ORGANIZATIONS_WEBSITE',
   OrganizationsYearFounded = 'ORGANIZATIONS_YEAR_FOUNDED',
+  TasksAssignees = 'TASKS_ASSIGNEES',
+  TasksAuthor = 'TASKS_AUTHOR',
+  TasksCreatedAt = 'TASKS_CREATED_AT',
+  TasksDescription = 'TASKS_DESCRIPTION',
+  TasksDueDate = 'TASKS_DUE_DATE',
+  TasksOpportunities = 'TASKS_OPPORTUNITIES',
+  TasksStatus = 'TASKS_STATUS',
+  TasksSubject = 'TASKS_SUBJECT',
+  TasksUpdatedAt = 'TASKS_UPDATED_AT',
 }
 
 export type Comment = {
@@ -2130,13 +2139,13 @@ export type InvoiceCustomer = {
 export type InvoiceLine = MetadataInterface & {
   __typename?: 'InvoiceLine';
   contractLineItem: ServiceLineItem;
-  /** @deprecated use sku instead */
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   metadata: Metadata;
   price: Scalars['Float']['output'];
   quantity: Scalars['Int64']['output'];
   sku?: Maybe<Sku>;
   skuId?: Maybe<Scalars['ID']['output']>;
+  skuName: Scalars['String']['output'];
   subtotal: Scalars['Float']['output'];
   taxDue: Scalars['Float']['output'];
   total: Scalars['Float']['output'];
@@ -4370,6 +4379,7 @@ export type Query = {
   tags: Array<Tag>;
   tags_ByEntityType: Array<Tag>;
   tasks: Array<Task>;
+  tasks_Search: TaskSearchResult;
   tenant: Scalars['String']['output'];
   tenantBillingProfile: TenantBillingProfile;
   tenantBillingProfiles: Array<TenantBillingProfile>;
@@ -4610,6 +4620,16 @@ export type QuerySlack_ChannelsArgs = {
 
 export type QueryTags_ByEntityTypeArgs = {
   entityType: EntityType;
+};
+
+export type QueryTasksArgs = {
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+};
+
+export type QueryTasks_SearchArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<SortBy>;
+  where?: InputMaybe<Filter>;
 };
 
 export type QueryTenantBillingProfileArgs = {
@@ -4919,6 +4939,7 @@ export enum TableIdType {
   Organizations = 'ORGANIZATIONS',
   PastInvoices = 'PAST_INVOICES',
   Targets = 'TARGETS',
+  Tasks = 'TASKS',
   UpcomingInvoices = 'UPCOMING_INVOICES',
 }
 
@@ -4972,6 +4993,7 @@ export enum TableViewType {
   Invoices = 'INVOICES',
   Opportunities = 'OPPORTUNITIES',
   Organizations = 'ORGANIZATIONS',
+  Tasks = 'TASKS',
 }
 
 export type Tag = {
@@ -5013,29 +5035,33 @@ export type TagUpdateInput = {
 
 export type Task = {
   __typename?: 'Task';
-  asignees: Array<Scalars['ID']['output']>;
-  context: Scalars['String']['output'];
+  assignees: Array<Scalars['ID']['output']>;
+  authorId?: Maybe<Scalars['ID']['output']>;
   createdAt: Scalars['Time']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  dueAt: Scalars['Time']['output'];
+  dueAt?: Maybe<Scalars['Time']['output']>;
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  opportunityId?: Maybe<Scalars['ID']['output']>;
-  ownerId: Scalars['ID']['output'];
+  opportunityIds: Array<Scalars['ID']['output']>;
   status: TaskStatus;
+  subject?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Time']['output'];
 };
 
 export type TaskInput = {
-  asignees?: InputMaybe<Array<Scalars['ID']['input']>>;
-  context?: InputMaybe<Scalars['String']['input']>;
+  assignees?: InputMaybe<Array<Scalars['ID']['input']>>;
   description?: InputMaybe<Scalars['String']['input']>;
   dueAt?: InputMaybe<Scalars['Time']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  opportunityId?: InputMaybe<Scalars['ID']['input']>;
-  ownerId?: InputMaybe<Scalars['ID']['input']>;
+  opportunityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   status?: InputMaybe<TaskStatus>;
+  subject?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TaskSearchResult = {
+  __typename?: 'TaskSearchResult';
+  tasks: Array<Scalars['ID']['output']>;
+  totalAvailable: Scalars['Int64']['output'];
+  totalElements: Scalars['Int64']['output'];
 };
 
 export enum TaskStatus {
