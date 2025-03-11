@@ -118,9 +118,7 @@ export class EditOrganizationTagUsecase {
 
   @action
   public select(ids?: string[]) {
-    const organization = this.organization;
-
-    if (!ids || !organization) {
+    if (!ids || !this.organization) {
       console.error(
         'EditOrganizationTagUsecase: select called without id or company',
       );
@@ -128,58 +126,29 @@ export class EditOrganizationTagUsecase {
       return;
     }
 
-    const tags = ids.map((e) => this.root.tags.getById(e));
+    const organization = this.organization;
+    const tags = ids.map((e) => this.root.tags.getById(e)).filter(Boolean);
     const currentTags = organization.value.tags;
 
-    if (!tags || !tags.length) {
-      currentTags.forEach(({ metadata }) => {
-        const tag = this.root.tags.getById(metadata.id);
-
-        if (!tag) {
-          console.error(
-            'EditOrganizationTagUsecase: Tag not found in the store',
-          );
-
-          return;
-        }
-        this.organizationService.removeTag(organization, tag);
-      });
-      this.newTags.clear();
-
-      return;
-    }
-
-    const tagsToAdd = tags
-      .filter(
-        (tag) =>
-          !currentTags.some((currentTag) => currentTag.metadata.id === tag?.id),
-      )
-      .filter(Boolean);
+    const tagsToAdd = tags.filter(
+      (tag) =>
+        !currentTags.some((currentTag) => currentTag.metadata.id === tag!.id),
+    );
 
     const tagsToRemove = currentTags
       .filter(
-        (currentTag) => !tags.some((tag) => tag?.id === currentTag.metadata.id),
+        (currentTag) => !tags.some((tag) => tag!.id === currentTag.metadata.id),
       )
       .map((tagDatum) => this.root.tags.getById(tagDatum.metadata.id))
       .filter(Boolean);
 
     tagsToAdd.forEach((tag) => {
-      if (!tag) {
-        console.error('EditOrganizationTagUsecase: Tag not found in the store');
-
-        return;
-      }
-      this.organizationService.addTag(organization, tag);
+      this.organizationService.addTag(organization, tag!);
     });
 
     tagsToRemove.forEach((tag) => {
-      if (!tag) {
-        console.error('EditOrganizationTagUsecase: Tag not found in the store');
-
-        return;
-      }
-      this.newTags.delete(tag.value.name);
-      this.organizationService.removeTag(organization, tag);
+      this.newTags.delete(tag!.value.name);
+      this.organizationService.removeTag(organization, tag!);
     });
   }
 
@@ -193,9 +162,14 @@ export class EditOrganizationTagUsecase {
       { name, entityType: EntityType.Organization },
       {
         onSuccess: (id) => {
-          this.select([id]);
           this.newTags.add(name);
           this.setSearchTerm('');
+
+          const currentTagIds = this.organization?.value.tags.map(
+            (tag) => tag.metadata.id,
+          );
+
+          this.select([...currentTagIds!, id]);
         },
       },
     );
