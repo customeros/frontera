@@ -254,7 +254,10 @@ export type IconName =
   | 'refresh-cw-02'
   | 'refresh-cw-01'
   | 'inbox-01'
-  | 'clipboard-check';
+  | 'clipboard-check'
+  | 'calendar-plus-02'
+  | 'clipboard-text'
+  | 'circle';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

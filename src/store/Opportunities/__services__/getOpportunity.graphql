@@ -15,6 +15,7 @@ query Opportunity($id: ID!) {
     amount
     currency
     maxAmount
+    taskIds
     internalType
     externalType
     internalStage

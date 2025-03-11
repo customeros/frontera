@@ -1,5 +1,5 @@
+import { useRef, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRef, useState, forwardRef } from 'react';
 
 import { useMergeRefs } from 'rooks';
 import { observer } from 'mobx-react-lite';
@@ -19,9 +19,9 @@ import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { useOutsideClick } from '@ui/utils/hooks/useOutsideClick';
 import { InternalStage } from '@shared/types/__generated__/graphql.types';
 
+import { Task } from './Task';
 import { Owner } from './Owner';
 import { MoreMenu } from './MoreMenu';
-import { NextSteps } from './NextSteps';
 import { ArrEstimate } from './ArrEstimate';
 import { OpportunityName } from './OpportunityName';
 
@@ -80,9 +80,7 @@ export const KanbanCard = observer(
     const store = useStore();
     const navigate = useNavigate();
     const containerRef = useRef<HTMLDivElement>(null);
-    const nextStepsRef = useRef<HTMLTextAreaElement>(null);
     const mergedRef = useMergeRefs(provided?.innerRef, containerRef);
-    const [showNextSteps, setShowNextSteps] = useState(!!card.value.nextSteps);
 
     const organization = card.organization;
     const logo = organization?.value.iconUrl || organization?.value.logoUrl;
@@ -97,17 +95,17 @@ export const KanbanCard = observer(
 
     if (!card.value.metadata.id) return null;
 
-    const handleNextStepsClick = () => {
-      if (card.value.nextSteps) {
-        setShowNextSteps(false);
-        card.update((value) => {
-          value.nextSteps = '';
+    const handleAddTaskClick = () => {
+      if (card.value.taskIds[0]) {
+        store.tasks.getById(card.value.taskIds[0])?.removeOpportunity(card.id);
+        card.value.taskIds = [];
 
-          return value;
-        });
+        if (store.ui.showPreviewCard) {
+          store.ui.setShowPreviewCard(false);
+        }
       } else {
-        setShowNextSteps(true);
-        setTimeout(() => nextStepsRef.current?.focus(), 10);
+        store.ui.commandMenu.setType('SetOpportunityTask');
+        store.ui.commandMenu.setOpen(true);
       }
     };
 
@@ -126,7 +124,22 @@ export const KanbanCard = observer(
         {...provided?.draggableProps}
         {...provided?.dragHandleProps}
         data-test='opp-kanban-card'
-        onMouseEnter={() => onFocus(card.id)}
+        onMouseEnter={() => {
+          onFocus(card.id);
+        }}
+        onClick={() => {
+          if (!card.value.taskIds[0]) return;
+
+          if (
+            store.ui.showPreviewCard &&
+            store.ui.focusRow === card.value.taskIds[0]
+          ) {
+            store.ui.setShowPreviewCard(false);
+          } else {
+            store.ui.setFocusRow(card.value.taskIds[0]);
+            store.ui.setShowPreviewCard(true);
+          }
+        }}
         className={cn(
           'group/kanbanCard  relative flex flex-col items-start px-3 pb-3 pt-[6px] mb-2 bg-white rounded-lg border border-grayModern-200 shadow-xs hover:shadow-lg focus:border-primary-500 transition-all duration-200 ease-in-out',
           {
@@ -143,11 +156,13 @@ export const KanbanCard = observer(
                 <OpportunityName opportunityId={card.id} />
                 <p
                   className='text-sm text-grayModern-500 p-0 hovergrayModernt-grayModern-700 hover:cursor-pointer'
-                  onClick={() => {
+                  onClick={(e) => {
                     logo &&
                       navigate(
                         `/organization/${card.value?.organization?.metadata.id}/`,
                       );
+                    e.stopPropagation();
+                    e.preventDefault();
                   }}
                 >
                   {organization?.value.name
@@ -158,12 +173,18 @@ export const KanbanCard = observer(
             </div>
 
             <MoreMenu
-              hasNextSteps={!!card.value.nextSteps}
-              onNextStepsClick={handleNextStepsClick}
+              hasTask={!!card.value.taskIds[0]}
+              onAddTaskClick={handleAddTaskClick}
             />
           </div>
 
-          <div className='flex items-center gap-2 w-full'>
+          <div
+            className='flex items-center gap-2 w-full'
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
             <Owner opportunityId={card.id} ownerId={card.owner?.id} />
 
             <div className='flex items-center justify-between w-full mb-[-4px]'>
@@ -189,14 +210,10 @@ export const KanbanCard = observer(
             </div>
           </div>
         </div>
-        {(card.value.nextSteps || showNextSteps) && (
+        {card.value.taskIds.length > 0 && (
           <>
             <Divider className='mt-3 mb-2' />
-            <NextSteps
-              opportunityId={card.id}
-              textareaRef={nextStepsRef}
-              onToggle={setShowNextSteps}
-            />
+            <Task taskId={card.value.taskIds[0]} />
           </>
         )}
       </div>

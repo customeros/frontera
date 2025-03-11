@@ -2,6 +2,7 @@ import React from 'react';
 
 import { observer } from 'mobx-react-lite';
 
+import { Icon } from '@ui/media/Icon';
 import { Edit03 } from '@ui/media/icons/Edit03';
 import { User01 } from '@ui/media/icons/User01';
 import { Archive } from '@ui/media/icons/Archive';
@@ -9,7 +10,6 @@ import { useStore } from '@shared/hooks/useStore';
 import { Delete } from '@ui/media/icons/Delete.tsx';
 import { Columns03 } from '@ui/media/icons/Columns03';
 import { Calculator } from '@ui/media/icons/Calculator';
-import { ArrowsRight } from '@ui/media/icons/ArrowsRight';
 import { ArrowBlockUp } from '@ui/media/icons/ArrowBlockUp.tsx';
 import { Kbd, CommandKbd, CommandItem } from '@ui/overlay/CommandMenu';
 import { CurrencyDollarCircle } from '@ui/media/icons/CurrencyDollarCircle';
@@ -56,26 +56,45 @@ export const OpportunityCommands = observer(() => {
         </CommandItem>
 
         <ChangeStageSubItemGroup />
+        {store.opportunities.value.get(opportunity?.id ?? '')?.value.taskIds
+          .length === 0 && (
+          <CommandItem
+            leftAccessory={<Icon name='clipboard-text' />}
+            onSelect={() => {
+              store.ui.commandMenu.setType('SetOpportunityTask');
+            }}
+            keywords={[
+              'set',
+              'next',
+              'step',
+              'edit',
+              'update',
+              'action',
+              'reminder',
+              'follow up',
+              'task',
+            ]}
+          >
+            Link task
+          </CommandItem>
+        )}
 
-        <CommandItem
-          leftAccessory={<ArrowsRight />}
-          onSelect={() => {
-            store.ui.commandMenu.setType('SetOpportunityNextSteps');
-          }}
-          keywords={[
-            'set',
-            'next',
-            'step',
-            'edit',
-            'update',
-            'action',
-            'reminder',
-            'follow up',
-            'task',
-          ]}
-        >
-          Set next step
-        </CommandItem>
+        {store.opportunities.value.get(opportunity?.id ?? '')?.value.taskIds
+          .length === 1 && (
+          <CommandItem
+            leftAccessory={<Icon name='link-broken-02' />}
+            onSelect={() => {
+              opportunity?.removeTask();
+              store.ui.commandMenu.setOpen(false);
+
+              if (store.ui.showPreviewCard) {
+                store.ui.setShowPreviewCard(false);
+              }
+            }}
+          >
+            Unlink task
+          </CommandItem>
+        )}
 
         <CommandItem
           leftAccessory={<Calculator />}

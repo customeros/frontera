@@ -109,4 +109,37 @@ export class Tasks extends Store<TaskDatum, Task> {
       });
     }
   }
+
+  async createTask() {
+    try {
+      const { task_Save } = await this.repository.saveTask({
+        input: {
+          subject: 'Unnamed task: In need of a name',
+        },
+      });
+
+      runInAction(() => {
+        const recordId = task_Save.id;
+
+        this.value.set(
+          recordId,
+          new Task(this, {
+            ...task_Save,
+            opportunityIds: [],
+          }),
+        );
+        this.version++;
+        this.sync({
+          action: 'APPEND',
+          ids: [recordId],
+        });
+      });
+
+      return task_Save.id;
+    } catch (err) {
+      this.root.ui.toastError('Failed to create task', 'create-task-failure');
+    } finally {
+      this.root.ui.toastSuccess('Task created', 'create-task-success');
+    }
+  }
 }

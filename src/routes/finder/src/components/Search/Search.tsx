@@ -10,6 +10,7 @@ import { TableViewsToggleNavigation } from '@finder/components/TableViewsToggleN
 import { SearchBarFilterData } from '@finder/components/SearchBarFilterData/SearchBarFilterData';
 
 import { cn } from '@ui/utils/cn';
+import { Plus } from '@ui/media/icons/Plus';
 import { Input } from '@ui/form/Input/Input';
 import { useStore } from '@shared/hooks/useStore';
 import { Button } from '@ui/form/Button/Button.tsx';
@@ -97,6 +98,7 @@ export const Search = observer(() => {
       !store.ui.isSearching ? '/ to search' : 'by contract name...',
     )
     .with(TableViewType.Opportunities, () => 'by name, company or owner...')
+    .with(TableViewType.Tasks, () => '')
     .otherwise(() => 'by company name...');
 
   const createNewEntityModalType:
@@ -152,6 +154,21 @@ export const Search = observer(() => {
         ),
       },
     ])
+    .with(TableViewType.Tasks, () => [
+      true,
+      {
+        leftIcon: <Plus />,
+        children: 'Create task',
+        onClick: () =>
+          store.tasks.createTask().then((id) => {
+            store.ui.setShowPreviewCard(true);
+            store.ui.setFocusRow(id!);
+          }),
+      },
+      {
+        label: <span>Add one or more</span>,
+      },
+    ])
     .otherwise(() => [false, {}, { label: null }]);
 
   return (
@@ -172,10 +189,6 @@ export const Search = observer(() => {
           onChange={handleChange}
           placeholder={placeholder}
           defaultValue={searchParams.get('search') ?? ''}
-          readOnly={
-            tableType === TableViewType.Organizations ||
-            tableType === TableViewType.Contacts
-          }
           onBlur={() => {
             store.ui.setIsSearching(null);
             wrapperRef.current?.removeAttribute('data-focused');
@@ -185,15 +198,22 @@ export const Search = observer(() => {
               store.ui.commandMenu.toggle('AddNewOrganization');
             }
           }}
-          className={cn({
-            'cursor-default': tableType === TableViewType.Contacts,
-            'cursor-pointer': tableType === TableViewType.Organizations,
-          })}
+          readOnly={
+            tableType === TableViewType.Organizations ||
+            tableType === TableViewType.Contacts ||
+            tableType === TableViewType.Tasks
+          }
           onFocus={() => {
             if (tableType === TableViewType.Organizations) return;
             store.ui.setIsSearching('organizations');
             wrapperRef.current?.setAttribute('data-focused', '');
           }}
+          className={cn({
+            'cursor-default':
+              tableType === TableViewType.Contacts ||
+              tableType === TableViewType.Tasks,
+            'cursor-pointer': tableType === TableViewType.Organizations,
+          })}
           onKeyUp={(e) => {
             if (
               e.code === 'Escape' ||

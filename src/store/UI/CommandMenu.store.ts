@@ -22,7 +22,7 @@ export type CommandMenuType =
   | 'ChooseOpportunityOrganization'
   | 'ChooseOpportunityStage'
   | 'AddNewOrganization'
-  | 'SetOpportunityNextSteps'
+  | 'SetOpportunityTask'
   | 'MergeConfirmationModal'
   | 'EditPersonaTag'
   | 'ContactHub'

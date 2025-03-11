@@ -240,3 +240,18 @@ export const flowsHelperTextMap: Record<string, string> = {
   [ColumnViewType.FlowCompletedCount]: 'E.g. 78',
   [ColumnViewType.FlowGoalAchievedCount]: 'E.g. 47',
 };
+
+export const tasksMap: Record<string, string> = {
+  [ColumnViewType.TasksSubject]: 'Subject',
+  [ColumnViewType.TasksAssignees]: 'Assignees',
+  [ColumnViewType.TasksStatus]: 'Status',
+  [ColumnViewType.TasksDueDate]: 'Due Date',
+  [ColumnViewType.TasksCreatedAt]: 'Created At',
+};
+
+export const tasksHelperTextMap: Record<string, string> = {
+  [ColumnViewType.TasksAssignees]: 'E.g. Steph Holler',
+  [ColumnViewType.TasksStatus]: 'E.g. To do',
+  [ColumnViewType.TasksDueDate]: 'E.g. 3 days ago',
+  [ColumnViewType.TasksCreatedAt]: 'E.g. 18 Dec 1974',
+};

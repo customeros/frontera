@@ -1,10 +1,11 @@
+import { RootStore } from '@store/root';
+
 import { Icon } from '@ui/media/Icon';
 import {
   TaskStatus,
   ColumnViewType,
   ComparisonOperator,
 } from '@shared/types/__generated__/graphql.types';
-
 export type FilterType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options?: any[];
@@ -16,11 +17,11 @@ export type FilterType = {
   groupOptions?: { label: string; options: { id: string; label: string }[] };
 };
 
-export const getTasksFilterTypes = () => {
+export const getTasksFilterTypes = (store?: RootStore) => {
   const filterTypes: Partial<Record<ColumnViewType, FilterType>> = {
     [ColumnViewType.TasksSubject]: {
       filterType: 'text',
-      filterName: 'Subject',
+      filterName: 'Task',
       filterAccesor: ColumnViewType.TasksSubject,
       filterOperators: [
         ComparisonOperator.Contains,
@@ -30,7 +31,7 @@ export const getTasksFilterTypes = () => {
       ],
       icon: (
         <Icon
-          name='message-text-circle-01'
+          name='clipboard-text'
           className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5'
         />
       ),
@@ -42,7 +43,7 @@ export const getTasksFilterTypes = () => {
       filterOperators: [ComparisonOperator.In, ComparisonOperator.NotIn],
       icon: (
         <Icon
-          name='message-text-circle-01'
+          name='columns-03'
           className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5'
         />
       ),
@@ -54,24 +55,46 @@ export const getTasksFilterTypes = () => {
     },
     [ColumnViewType.TasksDueDate]: {
       filterType: 'date',
-      filterName: 'Due in',
+      filterName: 'Due date',
       filterAccesor: ColumnViewType.TasksDueDate,
-      filterOperators: [ComparisonOperator.Lte],
+      filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
       icon: (
         <Icon
-          name='message-text-circle-01'
+          name='calendar'
           className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5'
         />
       ),
     },
-    [ColumnViewType.TasksCreatedAt]: {
-      filterType: 'date',
-      filterName: 'Created in',
-      filterAccesor: ColumnViewType.TasksCreatedAt,
-      filterOperators: [ComparisonOperator.Lte],
+    [ColumnViewType.TasksAssignees]: {
+      filterType: 'list',
+      filterName: 'Assignees',
+      filterAccesor: ColumnViewType.TasksAssignees,
+      filterOperators: [ComparisonOperator.In, ComparisonOperator.NotIn],
       icon: (
         <Icon
-          name='message-text-circle-01'
+          name='user-01'
+          className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5'
+        />
+      ),
+      options: store?.users
+        .toArray()
+        .filter(
+          (user) => !user.value.internal && !user.value.bot && !user.value.test,
+        )
+        .map((user) => ({
+          id: user?.id,
+          label: user?.name,
+          avatar: user?.value?.profilePhotoUrl,
+        })),
+    },
+    [ColumnViewType.TasksCreatedAt]: {
+      filterType: 'date',
+      filterName: 'Created date',
+      filterAccesor: ColumnViewType.TasksCreatedAt,
+      filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
+      icon: (
+        <Icon
+          name='calendar'
           className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5'
         />
       ),
@@ -80,10 +103,10 @@ export const getTasksFilterTypes = () => {
       filterType: 'date',
       filterName: 'Updated in',
       filterAccesor: ColumnViewType.TasksUpdatedAt,
-      filterOperators: [ComparisonOperator.Lte],
+      filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
       icon: (
         <Icon
-          name='message-text-circle-01'
+          name='calendar'
           className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5'
         />
       ),

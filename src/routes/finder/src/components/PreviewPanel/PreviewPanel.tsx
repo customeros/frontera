@@ -8,7 +8,6 @@ import { ContactDetails } from '@shared/components/ContactDetails';
 import { TaskDetails } from '@shared/components/TaskDetails/TaskDetails';
 import { OrganizationDetails } from '@shared/components/OrganizationDetails';
 import { InvoicePreviewModal } from '@organization/components/Timeline/PastZone/events/invoice/InvoicePreviewModal';
-
 export const PreviewPanel = observer(() => {
   const store = useStore();
   const { tableViewDef } = useCurrentViewDef();

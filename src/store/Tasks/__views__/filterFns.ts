@@ -18,14 +18,17 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
     .with(
       { property: ColumnViewType.TasksSubject },
       (filter) => (row: Task) => {
+        if (!filter.active) return true;
         const filterValues = filter?.value;
+        const values = row?.value.subject?.toLowerCase();
 
-        if (!filterValues || !row?.value.subject) return false;
+        if (!filterValues) return false;
 
-        return filterTypeText(filter, row?.value.subject);
+        return filterTypeText(filter, values);
       },
     )
     .with({ property: ColumnViewType.TasksStatus }, (filter) => (row: Task) => {
+      if (!filter.active) return true;
       const filterValues = filter?.value;
 
       if (!filterValues || !row?.value.status) return false;
@@ -40,6 +43,7 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
     .with(
       { property: ColumnViewType.TasksAssignees },
       (filter) => (row: Task) => {
+        if (!filter.active) return true;
         const filterValues = filter?.value;
 
         if (!filterValues || !row?.value.assignees) return false;
@@ -50,6 +54,7 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
     .with(
       { property: ColumnViewType.TasksDueDate },
       (filter) => (row: Task) => {
+        if (!filter.active) return true;
         const filterValues = filter?.value;
 
         if (!filterValues || !row?.value.dueAt) return false;
@@ -60,6 +65,7 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
     .with(
       { property: ColumnViewType.TasksCreatedAt },
       (filter) => (row: Task) => {
+        if (!filter.active) return true;
         const filterValues = filter?.value;
 
         if (!filterValues || !row?.value.createdAt) return false;

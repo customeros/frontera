@@ -2806,6 +2806,7 @@ export type Mutation = {
   tenant_UpdateBillingProfile: TenantBillingProfile;
   tenant_UpdateSettings: TenantSettings;
   tenant_UpdateSettingsOpportunityStage: ActionResponse;
+  testMutation: Scalars['Boolean']['output'];
   user_Update: User;
   user_UpdateOnboardingDetails: User;
 };
@@ -3579,6 +3580,10 @@ export type MutationTenant_UpdateSettingsOpportunityStageArgs = {
   input: TenantSettingsOpportunityStageConfigurationInput;
 };
 
+export type MutationTestMutationArgs = {
+  input: TestInput;
+};
+
 export type MutationUser_UpdateArgs = {
   input?: InputMaybe<UserUpdateInput>;
 };
@@ -3688,6 +3693,7 @@ export type Opportunity = MetadataInterface & {
    */
   sourceOfTruth?: Maybe<DataSource>;
   stageLastUpdated?: Maybe<Scalars['Time']['output']>;
+  taskIds: Array<Scalars['ID']['output']>;
   /** Deprecated, use metadata */
   updatedAt?: Maybe<Scalars['Time']['output']>;
 };
@@ -5049,12 +5055,15 @@ export type Task = {
 
 export type TaskInput = {
   assignees?: InputMaybe<Array<Scalars['ID']['input']>>;
+  authorId?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['Time']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   dueAt?: InputMaybe<Scalars['Time']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   opportunityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   status?: InputMaybe<TaskStatus>;
   subject?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Time']['input']>;
 };
 
 export type TaskSearchResult = {
@@ -5271,6 +5280,12 @@ export type TenantSettingsOpportunityStageConfigurationInput = {
   label?: InputMaybe<Scalars['String']['input']>;
   likelihoodRate?: InputMaybe<Scalars['Int64']['input']>;
   visible?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type TestInput = {
+  intParam?: InputMaybe<Scalars['Int']['input']>;
+  listParam?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  stringParam?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TimeRange = {

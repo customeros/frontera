@@ -13,6 +13,7 @@ import { ButtonGroup } from '@ui/form/ButtonGroup';
 import { TableIdType, TableViewType } from '@graphql/types';
 import { PreviewCard } from '@shared/components/PreviewCard';
 import { ViewSettings } from '@shared/components/ViewSettings';
+import { TaskDetails } from '@shared/components/TaskDetails/TaskDetails';
 import { ShortcutsPanel } from '@shared/components/PreviewCard/components/ShortcutsPanel';
 
 import { Search } from './src/components/Search';
@@ -32,6 +33,7 @@ export const ProspectsBoardPage = observer(() => {
   });
 
   const showFinder = searchParams.get('show') === 'finder';
+  const showPreviewCard = store.ui.showPreviewCard && !showFinder;
 
   return (
     <div className='flex flex-col text-grayModern-700 overflow-hidden bg-white'>
@@ -122,6 +124,12 @@ export const ProspectsBoardPage = observer(() => {
         {store.ui.showShortcutsPanel && (
           <PreviewCard>
             <ShortcutsPanel />
+          </PreviewCard>
+        )}
+
+        {showPreviewCard && (
+          <PreviewCard>
+            <TaskDetails id={store.ui.focusRow!} />
           </PreviewCard>
         )}
       </div>

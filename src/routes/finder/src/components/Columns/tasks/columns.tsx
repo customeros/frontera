@@ -9,7 +9,12 @@ import { createColumnHelper } from '@ui/presentation/Table';
 import { Task, TableViewDef, ColumnViewType } from '@graphql/types';
 import THead, { getTHeadProps } from '@ui/presentation/Table/THead';
 
-import { TaskStatusCell } from './cells';
+import {
+  DueDateCell,
+  TaskNameCell,
+  TaskStatusCell,
+  CreatedDateCell,
+} from './cells';
 
 type ColumnDatum = Task;
 
@@ -29,11 +34,11 @@ export const columns: Record<string, Column> = {
     enableSorting: false,
     enableResizing: true,
     cell: (props) => {
-      return <p>{props.getValue().value.subject}</p>;
+      return <TaskNameCell task={props.getValue()} />;
     },
     header: (props) => (
       <THead<HTMLInputElement>
-        title='Subject'
+        title='Task'
         id={ColumnViewType.TasksSubject}
         {...getTHeadProps<Task>(props)}
       />
@@ -48,7 +53,13 @@ export const columns: Record<string, Column> = {
     enableColumnFilter: false,
     enableResizing: false,
     cell: (props) => {
-      return <p>{props.getValue().firstAssignee?.name}</p>;
+      const asigness = props.getValue().firstAssignee?.name;
+
+      return asigness ? (
+        <p>{asigness}</p>
+      ) : (
+        <p className='text-grayModern-400'>Not assigned yet</p>
+      );
     },
     header: (props) => (
       <THead<HTMLInputElement>
@@ -67,7 +78,7 @@ export const columns: Record<string, Column> = {
     enableColumnFilter: false,
     enableResizing: false,
     cell: (props) => {
-      return <TaskStatusCell value={props.getValue().value.status} />;
+      return <TaskStatusCell taskId={props.getValue().id} />;
     },
     header: (props) => (
       <THead<HTMLInputElement>
@@ -86,11 +97,11 @@ export const columns: Record<string, Column> = {
     enableColumnFilter: false,
     enableResizing: false,
     cell: (props) => {
-      return <p>{props.getValue().value.dueAt}</p>;
+      return <DueDateCell dueDate={props.getValue().value.dueAt} />;
     },
     header: (props) => (
       <THead<HTMLInputElement>
-        title='Due in'
+        title='Due In'
         id={ColumnViewType.TasksDueDate}
         {...getTHeadProps<Task>(props)}
       />
@@ -105,7 +116,7 @@ export const columns: Record<string, Column> = {
     enableColumnFilter: false,
     enableResizing: false,
     cell: (props) => {
-      return <p>{props.getValue().value.createdAt}</p>;
+      return <CreatedDateCell date={props.getValue().value.createdAt} />;
     },
     header: (props) => (
       <THead<HTMLInputElement>

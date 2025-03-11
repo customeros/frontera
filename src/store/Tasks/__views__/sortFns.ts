@@ -36,4 +36,9 @@ export const getTasksSortFn = (columnId: string) =>
 
       return new Date(row.value.createdAt);
     })
+    .with(ColumnViewType.TasksUpdatedAt, () => (row: Task) => {
+      if (!row || !row.value.updatedAt) return null;
+
+      return new Date(row.value.updatedAt);
+    })
     .otherwise(() => (_row: Task) => false);

@@ -275,6 +275,13 @@ export class OpportunityStore implements Store<Opportunity> {
   async saveProperty(property: keyof Opportunity) {
     this.updateProperty(property);
   }
+
+  removeTask() {
+    this.root.tasks
+      .getById(this.value.taskIds[0] ?? '')
+      ?.removeOpportunity(this.id);
+    this.value.taskIds = [];
+  }
 }
 
 const makeDefaultValue = (): Opportunity => ({
@@ -306,6 +313,7 @@ const makeDefaultValue = (): Opportunity => ({
   owner: User.default() as any,
   stageLastUpdated: '',
   renewalAdjustedRate: 0,
+  taskIds: [],
   renewalApproved: false,
   renewalLikelihood: OpportunityRenewalLikelihood.ZeroRenewal,
   renewalUpdatedByUserId: '',

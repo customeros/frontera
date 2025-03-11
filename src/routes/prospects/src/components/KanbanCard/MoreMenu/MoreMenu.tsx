@@ -1,23 +1,22 @@
 import { observer } from 'mobx-react-lite';
 
+import { Icon } from '@ui/media/Icon';
 import { User01 } from '@ui/media/icons/User01';
-import { Delete } from '@ui/media/icons/Delete';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
 import { Archive } from '@ui/media/icons/Archive';
-import { ArrowsRight } from '@ui/media/icons/ArrowsRight';
 import { DotsVertical } from '@ui/media/icons/DotsVertical';
 import { CurrencyDollarCircle } from '@ui/media/icons/CurrencyDollarCircle';
 import { Menu, MenuList, MenuItem, MenuButton } from '@ui/overlay/Menu/Menu';
 
 interface MoreMenuProps {
+  hasTask: boolean;
   dataTest?: string;
-  hasNextSteps: boolean;
-  onNextStepsClick: () => void;
+  onAddTaskClick: () => void;
 }
 
 export const MoreMenu = observer(
-  ({ hasNextSteps, onNextStepsClick }: MoreMenuProps) => {
+  ({ hasTask, onAddTaskClick }: MoreMenuProps) => {
     const store = useStore();
 
     return (
@@ -29,13 +28,17 @@ export const MoreMenu = observer(
             icon={<DotsVertical />}
             aria-label='more options'
             dataTest={`opp-kanban-card-dots`}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
           />
         </MenuButton>
 
         <MenuList data-test={'opp-kanban-card-operations'}>
-          <MenuItem onClick={onNextStepsClick}>
-            {hasNextSteps ? <Delete /> : <ArrowsRight />}
-            {hasNextSteps ? 'Remove next step' : 'Add next step'}
+          <MenuItem onClick={onAddTaskClick}>
+            {<Icon name={hasTask ? 'link-broken-02' : 'clipboard-text'} />}
+            {hasTask ? 'Unlink task' : 'Link a task'}
           </MenuItem>
           <MenuItem onClick={() => store.ui.commandMenu.toggle('AssignOwner')}>
             <User01 />
