@@ -84,6 +84,7 @@ interface CommandItemProps
   value?: string;
   dataTest?: string;
   disabled?: boolean;
+  dataValue?: string;
   keywords?: string[];
   children: React.ReactNode;
   leftAccessory?: React.ReactNode;
@@ -99,6 +100,7 @@ export const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
       disabled = false,
       leftAccessory,
       rightAccessory,
+      dataValue,
       ...props
     }: CommandItemProps,
     ref,
@@ -106,6 +108,9 @@ export const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
     return (
       <Command.Item
         ref={ref}
+        // this is added to change the data-value of the item ( ex: if you have multiple items with the same value, you can use this to differentiate them )
+        //default behaviour for the show hover style for the item is to use the data-value but if the value is the same it will show same style for all of them, bassically all of them will be *hovered* and it's wrong because the name is the same it doesn't mean is the same item
+        value={dataValue}
         disabled={disabled}
         data-test={dataTest}
         {...props}

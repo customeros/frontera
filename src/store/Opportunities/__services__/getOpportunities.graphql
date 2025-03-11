@@ -12,6 +12,7 @@ query getOpportunities($pagination: Pagination!) {
       name
       amount
       maxAmount
+      taskIds
       internalType
       externalType
       internalStage

@@ -59,6 +59,9 @@ export const GeneralViewsSection = observer(
     const allOrganizationsActivePreset = [allOrganizationsView?.[0]?.value?.id];
     // const showInvoices = store.settings.tenant.value?.billingEnabled;
     const isOpportinitiesActive = pathname.includes('prospects');
+    const tasksView = store.tableViewDefs.getById(
+      store.tableViewDefs.tasksPreset ?? '',
+    );
 
     return (
       <CollapsibleSection
@@ -162,6 +165,25 @@ export const GeneralViewsSection = observer(
                   strokeWidth={0}
                   name='signature'
                   fill='currentColor'
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
+                />
+              )}
+            />
+            <RootSidenavItem
+              label='Tasks'
+              dataTest={`side-nav-item-all-tasks`}
+              onClick={() =>
+                handleItemClick(`finder?preset=${tasksView?.value?.id}`)
+              }
+              isActive={checkIsActive('finder', {
+                preset: tasksView?.value?.id ?? '',
+              })}
+              icon={(isActive) => (
+                <Icon
+                  name='clipboard-check'
                   className={cn(
                     'text-grayModern-500',
                     isActive && 'text-grayModern-700',

@@ -1,0 +1,7 @@
+query searchTasks($limit: Int, $where: Filter, $sort: SortBy) {
+  tasks_Search(limit: $limit, where: $where, sort: $sort) {
+    tasks
+    totalElements
+    totalAvailable
+  }
+}

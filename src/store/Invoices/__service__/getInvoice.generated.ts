@@ -9,6 +9,7 @@ export type InvoiceQuery = {
   invoice_ByNumber: {
     __typename?: 'Invoice';
     issued: any;
+    postpaid: boolean;
     invoiceUrl: string;
     invoiceNumber: string;
     invoicePeriodStart: any;
@@ -64,7 +65,7 @@ export type InvoiceQuery = {
       taxDue: number;
       total: number;
       price: number;
-      description?: string | null;
+      description: string;
       metadata: {
         __typename?: 'Metadata';
         id: string;

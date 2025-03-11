@@ -66,6 +66,7 @@ import {
   UpdateHealthStatus,
   AddNewOrganization,
   RenameTableViewDef,
+  SetOpportunityTask,
   OpportunityCommands,
   ContactBulkCommands,
   ConfirmBulkFlowEdit,
@@ -79,7 +80,6 @@ import {
   FlowValidationMessage,
   ChooseOpportunityStage,
   MergeConfirmationModal,
-  SetOpportunityNextSteps,
   DeleteConfirmationModal,
   GetBrowserExtensionLink,
   OrganizationBulkCommands,
@@ -128,7 +128,7 @@ const Commands: Record<CommandMenuType, ReactElement> = {
   OpportunityCommands: <OpportunityCommands />,
   RenameOpportunityName: <RenameOpportunityName />,
   ChooseOpportunityStage: <ChooseOpportunityStage />,
-  SetOpportunityNextSteps: <SetOpportunityNextSteps />,
+  SetOpportunityTask: <SetOpportunityTask />,
   ChooseOpportunityOrganization: <ChooseOpportunityOrganization />,
 
   // Organization

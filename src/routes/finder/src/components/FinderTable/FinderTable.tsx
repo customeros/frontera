@@ -14,6 +14,11 @@ import { ColumnSort } from '@tanstack/table-core';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { useColumnSizing } from '@finder/hooks/useColumnSizing';
 import { useTableActions } from '@invoices/hooks/useTableActions';
+import { useCurrentViewDef } from '@finder/hooks/useCurrentViewDef';
+import {
+  CommandMenuType,
+  CommandMenuEntity,
+} from '@store/UI/CommandMenu.store';
 import { OpportunitiesTableActions } from '@finder/components/Actions/OpportunityActions';
 
 import { useStore } from '@shared/hooks/useStore';
@@ -29,32 +34,28 @@ import {
 import { EmptyState } from '../EmptyState/EmptyState';
 import { computeFinderData } from './computeFinderData';
 import { computeFinderColumns } from './computeFinderColumns';
-import { InvoicesTableActions } from '../Actions/InvoicesTableActions';
-import {
-  ContactTableActions,
-  OrganizationTableActions,
-  FlowSequencesTableActions,
-} from '../Actions';
+import { ContactTableActions, OrganizationTableActions } from '../Actions';
 
 export const FinderTable = observer(() => {
   const store = useStore();
   const params = useParams();
   const [searchParams] = useSearchParams();
   const location = useLocation();
+  const { tableViewDef, preset } = useCurrentViewDef();
 
   const enableFeature = useFeatureIsOn('gp-dedicated-1');
   const tableRef = useRef<TableInstance<object> | null>(null);
-  const preset = searchParams?.get('preset');
-  const tableViewDef = store.tableViewDefs.getById(preset ?? '1');
   const contactsPreset = store.tableViewDefs.contactsPreset;
   const opportunitiesPreset = store.tableViewDefs.opportunitiesTablePreset;
-
+  const tasksPreset = store.tableViewDefs.tasksPreset;
   const sortingData = tableViewDef?.getSorting();
   const defaultSorting =
     preset === contactsPreset
       ? [{ id: ColumnViewType.ContactsCreatedAt, desc: true }]
       : preset === opportunitiesPreset
       ? [{ id: ColumnViewType.OpportunitiesCreatedDate, desc: true }]
+      : preset === tasksPreset
+      ? [{ id: ColumnViewType.TasksUpdatedAt, desc: true }]
       : [{ id: ColumnViewType.OrganizationsLastTouchpoint, desc: true }];
 
   const sorting: ColumnSort[] = !sortingData?.id
@@ -257,86 +258,53 @@ export const FinderTable = observer(() => {
   const handleSetFocused = (index: number | null, selectedIds: string[]) => {
     if (isCommandMenuPrompted) return;
 
-    if (selectedIds.length > 0) return;
+    const hasSingleSelection = selectedIds.length === 0;
 
-    if (tableType === TableViewType.Organizations) {
+    const hubType = match(tableType)
+      .returnType<CommandMenuType>()
+      .with(TableViewType.Organizations, () =>
+        hasSingleSelection
+          ? 'OrganizationCommands'
+          : 'OrganizationBulkCommands',
+      )
+      .with(TableViewType.Contacts, () =>
+        hasSingleSelection ? 'ContactCommands' : 'ContactBulkCommands',
+      )
+      .with(TableViewType.Opportunities, () =>
+        hasSingleSelection ? 'OpportunityCommands' : 'OpportunityBulkCommands',
+      )
+      .with(TableViewType.Flow, () =>
+        hasSingleSelection ? 'FlowCommands' : 'FlowsBulkCommands',
+      )
+      .otherwise(() => 'GlobalHub');
+
+    const entity = match(tableType)
+      .returnType<CommandMenuEntity>()
+      .with(TableViewType.Organizations, () => 'Organization')
+      .with(TableViewType.Contacts, () => 'Contact')
+      .with(TableViewType.Opportunities, () => 'Opportunity')
+      .with(TableViewType.Flow, () => 'Flow')
+      .otherwise(() => null);
+
+    const meta = match(tableType)
+      .with(TableViewType.Contacts, () => ({
+        tableId,
+        id: params.id,
+      }))
+      .otherwise(() => undefined);
+
+    store.ui.commandMenu.setType(hubType);
+
+    if (index !== null) {
       if (!store.ui.showPreviewCard) {
-        if (index !== null) {
-          store.ui.setFocusRow(data?.[index]?.id);
-        }
+        store.ui.setFocusRow(data?.[index]?.id);
       }
 
-      if (typeof index !== 'number') {
-        store.ui.commandMenu.setType('OrganizationHub');
-
-        return;
-      }
-
-      if (index > -1 && selectedIds.length === 0) {
-        store.ui.commandMenu.setType('OrganizationCommands');
-        store.ui.commandMenu.setContext({
-          entity: 'Organization',
-          ids: [data?.[index]?.id],
-        });
-      }
-    }
-
-    if (tableType === TableViewType.Contacts) {
-      if (!store.ui.showPreviewCard) {
-        if (index !== null) {
-          store.ui.setFocusRow(data?.[index]?.id);
-        }
-      }
-
-      if (typeof index !== 'number') {
-        store.ui.commandMenu.setType('ContactHub');
-
-        return;
-      }
-
-      if (index > -1 && selectedIds.length === 0) {
-        store.ui.commandMenu.setType('ContactCommands');
-        store.ui.commandMenu.setContext({
-          entity: 'Contact',
-          ids: [data?.[index]?.id],
-          meta: {
-            tableId: tableId,
-            id: params.id,
-          },
-        });
-      }
-    }
-
-    if (tableType === TableViewType.Flow) {
-      if (typeof index !== 'number') {
-        store.ui.commandMenu.setType('FlowHub');
-
-        return;
-      }
-
-      if (index > -1 && selectedIds.length === 0) {
-        store.ui.commandMenu.setType('FlowCommands');
-        store.ui.commandMenu.setContext({
-          entity: 'Flow',
-          ids: [data?.[index]?.id],
-        });
-      }
-    }
-
-    if (tableType === TableViewType.Opportunities) {
-      if (typeof index !== 'number') {
-        store.ui.commandMenu.setType('OpportunityHub');
-
-        return;
-      }
-
-      if (index > -1 && selectedIds.length === 0) {
-        store.ui.commandMenu.setType('OpportunityCommands');
-        store.ui.commandMenu.setContext({
-          entity: 'Opportunity',
-          ids: [data?.[index]?.id],
-        });
-      }
+      store.ui.commandMenu.setContext({
+        entity,
+        ids: [data?.[index]?.id],
+        meta,
+      });
     }
   };
 
@@ -386,14 +354,10 @@ export const FinderTable = observer(() => {
   const enableRowSelection = match(tableType)
     .with(TableViewType.Organizations, () => enableFeature || true)
     .with(TableViewType.Contacts, () => true)
-    .with(TableViewType.Invoices, () => true)
+    .with(TableViewType.Invoices, () => false)
     .with(TableViewType.Opportunities, () => true)
     .with(TableViewType.Flow, () => true)
     .otherwise(() => false);
-
-  if (checkIfEmpty()) {
-    return <EmptyState />;
-  }
 
   const canFetchMore = match(tableType)
     .with(
@@ -405,6 +369,10 @@ export const FinderTable = observer(() => {
       () => !!preset && store.contacts.canLoadNext(preset),
     )
     .otherwise(() => false);
+
+  if (checkIfEmpty()) {
+    return <EmptyState />;
+  }
 
   return (
     <div className='flex w-full'>
@@ -490,30 +458,6 @@ export const FinderTable = observer(() => {
                   !isEditing &&
                   !isCommandMenuPrompted
                 }
-              />
-            );
-          }
-
-          if (tableType === TableViewType.Flow) {
-            return (
-              <FlowSequencesTableActions
-                table={table}
-                selection={selectedIds}
-                focusedId={focusRow !== null ? data?.[focusRow]?.id : null}
-                enableKeyboardShortcuts={
-                  !isSearching &&
-                  !isFiltering &&
-                  !isEditing &&
-                  !isCommandMenuPrompted
-                }
-              />
-            );
-          }
-
-          if (tableType === TableViewType.Invoices) {
-            return (
-              <InvoicesTableActions
-                focusedId={focusRow !== null ? data?.[focusRow]?.id : null}
               />
             );
           }

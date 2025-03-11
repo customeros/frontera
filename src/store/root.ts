@@ -4,6 +4,7 @@ import { SkusStore } from '@store/Sku/Skus.store.ts';
 
 import { Persister } from './persister';
 import { UIStore } from './UI/UI.store';
+import { Tasks } from './Tasks/Tasks.store';
 import { MailStore } from './Mail/Mail.store';
 import { TagsStore } from './Tags/Tags.store';
 import { WindowManager } from './window-manager';
@@ -69,7 +70,7 @@ export class RootStore {
   externalSystemInstances: ExternalSystemInstancesStore;
   jobRoles: JobRolesStore;
   skus: SkusStore;
-
+  tasks: Tasks;
   static instance: RootStore;
 
   constructor() {
@@ -110,6 +111,7 @@ export class RootStore {
       this,
       this.transport,
     );
+    this.tasks = new Tasks(this, this.transport);
 
     when(
       () => this.isAuthenticated,
@@ -141,7 +143,6 @@ export class RootStore {
       this.invoices.bootstrap(),
       this.contracts.bootstrap(),
       this.externalSystemInstances.bootstrap(),
-
       this.users.bootstrap(),
       this.flows.bootstrap(),
       this.flowEmailVariables.bootstrap(),

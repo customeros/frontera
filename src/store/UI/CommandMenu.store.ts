@@ -22,7 +22,7 @@ export type CommandMenuType =
   | 'ChooseOpportunityOrganization'
   | 'ChooseOpportunityStage'
   | 'AddNewOrganization'
-  | 'SetOpportunityNextSteps'
+  | 'SetOpportunityTask'
   | 'MergeConfirmationModal'
   | 'EditPersonaTag'
   | 'ContactHub'
@@ -70,25 +70,27 @@ export type CommandMenuType =
   | 'AgentsCommands'
   | 'AgentCommands';
 
+export type CommandMenuEntity =
+  | 'Opportunity'
+  | 'Organization'
+  | 'Organizations'
+  | 'Opportunities'
+  | 'Contact'
+  | 'ContactFlows'
+  | 'TableViewDef'
+  | 'Flow'
+  | 'Flows'
+  | 'Agent'
+  | null;
+
 export type Context = {
   ids: Array<string>;
   callback?: () => void;
   selectId?: string | null;
   property?: string | null;
+  entity: CommandMenuEntity;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta?: Record<string, any>;
-  entity:
-    | 'Opportunity'
-    | 'Organization'
-    | 'Organizations'
-    | 'Opportunities'
-    | 'Contact'
-    | 'ContactFlows'
-    | 'TableViewDef'
-    | 'Flow'
-    | 'Flows'
-    | 'Agent'
-    | null;
 };
 
 const makeDefaultContext = () => ({

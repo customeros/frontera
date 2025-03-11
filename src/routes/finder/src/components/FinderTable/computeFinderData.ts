@@ -51,6 +51,9 @@ export const computeFinderData = (
     .with(TableViewType.Contacts, () => {
       return store.contacts.getViewById(preset ?? '');
     })
+    .with(TableViewType.Tasks, () => {
+      return store.tasks.getViewById(preset ?? '');
+    })
     .with(TableViewType.Contracts, () =>
       store.contracts?.toComputedArray((arr) => {
         const defaultFilters = getContractDefaultFilters(

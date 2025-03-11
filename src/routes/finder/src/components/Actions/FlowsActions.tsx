@@ -16,6 +16,9 @@ interface TableActionsProps {
   enableKeyboardShortcuts?: boolean;
 }
 
+/**
+ * @deprecated - TODO: To be removed after we conclude what we do with flows in agents
+ */
 export const FlowSequencesTableActions = ({
   table,
   enableKeyboardShortcuts,
