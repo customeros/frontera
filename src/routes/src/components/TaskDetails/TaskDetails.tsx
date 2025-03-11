@@ -133,6 +133,9 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
             variant='unstyled'
             value={task?.value.description ?? ''}
             placeholder='Add more context for yourself or someone else'
+            onBlur={() => {
+              usecase?.execute();
+            }}
             onChange={(e) =>
               usecase?.setProperty('description', e.target.value)
             }
@@ -170,6 +173,7 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
               options={assigneesOptions}
               onChange={(v) => {
                 usecase?.setProperty('assignees', v.value);
+                usecase?.execute();
               }}
             />
           </PopoverContent>
@@ -248,6 +252,7 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
                   'dueAt',
                   new UTCDate(v as Date).toISOString(),
                 );
+                usecase?.execute();
               }}
             />
           </PopoverContent>
@@ -297,6 +302,7 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
                 store.opportunities.value
                   .get(v.value)
                   ?.value.taskIds.push(task.id);
+                usecase?.execute();
               }}
             />
           </PopoverContent>
