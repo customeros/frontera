@@ -49,15 +49,18 @@ export const TagList = observer(
     const { open: isOpen, onOpen, onClose } = useDisclosure();
 
     const handleDeleteTag = (tagId: string) => {
-      const tag = store.tags.value.get(tagId);
+      const tag = store.tags.getById(tagId);
 
       if (tag) {
-        store.organizations.toArray().forEach((organization) => {
-          organization.deleteTag(tagId);
-        });
-        store.contacts.toArray().forEach((contact) => {
-          contact.deletePersona(tagId);
-        });
+        if (tag.value.entityType === EntityType.Organization) {
+          store.organizations.toArray().forEach((organization) => {
+            organization.deleteTag(tagId);
+          });
+        } else if (tag.value.entityType === EntityType.Contact) {
+          store.contacts.toArray().forEach((contact) => {
+            contact.deletePersona(tagId);
+          });
+        }
         store.tableViewDefs.toArray().forEach((tableViewDef) => {
           if (tableViewDef) {
             const personaFilter = tableViewDef.getFilter('CONTACTS_PERSONA');
