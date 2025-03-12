@@ -25,7 +25,7 @@ export const Mailboxes = observer(() => {
   const campaign = searchParams.get('campaign');
   const campaignParam = campaign ? `&campaign=${campaign}` : '';
 
-  const hasMailstack =
+  const _hasMailstack =
     store.mailboxes
       ?.toArray()
       .filter((v) => v.value.provider === MailboxProvider.Mailstack).length > 0;
@@ -81,7 +81,7 @@ export const Mailboxes = observer(() => {
     );
   }
 
-  if (showOutbound && hasMailstack) {
+  if (showOutbound) {
     return <EmptyMailstack onUpdate={goBuy} />;
   }
 
