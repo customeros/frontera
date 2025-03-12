@@ -9,6 +9,7 @@ import { Image } from '@ui/media/Image/Image';
 import { useStore } from '@shared/hooks/useStore';
 import { TopNav } from '@organization/components/TopNav';
 import { UserPresence } from '@shared/components/UserPresence';
+import { StagePicker } from '@organization/components/StagePicker';
 import { LoadingScreen } from '@shared/components/SplashScreen/components';
 import { TimelineContextsProvider } from '@organization/components/TimelineContextsProvider';
 
@@ -73,7 +74,11 @@ export const OrganizationPage = observer(() => {
           )}
           <h1 className='font-medium text-md'>{organization?.name}</h1>
         </div>
-        <RelationshipPicker />
+        <div className='flex items-center gap-2'>
+          <RelationshipPicker />
+          <span className='text-grayModern-300'>/</span>
+          <StagePicker />
+        </div>
         <div className='flex-1 min-h-[28px]' />
         {organization?.id && (
           <UserPresence

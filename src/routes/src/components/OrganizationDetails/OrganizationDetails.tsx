@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { EditOrganizationTagUsecase } from '@domain/usecases/organization-details/edit-organization-tag.usecase';
-import { SaveOrganizationRelationshipAndStageUsecase } from '@domain/usecases/organization-details/save-organization-relationship-and-stage.usecase';
 
 import { Icon } from '@ui/media/Icon';
 import { flags } from '@ui/media/flags';
@@ -14,36 +13,15 @@ import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { SocialMediaList } from '@organization/components/Tabs';
 import { useCopyToClipboard } from '@shared/hooks/useCopyToClipboard';
+import { FlagWrongFields } from '@shared/types/__generated__/graphql.types';
 import { TruncatedText } from '@ui/presentation/TruncatedText/TruncatedText';
-import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { IcpBadge } from '@shared/components/OrganizationDetails/components/icp';
 import { Domains } from '@shared/components/OrganizationDetails/components/domains';
 import { OwnerInput } from '@shared/components/OrganizationDetails/components/owner';
 import { Branches } from '@shared/components/OrganizationDetails/components/branches';
 import { AboutTabField } from '@shared/components/OrganizationDetails/components/AboutTabField';
-import {
-  FlagWrongFields,
-  OrganizationRelationship,
-} from '@shared/types/__generated__/graphql.types';
-import {
-  stageOptions,
-  getStageOptions,
-  relationshipOptions,
-} from '@organization/components/Tabs/panels/AboutPanel/util';
 
 import { Tags } from '../Tags';
-
-const iconMap = {
-  Customer: <Icon name='activity-heart' className='text-grayModern-500' />,
-  Prospect: <Icon name='seeding' className='text-grayModern-500' />,
-  'Not a fit': <Icon name='message-x-circle' className='text-grayModern-500' />,
-  'Former Customer': (
-    <Icon name='broken-heart' className='text-grayModern-500' />
-  ),
-  unknown: (
-    <Icon className='text-grayModern-500' name='align-horizontal-centre-02' />
-  ),
-};
 
 interface OrganizationDetailsProps {
   id: string;
@@ -64,10 +42,6 @@ export const OrganizationDetails = observer(
     );
 
     const tagsUsecase = useMemo(() => new EditOrganizationTagUsecase(id), [id]);
-    const saveRelationshipAndStageUsecase = useMemo(
-      () => new SaveOrganizationRelationshipAndStageUsecase(id),
-      [id],
-    );
 
     const handleCreateOption = () => {
       tagsUsecase.create();
@@ -76,18 +50,6 @@ export const OrganizationDetails = observer(
     const isEnriching = organization?.isEnriching;
 
     if (!organization) return null;
-
-    const applicableStageOptions = getStageOptions(
-      organization?.value?.relationship,
-    );
-
-    const selectedRelationshipOption = relationshipOptions.find(
-      (option) => option.value === organization?.value?.relationship,
-    );
-
-    const selectedStageOption = stageOptions.find(
-      (option) => option.value === organization?.value?.stage,
-    );
 
     return (
       <div className='flex h-full flex-1 bg-white pt-3 relative'>
@@ -173,45 +135,6 @@ export const OrganizationDetails = observer(
                 tagsUsecase.select(selection.map((o) => o.value));
               }}
             />
-
-            <div className='flex items-center justify-center w-full'>
-              {selectedRelationshipOption?.value !==
-                OrganizationRelationship.Customer && (
-                <div
-                  data-test='org-about-stage'
-                  className='flex-1 flex items-center'
-                >
-                  <Menu>
-                    <Tooltip label='Stage' align='start'>
-                      <MenuButton className='min-h-[20px] outline-none focus:outline-none'>
-                        <Icon
-                          name='target-05'
-                          className='text-grayModern-500 mb-0.5'
-                        />
-                        <span className='ml-3 text-sm'>
-                          {selectedStageOption?.label || 'Stage'}
-                        </span>
-                      </MenuButton>
-                    </Tooltip>
-                    <MenuList side='bottom' align='start'>
-                      {applicableStageOptions.map((option) => (
-                        <MenuItem
-                          key={option.value}
-                          onClick={() => {
-                            saveRelationshipAndStageUsecase.execute({
-                              stage: option.value,
-                            });
-                          }}
-                        >
-                          {iconMap[option.label as keyof typeof iconMap]}
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </MenuList>
-                  </Menu>
-                </div>
-              )}
-            </div>
             <AboutTabField
               id={store.ui.focusRow ?? id}
               dataTest={'org-about-industry'}
