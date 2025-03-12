@@ -79,15 +79,7 @@ export const ChangeRelationship = observer(() => {
     .otherwise(() => undefined);
 
   const options = match(context.entity)
-    .with('Organization', () =>
-      relationshipOptions.filter(
-        (option) =>
-          !(
-            selectedRelationshipOption?.label === 'Not a fit' &&
-            option.label === 'Prospect'
-          ),
-      ),
-    )
+    .with('Organization', () => relationshipOptions)
     .with('Organizations', () => relationshipOptions)
     .otherwise(() => []);
 
