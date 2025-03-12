@@ -4,7 +4,7 @@ import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
 import { Organization } from '@store/Organizations/Organization.dto';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store.ts';
-import { EditOwnerUseCase } from '@domain/usecases/command-menu/edit-owner-organization.usecase';
+import { EditOwnerUseCase } from '@domain/usecases/command-menu/organization/edit-owner-organization.usecase';
 
 import { Check } from '@ui/media/icons/Check.tsx';
 import { useStore } from '@shared/hooks/useStore';

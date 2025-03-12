@@ -154,6 +154,14 @@ export const FinderTable = observer(() => {
             ids: selectedIds,
           });
         }
+      } else if (tableType === TableViewType.Tasks) {
+        if (selectedIds.length === 1) {
+          store.ui.commandMenu.setType('TaskCommands');
+          store.ui.commandMenu.setContext({
+            entity: 'Task',
+            ids: selectedIds,
+          });
+        }
       } else {
         if (selectedIds.length === 1) {
           store.ui.commandMenu.setType('ContactCommands');
@@ -275,6 +283,9 @@ export const FinderTable = observer(() => {
       )
       .with(TableViewType.Flow, () =>
         hasSingleSelection ? 'FlowCommands' : 'FlowsBulkCommands',
+      )
+      .with(TableViewType.Tasks, () =>
+        hasSingleSelection ? 'TaskCommands' : 'GlobalHub',
       )
       .otherwise(() => 'GlobalHub');
 

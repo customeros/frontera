@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
-import { AddSearchOrganizationsUsecase } from '@domain/usecases/command-menu/add-search-organizations.usecase';
+import { AddSearchOrganizationsUsecase } from '@domain/usecases/command-menu/organization/add-search-organizations.usecase';
 
 import { cn } from '@ui/utils/cn';
 import { Avatar } from '@ui/media/Avatar';

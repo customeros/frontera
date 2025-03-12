@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
 import { Organization } from '@store/Organizations/Organization.dto';
-import { EditOrganizationRelationshipUseCase } from '@domain/usecases/command-menu/edit-organization-relationship.usecase';
+import { EditOrganizationRelationshipUseCase } from '@domain/usecases/command-menu/organization/edit-organization-relationship.usecase';
 
 import { Check } from '@ui/media/icons/Check.tsx';
 import { useStore } from '@shared/hooks/useStore';

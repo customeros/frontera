@@ -68,7 +68,13 @@ export type CommandMenuType =
   | 'DuplicateAgent'
   | 'ArchiveAgent'
   | 'AgentsCommands'
-  | 'AgentCommands';
+  | 'TaskCommands'
+  | 'AgentCommands'
+  | 'RenameTask'
+  | 'ChangeTaskStatus'
+  | 'AssignTask'
+  | 'LinkOpportunity'
+  | 'SetDueDate';
 
 export type CommandMenuEntity =
   | 'Opportunity'
@@ -80,6 +86,8 @@ export type CommandMenuEntity =
   | 'TableViewDef'
   | 'Flow'
   | 'Flows'
+  | 'Task'
+  | 'Tasks'
   | 'Agent'
   | null;
 

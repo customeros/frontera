@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { MergeOrganizationsCase } from '@domain/usecases/command-menu/merge-organizations.usecase.ts';
+import { MergeOrganizationsCase } from '@domain/usecases/command-menu/organization/merge-organizations.usecase';
 
 import { cn } from '@ui/utils/cn';
 import { useStore } from '@shared/hooks/useStore';

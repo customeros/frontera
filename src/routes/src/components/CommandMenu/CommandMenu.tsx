@@ -24,6 +24,13 @@ import { AddEmail } from './commands/contacts/AddEmail';
 import { AddLinkedinUrl } from './commands/contacts/AddLinkedin';
 import { EditLatestOrgActive } from './commands/contacts/EditLatestOrgActive';
 import {
+  RenameTask,
+  AssignTask,
+  SetDueDate,
+  LinkOpportunity,
+  ChangeTaskStatus,
+} from './commands/task';
+import {
   FlowHub,
   EditSku,
   EditName,
@@ -43,6 +50,7 @@ import {
   AddNewDomain,
   RemoveDomain,
   ArchiveAgent,
+  TaskCommands,
   CreateNewFlow,
   FlowsCommands,
   DuplicateFlow,
@@ -174,6 +182,14 @@ const Commands: Record<CommandMenuType, ReactElement> = {
   DuplicateAgent: <DuplicateAgent />,
   RenameAgent: <RenameAgent />,
   ArchiveAgent: <ArchiveAgent />,
+
+  //Task
+  TaskCommands: <TaskCommands />,
+  RenameTask: <RenameTask />,
+  ChangeTaskStatus: <ChangeTaskStatus />,
+  AssignTask: <AssignTask />,
+  LinkOpportunity: <LinkOpportunity />,
+  SetDueDate: <SetDueDate />,
 };
 
 export const CommandMenu = observer(() => {

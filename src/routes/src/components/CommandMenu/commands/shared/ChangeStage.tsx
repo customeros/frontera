@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Organization } from '@store/Organizations/Organization.dto';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store';
 import { getStageFromColumn } from '@opportunities/components/ProspectsBoard/columns';
-import { EditOrganizationStageUseCase } from '@domain/usecases/command-menu/edit-organization-stage.usecase';
+import { EditOrganizationStageUseCase } from '@domain/usecases/command-menu/organization/edit-organization-stage.usecase';
 
 import { Check } from '@ui/media/icons/Check';
 import { useStore } from '@shared/hooks/useStore';
