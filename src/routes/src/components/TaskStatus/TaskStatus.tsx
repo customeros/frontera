@@ -12,7 +12,7 @@ const statusColorSchemes: Record<TaskStatusEnum, TagProps['colorScheme']> = {
 
 const statusLabels = {
   [TaskStatusEnum.Todo]: 'Todo',
-  [TaskStatusEnum.InProgress]: 'In Progress',
+  [TaskStatusEnum.InProgress]: 'In progress',
   [TaskStatusEnum.Done]: 'Done',
 };
 
@@ -67,7 +67,7 @@ export const TaskStatus = ({
               name='hourglass-02'
               className='size-4 group-hover/in-progress:text-grayModern-700 text-grayModern-500'
             />
-            <span>In Progress</span>
+            <span>In progress</span>
           </div>
         </MenuItem>
         <MenuItem

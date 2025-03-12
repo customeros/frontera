@@ -114,13 +114,13 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
             size='xxs'
             variant='ghost'
             aria-label='more'
-            icon={<Icon name='dots-vertical' />}
+            icon={<Icon className='size-4' name='dots-vertical' />}
           />
           <IconButton
             size='xxs'
             variant='ghost'
             aria-label='close'
-            icon={<Icon name='x-close' />}
+            icon={<Icon name='x-close' className='size-4' />}
             onClick={() => store.ui.setShowPreviewCard(false)}
           />
         </div>
@@ -183,10 +183,10 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
       <div className='flex items-center gap-3'>
         <Popover>
           <PopoverAnchor>
-            <Icon name='user-01' className='text-grayModern-500' />
+            <Icon name='clock-fast-forward' className='text-grayModern-500' />
           </PopoverAnchor>
 
-          <p className='text-sm'>
+          <div className='text-sm flex items-center'>
             {task.value.dueAt ? (
               <>
                 {(() => {
@@ -198,10 +198,16 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
                   if (diffDays > 0) {
                     return (
                       <>
-                        Due in{' '}
                         <PopoverTrigger asChild>
-                          <span className='text-success-600 font-medium cursor-pointer'>
-                            {`${diffDays} day${diffDays !== 1 ? 's' : ''}`}
+                          <span className='gap-1 cursor-pointer'>
+                            Due in{' '}
+                            <span className='text-success-600 font-medium '>
+                              {`${diffDays} day${diffDays !== 1 ? 's' : ''}`}
+                            </span>
+                            <span>
+                              , on{' '}
+                              {format(new Date(task.value.dueAt), 'd MMM yyyy')}
+                            </span>
                           </span>
                         </PopoverTrigger>
                       </>
@@ -209,10 +215,12 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
                   } else if (diffDays === 0) {
                     return (
                       <>
-                        Due{' '}
                         <PopoverTrigger asChild>
-                          <span className='text-success-600 font-medium cursor-pointer'>
-                            today
+                          <span className='gap-1 cursor-pointer'>
+                            Due{' '}
+                            <span className='text-success-600 font-medium '>
+                              today
+                            </span>
                           </span>
                         </PopoverTrigger>
                       </>
@@ -222,10 +230,16 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
 
                     return (
                       <>
-                        Due{' '}
                         <PopoverTrigger asChild>
-                          <span className='text-error-700 font-medium cursor-pointer'>
-                            {`${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`}
+                          <span className='gap-1 cursor-pointer'>
+                            Due{' '}
+                            <span className='text-error-700 font-medium '>
+                              {`${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`}
+                            </span>
+                            <span>
+                              , on{' '}
+                              {format(new Date(task.value.dueAt), 'd MMM yyyy')}
+                            </span>
                           </span>
                         </PopoverTrigger>
                       </>
@@ -234,7 +248,6 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
 
                   return 'Due';
                 })()}
-                , on {format(new Date(task.value.dueAt), 'd MMM yyyy')}
               </>
             ) : (
               <PopoverTrigger asChild>
@@ -243,7 +256,7 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
                 </span>
               </PopoverTrigger>
             )}
-          </p>
+          </div>
 
           <PopoverContent align='start' alignOffset={-5}>
             <DatePicker
@@ -290,7 +303,7 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
 
           <PopoverContent align='start' alignOffset={-5}>
             <Combobox
-              className='w-full'
+              className='max-w-[340px]'
               options={opportunitiesOptions}
               placeholder='Link an opportunity...'
               onChange={(v) => {

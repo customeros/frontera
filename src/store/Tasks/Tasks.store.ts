@@ -5,8 +5,9 @@ import { observable, runInAction } from 'mobx';
 import { TaskDatum, TaskRepository } from '@infra/repositories/task';
 
 import { Task } from './Task.dto';
+import { TeamViews } from './__views__/Team.view';
 import { TasksView } from './__views__/Tasks.view';
-
+import { CustomView } from './__views__/Custom.view';
 export class Tasks extends Store<TaskDatum, Task> {
   private chunkSize = 500;
   private repository = TaskRepository.getInstance();
@@ -21,6 +22,8 @@ export class Tasks extends Store<TaskDatum, Task> {
     });
 
     new TasksView(this);
+    new CustomView(this);
+    new TeamViews(this);
   }
 
   async search(preset: string) {

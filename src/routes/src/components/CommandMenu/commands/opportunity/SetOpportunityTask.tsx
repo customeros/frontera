@@ -24,7 +24,9 @@ export const SetOpportunityTask = observer(() => {
     .otherwise(() => 'Change ARR estimate');
 
   const tasks = Array.from(store.tasks.value.values()).filter((task) =>
-    task.value.subject?.includes(usecase?.taskName ?? ''),
+    task.value.subject
+      ?.toLowerCase()
+      .includes(usecase?.taskName.toLowerCase() ?? ''),
   );
 
   const handleSelect = (taskId: string) => () => {

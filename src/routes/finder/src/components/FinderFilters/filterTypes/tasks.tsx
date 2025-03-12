@@ -48,8 +48,8 @@ export const getTasksFilterTypes = (store?: RootStore) => {
         />
       ),
       options: [
-        { id: TaskStatus.Todo, label: 'To do' },
-        { id: TaskStatus.InProgress, label: 'In Progress' },
+        { id: TaskStatus.Todo, label: 'Todo' },
+        { id: TaskStatus.InProgress, label: 'In progress' },
         { id: TaskStatus.Done, label: 'Done' },
       ],
     },
