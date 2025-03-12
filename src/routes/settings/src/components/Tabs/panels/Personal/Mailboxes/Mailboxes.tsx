@@ -81,7 +81,7 @@ export const Mailboxes = observer(() => {
     );
   }
 
-  if (showOutbound && !hasMailstack) {
+  if (showOutbound && hasMailstack) {
     return <EmptyMailstack onUpdate={goBuy} />;
   }
 
