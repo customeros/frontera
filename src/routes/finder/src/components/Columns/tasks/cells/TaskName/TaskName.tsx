@@ -11,7 +11,7 @@ export const TaskNameCell = observer(({ task }: { task: Task }) => {
   return (
     <div className='flex items-center gap-2 group/taskName w-full'>
       <span
-        className='overflow-ellipsis overflow-hidden font-medium no-underline hover:no-underline cursor-pointer'
+        className='overflow-ellipsis overflow-hidden no-underline hover:no-underline cursor-pointer'
         onClick={() => {
           if (store.ui.showPreviewCard && store.ui.focusRow === task.id) {
             store.ui.setShowPreviewCard(false);

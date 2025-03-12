@@ -19,10 +19,7 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
       { property: ColumnViewType.TasksSubject },
       (filter) => (row: Task) => {
         if (!filter.active) return true;
-        const filterValues = filter?.value;
         const values = row?.value.subject?.toLowerCase();
-
-        if (!filterValues) return false;
 
         return filterTypeText(filter, values);
       },

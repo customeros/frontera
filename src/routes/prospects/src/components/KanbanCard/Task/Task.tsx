@@ -16,7 +16,9 @@ export const Task = observer(({ taskId }: TaskProps) => {
   return (
     <Tooltip side='top' align='start' label='Next steps'>
       <div className='flex gap-2 w-full items-start justify-start'>
-        <Icon className='mt-0.5' name='clipboard-text' />
+        <div>
+          <Icon className='mt-0.5' name='clipboard-text' />
+        </div>
         <p className='text-sm'>{value}</p>
       </div>
     </Tooltip>

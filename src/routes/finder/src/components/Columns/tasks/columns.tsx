@@ -101,7 +101,7 @@ export const columns: Record<string, Column> = {
     },
     header: (props) => (
       <THead<HTMLInputElement>
-        title='Due In'
+        title='Due Date'
         id={ColumnViewType.TasksDueDate}
         {...getTHeadProps<Task>(props)}
       />

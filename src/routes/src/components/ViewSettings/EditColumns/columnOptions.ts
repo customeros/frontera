@@ -242,7 +242,7 @@ export const flowsHelperTextMap: Record<string, string> = {
 };
 
 export const tasksMap: Record<string, string> = {
-  [ColumnViewType.TasksSubject]: 'Subject',
+  [ColumnViewType.TasksSubject]: 'Task',
   [ColumnViewType.TasksAssignees]: 'Assignees',
   [ColumnViewType.TasksStatus]: 'Status',
   [ColumnViewType.TasksDueDate]: 'Due Date',
@@ -251,7 +251,7 @@ export const tasksMap: Record<string, string> = {
 
 export const tasksHelperTextMap: Record<string, string> = {
   [ColumnViewType.TasksAssignees]: 'E.g. Steph Holler',
-  [ColumnViewType.TasksStatus]: 'E.g. To do',
+  [ColumnViewType.TasksStatus]: 'E.g. Todo',
   [ColumnViewType.TasksDueDate]: 'E.g. 3 days ago',
-  [ColumnViewType.TasksCreatedAt]: 'E.g. 18 Dec 1974',
+  [ColumnViewType.TasksCreatedAt]: 'E.g. 18 Dec 2024',
 };
