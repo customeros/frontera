@@ -114,13 +114,13 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
             size='xxs'
             variant='ghost'
             aria-label='more'
-            icon={<Icon name='dots-vertical' />}
+            icon={<Icon className='size-4' name='dots-vertical' />}
           />
           <IconButton
             size='xxs'
             variant='ghost'
             aria-label='close'
-            icon={<Icon name='x-close' />}
+            icon={<Icon name='x-close' className='size-4' />}
             onClick={() => store.ui.setShowPreviewCard(false)}
           />
         </div>
