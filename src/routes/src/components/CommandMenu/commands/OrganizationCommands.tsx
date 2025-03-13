@@ -117,7 +117,7 @@ export const OrganizationCommands = observer(() => {
               store.ui.commandMenu.setType('ChangeStage');
             }}
           >
-            Change org stage...
+            Change company stage...
           </CommandItem>
         )}
         <StageSubItemGroup
@@ -141,7 +141,7 @@ export const OrganizationCommands = observer(() => {
             </>
           }
         >
-          Archive org
+          Archive company
         </CommandItem>
 
         <CommandItem

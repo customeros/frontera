@@ -46,13 +46,14 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
       },
     )
     .with(
-      { property: ColumnViewType.OpportunitiesNextStep },
+      { property: ColumnViewType.OpportunitiesTasks },
       (filter) => (row: OpportunityStore) => {
         if (!filter.active) return true;
 
-        const value = row.value.nextSteps.toLowerCase();
+        const value = row.root.tasks.getById(row.value.taskIds[0])?.value
+          .subject;
 
-        return filterTypeText(filter, value);
+        return filterTypeText(filter, value ?? '');
       },
     )
     .with(

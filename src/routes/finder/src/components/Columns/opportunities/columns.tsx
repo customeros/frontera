@@ -14,6 +14,7 @@ import { Skeleton } from '@ui/feedback/Skeleton/Skeleton.tsx';
 import { TableViewDef, ColumnViewType } from '@graphql/types';
 import THead, { getTHeadProps } from '@ui/presentation/Table/THead.tsx';
 
+import { TaskSubject } from './Cells/taskSubject';
 import { OpportunityName } from './Cells/opportunityName';
 import { OwnerCell, StageCell, ArrEstimateCell } from './Cells';
 
@@ -214,36 +215,26 @@ export const columns: Record<string, Column> = {
       ),
     },
   ),
-  [ColumnViewType.OpportunitiesNextStep]: columnHelper.accessor(
-    'value.nextSteps',
-    {
-      id: ColumnViewType.OpportunitiesNextStep,
-      minSize: 109,
-      size: 154,
-      maxSize: 400,
-      enableColumnFilter: false,
-      enableResizing: true,
-      enableSorting: true,
-      cell: (props) => {
-        return (
-          <TextCell text={props.getValue()} unknownText={'No next step'} />
-        );
-      },
-      header: (props) => (
-        <THead<HTMLInputElement>
-          title='Next Steps'
-          id={ColumnViewType.OpportunitiesNextStep}
-          {...getTHeadProps<OpportunityStore>(props)}
-        />
-      ),
-      skeleton: () => (
-        <div className='flex flex-col gap-1'>
-          <Skeleton className='w-[50%] h-[14px]' />
-          <Skeleton className='w-[25%] h-[14px]' />
-        </div>
-      ),
+  [ColumnViewType.OpportunitiesTasks]: columnHelper.accessor((row) => row, {
+    id: ColumnViewType.OpportunitiesTasks,
+    minSize: 94,
+    maxSize: 400,
+    enableSorting: true,
+    enableResizing: true,
+    cell: (props) => {
+      const taskIds = props.row.original.value.taskIds;
+
+      return <TaskSubject taskIds={taskIds} />;
     },
-  ),
+    header: (props) => (
+      <THead<HTMLInputElement>
+        title='Tasks'
+        id={ColumnViewType.OpportunitiesTasks}
+        {...getTHeadProps<OpportunityStore>(props)}
+      />
+    ),
+    skeleton: () => <Skeleton className='w-[100px] h-[14px]' />,
+  }),
 };
 
 export const getOpportunityColumnsConfig = (

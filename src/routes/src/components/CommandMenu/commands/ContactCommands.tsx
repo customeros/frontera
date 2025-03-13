@@ -134,7 +134,7 @@ export const ContactCommands = observer(() => {
             </>
           }
         >
-          Add new email
+          Add email
         </CommandItem>
 
         <CommandItem

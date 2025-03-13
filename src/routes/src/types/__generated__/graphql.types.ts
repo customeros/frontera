@@ -534,6 +534,7 @@ export enum ColumnViewType {
   OpportunitiesOrganization = 'OPPORTUNITIES_ORGANIZATION',
   OpportunitiesOwner = 'OPPORTUNITIES_OWNER',
   OpportunitiesStage = 'OPPORTUNITIES_STAGE',
+  OpportunitiesTasks = 'OPPORTUNITIES_TASKS',
   OpportunitiesTimeInStage = 'OPPORTUNITIES_TIME_IN_STAGE',
   OrganizationsAvatar = 'ORGANIZATIONS_AVATAR',
   OrganizationsChurnDate = 'ORGANIZATIONS_CHURN_DATE',
@@ -2801,6 +2802,7 @@ export type Mutation = {
   tag_Create: Tag;
   tag_Delete?: Maybe<Result>;
   tag_Update?: Maybe<Tag>;
+  task_Archive: ActionResponse;
   task_Save: Task;
   tenant_AddBillingProfile: TenantBillingProfile;
   tenant_UpdateBillingProfile: TenantBillingProfile;
@@ -3558,6 +3560,10 @@ export type MutationTag_DeleteArgs = {
 
 export type MutationTag_UpdateArgs = {
   input: TagUpdateInput;
+};
+
+export type MutationTask_ArchiveArgs = {
+  ids: Array<Scalars['ID']['input']>;
 };
 
 export type MutationTask_SaveArgs = {

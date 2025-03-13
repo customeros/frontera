@@ -1,11 +1,13 @@
 import { forwardRef } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 
+import { twMerge } from 'tailwind-merge';
+
 import { ChevronLeft } from '@ui/media/icons/ChevronLeft';
 import { ChevronRight } from '@ui/media/icons/ChevronRight';
 
 export const DatePicker = forwardRef(
-  ({ value, onChange, ...props }: CalendarProps, ref) => {
+  ({ value, onChange, className, ...props }: CalendarProps, ref) => {
     const handleDateInputChange = (
       value: CalendarProps['value'],
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -24,6 +26,7 @@ export const DatePicker = forwardRef(
         defaultValue={value}
         prevLabel={<ChevronLeft />}
         nextLabel={<ChevronRight />}
+        className={twMerge(className)}
         onChange={handleDateInputChange}
         formatMonth={(locale, date) =>
           date.toLocaleDateString(locale, { month: 'short' })

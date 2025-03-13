@@ -19,7 +19,11 @@ export class UsersStore extends Store<UserDatum, User> {
   get tenantUsers() {
     return this.toComputedArray((users) =>
       users.filter(
-        (user) => !user.value.bot && !user.value.test && !user.value.internal,
+        (user) =>
+          !user.value.bot &&
+          !user.value.test &&
+          !user.value.internal &&
+          user.value.name,
       ),
     );
   }

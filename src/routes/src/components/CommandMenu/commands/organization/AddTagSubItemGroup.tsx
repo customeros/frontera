@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { EditOrganizationTagUsecase } from '@domain/usecases/command-menu/edit-organization-tag.usecase.ts';
+import { EditOrganizationTagUsecase } from '@domain/usecases/command-menu/organization/edit-organization-tag.usecase';
 
 import { Tag01 } from '@ui/media/icons/Tag01';
 import { Check } from '@ui/media/icons/Check.tsx';

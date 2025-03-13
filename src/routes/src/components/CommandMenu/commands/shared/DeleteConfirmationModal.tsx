@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
+import { Tasks } from '@store/Tasks/Tasks.store';
 import { FlowStore } from '@store/Flows/Flow.store';
 import { Contact } from '@store/Contacts/Contact.dto';
 import { Organization } from '@store/Organizations/Organization.dto';
@@ -33,6 +34,7 @@ export const DeleteConfirmationModal = observer(() => {
       | TableViewDef
       | Contact
       | FlowStore
+      | Tasks
       | undefined
       | null
     >()
@@ -43,6 +45,10 @@ export const DeleteConfirmationModal = observer(() => {
     .with(
       'Flow',
       () => store.flows.value.get(context.ids?.[0]) as FlowStore | undefined,
+    )
+    .with(
+      'Task',
+      () => store.tasks.value.get(context.ids?.[0]) as Tasks | undefined,
     )
     .otherwise(() => undefined);
 
@@ -70,6 +76,12 @@ export const DeleteConfirmationModal = observer(() => {
       })
       .with('Flows', () => {
         store.ui.commandMenu.setType('FlowsBulkCommands');
+      })
+      .with('Task', () => {
+        store.ui.commandMenu.setType('TaskCommands');
+      })
+      .with('Tasks', () => {
+        store.ui.commandMenu.setType('TaskBulkCommands');
       });
   };
 
@@ -155,6 +167,18 @@ export const DeleteConfirmationModal = observer(() => {
           },
         });
       })
+      .with('Task', () => {
+        store.tasks.archive([context.ids?.[0]]);
+        store.ui.commandMenu.setType('TaskCommands');
+        store.ui.commandMenu.clearCallback();
+        store.ui.commandMenu.clearContext();
+      })
+      .with('Tasks', () => {
+        store.tasks.archive(context.ids);
+        store.ui.commandMenu.setType('TaskBulkCommands');
+        store.ui.commandMenu.clearCallback();
+        store.ui.commandMenu.clearContext();
+      })
       .otherwise(() => {});
 
     store.ui.commandMenu.setOpen(false);
@@ -189,7 +213,10 @@ export const DeleteConfirmationModal = observer(() => {
       'TableViewDef',
       () => `Archive '${(entity as TableViewDef)?.value.name}' ?`,
     )
+    .with('Task', () => `Archive this task?`)
+    .with('Tasks', () => `Archive these tasks?`)
     .otherwise(() => `Archive selected ${context.entity?.toLowerCase()}`);
+
   const description = match(context.entity)
     .with(
       'Flow',
@@ -200,12 +227,21 @@ export const DeleteConfirmationModal = observer(() => {
       () =>
         `Archiving these flows will end all active contacts currently in it`, // todo update contacts to dynamic value when we'll be able to get different record types
     )
+    .with(
+      'Task',
+      () =>
+        `Would you like to archive ${
+          store.tasks.getById(context.ids?.[0])?.value.subject
+        }?`,
+    )
+    .with('Tasks', () => `Would you like to archive these tasks?`)
     .otherwise(() => null);
 
   const confirmButtonLabel = match(context.entity)
     .with('Flows', () => `Archive flows`)
     .with('Flow', () => `Archive flow`)
-
+    .with('Task', () => `Archive task`)
+    .with('Tasks', () => `Archive tasks`)
     .otherwise(() => 'Archive');
 
   useEffect(() => {

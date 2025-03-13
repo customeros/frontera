@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { RemoveOrganizationDomainCase } from '@domain/usecases/command-menu/remove-organization-domain.usecase';
+import { RemoveOrganizationDomainCase } from '@domain/usecases/command-menu/organization/remove-organization-domain.usecase';
 
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';

@@ -205,7 +205,7 @@ export const opportunitiesMap: Record<string, string> = {
   [ColumnViewType.OpportunitiesTimeInStage]: 'Time in Stage',
   [ColumnViewType.OpportunitiesEstimatedArr]: 'Estimated ARR',
   [ColumnViewType.OpportunitiesCreatedDate]: 'Created',
-  [ColumnViewType.OpportunitiesNextStep]: 'Next Step',
+  [ColumnViewType.OpportunitiesTasks]: 'Tasks',
 };
 export const opportunitiesHelperTextMap: Record<string, string> = {
   [ColumnViewType.OpportunitiesName]: 'E.g. CustomerOs opportunity',
@@ -214,7 +214,7 @@ export const opportunitiesHelperTextMap: Record<string, string> = {
   [ColumnViewType.OpportunitiesTimeInStage]: 'E.g. 6 days',
   [ColumnViewType.OpportunitiesEstimatedArr]: 'E.g. $30,000',
   [ColumnViewType.OpportunitiesCreatedDate]: 'E.g. 12 Oct 2023',
-  [ColumnViewType.OpportunitiesNextStep]: 'E.g. Qualified',
+  [ColumnViewType.OpportunitiesTasks]: 'E.g. Call Steve Hobbs',
   [ColumnViewType.OpportunitiesOwner]: 'E.g. Howard Hu',
 };
 

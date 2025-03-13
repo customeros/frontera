@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { CommandGroup } from 'cmdk';
 import { observer } from 'mobx-react-lite';
-import { EditOrganizationTagUsecase } from '@domain/usecases/command-menu/edit-organization-tag.usecase.ts';
+import { EditOrganizationTagUsecase } from '@domain/usecases/command-menu/organization/edit-organization-tag.usecase';
 
 import { Plus } from '@ui/media/icons/Plus.tsx';
 import { Check } from '@ui/media/icons/Check.tsx';

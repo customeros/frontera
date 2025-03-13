@@ -44,14 +44,16 @@ export const CommandInput = ({
   return (
     <div
       className={cn(
-        'relative w-full p-6 pb-2 flex flex-col gap-2 border-b border-b-grayModern-100',
+        'relative w-full p-6 pb-2 flex flex-col gap-2 border-b border-b-grayModern-100 overflow-hidden truncate',
         wrapperClassName,
       )}
     >
       {label ? (
         typeof label === 'string' ? (
           <Tag size='md' variant='subtle' colorScheme='grayModern'>
-            <TagLabel>{label}</TagLabel>
+            <TagLabel className='overflow-hidden truncate max-w-[390px] text-ellipsis'>
+              {label}
+            </TagLabel>
           </Tag>
         ) : (
           label
@@ -116,7 +118,9 @@ export const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
         {...props}
       >
         {leftAccessory && <span className='inline-flex'>{leftAccessory}</span>}
-        {children}
+        <span className='overflow-hidden truncate max-w-[430px] text-ellipsis'>
+          {children}
+        </span>
         {rightAccessory && (
           <div className='flex gap-1 items-center ml-auto'>
             {rightAccessory}

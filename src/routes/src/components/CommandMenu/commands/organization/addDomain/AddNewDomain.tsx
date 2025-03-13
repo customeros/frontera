@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
-import { AddOrganizationDomainCase } from '@domain/usecases/command-menu/add-organization-domain.usecase';
+import { AddOrganizationDomainCase } from '@domain/usecases/command-menu/organization/add-organization-domain.usecase';
 
 import { cn } from '@ui/utils/cn';
 import { Input } from '@ui/form/Input';

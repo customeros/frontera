@@ -64,18 +64,16 @@ export const OpportunityCommands = observer(() => {
               store.ui.commandMenu.setType('SetOpportunityTask');
             }}
             keywords={[
-              'set',
-              'next',
-              'step',
-              'edit',
-              'update',
-              'action',
-              'reminder',
-              'follow up',
+              'link',
               'task',
+              'add',
+              'create',
+              'new',
+              'opportunity',
+              'opportunity task',
             ]}
           >
-            Link task
+            Link a task
           </CommandItem>
         )}
 

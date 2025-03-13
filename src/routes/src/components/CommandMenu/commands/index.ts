@@ -20,3 +20,5 @@ export * from './sku';
 export * from './AgentsCommands';
 export * from './AgentCommands';
 export * from './agent';
+export * from './task';
+export * from './TaskCommands';
