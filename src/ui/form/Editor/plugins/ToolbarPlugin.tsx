@@ -7,8 +7,12 @@ import { $isListNode, $createListNode, $isListItemNode } from '@lexical/list';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   LexicalNode,
+  UNDO_COMMAND,
+  REDO_COMMAND,
   $getSelection,
   TextFormatType,
+  CAN_UNDO_COMMAND,
+  CAN_REDO_COMMAND,
   $isRangeSelection,
   FORMAT_TEXT_COMMAND,
   $createParagraphNode,
@@ -16,6 +20,7 @@ import {
 } from 'lexical';
 
 import { cn } from '@ui/utils/cn.ts';
+import { Icon } from '@ui/media/Icon';
 import { Bold01 } from '@ui/media/icons/Bold01';
 import { IconButton } from '@ui/form/IconButton';
 import { Italic01 } from '@ui/media/icons/Italic01';
@@ -27,11 +32,15 @@ import { Strikethrough01 } from '@ui/media/icons/Strikethrough01';
 const activeStyle =
   'bg-grayModern-100 text-grayModern-700 hover:bg-grayModern-100';
 
+const LowPriority = 1;
+
 export default function ToolbarPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isBlockquote, setIsBlockquote] = useState(false);
   const [isBold, setIsBold] = useState(false);
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isOrderedList, setIsOrderedList] = useState(false);
   const [isUnorderedList, setIsUnorderedList] = useState(false);
@@ -100,7 +109,25 @@ export default function ToolbarPlugin(): JSX.Element {
 
         return false;
       },
-      1,
+      LowPriority,
+    );
+    editor.registerCommand(
+      CAN_UNDO_COMMAND,
+      (payload) => {
+        setCanUndo(payload);
+
+        return false;
+      },
+      LowPriority,
+    );
+    editor.registerCommand(
+      CAN_REDO_COMMAND,
+      (payload) => {
+        setCanRedo(payload);
+
+        return false;
+      },
+      LowPriority,
     );
   }, [editor, updateToolbar]);
 
@@ -145,6 +172,34 @@ export default function ToolbarPlugin(): JSX.Element {
 
   return (
     <div className='flex items-center'>
+      <IconButton
+        size='xs'
+        variant='ghost'
+        aria-label='Undo'
+        icon={<Icon name='arrow-block-down' className='text-inherit' />}
+        className={cn('rounded-sm', {
+          [activeStyle]: canUndo,
+        })}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          editor.dispatchCommand(UNDO_COMMAND, undefined);
+        }}
+      />
+
+      <IconButton
+        size='xs'
+        variant='ghost'
+        aria-label='Redo'
+        icon={<Icon name='arrow-block-up' className='text-inherit' />}
+        className={cn('rounded-sm', {
+          [activeStyle]: canRedo,
+        })}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          editor.dispatchCommand(REDO_COMMAND, undefined);
+        }}
+      />
+
       <IconButton
         size='xs'
         variant='ghost'
