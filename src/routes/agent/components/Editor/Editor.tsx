@@ -40,7 +40,16 @@ export const Editor = observer(() => {
   }, [store.flows.value.has(id)]);
 
   if (isLoading) {
-    return <LoadingScreen hide={false} isLoaded={false} showSplash={true} />;
+    // This should not be used here.
+    // TODO: Remove this
+    return (
+      <LoadingScreen
+        hide={false}
+        isLoaded={false}
+        showSplash={true}
+        isRetrying={false}
+      />
+    );
   }
 
   return (

@@ -87,6 +87,7 @@ export class SettingsStore {
       this.tenantApiKey = tenantApiKeyResult.data;
     } catch (e) {
       this.error = (e as Error)?.message;
+      throw e;
     }
   }
 

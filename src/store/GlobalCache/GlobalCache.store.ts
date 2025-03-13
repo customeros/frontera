@@ -26,16 +26,26 @@ export class GlobalCacheStore {
 
   async load() {
     try {
-      this.isLoading = true;
+      runInAction(() => {
+        this.isLoading = true;
+      });
 
       const response = await this.service.getGlobalCache();
 
-      this.value = response.global_Cache;
-      this.isBootstrapped = true;
+      runInAction(() => {
+        this.value = response.global_Cache;
+        this.isBootstrapped = true;
+      });
     } catch (error) {
-      this.error = (error as Error)?.message;
+      runInAction(() => {
+        this.error = (error as Error)?.message;
+        this.isLoading = false;
+      });
+      throw error;
     } finally {
-      this.isLoading = false;
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 

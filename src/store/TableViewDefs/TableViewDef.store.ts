@@ -190,6 +190,7 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
       runInAction(() => {
         this.error = (e as Error)?.message;
       });
+      throw e;
     } finally {
       runInAction(() => {
         this.isLoading = false;

@@ -74,6 +74,7 @@ export class ContractsStore implements GroupStore<Contract> {
       runInAction(() => {
         this.error = (e as Error)?.message;
       });
+      throw e;
     } finally {
       runInAction(() => {
         this.isLoading = false;

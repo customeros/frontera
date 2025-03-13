@@ -65,6 +65,7 @@ export class UsersStore extends Store<UserDatum, User> {
       runInAction(() => {
         this.error = (error as Error)?.message;
       });
+      throw error;
     } finally {
       runInAction(() => {
         this.isLoading = false;

@@ -60,6 +60,7 @@ export class BankAccountsStore implements GroupStore<BankAccount> {
       runInAction(() => {
         this.error = (e as Error)?.message;
       });
+      throw e;
     } finally {
       runInAction(() => {
         this.isLoading = false;

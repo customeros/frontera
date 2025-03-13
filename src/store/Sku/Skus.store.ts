@@ -38,6 +38,7 @@ export class SkusStore extends Store<SkuDatum, Sku> {
       runInAction(() => {
         this.error = (e as Error)?.message;
       });
+      throw e;
     } finally {
       runInAction(() => {
         this.isLoading = false;

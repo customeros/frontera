@@ -57,6 +57,7 @@ export class CustomFieldsStore extends SyncableGroup<
       runInAction(() => {
         this.error = (err as Error).message;
       });
+      throw err;
     }
   }
 

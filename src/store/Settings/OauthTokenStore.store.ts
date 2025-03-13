@@ -59,6 +59,7 @@ export class OauthTokenStore {
       runInAction(() => {
         this.error = (error as Error)?.message;
       });
+      throw error;
     } finally {
       runInAction(() => {
         this.isLoading = false;
