@@ -17,7 +17,7 @@ export const TaskCommands = observer(() => {
     <CommandsContainer label={label}>
       <>
         <CommandItem
-          keywords={['']}
+          keywords={taskKeywords.rename_task}
           leftAccessory={<Icon name='edit-03' />}
           onSelect={() => {
             store.ui.commandMenu.setType('RenameTask');
@@ -35,7 +35,7 @@ export const TaskCommands = observer(() => {
         </CommandItem>
 
         <CommandItem
-          keywords={['']}
+          keywords={taskKeywords.change_task_status}
           leftAccessory={<Icon name='columns-03' />}
           onSelect={() => {
             store.ui.commandMenu.setType('ChangeTaskStatus');
@@ -52,7 +52,7 @@ export const TaskCommands = observer(() => {
           Change task status...
         </CommandItem>
         <CommandItem
-          keywords={['']}
+          keywords={taskKeywords.assign_task}
           leftAccessory={<Icon name='user-01' />}
           onSelect={() => {
             store.ui.commandMenu.setType('AssignTask');
@@ -69,7 +69,7 @@ export const TaskCommands = observer(() => {
           Assign to...
         </CommandItem>
         <CommandItem
-          keywords={['']}
+          keywords={taskKeywords.link_opportunity}
           leftAccessory={<Icon name='coins-stacked-01' />}
           onSelect={() => {
             store.ui.commandMenu.setType('LinkOpportunity');
@@ -78,7 +78,7 @@ export const TaskCommands = observer(() => {
           Link opportunity...
         </CommandItem>
         <CommandItem
-          keywords={['']}
+          keywords={taskKeywords.set_due_date}
           leftAccessory={<Icon name='clock-fast-forward' />}
           onSelect={() => {
             store.ui.commandMenu.setType('SetDueDate');
@@ -92,7 +92,44 @@ export const TaskCommands = observer(() => {
         >
           Set due date...
         </CommandItem>
+
+        <CommandItem
+          rightAccessory={<Kbd className='size-auto h-5 px-1.5'>Space</Kbd>}
+          leftAccessory={
+            <Icon name={store.ui.showPreviewCard ? 'eye-off' : 'eye'} />
+          }
+          onSelect={() => {
+            store.ui.setShowPreviewCard(!store.ui.showPreviewCard);
+            store.ui.commandMenu.setOpen(false);
+          }}
+        >
+          {store.ui.showPreviewCard ? 'Hide task preview' : 'Preview task'}
+        </CommandItem>
+        <CommandItem
+          keywords={taskKeywords.archive_task}
+          leftAccessory={<Icon name='archive' />}
+          onSelect={() => {
+            store.ui.commandMenu.setType('DeleteConfirmationModal');
+          }}
+          rightAccessory={
+            <>
+              <CommandKbd />
+              <Kbd>D</Kbd>
+            </>
+          }
+        >
+          Archive task
+        </CommandItem>
       </>
     </CommandsContainer>
   );
 });
+
+const taskKeywords = {
+  rename_task: ['rename', 'task', 'edit', 'update', 'name', 'change', 'title'],
+  change_task_status: ['change', 'status', 'update', 'edit'],
+  assign_task: ['assign', 'task', 'owner'],
+  link_opportunity: ['link', 'opportunity', 'deal'],
+  set_due_date: ['set', 'due', 'date', 'time', 'remind'],
+  archive_task: ['archive', 'task', 'delete', 'remove', 'hide'],
+};

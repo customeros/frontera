@@ -41,29 +41,33 @@ export const StagePicker = observer(() => {
     <div>
       {selectedRelationshipOption?.value ===
         OrganizationRelationship.Prospect && (
-        <Menu>
-          <Tooltip label='Stage' align='start'>
-            <MenuButton className='min-h-[20px] outline-none focus:outline-none'>
-              <Tag size='md' variant='subtle' colorScheme='grayModern'>
-                <TagLabel>{selectedStageOption?.label || 'Stage'}</TagLabel>
-              </Tag>
-            </MenuButton>
-          </Tooltip>
-          <MenuList side='bottom' align='start'>
-            {applicableStageOptions.map((option) => (
-              <MenuItem
-                key={option.value}
-                onClick={() => {
-                  saveRelationshipAndStageUsecase.execute({
-                    stage: option.value,
-                  });
-                }}
-              >
-                {option.label}
-              </MenuItem>
-            ))}
-          </MenuList>
-        </Menu>
+        <>
+          <span className='text-grayModern-300 mr-2'>/</span>
+
+          <Menu>
+            <Tooltip label='Stage' align='start'>
+              <MenuButton className='min-h-[20px] outline-none focus:outline-none'>
+                <Tag size='md' variant='subtle' colorScheme='grayModern'>
+                  <TagLabel>{selectedStageOption?.label || 'Stage'}</TagLabel>
+                </Tag>
+              </MenuButton>
+            </Tooltip>
+            <MenuList side='bottom' align='start'>
+              {applicableStageOptions.map((option) => (
+                <MenuItem
+                  key={option.value}
+                  onClick={() => {
+                    saveRelationshipAndStageUsecase.execute({
+                      stage: option.value,
+                    });
+                  }}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+        </>
       )}
     </div>
   );

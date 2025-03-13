@@ -91,7 +91,7 @@ export const getFilterTypes = (store?: RootStore) => {
 
     [ColumnViewType.OpportunitiesTasks]: {
       filterType: 'text',
-      filterName: 'Tasks',
+      filterName: 'Task',
       filterAccesor: ColumnViewType.OpportunitiesTasks,
       filterOperators: [
         ComparisonOperator.Contains,

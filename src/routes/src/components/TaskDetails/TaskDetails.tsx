@@ -17,12 +17,8 @@ import { Textarea } from '@ui/form/Textarea/Textarea';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { TaskStatus } from '@shared/components/TaskStatus';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
-import {
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-  PopoverTrigger,
-} from '@ui/overlay/Popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
+
 export const TaskDetails = observer(({ id }: { id: string }) => {
   const [searchParams] = useSearchParams();
   const preset = searchParams.get('preset');
@@ -211,9 +207,10 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
 
       <div className='flex items-center gap-3'>
         <Popover>
-          <PopoverAnchor>
-            <Icon name='clock-fast-forward' className='text-grayModern-500' />
-          </PopoverAnchor>
+          <Icon
+            name='clock-fast-forward'
+            className='text-grayModern-500 size-4 mt-0.5'
+          />
 
           <div className='text-sm flex items-center'>
             {task.value.dueAt ? (

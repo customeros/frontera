@@ -208,6 +208,15 @@ export const data: ShortcutData = {
           key: 'D',
           modifierIcon: 'arrow-block-up',
         },
+        {
+          label: 'Archive task',
+          keyIcon: 'delete',
+          modifierIcon: 'command',
+        },
+        {
+          label: 'Preview task',
+          key: 'Space',
+        },
       ],
     },
   ],
