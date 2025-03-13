@@ -3,7 +3,10 @@ import { Transport } from '@infra/transport';
 import TasksDocument from './queries/tasks.graphql';
 import SaveTaskDocument from './mutations/saveTask.graphql';
 import SearchTasksDocument from './queries/searchTasks.graphql';
+import ArchiveTaskDocument from './mutations/archiveTask.graphql';
+import { ArchiveTaskMutation } from './mutations/archiveTask.generated';
 import { TasksQuery, TasksQueryVariables } from './queries/tasks.generated';
+import { ArchiveTaskMutationVariables } from './mutations/archiveTask.generated';
 import {
   SaveTaskMutation,
   SaveTaskMutationVariables,
@@ -44,5 +47,12 @@ export class TaskRepository {
       SearchTasksQuery,
       SearchTasksQueryVariables
     >(SearchTasksDocument, payload);
+  }
+
+  async archiveTasks(payload: ArchiveTaskMutationVariables) {
+    return this.transport.graphql.request<
+      ArchiveTaskMutation,
+      ArchiveTaskMutationVariables
+    >(ArchiveTaskDocument, payload);
   }
 }

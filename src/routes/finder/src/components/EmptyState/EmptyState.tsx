@@ -116,6 +116,17 @@ export const EmptyState = observer(() => {
             store.ui.commandMenu.setOpen(true);
           },
         };
+      case TableIdType.Tasks:
+        return {
+          title: 'Taskless territory',
+          description:
+            'This empty landscape is full of possibilities. Add some tasks and blaze a trail through your to-do list!',
+          buttonLabel: 'Create task',
+          dataTest: 'tasks-create-task',
+          onClick: () => {
+            store.tasks.createTask();
+          },
+        };
       default:
         return {
           title: "We couldn't find any companies",
@@ -147,9 +158,10 @@ export const EmptyState = observer(() => {
 
           <Button
             variant='outline'
+            colorScheme='primary'
             onClick={options.onClick}
             dataTest={options.dataTest}
-            className='mt-4 min-w-min text-sm bg-white'
+            className='mt-4 min-w-min text-sm'
           >
             {options.buttonLabel}
           </Button>

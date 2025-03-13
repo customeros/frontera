@@ -33,6 +33,7 @@ import {
 
 import { EmptyState } from '../EmptyState/EmptyState';
 import { computeFinderData } from './computeFinderData';
+import { TaskTableActions } from '../Actions/TaskActions';
 import { computeFinderColumns } from './computeFinderColumns';
 import { ContactTableActions, OrganizationTableActions } from '../Actions';
 
@@ -161,6 +162,12 @@ export const FinderTable = observer(() => {
             entity: 'Task',
             ids: selectedIds,
           });
+        } else {
+          store.ui.commandMenu.setType('TaskBulkCommands');
+          store.ui.commandMenu.setContext({
+            entity: 'Tasks',
+            ids: selectedIds,
+          });
         }
       } else {
         if (selectedIds.length === 1) {
@@ -285,7 +292,7 @@ export const FinderTable = observer(() => {
         hasSingleSelection ? 'FlowCommands' : 'FlowsBulkCommands',
       )
       .with(TableViewType.Tasks, () =>
-        hasSingleSelection ? 'TaskCommands' : 'GlobalHub',
+        hasSingleSelection ? 'TaskCommands' : 'TaskBulkCommands',
       )
       .otherwise(() => 'GlobalHub');
 
@@ -295,6 +302,7 @@ export const FinderTable = observer(() => {
       .with(TableViewType.Contacts, () => 'Contact')
       .with(TableViewType.Opportunities, () => 'Opportunity')
       .with(TableViewType.Flow, () => 'Flow')
+      .with(TableViewType.Tasks, () => 'Task')
       .otherwise(() => null);
 
     const meta = match(tableType)
@@ -359,6 +367,9 @@ export const FinderTable = observer(() => {
       .with(TableViewType.Invoices, () => store.invoices?.totalElements === 0)
       .with(TableViewType.Contracts, () => store.contracts?.totalElements === 0)
       .with(TableViewType.Flow, () => store.flows?.totalElements === 0)
+      .with(TableViewType.Tasks, () =>
+        preset ? store.tasks?.totalElements === 0 : true,
+      )
       .otherwise(() => false);
   };
 
@@ -368,6 +379,7 @@ export const FinderTable = observer(() => {
     .with(TableViewType.Invoices, () => false)
     .with(TableViewType.Opportunities, () => true)
     .with(TableViewType.Flow, () => true)
+    .with(TableViewType.Tasks, () => true)
     .otherwise(() => false);
 
   const canFetchMore = match(tableType)
@@ -462,6 +474,23 @@ export const FinderTable = observer(() => {
               <OpportunitiesTableActions
                 table={table}
                 selection={selectedIds}
+                focusedId={focusRow !== null ? data?.[focusRow]?.id : null}
+                enableKeyboardShortcuts={
+                  !isSearching &&
+                  !isFiltering &&
+                  !isEditing &&
+                  !isCommandMenuPrompted
+                }
+              />
+            );
+          }
+
+          if (tableType === TableViewType.Tasks) {
+            return (
+              <TaskTableActions
+                table={table}
+                selection={selectedIds}
+                isCommandMenuOpen={isCommandMenuPrompted}
                 focusedId={focusRow !== null ? data?.[focusRow]?.id : null}
                 enableKeyboardShortcuts={
                   !isSearching &&

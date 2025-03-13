@@ -1,0 +1,5 @@
+mutation archiveTask($ids: [ID!]!) {
+  task_Archive(ids: $ids) {
+    accepted
+  }
+}

@@ -74,7 +74,8 @@ export type CommandMenuType =
   | 'ChangeTaskStatus'
   | 'AssignTask'
   | 'LinkOpportunity'
-  | 'SetDueDate';
+  | 'SetDueDate'
+  | 'TaskBulkCommands';
 
 export type CommandMenuEntity =
   | 'Opportunity'

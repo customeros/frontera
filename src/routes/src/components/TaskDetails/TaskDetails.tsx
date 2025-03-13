@@ -16,6 +16,7 @@ import { useStore } from '@shared/hooks/useStore';
 import { Textarea } from '@ui/form/Textarea/Textarea';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { TaskStatus } from '@shared/components/TaskStatus';
+import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import {
   Popover,
   PopoverAnchor,
@@ -110,12 +111,40 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
           }}
         />
         <div className='flex items-start gap-2'>
-          <IconButton
-            size='xxs'
-            variant='ghost'
-            aria-label='more'
-            icon={<Icon className='size-4' name='dots-vertical' />}
-          />
+          {preset && (
+            <Menu>
+              <MenuButton asChild>
+                <IconButton
+                  size='xxs'
+                  variant='ghost'
+                  aria-label='more'
+                  icon={<Icon className='size-4' name='dots-vertical' />}
+                />
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  className='flex items-center gap-2 group/archive'
+                  onClick={() => {
+                    store.ui.setFocusRow(task.id);
+                    store.ui.commandMenu.setType('DeleteConfirmationModal');
+                    store.ui.commandMenu.setContext({
+                      ids: [task.id],
+                      entity: 'Task',
+                    });
+                    store.ui.setShowPreviewCard(false);
+                    store.ui.commandMenu.setOpen(true);
+                  }}
+                >
+                  <Icon
+                    name='archive'
+                    className='text-grayModern-500 group-hover/archive:text-grayModern-700'
+                  />
+                  Archive task
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          )}
+
           <IconButton
             size='xxs'
             variant='ghost'

@@ -185,6 +185,31 @@ export const data: ShortcutData = {
         },
       ],
     },
+    {
+      title: 'Tasks',
+      shortcuts: [
+        {
+          label: 'Rename task',
+          key: 'R',
+          modifierIcon: 'arrow-block-up',
+        },
+        {
+          label: 'Change task status',
+          key: 'S',
+          modifierIcon: 'arrow-block-up',
+        },
+        {
+          label: 'Assign to...',
+          key: 'O',
+          modifierIcon: 'arrow-block-up',
+        },
+        {
+          label: 'Set due date',
+          key: 'D',
+          modifierIcon: 'arrow-block-up',
+        },
+      ],
+    },
   ],
 };
 

@@ -132,6 +132,7 @@ export class Tasks extends Store<TaskDatum, Task> {
           }),
         );
         this.version++;
+        this.totalElements++;
         this.sync({
           action: 'APPEND',
           ids: [recordId],
@@ -143,6 +144,59 @@ export class Tasks extends Store<TaskDatum, Task> {
       this.root.ui.toastError('Failed to create task', 'create-task-failure');
     } finally {
       this.root.ui.toastSuccess('Task created', 'create-task-success');
+    }
+    this.refreshCurrentView();
+  }
+
+  async archive(ids: string[]) {
+    if (ids.length === 0) return;
+
+    ids.forEach((id) => {
+      this.getById(id)?.value.opportunityIds.forEach((opportunityId) => {
+        const opportunity = this.root.opportunities.value.get(opportunityId);
+
+        if (opportunity) {
+          opportunity.value.taskIds = [];
+        }
+      });
+
+      this.value.delete(id);
+    });
+
+    try {
+      await this.repository.archiveTasks({ ids });
+
+      runInAction(() => {
+        this.sync({ action: 'DELETE', ids });
+
+        this.root.ui.toastSuccess(
+          `Archived ${ids.length} ${ids.length === 1 ? 'task' : 'tasks'}`,
+          crypto.randomUUID(),
+        );
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.error = (err as Error)?.message;
+        this.root.ui.toastError(
+          `Failed to archive ${ids.length === 1 ? 'task' : 'tasks'}`,
+          crypto.randomUUID(),
+        );
+      });
+    } finally {
+      runInAction(() => {
+        this.isLoading = false;
+      });
+    }
+    this.refreshCurrentView();
+  }
+
+  private refreshCurrentView() {
+    const currentPreset = new URLSearchParams(window.location.search).get(
+      'preset',
+    );
+
+    if (currentPreset) {
+      this.search(currentPreset);
     }
   }
 }

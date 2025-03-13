@@ -108,7 +108,7 @@ export const OrganizationBulkCommands = observer(() => {
             </>
           }
         >
-          Archive org
+          Archive company
         </CommandItem>
 
         <CommandItem
