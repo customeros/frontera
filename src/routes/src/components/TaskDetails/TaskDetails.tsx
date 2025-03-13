@@ -286,6 +286,7 @@ export const TaskDetails = observer(({ id }: { id: string }) => {
 
           <PopoverContent align='start' alignOffset={-5}>
             <DatePicker
+              value={task.value.dueAt ?? new Date()}
               onChange={(v) => {
                 usecase?.setProperty(
                   'dueAt',
