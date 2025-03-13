@@ -83,11 +83,8 @@ export const OrganizationPage = observer(() => {
           )}
           <h1 className='font-medium text-md'>{organization?.name}</h1>
         </div>
-        <div className='flex items-center gap-2'>
-          <RelationshipPicker />
-          <span className='text-grayModern-300'>/</span>
-          <StagePicker />
-        </div>
+        <RelationshipPicker />
+        <StagePicker />
         <div className='flex-1 min-h-[28px]' />
         {organization?.id && (
           <UserPresence
