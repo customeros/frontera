@@ -33,25 +33,26 @@ export const SetDueDate = observer(() => {
 
   return (
     <Command>
-      <div className='flex flex-col gap-2 p-6 pb-2'>
-        <Tag size='md' variant='subtle' colorScheme='grayModern'>
-          <TagLabel className='overflow-hidden truncate max-w-[390px] text-ellipsis'>
-            {label}
-          </TagLabel>
-        </Tag>
+      <div className='flex flex-col gap-2 justify-center items-center'>
+        <div className='flex p-6 pb-2 justify-items-start w-full'>
+          <Tag size='md' variant='subtle' colorScheme='grayModern'>
+            <TagLabel className='overflow-hidden truncate max-w-[390px] text-ellipsis'>
+              {label}
+            </TagLabel>
+          </Tag>
+        </div>
+        <Divider className='my-2' />
+        <DatePicker
+          value={task?.value.dueAt}
+          onChange={(value) => {
+            usecase.setProperty(
+              'dueAt',
+              value ? value.toString() : new Date().toString(),
+            );
+            handleChange();
+          }}
+        />
       </div>
-      <Divider className='my-2' />
-      <DatePicker
-        className='!w-fit'
-        value={task?.value.dueAt}
-        onChange={(value) => {
-          usecase.setProperty(
-            'dueAt',
-            value ? value.toString() : new Date().toString(),
-          );
-          handleChange();
-        }}
-      />
     </Command>
   );
 });

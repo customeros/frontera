@@ -278,8 +278,8 @@ const contactKeywords = {
   move_to_flow: ['move', 'to', 'flow'],
   change_latest_org: [
     'edit',
-    'organization',
     'company',
+    'organization',
     'change',
     'update',
     'latest',

@@ -205,7 +205,7 @@ export const opportunitiesMap: Record<string, string> = {
   [ColumnViewType.OpportunitiesTimeInStage]: 'Time in Stage',
   [ColumnViewType.OpportunitiesEstimatedArr]: 'Estimated ARR',
   [ColumnViewType.OpportunitiesCreatedDate]: 'Created',
-  [ColumnViewType.OpportunitiesTasks]: 'Tasks',
+  [ColumnViewType.OpportunitiesTasks]: 'Task',
 };
 export const opportunitiesHelperTextMap: Record<string, string> = {
   [ColumnViewType.OpportunitiesName]: 'E.g. CustomerOs opportunity',
