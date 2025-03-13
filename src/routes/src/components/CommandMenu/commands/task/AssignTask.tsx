@@ -29,7 +29,7 @@ export const AssignTask = observer(() => {
     <Command shouldFilter={false} label='Assign task...'>
       <CommandInput
         label={label}
-        placeholder='Asign to...'
+        placeholder='Assign to...'
         value={usecase.searchTerm}
         onValueChange={usecase.setSearchTerm}
         onKeyDownCapture={(e) => {

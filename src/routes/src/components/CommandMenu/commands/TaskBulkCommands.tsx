@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 
+import { Icon } from '@ui/media/Icon';
 import { Archive } from '@ui/media/icons/Archive';
 import { useStore } from '@shared/hooks/useStore';
-import { Delete } from '@ui/media/icons/Delete.tsx';
 import { Kbd, CommandKbd, CommandItem } from '@ui/overlay/CommandMenu';
 import { CommandsContainer } from '@shared/components/CommandMenu/commands/shared';
 
@@ -10,7 +10,7 @@ export const TaskBulkCommands = observer(() => {
   const store = useStore();
   const selectedIds = store.ui.commandMenu.context.ids;
 
-  const label = `${selectedIds?.length} companies`;
+  const label = `${selectedIds?.length} tasks`;
 
   return (
     <CommandsContainer label={label}>
@@ -25,7 +25,7 @@ export const TaskBulkCommands = observer(() => {
             <>
               <CommandKbd />
               <Kbd>
-                <Delete className='size-3' />
+                <Icon name='archive' className='size-3' />
               </Kbd>
             </>
           }

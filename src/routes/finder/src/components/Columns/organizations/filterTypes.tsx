@@ -70,7 +70,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Globe01 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Globe01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsRelationship]: {
@@ -111,7 +111,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Activity className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Activity className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: [
         { id: OpportunityRenewalLikelihood.HighRenewal, label: 'High' },
@@ -131,7 +131,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Trophy01 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Trophy01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: [
         {
@@ -170,7 +170,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.OrganizationsRenewalDate,
       filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
       icon: (
-        <Calendar className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsForecastArr]: {
@@ -184,7 +184,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Calculator className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Calculator className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsOwner]: {
@@ -215,7 +215,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <ArrowCircleDownRight className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <ArrowCircleDownRight className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: uniqBy(store?.organizations.toArray(), 'value.leadSource')
         .map((v) => v.value.leadSource)
@@ -231,7 +231,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.OrganizationsCreatedDate,
       filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
       icon: (
-        <Calendar className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsYearFounded]: {
@@ -245,7 +245,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Cake className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Cake className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsEmployeeCount]: {
@@ -259,7 +259,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Users03 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Users03 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsSocials]: {
@@ -273,7 +273,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <LinkedinOutline className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <LinkedinOutline className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsLastTouchpoint]: {
@@ -282,7 +282,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.OrganizationsLastTouchpoint,
       filterOperators: [ComparisonOperator.In, ComparisonOperator.NotIn],
       icon: (
-        <Calendar className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: [
         {
@@ -309,7 +309,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.OrganizationsChurnDate,
       filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
       icon: (
-        <Calendar className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsLastTouchpointDate]: {
@@ -318,7 +318,7 @@ export const getFilterTypes = (store?: RootStore) => {
       filterAccesor: ColumnViewType.OrganizationsLastTouchpointDate,
       filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
       icon: (
-        <Calendar className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsLtv]: {
@@ -332,7 +332,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <CurrencyDollarCircle className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <CurrencyDollarCircle className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsIndustry]: {
@@ -362,7 +362,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.NotEquals,
       ],
       icon: (
-        <Hash02 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Hash02 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsTags]: {
@@ -376,7 +376,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Tag01 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Tag01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: store?.tags
         .toArray()
@@ -398,7 +398,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Globe04 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Globe04 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: Array.from(countryMap).map(([key, value]) => ({
         id: key.toUpperCase(),
@@ -417,7 +417,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Key01 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Key01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: [
         { id: 'Public', label: 'Public' },
@@ -435,7 +435,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Columns03 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Columns03 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
       options: [
         {
@@ -471,7 +471,7 @@ export const getFilterTypes = (store?: RootStore) => {
         ComparisonOperator.IsNotEmpty,
       ],
       icon: (
-        <Globe01 className='roup-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+        <Globe01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
   };
