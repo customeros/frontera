@@ -31,7 +31,7 @@ export class AgentStore extends Store<AgentDatum, Agent> {
     if (err) {
       console.error('Error bootstrapping agents:', err);
 
-      return;
+      throw err;
     }
     runInAction(() => {
       data?.agents.forEach((datum) => {

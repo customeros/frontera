@@ -47,6 +47,7 @@ export class FeaturesStore {
       runInAction(() => {
         this.error = (err as Error).message;
       });
+      throw err;
     } finally {
       runInAction(() => {
         this.isLoading = false;

@@ -36,6 +36,7 @@ export class ExternalSystemInstancesStore {
       runInAction(() => {
         this.error = (err as Error)?.message;
       });
+      throw err;
     } finally {
       runInAction(() => {
         this.isLoading = false;

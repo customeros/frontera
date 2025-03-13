@@ -45,9 +45,11 @@ export class IndustriesStore extends Store<IndustryDatum, Industry> {
 
         this.size = this.value.size;
         this.version++;
+        this.isBootstrapped = true;
       });
     } catch (e) {
       console.error('Failed invalidating unsed industries list ');
+      throw e;
     }
   }
 

@@ -235,6 +235,7 @@ export class MailboxesStore extends SyncableGroup<Mailbox, MailboxStore> {
       runInAction(() => {
         this.error = (err as Error).message;
       });
+      throw err;
     }
   }
 

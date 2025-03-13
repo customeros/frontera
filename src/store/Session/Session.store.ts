@@ -74,6 +74,9 @@ export class SessionStore {
   constructor(public root: RootStore, public transport: Transport) {
     makeAutoObservable(this);
 
+    this.clearSession = this.clearSession.bind(this);
+    this.removeSessionFromWindow = this.removeSessionFromWindow.bind(this);
+
     this.hydrate();
     autorun(() => {
       if (this.isHydrated) {
@@ -259,8 +262,10 @@ export class SessionStore {
 
   async clearSession() {
     try {
-      this.sessionToken = null;
-      this.value = defaultSession;
+      runInAction(() => {
+        this.sessionToken = null;
+        this.value = defaultSession;
+      });
       this.removeSessionFromWindow();
       this.root.windowManager.clearPersisterKey();
 

@@ -5,12 +5,14 @@ import { SimulatedProgress } from './SimulatedProgressBar.tsx';
 import logoCustomerOs from '../../../assets/customer-os-small.png';
 
 export const LoadingScreen = ({
-  showSplash,
   hide,
   isLoaded,
+  isRetrying,
+  showSplash,
 }: {
   hide: boolean;
   isLoaded: boolean;
+  isRetrying: boolean;
   showSplash: boolean;
 }) => {
   return (
@@ -25,7 +27,9 @@ export const LoadingScreen = ({
         <div>
           <img width={44} height={44} alt='CustomerOS' src={logoCustomerOs} />
         </div>
-        <h1 className='text-md font-medium mt-2'>Please wait...</h1>
+        <h1 className='text-md font-medium mt-2'>
+          {isRetrying ? 'Retrying...' : 'Please wait...'}
+        </h1>
         <LoadingMessage />
         <div className='mt-4 w-full max-w-[353px]'>
           <SimulatedProgress accelerate={isLoaded} />

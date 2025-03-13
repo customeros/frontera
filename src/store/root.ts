@@ -1,6 +1,6 @@
 import { Transport } from '@infra/transport';
-import { when, makeAutoObservable } from 'mobx';
 import { SkusStore } from '@store/Sku/Skus.store.ts';
+import { when, runInAction, makeAutoObservable } from 'mobx';
 
 import { Persister } from './persister';
 import { UIStore } from './UI/UI.store';
@@ -35,10 +35,16 @@ import { ContractLineItemsStore } from './ContractLineItems/ContractLineItems.st
 import { FlowEmailVariablesStore } from './FlowEmailVariables/FlowEmailVariables.store';
 import { ExternalSystemInstancesStore } from './ExternalSystemInstances/ExternalSystemInstances.store';
 
+const RETRY_DELAY = 1000;
+const MAX_BOOTSTRAP_RETRIES = 3;
+
 export class RootStore {
   demoMode = false;
   transactions: TransactionService;
+  bootstrapIsRetrying = false;
+  private bootstrapRetryCount = 0;
   private transport = Transport.getInstance();
+  private retryTimeoutId: NodeJS.Timeout | null = null;
 
   ui: UIStore;
   mail: MailStore;
@@ -77,7 +83,6 @@ export class RootStore {
     makeAutoObservable(this);
 
     this.transactions = new TransactionService(this, this.transport);
-
     this.common = new CommonStore(this);
     this.tableViewDefs = new TableViewDefStore(this, this.transport);
     this.settings = new SettingsStore(this, this.transport);
@@ -113,6 +118,8 @@ export class RootStore {
     );
     this.tasks = new Tasks(this, this.transport);
 
+    this.bootstrap = this.bootstrap.bind(this);
+
     when(
       () => this.isAuthenticated,
       async () => {
@@ -131,25 +138,60 @@ export class RootStore {
   }
 
   async bootstrap() {
-    await Promise.all([
-      this.tableViewDefs.bootstrap(),
-      this.globalCache.bootstrap(),
-      this.industries.bootstrap(),
-      this.settings.bootstrap(),
-      this.customFields.bootstrap(),
-      this.mailboxes.bootstrap(),
-      this.tags.bootstrap(),
-      this.opportunities.bootstrap(),
-      this.invoices.bootstrap(),
-      this.contracts.bootstrap(),
-      this.externalSystemInstances.bootstrap(),
-      this.users.bootstrap(),
-      this.flows.bootstrap(),
-      this.flowEmailVariables.bootstrap(),
-      this.skus.bootstrap(),
-      this.agents.bootstrap(),
-      this.common.bootstrap(),
-    ]);
+    try {
+      await Promise.all([
+        this.tableViewDefs.bootstrap(),
+        this.globalCache.bootstrap(),
+        this.industries.bootstrap(),
+        this.settings.bootstrap(),
+        this.customFields.bootstrap(),
+        this.mailboxes.bootstrap(),
+        this.tags.bootstrap(),
+        this.opportunities.bootstrap(),
+        this.invoices.bootstrap(),
+        this.contracts.bootstrap(),
+        this.externalSystemInstances.bootstrap(),
+        this.users.bootstrap(),
+        this.flows.bootstrap(),
+        this.flowEmailVariables.bootstrap(),
+        this.skus.bootstrap(),
+        this.agents.bootstrap(),
+        this.common.bootstrap(),
+      ]);
+
+      if (this.bootstrapIsRetrying) {
+        runInAction(() => {
+          this.bootstrapIsRetrying = false;
+          this.bootstrapRetryCount = 0;
+        });
+      }
+    } catch (error) {
+      if (this.bootstrapRetryCount <= MAX_BOOTSTRAP_RETRIES) {
+        runInAction(() => {
+          this.bootstrapIsRetrying = true;
+          this.bootstrapRetryCount++;
+        });
+
+        if (this.retryTimeoutId) {
+          clearTimeout(this.retryTimeoutId);
+        }
+        this.retryTimeoutId = setTimeout(
+          this.bootstrap,
+          this.bootstrapRetryCount * RETRY_DELAY,
+        );
+      } else {
+        runInAction(() => {
+          if (this.retryTimeoutId) {
+            clearTimeout(this.retryTimeoutId);
+            this.retryTimeoutId = null;
+          }
+        });
+        this.session.clearSession();
+        window.location.href =
+          '/auth/failure?message=Max%20bootstrap%20retries%20reached';
+        console.error('Max bootstrap retries reached');
+      }
+    }
   }
 
   public static getInstance() {
@@ -161,8 +203,6 @@ export class RootStore {
   }
 
   get isAuthenticating() {
-    if (this.demoMode) return false;
-
     return this.session.isLoading !== null || this.session.isBootstrapping;
   }
 
@@ -180,15 +220,26 @@ export class RootStore {
 
   get isBootstrapped() {
     return (
-      (this.tableViewDefs.isHydrated || this.tableViewDefs.isBootstrapped) &&
+      this.tableViewDefs.isBootstrapped &&
+      this.globalCache.isBootstrapped &&
+      this.industries.isBootstrapped &&
       this.settings.isBootstrapped &&
-      this.globalCache.isBootstrapped
+      this.customFields.isBootstrapped &&
+      this.mailboxes.isBootstrapped &&
+      this.tags.isBootstrapped &&
+      this.opportunities.isBootstrapped &&
+      this.invoices.isBootstrapped &&
+      this.contracts.isBootstrapped &&
+      this.externalSystemInstances.isBootstrapped &&
+      this.users.isBootstrapped &&
+      this.flows.isBootstrapped &&
+      this.flowEmailVariables.isBootstrapped &&
+      this.skus.isBootstrapped &&
+      this.agents.isBootstrapped
     );
   }
 
   get isBootstrapping() {
-    if (this.demoMode) return false;
-
     return (
       this.tableViewDefs.isLoading ||
       this.settings.isBootstrapping ||
@@ -197,8 +248,6 @@ export class RootStore {
   }
 
   get isSyncing() {
-    if (this.demoMode) return false;
-
     return this.organizations.isLoading;
   }
 }

@@ -71,6 +71,7 @@ export class InvoicesStore extends SyncableGroup<Invoice, InvoiceStore> {
       runInAction(() => {
         this.error = (e as Error)?.message;
       });
+      throw e;
     } finally {
       runInAction(() => {
         this.isLoading = false;

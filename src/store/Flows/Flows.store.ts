@@ -68,6 +68,7 @@ export class FlowsStore implements GroupStore<Flow> {
       runInAction(() => {
         this.error = (e as Error)?.message;
       });
+      throw e;
     } finally {
       runInAction(() => {
         this.isLoading = false;
