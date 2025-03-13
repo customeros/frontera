@@ -38,7 +38,16 @@ export const OrganizationPage = observer(() => {
   }
 
   if (!store.organizations.isBootstrapped) {
-    return <LoadingScreen hide={false} isLoaded={false} showSplash={true} />;
+    // This should not be used here
+    // TODO: Remove this.
+    return (
+      <LoadingScreen
+        hide={false}
+        isLoaded={false}
+        showSplash={true}
+        isRetrying={false}
+      />
+    );
   }
 
   if (!store.organizations.value.has(id)) {
