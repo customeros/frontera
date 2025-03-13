@@ -39,7 +39,7 @@ export const EvaluateCompanyIcpFit = observer(() => {
   }, [id]);
 
   return (
-    <article className='flex flex-col gap-4 -mr-4 px-4 py-3'>
+    <div className='flex flex-col gap-4 -mr-4 px-4 py-3 h-[calc(100vh-50px)] overflow-y-auto'>
       <h1 className='text-sm font-medium pr-4'>
         {agent.getCapabilityName(CapabilityType.IcpQualify)}
       </h1>
@@ -181,6 +181,6 @@ export const EvaluateCompanyIcpFit = observer(() => {
         usecase={editIcpDomainsUsecase}
         onClose={() => setIsOpen(false)}
       />
-    </article>
+    </div>
   );
 });
