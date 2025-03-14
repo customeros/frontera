@@ -7,7 +7,6 @@ import { Kbd, CommandKbd, CommandItem } from '@ui/overlay/CommandMenu';
 import { CommandsContainer } from '@shared/components/CommandMenu/commands/shared';
 
 import { ChangeTaskStatusSubItems } from './task/ChangeTaskStatusSubItems';
-// TODO - uncomment keyboard shortcuts when they are implemented
 export const TaskCommands = observer(() => {
   const store = useStore();
   const id = (store.ui.commandMenu.context.ids as string[])?.[0];
