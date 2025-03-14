@@ -3,10 +3,16 @@ import { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { EditTaskUsecase } from '@domain/usecases/command-menu/task/edit-task.usecase';
 
-import { Icon } from '@ui/media/Icon';
+import { Icon, IconName } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
+import { TaskStatus as TaskStatusEnum } from '@graphql/types';
 import { TaskStatus } from '@shared/types/__generated__/graphql.types';
 import { Command, CommandItem, CommandInput } from '@ui/overlay/CommandMenu';
+const statusIcons = {
+  [TaskStatusEnum.Todo]: 'circle',
+  [TaskStatusEnum.InProgress]: 'hourglass-02',
+  [TaskStatusEnum.Done]: 'check',
+};
 
 export const ChangeTaskStatus = observer(() => {
   const store = useStore();
@@ -64,7 +70,10 @@ export const ChangeTaskStatus = observer(() => {
                 handleClose();
               }}
             >
-              {status.label}
+              <div className='flex items-center gap-2'>
+                <Icon name={statusIcons[status.value] as IconName} />
+                {status.label}
+              </div>
             </CommandItem>
           ))}
       </Command.List>

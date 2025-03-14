@@ -3,3 +3,4 @@ export * from './ChangeTaskStatus';
 export * from './LinkOpportunity';
 export * from './AssignTask';
 export * from './SetDueDate';
+export * from './ChangeTaskStatusSubItems';

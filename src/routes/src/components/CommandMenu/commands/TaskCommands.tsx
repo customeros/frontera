@@ -6,7 +6,7 @@ import { ArrowBlockUp } from '@ui/media/icons/ArrowBlockUp';
 import { Kbd, CommandKbd, CommandItem } from '@ui/overlay/CommandMenu';
 import { CommandsContainer } from '@shared/components/CommandMenu/commands/shared';
 
-// TODO - uncomment keyboard shortcuts when they are implemented
+import { ChangeTaskStatusSubItems } from './task/ChangeTaskStatusSubItems';
 export const TaskCommands = observer(() => {
   const store = useStore();
   const id = (store.ui.commandMenu.context.ids as string[])?.[0];
@@ -51,6 +51,7 @@ export const TaskCommands = observer(() => {
         >
           Change task status...
         </CommandItem>
+        <ChangeTaskStatusSubItems />
         <CommandItem
           keywords={taskKeywords.assign_task}
           leftAccessory={<Icon name='user-01' />}
