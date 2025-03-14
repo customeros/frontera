@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { EditTaskUsecase } from '@domain/usecases/command-menu/task/edit-task.usecase';
 
 import { Icon } from '@ui/media/Icon';
@@ -12,9 +14,7 @@ export const ChangeTaskStatusSubItems = () => {
     store.ui.commandMenu.context.ids?.[0] as string,
   );
 
-  if (!task) return null;
-
-  const usecase = new EditTaskUsecase(task);
+  const usecase = useMemo(() => new EditTaskUsecase(task!), [task]);
 
   return (
     <>
