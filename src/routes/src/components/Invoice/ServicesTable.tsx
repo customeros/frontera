@@ -72,7 +72,18 @@ export function ServicesTable({
               <div className={'flex w-full'}>
                 <div className='w-1/2 '>
                   <div className='text-left text-sm capitalize font-medium leading-5'>
+                    {(service as InvoiceLine).skuName}
                     {service?.description ?? 'Unnamed'}
+                  </div>
+                  <div>
+                    {isGenerated &&
+                      service?.contractLineItem?.billingCycle ===
+                        BilledType.Once &&
+                      !!service?.contractLineItem?.description?.length && (
+                        <p className='text-xs text-grayModern-600'>
+                          {service?.contractLineItem?.description}
+                        </p>
+                      )}
                   </div>
                   <div className='text-grayModern-500 text-sm'>
                     {isGenerated &&
@@ -128,14 +139,6 @@ export function ServicesTable({
                           )}
                       </div>
                     )}
-                    {isGenerated &&
-                      service?.contractLineItem?.billingCycle ===
-                        BilledType.Once &&
-                      !!service?.contractLineItem?.description?.length && (
-                        <p className='text-xs text-grayModern-500'>
-                          {service?.contractLineItem?.description}
-                        </p>
-                      )}
                   </div>
                 </div>
                 <div className='w-1/6 flex justify-end text-sm text-grayModern-500 leading-5'>
