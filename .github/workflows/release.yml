@@ -15,25 +15,18 @@ env:
 permissions:
   contents: write
   packages: write
+  actions: write # Needed to cancel workflow
 
 jobs:
-  create-release:
-    runs-on: ubicloud-standard-2
+  check-release-needed:
+    runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
     outputs:
-      next_version: ${{ steps.generate_version.outputs.next_version }}
-      should_release: ${{ steps.generate_version.outputs.should_release }}
+      version_bump: ${{ steps.commit_message.outputs.version_bump }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Needed to fetch all tags
-
-      - name: Get latest tag
-        id: get_latest_tag
-        run: |
-          # Get the latest tag, default to v0.0.0 if no tags exist
-          latest_tag=$(git tag -l "v*" | grep -E 'v[0-9]+\.[0-9]+\.[0-9]+$' | sort -t. -k1,1 -k2,2n -k3,3n | tail -n 1 || echo "v0.0.0")          
-          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT
 
       - name: Get version info from commits
         id: commit_message
@@ -80,12 +73,43 @@ jobs:
             fi
           fi
 
+      - name: Cancel workflow if no release is needed
+        if: steps.commit_message.outputs.version_bump == 'skip'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            console.log("No version bump prefix found. Cancelling workflow.");
+            await github.rest.actions.cancelWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId
+            });
+
+  create-release:
+    needs: check-release-needed
+    # Only run if version_bump is not 'skip' - this acts as a failsafe
+    if: needs.check-release-needed.outputs.version_bump != 'skip'
+    runs-on: ubicloud-standard-2
+    outputs:
+      next_version: ${{ steps.generate_version.outputs.next_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed to fetch all tags
+
+      - name: Get latest tag
+        id: get_latest_tag
+        run: |
+          # Get the latest tag, default to v0.0.0 if no tags exist
+          latest_tag=$(git tag -l "v*" | grep -E 'v[0-9]+\.[0-9]+\.[0-9]+$' | sort -t. -k1,1 -k2,2n -k3,3n | tail -n 1 || echo "v0.0.0")          
+          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT
+
       - name: Generate next version
         id: generate_version
-        if: steps.commit_message.outputs.version_bump != 'skip'
         run: |
           latest_tag=${{ steps.get_latest_tag.outputs.latest_tag }}
-          version_bump="${{ steps.commit_message.outputs.version_bump }}"
+          version_bump="${{ needs.check-release-needed.outputs.version_bump }}"
           
           # Debug output
           echo "Latest tag: $latest_tag"
@@ -119,10 +143,8 @@ jobs:
           
           echo "Next version will be: $next_version"
           echo "next_version=${next_version}" >> $GITHUB_OUTPUT
-          echo "should_release=true" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        if: steps.commit_message.outputs.version_bump != 'skip' && steps.generate_version.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.generate_version.outputs.next_version }}
@@ -131,25 +153,21 @@ jobs:
 
       # Docker build and push steps start here
       - name: Delete huge unnecessary tools folder
-        if: steps.generate_version.outputs.should_release == 'true'
         run: rm -rf /opt/hostedtoolcache
 
       - name: Set up Docker Buildx
-        if: steps.generate_version.outputs.should_release == 'true'
         uses: docker/setup-buildx-action@v3
         with:
           driver-opts: |
             network=host
 
       - uses: ubicloud/setup-node@v4
-        if: steps.generate_version.outputs.should_release == 'true'
         with:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: './package-lock.json'
 
       - name: Log in to the Container registry
-        if: steps.generate_version.outputs.should_release == 'true'
         uses: docker/login-action@v3.3.0
         with:
           registry: ${{ env.REGISTRY }}
@@ -158,7 +176,6 @@ jobs:
 
       # Build and push production image with the new version tag
       - name: Build and push production image
-        if: steps.generate_version.outputs.should_release == 'true'
         uses: docker/build-push-action@v6.13.0
         with:
           push: true
@@ -177,7 +194,6 @@ jobs:
 
       # Build and push middleware image with the new version tag
       - name: Build and push middleware image
-        if: steps.generate_version.outputs.should_release == 'true'
         uses: docker/build-push-action@v6.13.0
         with:
           context: middleware/
@@ -191,12 +207,10 @@ jobs:
 
       # Save outputs for the deploy workflow
       - name: Save workflow outputs
-        if: steps.generate_version.outputs.should_release == 'true'
         run: |
           echo "{\"next_version\": \"${{ steps.generate_version.outputs.next_version }}\"}" > workflow-data.json
 
       - name: Upload workflow outputs
-        if: steps.generate_version.outputs.should_release == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: workflow-data
