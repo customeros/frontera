@@ -61,6 +61,7 @@ query getInvoices($pagination: Pagination!, $where: Filter, $sort: [SortBy!]) {
       subtotal
       taxDue
       invoiceLineItems {
+        skuName
         metadata {
           id
           created
