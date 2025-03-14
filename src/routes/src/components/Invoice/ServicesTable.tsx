@@ -72,7 +72,7 @@ export function ServicesTable({
               <div className={'flex w-full'}>
                 <div className='w-1/2 '>
                   <div className='text-left text-sm capitalize font-medium leading-5'>
-                    {(service as InvoiceLine).skuName}
+                    {(service as InvoiceLine)?.skuName ?? ''}
                     {service?.description ?? 'Unnamed'}
                   </div>
                   <div>
