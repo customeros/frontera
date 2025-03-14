@@ -54,7 +54,6 @@ query Invoice($number: String!) {
     status
     subtotal
     invoiceLineItems {
-      skuName
       metadata {
         id
         created

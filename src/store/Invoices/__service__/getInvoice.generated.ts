@@ -60,7 +60,6 @@ export type InvoiceQuery = {
     };
     invoiceLineItems: Array<{
       __typename?: 'InvoiceLine';
-      skuName: string;
       quantity: any;
       subtotal: number;
       taxDue: number;
