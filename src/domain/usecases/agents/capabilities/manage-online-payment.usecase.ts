@@ -10,7 +10,7 @@ export class ManageOnlinePaymentUsecase {
   private root = RootStore.getInstance();
 
   @observable accessor isConnecting = false;
-  @observable accessor isEnabled = false;
+  @observable accessor isDisableDialogOpen = false;
 
   constructor(private readonly agentId: string) {
     this.setIsConnecting = this.setIsConnecting.bind(this);
@@ -33,6 +33,16 @@ export class ManageOnlinePaymentUsecase {
   }
 
   @action
+  setIsDisableDialogOpen(value: boolean) {
+    const span = Tracer.span(
+      'ManageOnlinePaymentUsecase.setIsDisableDialogOpen',
+    );
+
+    this.isDisableDialogOpen = value;
+    span.end();
+  }
+
+  @action
   setIsConnecting(value: boolean) {
     const span = Tracer.span('ManageOnlinePaymentUsecase.setIsConnecting');
 
@@ -43,15 +53,13 @@ export class ManageOnlinePaymentUsecase {
   @action
   toggleCapability(value?: boolean) {
     const span = Tracer.span('ManageOnlinePaymentUsecase.toggleCapability', {
-      isEnabled: this.isEnabled,
+      isEnabled: this.capability?.active,
     });
 
-    this.isEnabled = value ?? !this.isEnabled;
-
-    this.execute();
+    this.execute(value);
 
     span.end({
-      isEnabled: this.isEnabled,
+      isEnabled: this.capability?.active,
     });
   }
 
@@ -92,9 +100,9 @@ export class ManageOnlinePaymentUsecase {
     });
   }
 
-  async execute() {
+  async execute(isActive?: boolean) {
     const span = Tracer.span('ManageOnlinePaymentUsecase.execute', {
-      isEnabled: this.isEnabled,
+      isEnabled: this.capability?.active,
     });
 
     const agent = this.root.agents.getById(this.agentId);
@@ -108,7 +116,7 @@ export class ManageOnlinePaymentUsecase {
       return;
     }
 
-    agent?.toggleCapabilityStatus(CapabilityType.ProcessAutopayment);
+    agent?.toggleCapabilityStatus(CapabilityType.ProcessAutopayment, isActive);
 
     const [res, err] = await this.service.saveAgent(agent);
 
@@ -124,7 +132,7 @@ export class ManageOnlinePaymentUsecase {
     }
 
     span.end({
-      isEnabled: this.isEnabled,
+      isEnabled: this.capability?.active,
     });
   }
 }
