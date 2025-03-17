@@ -65,9 +65,7 @@ export class ManageOnlinePaymentUsecase {
 
   @action
   async init() {
-    const span = Tracer.span('ManageOnlinePaymentUsecase.init', {
-      isEnabled: this.isEnabled,
-    });
+    const span = Tracer.span('ManageOnlinePaymentUsecase.init');
 
     const agent = this.root.agents.getById(this.agentId);
 
@@ -93,11 +91,7 @@ export class ManageOnlinePaymentUsecase {
       return;
     }
 
-    this.isEnabled = capability.active;
-
-    span.end({
-      isEnabled: this.isEnabled,
-    });
+    span.end();
   }
 
   async execute(isActive?: boolean) {
