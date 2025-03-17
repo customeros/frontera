@@ -50,7 +50,7 @@ export const FinderPage = observer(() => {
           <Search />
         </div>
         <div className='flex'>
-          <div className=' w-full overflow-auto'>
+          <div className=' w-full overflow-auto h-full'>
             <FiltersContainer />
             <FinderTable />
           </div>
