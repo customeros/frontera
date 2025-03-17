@@ -1,14 +1,19 @@
-import { computed } from 'mobx';
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
+import { action, computed, observable } from 'mobx';
 import { AgentService } from '@domain/services/agent/agent.service';
+
+import { AgentType } from '@shared/types/__generated__/graphql.types';
 
 export class ToggleAgentActiveUsecase {
   private service = new AgentService();
   private root = RootStore.getInstance();
+  @observable accessor isOpen: boolean = false;
 
   constructor(private id: string) {
     this.toggleActive = this.toggleActive.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.toggleAgentStatus = this.toggleAgentStatus.bind(this);
   }
 
   @computed
@@ -16,6 +21,25 @@ export class ToggleAgentActiveUsecase {
     return this.root.agents.getById(this.id);
   }
 
+  @action
+  toggleModal() {
+    this.isOpen = !this.isOpen;
+  }
+
+  @action
+  toggleAgentStatus() {
+    if (!this.agent) {
+      console.error(
+        'ToggleAgentActiveUsecase.toggleStatus: Agent not found. Aborting',
+      );
+
+      return;
+    }
+
+    this.agent.toggleStatus();
+  }
+
+  @action
   async toggleActive() {
     const span = Tracer.span('ToggleAgentActiveUsecase.toggleActive');
 
@@ -27,7 +51,17 @@ export class ToggleAgentActiveUsecase {
       return;
     }
 
-    this.agent.toggleStatus();
+    if (this.agent.value.type === AgentType.CashflowGuardian) {
+      if (!this.agent.value.isActive) {
+        this.agent.toggleStatus();
+      } else {
+        this.toggleModal();
+      }
+    }
+
+    if (this.agent.value.type !== AgentType.CashflowGuardian) {
+      this.agent.toggleStatus();
+    }
 
     const [res, err] = await this.service.saveAgent(this.agent);
 

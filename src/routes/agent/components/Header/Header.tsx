@@ -12,6 +12,7 @@ import { useStore } from '@shared/hooks/useStore';
 import { Button } from '@ui/form/Button/Button.tsx';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
+import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog';
 
 import { IconAndColorPicker } from './components/IconAndColorPicker';
 
@@ -65,123 +66,121 @@ export const Header = observer(() => {
   };
 
   return (
-    <div className='w-full border-b border-b-grayModern-200 px-3 py-[5px] flex justify-between items-center'>
-      <div className='flex items-center gap-1'>
-        <Link
-          to='/agents'
-          className='text-md font-medium text-grayModern-500 hover:text-grayModern-700 transition-colors'
-        >
-          Agents
-        </Link>
-        <Icon name='chevron-right' className='w-4 h-4 text-grayModern-500' />
+    <>
+      <div className='w-full border-b border-b-grayModern-200 px-3 py-[5px] flex justify-between items-center'>
         <div className='flex items-center gap-1'>
-          <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
-            <PopoverTrigger className={'group'} ref={iconPickerTriggerRef}>
-              {agent?.value?.icon && (
-                <div
-                  className={cn(
-                    'flex items-center rounded-sm p-0.5 bg-grayModern-100',
-                    bg,
-                    {
-                      [bg?.replace('group-hover:', '')]: showIconPicker,
-                    },
-                  )}
-                >
-                  <Icon
-                    name={agent.value.icon as IconName}
-                    className={cn('size-4', iconColor, {
-                      [iconColor?.replace('group-hover:', '')]: showIconPicker,
-                    })}
-                  />
-                </div>
-              )}
-            </PopoverTrigger>
-
-            <PopoverContent
-              align='start'
-              className='p-4 bg-grayModern-700 border-0'
-            >
-              <IconAndColorPicker />
-            </PopoverContent>
-          </Popover>
-
+          <Link
+            to='/agents'
+            className='text-md font-medium text-grayModern-500 hover:text-grayModern-700 transition-colors'
+          >
+            Agents
+          </Link>
+          <Icon name='chevron-right' className='w-4 h-4 text-grayModern-500' />
           <div className='flex items-center gap-1'>
-            <Button
-              size='xxs'
-              variant='ghost'
-              onClick={() => handleOpenCommandMenu('RenameAgent')}
-              className='text-md font-medium hover:bg-transparent focus:bg-transparent'
-            >
-              {agent?.value?.name}
-            </Button>
-            <Menu open={menuOpen} onOpenChange={setMenuOpen}>
-              <MenuButton asChild>
-                <IconButton
-                  size='xs'
-                  variant='ghost'
-                  aria-label={'Menu'}
-                  icon={<Icon name='dots-vertical' />}
-                />
-              </MenuButton>
-              <MenuList side='bottom' align='start'>
-                <MenuItem
-                  className='group'
-                  onClick={() => handleOpenCommandMenu('RenameAgent')}
-                >
-                  <Icon
-                    name='edit-03'
-                    className='text-grayModern-500 group-hover:text-grayModern-700'
-                  />
-                  Rename
-                </MenuItem>
+            <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
+              <PopoverTrigger className={'group'} ref={iconPickerTriggerRef}>
+                {agent?.value?.icon && (
+                  <div
+                    className={cn(
+                      'flex items-center rounded-sm p-0.5 bg-grayModern-100',
+                      bg,
+                      {
+                        [bg?.replace('group-hover:', '')]: showIconPicker,
+                      },
+                    )}
+                  >
+                    <Icon
+                      name={agent.value.icon as IconName}
+                      className={cn('size-4', iconColor, {
+                        [iconColor?.replace('group-hover:', '')]:
+                          showIconPicker,
+                      })}
+                    />
+                  </div>
+                )}
+              </PopoverTrigger>
 
-                <MenuItem className='group' onClick={handleIconPickerOpen}>
-                  <Icon
-                    name='brush-01'
-                    className='text-grayModern-500 group-hover:text-grayModern-700'
-                  />
-                  Change icon
-                </MenuItem>
-                {/*<MenuItem*/}
-                {/*  disabled={true}*/}
-                {/*  className='group'*/}
-                {/*  onClick={() => {*/}
-                {/*    store.ui.commandMenu.setContext({*/}
-                {/*      ...store.ui.commandMenu.context,*/}
-                {/*      ids: [id],*/}
-                {/*    });*/}
-                {/*    store.ui.commandMenu.setType('DuplicateAgent');*/}
-                {/*    store.ui.commandMenu.setOpen(true);*/}
-                {/*  }}*/}
-                {/*>*/}
-                {/*  <Icon*/}
-                {/*    name='layers-two-01'*/}
-                {/*    className='text-grayModern-500 group-hover:text-grayModern-700'*/}
-                {/*  />*/}
-                {/*  Duplicate agent*/}
-                {/*</MenuItem>*/}
-                <MenuItem
-                  className='group'
-                  onClick={() => handleOpenCommandMenu('ArchiveAgent')}
-                >
-                  <Icon
-                    name='archive'
-                    className='text-grayModern-500 group-hover:text-grayModern-700'
-                  />
-                  Archive agent
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </div>
+              <PopoverContent
+                align='start'
+                className='p-4 bg-grayModern-700 border-0'
+              >
+                <IconAndColorPicker />
+              </PopoverContent>
+            </Popover>
 
-          <div className='ml-2 flex items-center'>
-            <Switch
-              onChange={() => usecase.toggleActive()}
-              checked={agent?.value?.isActive ?? false}
-            />{' '}
+            <div className='flex items-center gap-1'>
+              <Button
+                size='xxs'
+                variant='ghost'
+                onClick={() => handleOpenCommandMenu('RenameAgent')}
+                className='text-md font-medium hover:bg-transparent focus:bg-transparent'
+              >
+                {agent?.value?.name}
+              </Button>
+              <Menu open={menuOpen} onOpenChange={setMenuOpen}>
+                <MenuButton asChild>
+                  <IconButton
+                    size='xs'
+                    variant='ghost'
+                    aria-label={'Menu'}
+                    icon={<Icon name='dots-vertical' />}
+                  />
+                </MenuButton>
+                <MenuList side='bottom' align='start'>
+                  <MenuItem
+                    className='group'
+                    onClick={() => handleOpenCommandMenu('RenameAgent')}
+                  >
+                    <Icon
+                      name='edit-03'
+                      className='text-grayModern-500 group-hover:text-grayModern-700'
+                    />
+                    Rename
+                  </MenuItem>
+
+                  <MenuItem className='group' onClick={handleIconPickerOpen}>
+                    <Icon
+                      name='brush-01'
+                      className='text-grayModern-500 group-hover:text-grayModern-700'
+                    />
+                    Change icon
+                  </MenuItem>
+                  <MenuItem
+                    className='group'
+                    onClick={() => handleOpenCommandMenu('ArchiveAgent')}
+                  >
+                    <Icon
+                      name='archive'
+                      className='text-grayModern-500 group-hover:text-grayModern-700'
+                    />
+                    Archive agent
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+
+            <div className='ml-2 flex items-center'>
+              <Switch
+                onChange={usecase.toggleActive}
+                checked={agent?.value?.isActive ?? false}
+              />{' '}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <ConfirmDeleteDialog
+        isOpen={usecase.isOpen}
+        onClose={usecase.toggleModal}
+        confirmButtonLabel='Disable agent'
+        label='Disable Cashflow Guardian?'
+        onConfirm={usecase.toggleAgentStatus}
+        body={
+          <p className='text-sm '>
+            If you turn off the Cashflow Guardian agent, any customers with
+            active contracts will no longer receive invoices.
+          </p>
+        }
+      />
+    </>
   );
 });
