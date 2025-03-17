@@ -62,6 +62,9 @@ export const GeneralViewsSection = observer(
     const tasksView = store.tableViewDefs.getById(
       store.tableViewDefs.tasksPreset ?? '',
     );
+    const flowsView = store.tableViewDefs.getById(
+      store.tableViewDefs.flowsPreset ?? '',
+    );
 
     return (
       <CollapsibleSection
@@ -130,6 +133,46 @@ export const GeneralViewsSection = observer(
                 />
               )}
             />
+            <RootSidenavItem
+              label='Tasks'
+              dataTest={`side-nav-item-all-tasks`}
+              onClick={() =>
+                handleItemClick(`finder?preset=${tasksView?.value?.id}`)
+              }
+              isActive={checkIsActive('finder', {
+                preset: tasksView?.value?.id ?? '',
+              })}
+              icon={(isActive) => (
+                <Icon
+                  name='clipboard-check'
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
+                />
+              )}
+            />
+            <RootSidenavItem
+              label='Contracts'
+              dataTest={`side-nav-item-all-contracts`}
+              onClick={() =>
+                handleItemClick(`finder?preset=${contractsView?.value?.id}`)
+              }
+              isActive={checkIsActive('finder', {
+                preset: contractsView?.value?.id ?? '',
+              })}
+              icon={(isActive) => (
+                <Icon
+                  strokeWidth={0}
+                  name='signature'
+                  fill='currentColor'
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
+                />
+              )}
+            />
             {upcomingInvoices && (
               <RootSidenavItem
                 label='Invoices'
@@ -152,38 +195,17 @@ export const GeneralViewsSection = observer(
               />
             )}
             <RootSidenavItem
-              label='Contracts'
-              dataTest={`side-nav-item-all-contracts`}
+              label='Flows'
+              dataTest={`side-nav-item-all-flows`}
               onClick={() =>
-                handleItemClick(`finder?preset=${contractsView?.value?.id}`)
+                handleItemClick(`finder?preset=${flowsView?.value?.id}`)
               }
               isActive={checkIsActive('finder', {
-                preset: contractsView?.value?.id ?? '',
+                preset: flowsView?.value?.id ?? '',
               })}
               icon={(isActive) => (
                 <Icon
-                  strokeWidth={0}
-                  name='signature'
-                  fill='currentColor'
-                  className={cn(
-                    'text-grayModern-500',
-                    isActive && 'text-grayModern-700',
-                  )}
-                />
-              )}
-            />
-            <RootSidenavItem
-              label='Tasks'
-              dataTest={`side-nav-item-all-tasks`}
-              onClick={() =>
-                handleItemClick(`finder?preset=${tasksView?.value?.id}`)
-              }
-              isActive={checkIsActive('finder', {
-                preset: tasksView?.value?.id ?? '',
-              })}
-              icon={(isActive) => (
-                <Icon
-                  name='clipboard-check'
+                  name='dataflow-03'
                   className={cn(
                     'text-grayModern-500',
                     isActive && 'text-grayModern-700',
