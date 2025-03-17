@@ -60,18 +60,17 @@ export const FlowSender = observer(
 
     return (
       <div className='flex justify-between items-center'>
-        <div className='flex'>
+        <div className='flex items-center w-full'>
           <Avatar
             size='xs'
             textSize='xxs'
             name={flowSender?.user?.name ?? 'Unnamed'}
+            className={' mr-2 border border-grayModern-200'}
             src={flowSender?.user?.value?.profilePhotoUrl ?? ''}
             icon={<User01 className='text-grayModern-500 size-3' />}
-            className={'w-5 h-5 min-w-5 mr-2 border border-grayModern-200'}
           />
-          <span className='flex-1 text-sm'>
-            {flowSender?.user?.name ?? 'Unnamed'}
-          </span>
+
+          <span className='text-sm'>{flowSender?.user?.name ?? 'Unnamed'}</span>
         </div>
         <div className='flex items-center gap-1'>
           {hasLinkedInNodes && (
