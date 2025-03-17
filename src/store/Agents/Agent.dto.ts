@@ -180,7 +180,10 @@ export class Agent extends Entity<AgentDatum> {
   }
 
   @action
-  public toggleCapabilityStatus(capabilityType: CapabilityType) {
+  public toggleCapabilityStatus(
+    capabilityType: CapabilityType,
+    value?: boolean,
+  ) {
     this.draft();
 
     const foundIndex = this.value.capabilities.findIndex(
@@ -196,7 +199,7 @@ export class Agent extends Entity<AgentDatum> {
     }
 
     this.value.capabilities[foundIndex].active =
-      !this.value.capabilities[foundIndex].active;
+      value ?? !this.value.capabilities[foundIndex].active;
 
     this.commit({ syncOnly: true });
   }
