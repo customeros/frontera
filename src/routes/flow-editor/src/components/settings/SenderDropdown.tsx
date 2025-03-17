@@ -95,7 +95,7 @@ export const SenderDropdown = observer(
             <Button
               size='xs'
               variant='ghost'
-              className='-ml-2'
+              className='ml-[-5px]'
               colorScheme='primary'
               dataTest='flow-add-senders'
               onClick={() => setOpen(true)}
