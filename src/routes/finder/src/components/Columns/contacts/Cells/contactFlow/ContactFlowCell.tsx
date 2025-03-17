@@ -30,7 +30,7 @@ export const ContactFlowCell = observer(
   ({ contactId }: ContactNameCellProps) => {
     const store = useStore();
 
-    const contactStore = store.contacts.value.get(contactId);
+    const contactStore = store.contacts.getById(contactId);
     const itemRef = useRef<HTMLDivElement>(null);
 
     const contactFlows = contactStore?.flows;
