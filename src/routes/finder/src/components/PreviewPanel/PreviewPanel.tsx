@@ -12,9 +12,9 @@ export const PreviewPanel = observer(() => {
   const store = useStore();
   const { tableViewDef } = useCurrentViewDef();
 
-  if (!store.ui.showPreviewCard && !store.ui.isSearching) {
-    return null;
-  }
+  if (!store.ui.showPreviewCard && !store.ui.isSearching) return;
+
+  if (tableViewDef?.value.tableType === TableViewType.Flow) return;
 
   return (
     <PreviewCard

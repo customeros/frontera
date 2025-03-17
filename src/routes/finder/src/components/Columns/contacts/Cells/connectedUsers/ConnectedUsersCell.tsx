@@ -17,7 +17,7 @@ export const ConnectedUsers = observer(({ users }: ConnectedUsersProps) => {
   );
 
   return (
-    <p
+    <div
       className='flex w-fit gap-x-1'
       title={
         usersDisplayed?.length > 1
@@ -33,6 +33,6 @@ export const ConnectedUsers = observer(({ users }: ConnectedUsersProps) => {
           {name}
         </div>
       ))}
-    </p>
+    </div>
   );
 });

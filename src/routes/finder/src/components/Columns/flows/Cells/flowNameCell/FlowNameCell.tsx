@@ -26,6 +26,7 @@ export const FlowNameCell = observer(({ id }: FlowNameCellProps) => {
 
   const flowStore = store.flows.value.get(id);
   const flowName = flowStore?.value?.name;
+  const [value, setValue] = useState(flowStore?.value?.name);
 
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -98,15 +99,18 @@ export const FlowNameCell = observer(({ id }: FlowNameCellProps) => {
             variant='unstyled'
             ref={nameInputRef}
             className='min-h-5'
+            value={value ?? ''}
             placeholder='Flow name'
             onKeyDown={handleEscape}
             onFocus={(e) => e.target.select()}
-            value={flowStore?.value?.name ?? ''}
             onChange={(e) => {
-              flowStore?.update((value) => {
-                set(value, 'name', e.target.value);
+              setValue(e.target.value);
+            }}
+            onBlur={() => {
+              flowStore?.update((v) => {
+                set(v, 'name', value);
 
-                return value;
+                return v;
               });
             }}
           />
