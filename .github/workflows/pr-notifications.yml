@@ -75,7 +75,7 @@ jobs:
                   body: JSON.stringify({
                     channel: slackChannelId,
                     text: message,
-                    unfurl_links: true,
+                    unfurl_links: false,
                   }),
                 });
                 
