@@ -1,7 +1,7 @@
 import { Tracer } from '@infra/tracer';
 import { injectable } from '@infra/container';
 import { type Agent } from '@store/Agents/Agent.dto';
-import { AgentRepository } from '@infra/repositories/agent';
+import { AgentRepository } from '@infra/repositories/core/agent';
 
 import { unwrap } from '@utils/unwrap';
 import { AgentType } from '@graphql/types';

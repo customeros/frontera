@@ -2,11 +2,11 @@ import { runInAction } from 'mobx';
 import { RootStore } from '@store/root';
 import { injectable } from '@infra/container';
 import { TagStore } from '@store/Tags/Tag.store';
+import { OrganizationRepository } from '@infra/repositories/core/organization';
 import {
   Organization,
   OrganizationDatum,
 } from '@store/Organizations/Organization.dto';
-import { OrganizationRepository } from '@infra/repositories/organization/organization.repository.ts';
 
 import { unwrap } from '@utils/unwrap';
 import {

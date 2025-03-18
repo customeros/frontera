@@ -1,6 +1,6 @@
 import { RootStore } from '@store/root';
 import { injectable } from '@infra/container';
-import { SettingsRepository } from '@infra/repositories/settings';
+import { SettingsRepository } from '@infra/repositories/core/settings';
 
 import { unwrap } from '@utils/unwrap';
 

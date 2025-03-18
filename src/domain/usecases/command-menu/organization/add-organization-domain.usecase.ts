@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
 import { OrganizationService } from '@domain/services';
 import { Organization } from '@store/Organizations/Organization.dto';
-import { OrganizationRepository } from '@infra/repositories/organization/organization.repository.ts';
+import { OrganizationRepository } from '@infra/repositories/core/organization/organization.repository';
 
 export class AddOrganizationDomainCase {
   @observable accessor inputValue: string = '';

@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import { Entity } from '@store/record';
 import { computed, observable } from 'mobx';
-import { TaskDatum } from '@infra/repositories/task';
+import { TaskDatum } from '@infra/repositories/core/task';
 import { TasksService } from '@domain/services/task/tasks.service';
 
 import { TaskStatus } from '@graphql/types';

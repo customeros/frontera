@@ -2,8 +2,8 @@ import { match } from 'ts-pattern';
 import { RootStore } from '@store/root';
 import { when, action, reaction, computed, observable } from 'mobx';
 import { Organization } from '@store/Organizations/Organization.dto';
-import { OrganizationRepository } from '@infra/repositories/organization';
-import { SearchGlobalOrganizationsQuery } from '@infra/repositories/organization/queries/searchGlobalOrganizations.generated';
+import { OrganizationRepository } from '@infra/repositories/core/organization';
+import { SearchGlobalOrganizationsQuery } from '@infra/repositories/core/organization/queries/searchGlobalOrganizations.generated';
 
 import { validateUrl } from '@utils/url';
 import {

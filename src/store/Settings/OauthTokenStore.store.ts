@@ -2,7 +2,7 @@ import type { RootStore } from '@store/root';
 
 import { Transport } from '@infra/transport';
 import { runInAction, makeAutoObservable } from 'mobx';
-import { CommonRepository } from '@infra/repositories/common';
+import { CommonRepository } from '@infra/repositories/core/common';
 
 import { MailboxProvider } from '@shared/types/__generated__/graphql.types';
 

@@ -4,7 +4,7 @@ import { injectable } from '@infra/container';
 import {
   CommonRepository,
   WebhookIntegration,
-} from '@infra/repositories/common';
+} from '@infra/repositories/core/common';
 
 import { unwrap } from '@utils/unwrap';
 

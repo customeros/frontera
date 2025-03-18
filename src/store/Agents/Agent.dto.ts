@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import { Entity } from '@store/record';
 import { Tracer } from '@infra/tracer';
 import { action, computed, observable } from 'mobx';
-import { type AgentDatum } from '@infra/repositories/agent';
+import { type AgentDatum } from '@infra/repositories/core/agent';
 
 import { IconName } from '@ui/media/Icon';
 import {

@@ -1,7 +1,7 @@
 import { merge } from 'lodash';
 import { Entity } from '@store/record';
 import { action, observable } from 'mobx';
-import { GetUsersQuery } from '@infra/repositories/user/quaries/getUsers.generated';
+import { GetUsersQuery } from '@infra/repositories/core/user/queries/getUsers.generated';
 
 import { UserUpdateInput } from '@shared/types/__generated__/graphql.types';
 

@@ -1,7 +1,7 @@
 import { RootStore } from '@store/root';
 import { User } from '@store/Users/User.dto';
 import { injectable } from '@infra/container';
-import { UserRepository } from '@infra/repositories/user';
+import { UserRepository } from '@infra/repositories/core/user';
 
 import { unwrap } from '@utils/unwrap';
 

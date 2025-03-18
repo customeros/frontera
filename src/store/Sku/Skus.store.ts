@@ -4,8 +4,8 @@ import type { Transport } from '@infra/transport';
 import { Store } from '@store/_store';
 import { Sku } from '@store/Sku/Sku.dto';
 import { action, computed, runInAction } from 'mobx';
-import { SkuRepository } from '@infra/repositories/sku';
-import { SkuDatum } from '@infra/repositories/sku/sku.datum';
+import { SkuRepository } from '@infra/repositories/core/sku';
+import { SkuDatum } from '@infra/repositories/core/sku/sku.datum';
 
 import { SkuInput } from '@graphql/types';
 
