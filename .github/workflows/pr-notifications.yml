@@ -99,7 +99,7 @@ jobs:
                 // Reactions to manage
                 const REACTIONS = {
                   APPROVED: 'white_check_mark',
-                  MERGED: 'merged',
+                  MERGED: 'partymerge',
                   CLOSED: 'x'
                 };
                 
