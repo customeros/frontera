@@ -1,0 +1,76 @@
+name: PR Notifications
+
+on:
+  pull_request:
+    types: [opened, review_submitted, closed]
+
+jobs:
+  notify:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Handle PR Events
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { eventName, payload } = context;
+            const pr = payload.pull_request;
+            const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
+            const slackChannel = process.env.SLACK_CHANNEL || '#github-notifications';
+            
+            let message = '';
+            let emoji = '';
+            
+            switch (eventName) {
+              case 'opened':
+                message = `🆕 New PR: <${pr.html_url}|${pr.title}> by @${pr.user.login}`;
+                emoji = '👀';
+                break;
+              case 'review_submitted':
+                if (payload.review.state === 'approved') {
+                  message = `✅ PR Approved: <${pr.html_url}|${pr.title}> by @${payload.review.user.login}`;
+                  emoji = '✅';
+                }
+                break;
+              case 'closed':
+                if (pr.merged) {
+                  message = `🎉 PR Merged: <${pr.html_url}|${pr.title}> by @${pr.merged_by.login}`;
+                  emoji = '🎉';
+                }
+                break;
+            }
+            
+            if (message) {
+              const response = await fetch(slackWebhookUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  channel: slackChannel,
+                  text: message,
+                  unfurl_links: true,
+                }),
+              });
+              
+              if (response.ok && emoji) {
+                const result = await response.json();
+                const ts = result.ts;
+                
+                // Add reaction to the message
+                await fetch(slackWebhookUrl, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    channel: slackChannel,
+                    timestamp: ts,
+                    name: emoji,
+                  }),
+                });
+              }
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }} 
