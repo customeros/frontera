@@ -16,61 +16,115 @@ jobs:
             const { eventName, payload } = context;
             const pr = payload.pull_request;
             const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
-            const slackChannel = process.env.SLACK_CHANNEL || '#github-notifications';
+            const slackApiToken = process.env.SLACK_API_TOKEN;
+            const slackChannelId = process.env.SLACK_CHANNEL_ID;
+            
+            if (!slackWebhookUrl) {
+              console.error('SLACK_WEBHOOK_URL is not defined. Please add it to your repository secrets.');
+              return;
+            }
+            
+            if (!slackChannelId) {
+              console.error('SLACK_CHANNEL_ID is not defined. Please add it to your repository secrets.');
+              return;
+            }
+            
+            if (!slackApiToken) {
+              console.error('SLACK_API_TOKEN is not defined. Please add it to your repository secrets to enable reactions.');
+            }
             
             let message = '';
             let emoji = '';
             
             switch (eventName) {
-              case 'opened':
-                message = `🆕 New PR: <${pr.html_url}|${pr.title}> by @${pr.user.login}`;
-                emoji = '👀';
-                break;
-              case 'review_submitted':
-                if (payload.review.state === 'approved') {
-                  message = `✅ PR Approved: <${pr.html_url}|${pr.title}> by @${payload.review.user.login}`;
-                  emoji = '✅';
+              case 'pull_request':
+                if (payload.action === 'opened') {
+                  message = `🆕 New PR: <${pr.html_url}|${pr.title}> by @${pr.user.login}`;
+                  emoji = 'eyes';
+                } else if (payload.action === 'closed') {
+                  if (pr.merged) {
+                    message = `🎉 PR Merged: <${pr.html_url}|${pr.title}> by @${pr.merged_by.login}`;
+                    emoji = 'partymerge';
+                  }
                 }
                 break;
-              case 'closed':
-                if (pr.merged) {
-                  message = `🎉 PR Merged: <${pr.html_url}|${pr.title}> by @${pr.merged_by.login}`;
-                  emoji = '🎉';
+              case 'pull_request_review':
+                if (payload.review.state === 'approved') {
+                  message = `✅ PR Approved: <${pr.html_url}|${pr.title}> by @${payload.review.user.login}`;
+                  emoji = 'white_check_mark';
                 }
                 break;
             }
             
             if (message) {
-              const response = await fetch(slackWebhookUrl, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  channel: slackChannel,
-                  text: message,
-                  unfurl_links: true,
-                }),
-              });
-              
-              if (response.ok && emoji) {
-                const result = await response.json();
-                const ts = result.ts;
-                
-                // Add reaction to the message
-                await fetch(slackWebhookUrl, {
+              try {
+                // Post message using webhook
+                const response = await fetch(slackWebhookUrl, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
                   },
                   body: JSON.stringify({
-                    channel: slackChannel,
-                    timestamp: ts,
-                    name: emoji,
+                    channel: slackChannelId, // Use channel ID here
+                    text: message,
+                    unfurl_links: true,
                   }),
                 });
+                
+                if (!response.ok) {
+                  throw new Error(`Failed to post message: ${response.status} ${response.statusText}`);
+                }
+                
+                console.log('Message posted successfully to Slack');
+                
+                // Add reaction using Web API (if token is provided)
+                if (slackApiToken && emoji) {
+                  try {
+                    // Get latest message in the channel
+                    const historyResponse = await fetch(`https://slack.com/api/conversations.history?channel=${slackChannelId}&limit=1`, {
+                      headers: {
+                        'Authorization': `Bearer ${slackApiToken}`,
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                    });
+                    
+                    const historyData = await historyResponse.json();
+                    if (historyData.ok && historyData.messages.length > 0) {
+                      const latestMessage = historyData.messages[0];
+                      const timestamp = latestMessage.ts;
+                      
+                      // Now we can add the reaction
+                      const reactionResponse = await fetch('https://slack.com/api/reactions.add', {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${slackApiToken}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          channel: slackChannelId, // Use channel ID here
+                          name: emoji,
+                          timestamp: timestamp,
+                        }),
+                      });
+                      
+                      const reactionData = await reactionResponse.json();
+                      if (reactionData.ok) {
+                        console.log(`Reaction ${emoji} added successfully`);
+                      } else {
+                        console.error(`Failed to add reaction: ${reactionData.error}`);
+                      }
+                    } else {
+                      console.error('Could not retrieve latest message to add reaction');
+                    }
+                  } catch (reactionError) {
+                    console.error('Error adding reaction:', reactionError.message);
+                  }
+                }
+              } catch (error) {
+                console.error('Error posting message to Slack:', error.message);
               }
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }} 
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
