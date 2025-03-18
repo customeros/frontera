@@ -225,6 +225,19 @@ async function createServer() {
     followRedirects: true,
   });
 
+  const mailstackApiGqlProxy = createProxyMiddleware({
+    pathFilter: '/mailstack',
+    pathRewrite: { '^/mailstack': '' },
+    target: process.env.MAILSTACK_API_PATH + '/query',
+    changeOrigin: true,
+    headers: {
+      'X-CUSTOMER-OS-API-KEY': process.env.MAILSTACK_API_KEY,
+    },
+    logger: console,
+    preserveHeaderKeyCase: true,
+    followRedirects: true,
+  });
+
   const customerOsApiRestProxy = createProxyMiddleware({
     pathFilter: '/cos',
     pathRewrite: { '^/cos': '' },
@@ -285,6 +298,7 @@ async function createServer() {
   });
 
   app.use(customerOsApiGqlProxy);
+  app.use(mailstackApiGqlProxy);
   app.use(customerOsApiRestProxy);
   app.use(customerOsApiRestProxyForTenant);
   app.use(internalApiProxy);

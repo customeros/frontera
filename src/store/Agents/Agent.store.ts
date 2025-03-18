@@ -3,7 +3,10 @@ import { Tracer } from '@infra/tracer';
 import { action, runInAction } from 'mobx';
 import { type RootStore } from '@store/root';
 import { type Transport } from '@infra/transport';
-import { type AgentDatum, AgentRepository } from '@infra/repositories/agent';
+import {
+  type AgentDatum,
+  AgentRepository,
+} from '@infra/repositories/core/agent';
 
 import { unwrap } from '@utils/unwrap';
 import { AgentType } from '@graphql/types';

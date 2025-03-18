@@ -1,5 +1,5 @@
 // import { expect } from 'vitest';
-import { OrganizationRepository } from '@infra/repositories/organization';
+import { OrganizationRepository } from '@infra/repositories/core/organization';
 import { ContactService } from '@store/Contacts/__service__/Contacts.service.ts';
 import { contactsTestState } from '@store/Contacts/__tests__/contactsTestState.ts';
 import { organizationsTestState } from '@store/Organizations/__tests__/organizationsTestState.ts';

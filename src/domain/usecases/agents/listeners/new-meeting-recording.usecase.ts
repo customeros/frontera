@@ -2,8 +2,8 @@ import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
 import { Agent } from '@store/Agents/Agent.dto';
 import { action, computed, observable } from 'mobx';
-import { WebhookIntegration } from '@infra/repositories/common';
 import { AgentService } from '@domain/services/agent/agent.service';
+import { WebhookIntegration } from '@infra/repositories/core/common';
 import { CommonService } from '@domain/services/common/common.service';
 
 import { AgentListenerEvent } from '@graphql/types';

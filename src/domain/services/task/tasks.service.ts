@@ -1,7 +1,7 @@
 import { RootStore } from '@store/root';
 import { Task } from '@store/Tasks/Task.dto';
 import { injectable } from '@infra/container';
-import { TaskRepository } from '@infra/repositories/task';
+import { TaskRepository } from '@infra/repositories/core/task';
 
 import { unwrap } from '@utils/unwrap';
 

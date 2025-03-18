@@ -1,0 +1,8 @@
+query TestThreadQuery($threadId: String!) {
+          getThreadMetadata(threadId: $threadId) {
+            id
+            summary
+            participants
+            hasAttachments
+          }
+        }

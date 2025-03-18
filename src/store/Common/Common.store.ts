@@ -5,7 +5,7 @@ import {
   CommonRepository,
   SlackChannelDatum,
   TenantImpersonateDatum,
-} from '@infra/repositories/common';
+} from '@infra/repositories/core/common';
 
 import { unwrap } from '@utils/unwrap';
 

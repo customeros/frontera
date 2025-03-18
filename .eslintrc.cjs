@@ -97,6 +97,7 @@ module.exports = {
           '@utils/**',
           '@shared/**',
           '@graphql/types',
+          '@graphqlMailstack/types',
           '@organization/**',
           '@organizations/**',
           '@customerMap/**',

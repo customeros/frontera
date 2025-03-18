@@ -2,7 +2,7 @@ import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
 import { observable, runInAction } from 'mobx';
-import { TaskDatum, TaskRepository } from '@infra/repositories/task';
+import { TaskDatum, TaskRepository } from '@infra/repositories/core/task';
 
 import { Task } from './Task.dto';
 import { TeamViews } from './__views__/Team.view';

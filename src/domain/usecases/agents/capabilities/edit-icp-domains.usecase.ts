@@ -4,8 +4,8 @@ import { Agent } from '@store/Agents/Agent.dto';
 import { when, action, reaction, computed, observable } from 'mobx';
 import { AgentService } from '@domain/services/agent/agent.service';
 import { Organization } from '@store/Organizations/Organization.dto';
-import { OrganizationRepository } from '@infra/repositories/organization';
-import { SearchGlobalOrganizationsQuery } from '@infra/repositories/organization/queries/searchGlobalOrganizations.generated';
+import { OrganizationRepository } from '@infra/repositories/core/organization';
+import { SearchGlobalOrganizationsQuery } from '@infra/repositories/core/organization/queries/searchGlobalOrganizations.generated';
 
 import { validateUrl } from '@utils/url';
 import { CapabilityType } from '@graphql/types';

@@ -1,6 +1,6 @@
 import { RootStore } from '@store/root';
 import { injectable } from '@infra/container';
-import { SkuRepository } from '@infra/repositories/sku';
+import { SkuRepository } from '@infra/repositories/core/sku';
 
 import { unwrap } from '@utils/unwrap';
 import { SkuInput } from '@shared/types/__generated__/graphql.types';

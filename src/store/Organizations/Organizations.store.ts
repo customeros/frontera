@@ -4,8 +4,8 @@ import type { Transport } from '@infra/transport';
 import set from 'lodash/set';
 import { Store } from '@store/_store';
 import { action, computed, observable, runInAction } from 'mobx';
-import { OrganizationRepository } from '@infra/repositories/organization';
-import { SaveOrganizationMutationVariables } from '@infra/repositories/organization/mutations/saveOrganization.generated';
+import { OrganizationRepository } from '@infra/repositories/core/organization';
+import { SaveOrganizationMutationVariables } from '@infra/repositories/core/organization/mutations/saveOrganization.generated';
 
 import {
   relationshipStageMap,

@@ -1,8 +1,8 @@
 import { it, expect, describe } from 'vitest';
 import { Transport } from '@infra/transport.ts';
 import { VitestHelper } from '@store/vitest-helper.ts';
-import { UserRepository } from '@infra/repositories/user';
-import { OrganizationRepository } from '@infra/repositories/organization';
+import { UserRepository } from '@infra/repositories/core/user';
+import { OrganizationRepository } from '@infra/repositories/core/organization';
 
 import {
   Currency,

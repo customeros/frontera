@@ -1,6 +1,6 @@
 import type { User } from '@store/Users/User.dto';
-import type { GetOrganizationsByIdsQuery } from '@infra/repositories/organization/queries/getOrganizationsByIds.generated';
-import type { SaveOrganizationMutationVariables } from '@infra/repositories/organization/mutations/saveOrganization.generated';
+import type { GetOrganizationsByIdsQuery } from '@infra/repositories/core/organization/queries/getOrganizationsByIds.generated';
+import type { SaveOrganizationMutationVariables } from '@infra/repositories/core/organization/mutations/saveOrganization.generated';
 
 import { set } from 'lodash';
 import merge from 'lodash/merge';

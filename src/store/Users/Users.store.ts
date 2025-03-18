@@ -3,7 +3,7 @@ import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
 import { User, UserDatum } from '@store/Users/User.dto';
-import { UserRepository } from '@infra/repositories/user/user.repository';
+import { UserRepository } from '@infra/repositories/core/user/user.repository';
 
 export class UsersStore extends Store<UserDatum, User> {
   private repository = UserRepository.getInstance();

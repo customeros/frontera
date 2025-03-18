@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import { Entity } from '@store/record';
 import { action, computed, observable } from 'mobx';
-import { SkuDatum } from '@infra/repositories/sku/sku.datum';
+import { SkuDatum } from '@infra/repositories/core/sku/sku.datum';
 
 import { SkuType, SkuInput } from '@graphql/types';
 

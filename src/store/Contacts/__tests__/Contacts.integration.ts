@@ -1,6 +1,6 @@
 import { it, expect, describe } from 'vitest';
 import { VitestHelper, generateEmail } from '@store/vitest-helper.ts';
-import { OrganizationRepository } from '@infra/repositories/organization/organization.repository.ts';
+import { OrganizationRepository } from '@infra/repositories/core/organization/organization.repository.ts';
 
 import {
   EmailLabel,
