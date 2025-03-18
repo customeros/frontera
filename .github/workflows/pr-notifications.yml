@@ -75,6 +75,7 @@ jobs:
                     channel: slackChannelId,
                     text: message,
                     unfurl_links: false,
+                    unfurl_media: false,
                     username: pr.user.name,
                     icon_url: pr.user.avatar_url
                   }),
