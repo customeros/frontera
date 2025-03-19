@@ -257,7 +257,8 @@ export type IconName =
   | 'clipboard-check'
   | 'calendar-plus-02'
   | 'clipboard-text'
-  | 'circle';
+  | 'circle'
+  | 'layout-right-drawer-panel';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

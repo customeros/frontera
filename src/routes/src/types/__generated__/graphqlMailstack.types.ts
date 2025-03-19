@@ -20,21 +20,21 @@ export type Incremental<T> =
     };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  Time: { input: any; output: any };
   ID: { input: string; output: string };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
   String: { input: string; output: string };
   Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  Time: { input: any; output: any };
 };
 
 export type Attachment = {
   __typename?: 'Attachment';
-  id: Scalars['String']['output'];
-  url: Scalars['String']['output'];
-  filename: Scalars['String']['output'];
-  messageId: Scalars['String']['output'];
   contentType: Scalars['String']['output'];
+  filename: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  messageId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export enum EmailDirection {
@@ -43,40 +43,40 @@ export enum EmailDirection {
 }
 
 export type EmailMessage = {
-  direction: EmailDirection;
   __typename?: 'EmailMessage';
-  id: Scalars['String']['output'];
-  body: Scalars['String']['output'];
-  from: Scalars['String']['output'];
-  subject: Scalars['String']['output'];
-  receivedAt: Scalars['Time']['output'];
-  threadId: Scalars['String']['output'];
-  mailboxId: Scalars['String']['output'];
-  to: Array<Scalars['String']['output']>;
   attachmentCount: Scalars['Int']['output'];
-  cc?: Maybe<Array<Scalars['String']['output']>>;
   bcc?: Maybe<Array<Scalars['String']['output']>>;
+  body: Scalars['String']['output'];
+  cc?: Maybe<Array<Scalars['String']['output']>>;
+  direction: EmailDirection;
+  from: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  mailboxId: Scalars['String']['output'];
+  receivedAt: Scalars['Time']['output'];
+  subject: Scalars['String']['output'];
+  threadId: Scalars['String']['output'];
+  to: Array<Scalars['String']['output']>;
 };
 
 export type EmailThread = {
   __typename?: 'EmailThread';
   id: Scalars['String']['output'];
-  userId: Scalars['String']['output'];
   isDone: Scalars['Boolean']['output'];
-  subject: Scalars['String']['output'];
-  summary: Scalars['String']['output'];
   isViewed: Scalars['Boolean']['output'];
-  mailboxId: Scalars['String']['output'];
+  lastMessageAt?: Maybe<Scalars['Time']['output']>;
   lastSender: Scalars['String']['output'];
   lastSenderDomain: Scalars['String']['output'];
-  lastMessageAt?: Maybe<Scalars['Time']['output']>;
+  mailboxId: Scalars['String']['output'];
+  subject: Scalars['String']['output'];
+  summary: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
+  getEmailsByThread: Array<EmailMessage>;
   getThreadMetadata: ThreadMetadata;
   getThreadsByUser: Array<EmailThread>;
-  getEmailsByThread: Array<EmailMessage>;
 };
 
 export type QueryGetEmailsByThreadArgs = {
@@ -93,9 +93,9 @@ export type QueryGetThreadsByUserArgs = {
 
 export type ThreadMetadata = {
   __typename?: 'ThreadMetadata';
-  id: Scalars['String']['output'];
-  summary: Scalars['String']['output'];
-  hasAttachments: Scalars['Boolean']['output'];
   attachments?: Maybe<Array<Maybe<Attachment>>>;
+  hasAttachments: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
   participants: Array<Scalars['String']['output']>;
+  summary: Scalars['String']['output'];
 };
