@@ -1,10 +1,10 @@
-import * as Types from './../../../../../routes/src/types/__generated__/graphqlMailstack.types';
+import * as Types from '../../../../../routes/src/types/__generated__/graphqlMailstack.types';
 
-export type TestThreadQueryQueryVariables = Types.Exact<{
+export type GetThreadQueryQueryVariables = Types.Exact<{
   threadId: Types.Scalars['String']['input'];
 }>;
 
-export type TestThreadQueryQuery = {
+export type GetThreadQueryQuery = {
   __typename?: 'Query';
   getThreadMetadata: {
     __typename?: 'ThreadMetadata';
