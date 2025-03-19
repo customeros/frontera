@@ -397,7 +397,7 @@ async function createServer() {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '30d',
+          expiresIn: '7 days',
         },
       );
 
@@ -523,6 +523,7 @@ async function createServer() {
           idToken: tokens.id_token,
         },
       });
+
       const loginResponse = await loginResponsePromise.json();
 
       const integrations_token = createIntegrationAppToken(
@@ -549,7 +550,7 @@ async function createServer() {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '30d',
+          expiresIn: '7 days',
         },
       );
 
@@ -657,7 +658,7 @@ async function createServer() {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '30d',
+          expiresIn: '7 days',
         },
       );
 
