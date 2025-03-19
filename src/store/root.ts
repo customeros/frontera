@@ -22,6 +22,7 @@ import { MailboxesStore } from './Settings/Mailboxes.store';
 import { ContractsStore } from './Contracts/Contracts.store';
 import { RemindersStore } from './Reminders/Reminders.store';
 import { JobRolesStore } from './JobRoles/JobRoles.store.ts';
+import { EmailsInbox } from './EmailInbox/EmailsInbox.store';
 import { IndustriesStore } from './Industries/Industries.store';
 import { DocumentsStore } from './Documents/Documents.store.ts';
 import { CustomFieldsStore } from './Settings/CustomFields.store';
@@ -59,6 +60,7 @@ export class RootStore {
   session: SessionStore;
   invoices: InvoicesStore;
   contacts: ContactsStore;
+  emailsInbox: EmailsInbox;
   flowSenders: FlowSendersStore;
   contracts: ContractsStore;
   reminders: RemindersStore;
@@ -104,6 +106,7 @@ export class RootStore {
     this.contacts = new ContactsStore(this, this.transport);
     this.contracts = new ContractsStore(this, this.transport);
     this.reminders = new RemindersStore(this, this.transport);
+    this.emailsInbox = new EmailsInbox(this, this.transport);
     this.customFields = new CustomFieldsStore(this, this.transport);
     this.globalCache = new GlobalCacheStore(this, this.transport);
     this.flowSenders = new FlowSendersStore(this, this.transport);
@@ -151,6 +154,7 @@ export class RootStore {
         this.mailboxes.bootstrap(),
         this.tags.bootstrap(),
         this.opportunities.bootstrap(),
+        this.emailsInbox.bootstrap(),
         this.invoices.bootstrap(),
         this.contracts.bootstrap(),
         this.externalSystemInstances.bootstrap(),

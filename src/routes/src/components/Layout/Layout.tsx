@@ -20,6 +20,7 @@ const knownPaths = [
   '/welcome',
   '/agents',
   '/flow-editor',
+  '/inbox',
 ];
 
 export const Layout = () => {
@@ -36,6 +37,7 @@ export const Layout = () => {
       P.string.startsWith('/welcome'),
       P.string.startsWith('/agents'),
       P.string.startsWith('/organization'),
+      P.string.startsWith('/inbox'),
       () => <RootSidenav />,
     )
     .with(P.string.startsWith('/settings'), () => <SettingsSidenav />)
@@ -52,6 +54,7 @@ export const Layout = () => {
       P.string.startsWith('/welcome'),
       P.string.startsWith('/agents'),
       P.string.startsWith('/organization'),
+      P.string.startsWith('/inbox'),
       () => true,
     )
     .otherwise(() => false);

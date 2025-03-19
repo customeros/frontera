@@ -1,0 +1,14 @@
+query getInboxQuery($userId: String!) {
+  getThreadsByUser(userId: $userId) {
+    id
+    isDone
+    isViewed
+    lastMessageAt
+    lastSender
+    lastSenderDomain
+    mailboxId
+    subject
+    summary
+    userId
+  }
+}
