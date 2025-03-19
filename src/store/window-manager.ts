@@ -24,10 +24,20 @@ export class WindowManager {
     );
 
     window.addEventListener('focus', () => {
-      // todo call graphql
-      // query version {
-      //   version
-      // }
+      if (this.root.session.value.exp) {
+        const expirationDate = new Date(this.root.session.value.exp * 1000);
+        const currentDate = new Date();
+        const differenceInDays =
+          (expirationDate.getTime() - currentDate.getTime()) /
+          (1000 * 3600 * 24);
+
+        if (differenceInDays > 7) {
+          this.root.session.clearSession();
+          setTimeout(() => {
+            window.location.href = '/auth/signin';
+          }, 1000);
+        }
+      }
     });
     window.addEventListener('blur', () => {
       this.persistLastActiveAt();

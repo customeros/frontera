@@ -115,18 +115,7 @@ export class SessionStore {
 
     if (this.isAuthenticated) {
       // Refresh session data
-
-      if (
-        !!this.value.exp &&
-        this.value.exp > Date.now() / 1000 + 7 * 24 * 60 * 60
-      ) {
-        this.clearSession();
-        window.location.href = '/auth/signin';
-
-        return;
-      } else {
-        await this.fetchSession();
-      }
+      await this.fetchSession();
 
       return;
     }

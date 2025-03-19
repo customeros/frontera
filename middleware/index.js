@@ -397,7 +397,7 @@ async function createServer() {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '7 days',
+          expiresIn: '7d',
         },
       );
 
@@ -550,7 +550,7 @@ async function createServer() {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '7 days',
+          expiresIn: '7d',
         },
       );
 
@@ -658,7 +658,7 @@ async function createServer() {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '7 days',
+          expiresIn: '7d',
         },
       );
 
