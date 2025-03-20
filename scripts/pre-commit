@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd packages/apps/frontera
 npx lint-staged
 
 if [ $? -ne 0 ]; then
@@ -8,4 +7,4 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-exit 0 
+exit 0

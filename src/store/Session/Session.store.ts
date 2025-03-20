@@ -86,11 +86,15 @@ export class SessionStore {
 
     autorun(() => {
       if (this.sessionToken) {
-        this.transport.setHeaders({
+        const headers = {
           Authorization: `Bearer ${this.sessionToken}`,
           'X-Openline-TENANT': this.value.tenant ?? '',
           'X-Openline-USERNAME': this.value.profile.email ?? '',
-        });
+        };
+
+        this.transport.setHeaders(headers);
+        Transport.getInstance('mailstack').setHeaders(headers);
+        Transport.getInstance('realtime').setHeaders(headers);
 
         Persister.setTenant(this.value.tenant);
         this.persist();

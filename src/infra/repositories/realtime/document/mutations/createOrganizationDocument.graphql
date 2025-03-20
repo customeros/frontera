@@ -1,0 +1,10 @@
+mutation createOrganizationDocument($input: CreateDocumentInput!) {
+  createDocument(input: $input) {
+    id
+    name
+    tenant
+    userId
+    insertedAt
+    updatedAt
+  }
+}

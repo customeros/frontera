@@ -1,0 +1,10 @@
+query organizationDocuments($organizationId: ID!) {
+  organizationDocuments(organizationId: $organizationId) {
+    id
+    name
+    tenant
+    userId
+    insertedAt
+    updatedAt
+  }
+}
