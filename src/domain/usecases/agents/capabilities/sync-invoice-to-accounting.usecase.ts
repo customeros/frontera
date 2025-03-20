@@ -22,6 +22,8 @@ export class SyncInvoiceToAccountingUsecase {
   @observable accessor isRevoking = false;
   @observable accessor isAccountingMethodInfoOpen = false;
   @observable accessor accountingMethod: AccountingMethod = 'cash';
+  @observable accessor arIncomeAccountName: string = '';
+  @observable accessor paymentIncomeAccountName: string = '';
 
   constructor(private agentId: string) {
     this.init = this.init.bind(this);
@@ -32,6 +34,10 @@ export class SyncInvoiceToAccountingUsecase {
     this.toggleAccountingMethod = this.toggleAccountingMethod.bind(this);
     this.toggleAccountingMethodInfo =
       this.toggleAccountingMethodInfo.bind(this);
+    this.setArIncomeAccountName = this.setArIncomeAccountName.bind(this);
+    this.setPaymentIncomeAccountName =
+      this.setPaymentIncomeAccountName.bind(this);
+    this.saveConfig = this.saveConfig.bind(this);
   }
 
   @computed
@@ -70,6 +76,16 @@ export class SyncInvoiceToAccountingUsecase {
     span.end({
       isRevokeOpen: this.isRevokeOpen,
     });
+  }
+
+  @action
+  public setArIncomeAccountName(name: string) {
+    this.arIncomeAccountName = name;
+  }
+
+  @action
+  public setPaymentIncomeAccountName(name: string) {
+    this.paymentIncomeAccountName = name;
   }
 
   @action
@@ -167,6 +183,27 @@ export class SyncInvoiceToAccountingUsecase {
   }
 
   @action
+  public async saveConfig() {
+    const span = Tracer.span('SyncInvoiceToAccountingUsecase.saveConfig');
+
+    const [res, err] = await this.agentService.saveAgent(this.agent!);
+
+    if (err) {
+      console.error(
+        'SyncInvoiceToAccountingUsecase.saveConfig: Error saving agent',
+        err,
+      );
+    }
+
+    if (res) {
+      this.agent?.put(res.agent_Save);
+      this.init();
+    }
+
+    span.end();
+  }
+
+  @action
   public async execute() {
     const span = Tracer.span('SyncInvoiceToAccountingUsecase.execute');
 
@@ -258,9 +295,12 @@ export class SyncInvoiceToAccountingUsecase {
       return;
     }
 
-    const config = Agent.parseConfig<'quickbooks' | 'accountingMethodAccrual'>(
-      this.capability.config,
-    );
+    const config = Agent.parseConfig<
+      | 'quickbooks'
+      | 'accountingMethodAccrual'
+      | 'arIncomeAccountName'
+      | 'paymentIncomeAccountName'
+    >(this.capability.config);
 
     if (!config) {
       console.error('SyncInvoiceToAccountingUsecase.init: Config is required');
@@ -282,7 +322,9 @@ export class SyncInvoiceToAccountingUsecase {
     this.accountingMethod = config.accountingMethodAccrual.value
       ? 'accrual'
       : 'cash';
-
+    this.arIncomeAccountName = config.arIncomeAccountName.value as string;
+    this.paymentIncomeAccountName = config.paymentIncomeAccountName
+      .value as string;
     span.end({
       isQuickbooksConnected: this.isQuickbooksConnected,
       isEnabled: this.isEnabled,

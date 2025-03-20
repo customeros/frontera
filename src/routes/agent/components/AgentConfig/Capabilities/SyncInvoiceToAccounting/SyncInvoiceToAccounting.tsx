@@ -7,6 +7,7 @@ import { SyncInvoiceToAccountingUsecase } from '@domain/usecases/agents/capabili
 import { cn } from '@ui/utils/cn';
 import { Logo } from '@ui/media/Logo';
 import { Icon } from '@ui/media/Icon';
+import { Input } from '@ui/form/Input';
 import { Switch } from '@ui/form/Switch';
 import { Spinner } from '@ui/feedback/Spinner';
 import { Button } from '@ui/form/Button/Button';
@@ -115,6 +116,28 @@ export const SyncInvoiceToAccounting = observer(() => {
                 Accrual
               </Button>
             </ButtonGroup>
+          </div>
+          <div className='flex flex-col gap-2 mt-2'>
+            <label className='text-sm font-medium'>AR income account</label>
+            <Input
+              size='sm'
+              variant='outline'
+              onBlur={usecase.saveConfig}
+              value={usecase.arIncomeAccountName}
+              onChange={(e) => usecase.setArIncomeAccountName(e.target.value)}
+            />
+            <label className='text-sm font-medium'>
+              Payment income account
+            </label>
+            <Input
+              size='sm'
+              variant='outline'
+              onBlur={usecase.saveConfig}
+              value={usecase.paymentIncomeAccountName}
+              onChange={(e) =>
+                usecase.setPaymentIncomeAccountName(e.target.value)
+              }
+            />
           </div>
         </>
       )}
