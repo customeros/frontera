@@ -8,21 +8,31 @@ import { Menu } from '@ui/overlay/Menu/Menu';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
+import { CreatebleEmail } from '../CreatebleEmail.tsx/CreatebleEmail';
+const usecase = new MailboxListUsecase();
+
 export const MailboxList = observer(() => {
   const store = useStore();
 
   const mailboxList = store.mailboxes.toArray();
-  const usecase = new MailboxListUsecase();
-
   return (
     <div className='flex items-start'>
       <div className='flex flex-col  mb-[-1px] mt-0 flex-1 overflow-visible'>
         <div className='flex flex-col'>
-          {usecase.bccEnabled && (
-            <div>
+          {usecase.ccEnabled && (
+            <div className='flex items-center'>
               <span className='text-grayModern-700 font-semibold text-sm mr-1'>
                 CC:
               </span>
+              <CreatebleEmail
+                value={[{ label: 'valoaremare', value: 'valoaremare' }]}
+                placeholder='Add CC'
+                options={[]}
+                onChange={() => {}}
+                onCreate={() => {}}
+                inputValue={'valoaremare'}
+                setInputValue={() => {}}
+              />
             </div>
           )}
           {usecase.bccEnabled && (
@@ -38,17 +48,22 @@ export const MailboxList = observer(() => {
           <Menu>
             <MenuButton asChild>
               <Button
-                size='xxs'
+                size='xs'
                 variant='ghost'
                 className='ml-[-3px]'
                 rightIcon={<Icon name='chevron-down' />}
               >
-                Nic Fassbender • nic@acme.com
+                {usecase.from}
               </Button>
             </MenuButton>
             <MenuList>
-              {mailboxList.map((mailbox) => (
-                <MenuItem key={mailbox.id}>{mailbox.value.mailbox}</MenuItem>
+              {mailboxList.map((mailbox, index) => (
+                <MenuItem
+                  key={index}
+                  onClick={() => usecase.selectMailbox(mailbox.value.mailbox)}
+                >
+                  {mailbox.value.mailbox}
+                </MenuItem>
               ))}
             </MenuList>
           </Menu>
