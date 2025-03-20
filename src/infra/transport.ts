@@ -11,6 +11,8 @@ import {
 
 import { LatestDiff } from './types';
 
+type ApiRealm = 'core' | 'realtime' | 'mailstack';
+
 export interface TransportOptions {
   email: string;
   userId: string;
@@ -34,20 +36,22 @@ export class Transport {
   channels: Map<string, Channel> = new Map();
   channelMeta: Record<string, unknown> = {};
   stream: ReturnType<typeof createStreamClient>;
-  static instance: Transport;
+  static instances: Map<ApiRealm, Transport> = new Map();
+  private realm: ApiRealm;
 
-  static getInstance() {
-    if (!Transport.instance) {
-      Transport.instance = new Transport();
+  static getInstance(realm: ApiRealm = 'core') {
+    if (!Transport.instances.has(realm)) {
+      Transport.instances.set(realm, new Transport(realm));
     }
 
-    return Transport.instance;
+    return Transport.instances.get(realm)!;
   }
 
-  constructor() {
+  constructor(realm: ApiRealm = 'core') {
+    this.realm = realm;
     this.http = createHttpClient({});
     this.stream = createStreamClient({});
-    this.graphql = createGraphqlClient(defaultGraphqlHeaders);
+    this.graphql = createGraphqlClient(realm, defaultGraphqlHeaders);
 
     this.socket = new Socket(
       `${import.meta.env.VITE_REALTIME_WS_PATH}/socket`,
@@ -128,7 +132,7 @@ export class Transport {
   setHeaders(headers: Record<string, string>) {
     this.http = createHttpClient(headers);
     this.stream = createStreamClient(headers);
-    this.graphql = createGraphqlClient(headers);
+    this.graphql = createGraphqlClient(this.realm, headers);
   }
 }
 
@@ -197,10 +201,20 @@ class TracedGraphQLClient {
   }
 }
 
-function createGraphqlClient(headers?: Record<string, string>) {
+function createGraphqlClient(
+  realm: ApiRealm,
+  headers?: Record<string, string>,
+) {
+  const path =
+    realm === 'core'
+      ? 'customer-os-api'
+      : realm === 'mailstack'
+      ? 'mailstack'
+      : 'realtime';
+
   const url = isTestMode
     ? import.meta.env.VITE_TEST_API_URL
-    : `${import.meta.env.VITE_MIDDLEWARE_API_URL}/customer-os-api`;
+    : `${import.meta.env.VITE_MIDDLEWARE_API_URL}/${path}`;
 
   return new TracedGraphQLClient(url, {
     headers,

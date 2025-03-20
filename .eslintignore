@@ -1,3 +1,4 @@
 /node_modules
 /src/routes/src/types/__generated__/graphql.types.ts
 /src/routes/src/types/__generated__/graphqlMailstack.types.ts
+/src/routes/src/types/__generated__/graphqlRealtime.types.ts

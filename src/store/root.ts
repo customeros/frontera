@@ -23,6 +23,7 @@ import { ContractsStore } from './Contracts/Contracts.store';
 import { RemindersStore } from './Reminders/Reminders.store';
 import { JobRolesStore } from './JobRoles/JobRoles.store.ts';
 import { IndustriesStore } from './Industries/Industries.store';
+import { DocumentsStore } from './Documents/Documents.store.ts';
 import { CustomFieldsStore } from './Settings/CustomFields.store';
 import { GlobalCacheStore } from './GlobalCache/GlobalCache.store';
 import { FlowSendersStore } from './FlowSenders/FlowSenders.store';
@@ -77,6 +78,7 @@ export class RootStore {
   jobRoles: JobRolesStore;
   skus: SkusStore;
   tasks: Tasks;
+  documents: DocumentsStore;
   static instance: RootStore;
 
   constructor() {
@@ -117,6 +119,7 @@ export class RootStore {
       this.transport,
     );
     this.tasks = new Tasks(this, this.transport);
+    this.documents = new DocumentsStore(this, this.transport);
 
     this.bootstrap = this.bootstrap.bind(this);
 

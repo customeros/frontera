@@ -261,6 +261,19 @@ async function createServer() {
     followRedirects: true,
   });
 
+  const realtimeApiProxy = createProxyMiddleware({
+    pathFilter: '/realtime',
+    pathRewrite: { '^/realtime': '' },
+    target: process.env.REALTIME_API_PATH + '/graphql',
+    headers: {
+      'X-Openline-API-KEY': process.env.REALTIME_API_KEY,
+    },
+    changeOrigin: true,
+    logger: console,
+    preserveHeaderKeyCase: true,
+    followRedirects: true,
+  });
+
   const internalApiProxy = createProxyMiddleware({
     pathFilter: '/internal',
     pathRewrite: { '^/internal': '' },
@@ -304,6 +317,7 @@ async function createServer() {
   app.use(internalApiProxy);
   app.use(filesApiProxy);
   app.use(basConfigProxy);
+  app.use(realtimeApiProxy);
 
   //login button
   app.use('/google-auth', (req, res) => {
