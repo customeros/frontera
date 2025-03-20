@@ -8,7 +8,7 @@ import {
 
 export class EmailInboxRepository {
   static instance: EmailInboxRepository | null = null;
-  private transport = Transport.getInstance();
+  private transport = Transport.getInstance('mailstack');
 
   public static getInstance() {
     if (!EmailInboxRepository.instance) {

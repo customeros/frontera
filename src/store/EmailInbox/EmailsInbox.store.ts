@@ -6,7 +6,6 @@ import { EmailInboxDatum } from '@infra/repositories/mailstack/EmailInbox/emailI
 import { EmailInboxRepository } from '@infra/repositories/mailstack/EmailInbox/emailInbox.repository';
 
 import { EmailInbox } from './EmailInbox.dto';
-
 export class EmailsInbox extends Store<EmailInboxDatum, EmailInbox> {
   private repository = EmailInboxRepository.getInstance();
 
@@ -23,6 +22,10 @@ export class EmailsInbox extends Store<EmailInboxDatum, EmailInbox> {
 
     try {
       this.isLoading = true;
+
+      // const { getInboxes } = await this.repository.getInboxes({
+      //   userId: this.root.session.value.profile.id,
+      // });
 
       const getThreadsByUser = [
         {
