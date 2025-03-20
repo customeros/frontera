@@ -394,13 +394,6 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
             }
           />
 
-          {showToolbarBottom && (
-            <div className='w-full flex justify-between items-center mt-2'>
-              <ToolbarPlugin />
-              {children}
-            </div>
-          )}
-
           {documentId && (
             <CollaborationPlugin
               id={documentId}
@@ -419,6 +412,15 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
               onUndoStateChange={onUndoStateChange}
             />
           )}
+          <div
+            className={cn(
+              'w-full flex justify-between items-center mt-2',
+              !showToolbarBottom && 'justify-end',
+            )}
+          >
+            {showToolbarBottom && <ToolbarPlugin />}
+            {children}
+          </div>
         </LexicalComposer>
       </div>
     );
