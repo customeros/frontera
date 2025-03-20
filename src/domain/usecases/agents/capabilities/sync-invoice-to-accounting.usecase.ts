@@ -81,11 +81,23 @@ export class SyncInvoiceToAccountingUsecase {
   @action
   public setArIncomeAccountName(name: string) {
     this.arIncomeAccountName = name;
+
+    this.agent?.setCapabilityConfig(
+      CapabilityType.SyncInvoiceToAccounting,
+      'arIncomeAccountName',
+      name,
+    );
   }
 
   @action
   public setPaymentIncomeAccountName(name: string) {
     this.paymentIncomeAccountName = name;
+
+    this.agent?.setCapabilityConfig(
+      CapabilityType.SyncInvoiceToAccounting,
+      'paymentIncomeAccountName',
+      name,
+    );
   }
 
   @action
