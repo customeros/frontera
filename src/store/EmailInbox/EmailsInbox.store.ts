@@ -23,11 +23,11 @@ export class EmailsInbox extends Store<EmailInboxDatum, EmailInbox> {
     try {
       this.isLoading = true;
 
-      // const { getInboxes } = await this.repository.getInboxes({
+      // const { getThreadsByUser } = await this.repository.getInboxes({
       //   userId: this.root.session.value.profile.id,
       // });
 
-      const getThreadsByUser = [
+      const getThreadsByUserMock = [
         {
           id: '1',
           isDone: false,
@@ -80,9 +80,11 @@ export class EmailsInbox extends Store<EmailInboxDatum, EmailInbox> {
       ];
 
       runInAction(() => {
-        getThreadsByUser.forEach((thread) => {
+        getThreadsByUserMock.forEach((thread) => {
           this.value.set(thread.id, new EmailInbox(this, thread));
         });
+        this.isBootstrapped = true;
+        this.totalElements = getThreadsByUserMock.length;
       });
     } catch (error) {
       runInAction(() => {
