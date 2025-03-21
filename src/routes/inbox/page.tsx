@@ -9,7 +9,7 @@ import { ThreadsView } from './components/ThreadsView';
 export const InboxPage = () => {
   return (
     <div className='flex h-full'>
-      <div className='border-r border-r-grayModern-200 h-full flex-1'>
+      <div className='border-r border-r-grayModern-200 h-full flex-1 min-w-[400px] max-w-[500px]'>
         <div className='border-b border-b-grayModern-200 px-3 py-[10px] flex justify-between items-center'>
           <p className='text-md font-medium'>Inbox</p>
           <div className='flex items-center gap-2'>
@@ -17,7 +17,7 @@ export const InboxPage = () => {
             <Switch />
           </div>
         </div>
-        <div className='flex flex-col '>
+        <div className='flex flex-col overflow-y-auto h-full'>
           {/* <div className='flex justify-between items-center p-2 border-b border-b-grayModern-200 bg-grayModern-50 '>
             <p className='text-sm font-medium'>Scheduled & drafts</p>
             <IconButton
