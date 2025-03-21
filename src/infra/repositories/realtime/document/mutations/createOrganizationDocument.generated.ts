@@ -12,6 +12,7 @@ export type CreateOrganizationDocumentMutation = {
     name: string;
     tenant?: string | null;
     userId: string;
+    icon?: string | null;
     insertedAt: string;
     updatedAt: string;
   } | null;

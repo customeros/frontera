@@ -9,6 +9,7 @@ import { flags } from '@ui/media/flags';
 import { Spinner } from '@ui/feedback/Spinner';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
+import { Divider } from '@ui/presentation/Divider';
 import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { SocialMediaList } from '@organization/components/Tabs';
@@ -22,6 +23,7 @@ import { Branches } from '@shared/components/OrganizationDetails/components/bran
 import { AboutTabField } from '@shared/components/OrganizationDetails/components/AboutTabField';
 
 import { Tags } from '../Tags';
+import { Documents } from './components/documents';
 
 interface OrganizationDetailsProps {
   id: string;
@@ -109,7 +111,7 @@ export const OrganizationDetails = observer(
 
           <Domains id={id} />
 
-          <div className='flex flex-col w-full flex-1 items-start justify-start gap-3 mt-2 pb-20'>
+          <div className='flex flex-col w-full items-start justify-start gap-3 mt-2 pb-4'>
             {!!organization?.value?.description && (
               <TruncatedText
                 maxLines={7}
@@ -181,6 +183,12 @@ export const OrganizationDetails = observer(
                 <Branches id={id} isReadOnly={parentRelationshipReadOnly} />
               )}
           </div>
+
+          <Divider className='my-4' />
+          <Documents id={id} />
+
+          <div id='spacer' className='pb-20' />
+
           {organization?.value.customerOsId && (
             <Tooltip label='Copy ID'>
               <span

@@ -29,6 +29,7 @@ export type Scalars = {
 
 export type CreateDocumentInput = {
   body: Scalars['String']['input'];
+  icon: Scalars['String']['input'];
   lexicalState: Scalars['String']['input'];
   name: Scalars['String']['input'];
   organizationId: Scalars['ID']['input'];
@@ -39,6 +40,7 @@ export type CreateDocumentInput = {
 export type Document = {
   __typename?: 'Document';
   body?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   insertedAt: Scalars['String']['output'];
   lexicalState?: Maybe<Scalars['String']['output']>;

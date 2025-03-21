@@ -5,7 +5,7 @@ import CreateOrganizationDocumentDocument from './mutations/createOrganizationDo
 import {
   OrganizationDocumentsQuery,
   OrganizationDocumentsQueryVariables,
-} from './queries/oranizationDocuments.generated';
+} from './queries/organizationDocuments.generated';
 import {
   CreateOrganizationDocumentMutation,
   CreateOrganizationDocumentMutationVariables,
