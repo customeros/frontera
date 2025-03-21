@@ -122,43 +122,25 @@ export const ProductItemEdit = observer(
         );
       };
 
-      const checkIfBeforeToday = (date: Date) => {
-        if (isDraft || type === 'one-time') return null;
+      // const checkIfBeforeToday = (date: Date) => {
+      //   if (isDraft || type === 'one-time') return null;
 
-        if (allServices?.length === 1) {
-          return DateTimeUtils.isBefore(date.toString(), new Date().toString());
-        }
+      //   if (allServices?.length === 1) {
+      //     return DateTimeUtils.isBefore(date.toString(), new Date().toString());
+      //   }
 
-        return false;
-      };
+      //   return false;
+      // };
 
       const existingServiceStarted = checkExistingServiceStarted(utcDate);
-      const isTodayOrBefore = checkIfBeforeToday(utcDate);
+      // const isTodayOrBefore = checkIfBeforeToday(utcDate);
       const currentService = findCurrentService();
       const isBeforeCurrentService = checkIfBeforeCurrentService(
         utcDate,
         currentService,
       );
 
-      if (isTodayOrBefore) {
-        toastError(
-          `Select a service start date that is in the future`,
-          `${service?.tempValue?.metadata?.id}-service-started-date-update-error`,
-        );
-
-        return;
-      }
-
-      if (isBeforeCurrentService) {
-        toastError(
-          `Modifications must be effective after the current service`,
-          `${service?.tempValue?.metadata?.id}-service-started-date-update-error`,
-        );
-
-        return;
-      }
-
-      if (isBeforeCurrentService) {
+      if (isBeforeCurrentService && type !== 'one-time') {
         toastError(
           `Modifications must be effective after the current service`,
           `${service?.tempValue?.metadata?.id}-service-started-date-update-error`,
