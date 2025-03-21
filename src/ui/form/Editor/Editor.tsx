@@ -5,13 +5,18 @@ import React, {
   useState,
   useEffect,
   forwardRef,
+  useContext,
+  useCallback,
   useImperativeHandle,
 } from 'react';
 
+import * as Y from 'yjs';
+import { UndoManager } from 'yjs';
 import { twMerge } from 'tailwind-merge';
 import { TRANSFORMERS } from '@lexical/markdown';
 import { cva, VariantProps } from 'class-variance-authority';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { PhoenixChannelProvider } from '@infra/y-phoenix-channel';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { $insertNodes, $nodesOfType, LexicalEditor } from 'lexical';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -22,6 +27,7 @@ import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { $generateNodesFromDOM, $generateHtmlFromNodes } from '@lexical/html';
+import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import {
@@ -34,6 +40,7 @@ import { SelectOption } from '@ui/utils/types';
 import { LinkPastePlugin } from '@ui/form/Editor/plugins/PastePlugin';
 import ToolbarPlugin from '@ui/form/Editor/plugins/ToolbarPlugin.tsx';
 import TextNodeTransformer from '@ui/form/Editor/nodes/TextTransformar.ts';
+import { PhoenixSocketContext } from '@shared/components/Providers/SocketProvider';
 
 import { nodes } from './nodes/nodes';
 import { HashtagNode } from './nodes/HashtagNode';
@@ -41,6 +48,7 @@ import MentionsPlugin from './plugins/MentionsPlugin';
 import AutoLinkPlugin from './plugins/AutoLinkPlugin';
 import HashtagsPlugin from './plugins/HashtagsPlugin';
 import VariablePlugin from './plugins/VariablesPlugin';
+import { YjsUndoPlugin } from './plugins/YjsUndoPlugin';
 import FloatingLinkEditorPlugin from './plugins/FloatingLinkEditorPlugin';
 import { FloatingMenuPlugin } from './plugins/FloatingTextFormatToolbarPlugin';
 
@@ -104,9 +112,11 @@ const contentEditableVariants = cva('focus:outline-none', {
 });
 
 interface EditorProps extends VariantProps<typeof contentEditableVariants> {
+  useYjs?: boolean;
   namespace: string;
   dataTest?: string;
   className?: string;
+  documentId?: string;
   placeholder?: string;
   isReadOnly?: boolean;
   usePlainText?: boolean;
@@ -124,7 +134,16 @@ interface EditorProps extends VariantProps<typeof contentEditableVariants> {
   onHashtagsChange?: (hashtags: SelectOption[]) => void;
   onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLDivElement>) => void;
+  user?: {
+    username: string;
+    cursorColor: string;
+  };
   onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  onUndoStateChange?: (canUndo: boolean, canRedo: boolean) => void;
+  undoRef?: React.MutableRefObject<{
+    undo: () => void;
+    redo: () => void;
+  } | null>;
 }
 
 export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
@@ -149,22 +168,34 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
       usePlainText = false,
       placeholderClassName,
       onKeyDown,
+      useYjs = false,
+      user,
       placeholder = 'Type something',
       showToolbarBottom = false,
       isReadOnly = false,
+      onUndoStateChange,
+      undoRef,
+      documentId,
     },
     ref,
   ) => {
     const editor = useRef<LexicalEditor | null>(null);
     const hasLoadedDefaultHtmlValue = useRef(false);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [floatingAnchorElem, setFloatingAnchorElem] =
       useState<HTMLDivElement>();
+    const [_yjsProvider, setYjsProvider] =
+      useState<PhoenixChannelProvider | null>(null);
+    const [undoManager, setUndoManager] = useState<UndoManager | null>(null);
+
+    const { socket } = useContext(PhoenixSocketContext);
 
     const initialConfig: InitialConfigType = {
       namespace,
       theme,
       onError,
       nodes,
+      editorState: useYjs ? null : undefined,
       editable: !isReadOnly,
     };
 
@@ -179,6 +210,8 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
     useImperativeHandle(ref, () => editor.current as LexicalEditor);
 
     useEffect(() => {
+      // if (useYjs) return;
+
       editor.current?.update(() => {
         if (!editor?.current || hasLoadedDefaultHtmlValue.current) return;
 
@@ -209,17 +242,84 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
       return () => {
         dispose?.();
       };
-    }, []);
+    }, [useYjs]);
+
+    const providerFactory = useCallback(
+      (id: string, yjsDocMap: Map<string, Y.Doc>) => {
+        if (!useYjs || !socket) {
+          return null;
+        }
+
+        const doc = (() => {
+          if (yjsDocMap.has(id)) {
+            const doc = yjsDocMap.get(id)!;
+
+            doc.load();
+
+            return doc;
+          }
+
+          const doc = new Y.Doc();
+
+          yjsDocMap.set(id, doc);
+
+          return doc;
+        })();
+
+        const provider = new PhoenixChannelProvider(
+          socket!,
+          `Document:${id}`,
+          doc,
+        );
+
+        provider.on('status', (_event) => {
+          // console.log('event status', event);
+        });
+
+        const yXmlFragment = doc.get('lexical', Y.XmlFragment);
+        const newUndoManager = new UndoManager(yXmlFragment, {
+          captureTimeout: 500,
+          trackedOrigins: new Set([null, provider]),
+        });
+
+        setTimeout(() => setUndoManager(newUndoManager), 0);
+        setTimeout(() => setYjsProvider(provider), 0);
+
+        return provider;
+      },
+      [socket, useYjs],
+    );
+
+    useEffect(() => {
+      if (undoRef && undoManager) {
+        undoRef.current = {
+          undo: () => undoManager.undo(),
+          redo: () => undoManager.redo(),
+        };
+      }
+
+      return () => {
+        if (undoRef) {
+          undoRef.current = null;
+        }
+      };
+    }, [undoManager, undoRef]);
+
+    if (!socket) {
+      return <div>No socket</div>;
+    }
 
     return (
-      <div className='relative w-full h-full lexical-editor cursor-text'>
+      <div
+        ref={containerRef}
+        className='relative w-full h-full lexical-editor cursor-text'
+      >
         <LexicalComposer initialConfig={initialConfig}>
           <EditorRefPlugin editorRef={editor} />
           <CheckListPlugin />
           <AutoLinkPlugin />
-          <HistoryPlugin />
+          {!useYjs && <HistoryPlugin />}
           <AutoFocusPlugin />
-          {/* Used for stripping styles of copy-pasted text */}
           <TextNodeTransformer />
           <ListPlugin />
 
@@ -294,9 +394,27 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
           {showToolbarBottom && (
             <div className='w-full flex justify-between items-center mt-2'>
               <ToolbarPlugin />
-
               {children}
             </div>
+          )}
+
+          {documentId && (
+            <CollaborationPlugin
+              id={documentId}
+              shouldBootstrap={false}
+              username={user?.username}
+              cursorColor={user?.cursorColor}
+              cursorsContainerRef={containerRef}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              providerFactory={providerFactory as any}
+            />
+          )}
+
+          {useYjs && (
+            <YjsUndoPlugin
+              undoManager={undoManager}
+              onUndoStateChange={onUndoStateChange}
+            />
           )}
         </LexicalComposer>
       </div>

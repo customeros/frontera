@@ -1,5 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 
+import { Editor } from '@ui/form/Editor/Editor';
 import { Layout } from '@shared/components/Layout/Layout';
 
 import { AuthRoute } from './auth/route';
@@ -20,6 +21,15 @@ const NotFoundRoute: RouteObject = {
   element: <NotFound />,
 };
 
+const TestRoute: RouteObject = {
+  path: '/test',
+  element: (
+    <div className='h-full w-full container mx-auto'>
+      <Editor useYjs namespace='test' documentId='doc-id-2' />
+    </div>
+  ),
+};
+
 export const RootRoute: RouteObject = {
   path: '/',
   element: <Layout />,
@@ -35,6 +45,7 @@ export const RootRoute: RouteObject = {
     FlowEditorRoute,
     OnboardingRoute,
     NotFoundRoute,
+    TestRoute,
   ],
   errorElement: <Error />,
 };
