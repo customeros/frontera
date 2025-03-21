@@ -1,5 +1,5 @@
 import { GetInboxQueryQuery } from './query/getInbox.generated';
 
-export type EmailInboxDatum = NonNullable<
-  GetInboxQueryQuery['getThreadsByUser'][number]
+export type ThreadsDatum = NonNullable<
+  GetInboxQueryQuery['getAllThreads']['edges'][number]
 >;

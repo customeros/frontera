@@ -1,13 +1,13 @@
 import { merge } from 'lodash';
 import { observable } from 'mobx';
 import { Entity } from '@store/record';
-import { EmailInboxDatum } from '@infra/repositories/mailstack/EmailInbox/emailInbox.datum';
+import { ThreadsDatum } from '@infra/repositories/mailstack/EmailInbox/emailInbox.datum';
 
-import { EmailsInbox } from './EmailsInbox.store';
+import { Threads } from './Threads.store';
 
-export class EmailInbox extends Entity<EmailInboxDatum> {
-  @observable accessor value: EmailInboxDatum = EmailInbox.default();
-  constructor(store: EmailsInbox, data: EmailInboxDatum) {
+export class Thread extends Entity<ThreadsDatum> {
+  @observable accessor value: ThreadsDatum = Thread.default();
+  constructor(store: Threads, data: ThreadsDatum) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     super(store as any, data);
   }
@@ -44,7 +44,7 @@ export class EmailInbox extends Entity<EmailInboxDatum> {
     return this.value.subject;
   }
 
-  static default(payload?: EmailInboxDatum): EmailInboxDatum {
+  static default(payload?: ThreadsDatum): ThreadsDatum {
     return merge(
       {
         id: crypto.randomUUID(),

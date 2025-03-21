@@ -5,23 +5,17 @@ import { Icon } from '@ui/media/Icon';
 import { Plus } from '@ui/media/icons/Plus';
 import { Combobox } from '@ui/form/Combobox';
 import { Menu } from '@ui/overlay/Menu/Menu';
-import { useStore } from '@shared/hooks/useStore';
-import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
+// import { useStore } from '@shared/hooks/useStore';
 import { SelectOption } from '@shared/types/SelectOptions';
+import { Tag, TagLabel, TagRightElement } from '@ui/presentation/Tag';
 import { MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
-import {
-  Tag,
-  TagLabel,
-  TagRightIcon,
-  TagRightButton,
-} from '@ui/presentation/Tag';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@ui/overlay/Popover/Popover.tsx';
 
-interface CreatebleEmailProps {
+interface CreatebleEmailAddressProps {
   dataTest?: string;
   className?: string;
   inputValue: string;
@@ -35,7 +29,7 @@ interface CreatebleEmailProps {
   onChange: (selection: SelectOption[]) => void;
 }
 
-export const CreatebleEmail = observer(
+export const CreatebleEmailAdress = observer(
   ({
     value,
     options,
@@ -48,8 +42,8 @@ export const CreatebleEmail = observer(
     dataTest,
     inputValue,
     setInputValue,
-  }: CreatebleEmailProps) => {
-    const store = useStore();
+  }: CreatebleEmailAddressProps) => {
+    // const store = useStore();
 
     const handleClear = (id: string) => {
       onChange?.(value.filter((o) => o.value !== id));
@@ -73,23 +67,30 @@ export const CreatebleEmail = observer(
                     colorScheme={'grayModern'}
                   >
                     <TagLabel>{option.label}</TagLabel>
-                    <TagRightIcon>
+                    <TagRightElement>
                       <Menu>
                         <MenuButton>
                           <Icon name={'menu-01'} className='ml-1' />
                         </MenuButton>
                         <MenuList>
-                          <MenuItem>
-                            <Icon name={'x-close'} />
-                            <span>Remove</span>
+                          <MenuItem onClick={() => handleClear(option.value)}>
+                            <div className='flex items-center gap-1'>
+                              <p>Remove address</p>
+                            </div>
                           </MenuItem>
                           <MenuItem>
-                            <Icon name={'x-close'} />
-                            <span>copy email</span>
+                            <p>{option.label}</p>
+                            <Icon
+                              name='copy-03'
+                              className='text-grayModern-400 size-4'
+                            />
+                          </MenuItem>
+                          <MenuItem>
+                            <p>Add to contacts</p>
                           </MenuItem>
                         </MenuList>
                       </Menu>
-                    </TagRightIcon>
+                    </TagRightElement>
                   </Tag>
                 );
               })

@@ -1,0 +1,17 @@
+query getAllEmailsInThread($threadId: String!) {
+  getAllEmailsInThread(threadId: $threadId) {
+    attachmentCount
+    bcc
+    body
+    cc
+    direction
+    from
+    fromName
+    id
+    mailboxId
+    receivedAt
+    subject
+    threadId
+    to
+  }
+}

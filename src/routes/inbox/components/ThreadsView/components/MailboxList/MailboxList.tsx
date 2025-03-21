@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { observer } from 'mobx-react-lite';
 import { MailboxListUsecase } from '@domain/usecases/inbox/mailbox-list.usecase';
 
@@ -8,13 +6,15 @@ import { Menu } from '@ui/overlay/Menu/Menu';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
-import { CreatebleEmail } from '../CreatebleEmail.tsx/CreatebleEmail';
+
+import { CreatebleEmailAdress } from '../CreatebleEmailAdress/CreatebleEmailAddress';
 const usecase = new MailboxListUsecase();
 
 export const MailboxList = observer(() => {
   const store = useStore();
 
   const mailboxList = store.mailboxes.toArray();
+
   return (
     <div className='flex items-start'>
       <div className='flex flex-col  mb-[-1px] mt-0 flex-1 overflow-visible'>
@@ -24,14 +24,14 @@ export const MailboxList = observer(() => {
               <span className='text-grayModern-700 font-semibold text-sm mr-1'>
                 CC:
               </span>
-              <CreatebleEmail
-                value={[{ label: 'valoaremare', value: 'valoaremare' }]}
-                placeholder='Add CC'
+              <CreatebleEmailAdress
                 options={[]}
                 onChange={() => {}}
                 onCreate={() => {}}
-                inputValue={'valoaremare'}
+                placeholder='Add CC'
                 setInputValue={() => {}}
+                inputValue={'valoaremare'}
+                value={[{ label: 'nic@acme.com', value: 'valoaremare' }]}
               />
             </div>
           )}

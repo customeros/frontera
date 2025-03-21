@@ -1,5 +1,5 @@
-import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import React, { useRef, useEffect, useCallback } from 'react';
 
 import { observer } from 'mobx-react-lite';
 
@@ -7,24 +7,55 @@ import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { Avatar } from '@ui/media/Avatar';
 import { useStore } from '@shared/hooks/useStore';
+
+import { timeAgo } from '../../utils/timeAgo';
+
 export const EmailInbox = observer(() => {
   const store = useStore();
-  const emails = store.emailsInbox.toArray();
+  const emails = store.threads.toArray();
   const users = store.users.toArray();
   const [_searchParams, setSearchParams] = useSearchParams();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const lastEmailElementRef = useRef<HTMLDivElement | null>(null);
+
+  const lastEmailRef = useCallback((node: HTMLDivElement | null) => {
+    lastEmailElementRef.current = node;
+  }, []);
+
+  useEffect(() => {
+    if (store.threads.isLoading) return;
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && store.threads.hasNextPage) {
+        store.threads.loadMoreThreads();
+      }
+    });
+
+    if (lastEmailElementRef.current) {
+      observerRef.current.observe(lastEmailElementRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [store.threads.isLoading, store.threads.hasNextPage, emails.length]);
 
   return (
-    <div className='flex flex-col mt-2'>
-      {emails.map((email) => {
+    <div className='flex flex-col mt-2 overflow-y-auto pb-20'>
+      {emails.map((email, index) => {
         const user = users.find((user) => user.id === email.userId);
-
-        const _file = store.files.download(user?.profilePhotoUrl ?? '');
-        const imgSrc = store.files.values.get(user?.profilePhotoUrl ?? '');
+        const isLast = index === emails.length - 10;
+        // const _file = store.files.download(user?.profilePhotoUrl ?? '');
+        // const imgSrc = store.files.values.get(user?.profilePhotoUrl ?? '');
 
         return (
           <React.Fragment key={email.id}>
             <div
-              className='flex gap-2 p-2 cursor-pointer items-center hover:bg-grayModern-100  hover:rounded-md'
+              ref={isLast ? lastEmailRef : null}
+              className='flex gap-2 p-2 cursor-pointer items-center hover:bg-grayModern-100 hover:rounded-md'
               onClick={() => {
                 setSearchParams((prev) => {
                   prev.set('email', email.id);
@@ -35,8 +66,8 @@ export const EmailInbox = observer(() => {
             >
               <div>
                 <Avatar
+                  src={''}
                   size='sm'
-                  src={imgSrc}
                   textSize='sm'
                   variant='outlineCircle'
                   name={user?.name ?? ''}
@@ -78,20 +109,3 @@ export const EmailInbox = observer(() => {
     </div>
   );
 });
-
-const timeAgo = (date: string) => {
-  const now = new Date();
-  const lastMessageDate = new Date(date);
-  const diffInMs = now.getTime() - lastMessageDate.getTime();
-  const diffInMins = Math.floor(diffInMs / 60000);
-  const diffInHours = Math.floor(diffInMins / 60);
-  const diffInDays = Math.floor(diffInHours / 24);
-
-  if (diffInMins < 60) {
-    return `${diffInMins}min `;
-  } else if (diffInHours < 24) {
-    return `${diffInHours}hours`;
-  } else {
-    return `${diffInDays}days`;
-  }
-};
