@@ -1,5 +1,3 @@
-import { useSearchParams } from 'react-router-dom';
-
 import { observer } from 'mobx-react-lite';
 
 import { Icon } from '@ui/media/Icon';
@@ -8,14 +6,10 @@ import { Button } from '@ui/form/Button/Button';
 import { Avatar } from '@ui/media/Avatar/Avatar';
 import { useStore } from '@shared/hooks/useStore';
 
+import { MailStub } from './components/MailStub/MailStub';
 import { MailboxList } from './components/MailboxList/MailboxList';
-
 export const ThreadsView = observer(() => {
   const store = useStore();
-  const [searchParams] = useSearchParams();
-  const emailId = searchParams.get('email');
-
-  // const threads = store.threads.toArray();
 
   const user = store.users.getById(store.session.value.profile.id);
   const avatarId = user?.profilePhotoUrl ?? '';
@@ -24,11 +18,8 @@ export const ThreadsView = observer(() => {
   return (
     <>
       <div className='flex flex-col items-center w-full justify-between h-[calc(100vh-40px)] p-4'>
-        <div className='flex flex-col gap-2'>
-          {emailId === '1' && <div>Email 1</div>}
-          {emailId === '2' && <div>Email 2</div>}
-          {emailId === '3' && <div>Email 3</div>}
-          {emailId === '4' && <div>Email 4</div>}
+        <div className='flex flex-col gap-2 w-full'>
+          <MailStub />
         </div>
         <div className='border border-grayModern-200 rounded-md p-2  w-[70%]'>
           <div className='w-[100%]'>

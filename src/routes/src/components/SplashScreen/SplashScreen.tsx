@@ -19,6 +19,7 @@ const privatePaths = [
   '/renewals',
   '/welcome',
   '/customer-map',
+  '/inbox',
 ];
 
 export const SplashScreen = observer(

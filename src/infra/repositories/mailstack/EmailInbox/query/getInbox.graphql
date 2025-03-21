@@ -1,14 +1,23 @@
-query getInboxQuery($userId: String!) {
-  getThreadsByUser(userId: $userId) {
-    id
-    isDone
-    isViewed
-    lastMessageAt
-    lastSender
-    lastSenderDomain
-    mailboxId
-    subject
-    summary
-    userId
+query getInboxQuery($userId: String!, $pagination: PaginationInput) {
+  getAllThreads(userId: $userId, pagination: $pagination) {
+    edges {
+      id
+      isDone
+      isViewed
+      lastMessageAt
+      lastSender
+      lastSenderDomain
+      mailboxId
+      subject
+      summary
+      userId
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    totalCount
   }
 }
