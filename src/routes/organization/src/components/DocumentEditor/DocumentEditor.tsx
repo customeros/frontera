@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useMemo, useState, useCallback } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { Portal } from '@radix-ui/react-portal';
@@ -11,18 +11,38 @@ import { Editor } from '@ui/form/Editor/Editor';
 import { IconButton } from '@ui/form/IconButton';
 import { IconPicker } from '@ui/form/IconPicker';
 import { useStore } from '@shared/hooks/useStore';
+import { useChannel } from '@shared/hooks/useChannel';
+import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 
 export const DocumentEditor = observer(() => {
   const store = useStore();
+  const { id } = useParams();
   const [params, setParams] = useSearchParams();
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [viewMode, setViewMode] = useState<'fullscreen' | 'default'>('default');
+  const { presentUsers, currentUserId } = useChannel(
+    `organization_presence:${id}`,
+  );
+
+  const presenceUser = useMemo(() => {
+    const found = presentUsers.find((u) => u.user_id === currentUserId);
+
+    if (!found?.username || !found?.color) return undefined;
+
+    return {
+      username: found.username,
+      cursorColor: found.color,
+    };
+  }, [currentUserId, presentUsers]);
 
   const docId = params.get('doc')!;
   const doc = store.documents.getById(docId);
+  const author = doc && store.users.getById(doc.value.userId);
   const isFullscreen = viewMode === 'fullscreen';
+  const authorPhoto =
+    author && store.files.getById(author.value.profilePhotoUrl);
 
   const closeEditor = () => {
     setParams((prev) => {
@@ -160,7 +180,20 @@ export const DocumentEditor = observer(() => {
             </div>
 
             <div className='flex items-center gap-2'>
-              <Avatar size='xs' name='Alex Calinica' variant='outlineCircle' />
+              <Tooltip hasArrow side='bottom' label={author?.value.name}>
+                <div>
+                  <Avatar
+                    size='xs'
+                    src={authorPhoto}
+                    variant='outlineCircle'
+                    name={author?.value.name}
+                    icon={
+                      <Icon name='user-01' className='text-grayModern-500' />
+                    }
+                  />
+                </div>
+              </Tooltip>
+
               <span className='text-sm text-nowrap text-grayModern-500'>
                 created 12 Jan 2025
               </span>
@@ -169,6 +202,7 @@ export const DocumentEditor = observer(() => {
 
           <Editor
             useYjs
+            user={presenceUser}
             documentId={doc?.value.id}
             namespace='organization-document-editor'
           />
