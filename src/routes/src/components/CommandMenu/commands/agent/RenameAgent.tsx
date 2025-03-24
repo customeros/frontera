@@ -30,10 +30,9 @@ export const RenameAgent = observer(() => {
         onValueChange={(value) => usecase.setInputValue(value)}
       />
       <Command.List>
-        <CommandItem
-          onSelect={usecase.execute}
-          leftAccessory={<Edit03 />}
-        >{`Rename agent to "${usecase.inputValue}"`}</CommandItem>
+        <CommandItem onSelect={usecase.execute} leftAccessory={<Edit03 />}>
+          <span className='truncate'>{`Rename agent to "${usecase.inputValue}"`}</span>
+        </CommandItem>
       </Command.List>
     </Command>
   );

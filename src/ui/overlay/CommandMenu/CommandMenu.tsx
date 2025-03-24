@@ -7,8 +7,8 @@ import { IconButton } from '@ui/form/IconButton';
 import { XClose } from '@ui/media/icons/XClose.tsx';
 import { Button } from '@ui/form/Button/Button.tsx';
 import { Tag, TagLabel } from '@ui/presentation/Tag/Tag';
+import { isUserPlatformMac } from '@utils/getUserPlatform';
 import { ChevronRight } from '@ui/media/icons/ChevronRight';
-import { isUserPlatformMac } from '@utils/getUserPlatform.ts';
 import { Command as CommandIcon } from '@ui/media/icons/Command';
 
 interface CommandInputProps
@@ -118,9 +118,7 @@ export const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
         {...props}
       >
         {leftAccessory && <span className='inline-flex'>{leftAccessory}</span>}
-        <span className='overflow-hidden truncate max-w-[430px] text-ellipsis'>
-          {children}
-        </span>
+        {children}
         {rightAccessory && (
           <div className='flex gap-1 items-center ml-auto'>
             {rightAccessory}
