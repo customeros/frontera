@@ -45,7 +45,9 @@ export const RenameTask = observer(() => {
         <CommandItem
           leftAccessory={<Edit03 />}
           onSelect={() => handleChangeName()}
-        >{`Rename task to "${task?.value.subject}"`}</CommandItem>
+        >
+          <span className='truncate'>{`Rename task to "${task?.value.subject}"`}</span>
+        </CommandItem>
       </Command.List>
     </Command>
   );
