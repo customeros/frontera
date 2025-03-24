@@ -67,7 +67,7 @@ export const DocumentEditor = observer(() => {
     [viewMode],
   );
 
-  const [_ring, bg, iconColor] = plmMap['grayModern'];
+  const [_ring, bg, iconColor] = colorMap['grayModern'];
 
   return (
     <Wrapper>
@@ -110,11 +110,11 @@ export const DocumentEditor = observer(() => {
                   iconOptions={[]}
                   icon={'activity'}
                   color='grayModern'
-                  colorsMap={colorMap}
                   iconSearchValue={''}
                   onIconSearch={() => {}}
                   onIconChange={() => {}}
                   onColorChange={() => {}}
+                  colorsMap={iconPickerColorMap}
                 />
               </PopoverContent>
             </Popover>
@@ -212,7 +212,7 @@ export const DocumentEditor = observer(() => {
   );
 });
 
-const colorMap = {
+const iconPickerColorMap = {
   grayModern: 'bg-grayModern-400 ring-grayModern-400',
   error: 'bg-error-400 ring-error-400',
   warning: 'bg-warning-400 ring-warning-400',
@@ -225,7 +225,7 @@ const colorMap = {
   pink: 'bg-pink-400 ring-pink-400',
 };
 
-const plmMap = {
+const colorMap = {
   grayModern: [
     'hover:ring-grayModern-400',
     'group-hover:bg-grayModern-50',

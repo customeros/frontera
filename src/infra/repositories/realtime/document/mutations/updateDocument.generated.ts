@@ -1,12 +1,12 @@
 import * as Types from '../../../../../routes/src/types/__generated__/graphqlRealtime.types';
 
-export type OrganizationDocumentsQueryVariables = Types.Exact<{
-  organizationId: Types.Scalars['ID']['input'];
+export type UpdateDocumentMutationVariables = Types.Exact<{
+  input: Types.UpdateDocumentInput;
 }>;
 
-export type OrganizationDocumentsQuery = {
-  __typename?: 'RootQueryType';
-  organizationDocuments?: Array<{
+export type UpdateDocumentMutation = {
+  __typename?: 'RootMutationType';
+  updateDocument?: {
     __typename?: 'Document';
     id: string;
     name: string;
@@ -16,5 +16,5 @@ export type OrganizationDocumentsQuery = {
     color?: string | null;
     insertedAt: string;
     updatedAt: string;
-  } | null> | null;
+  } | null;
 };

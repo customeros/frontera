@@ -5,6 +5,7 @@ query organizationDocuments($organizationId: ID!) {
     tenant
     userId
     icon
+    color
     insertedAt
     updatedAt
   }

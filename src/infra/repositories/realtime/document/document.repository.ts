@@ -1,7 +1,12 @@
 import { Transport } from '@infra/transport';
 
+import UpdateDocumentDocument from './mutations/updateDocument.graphql';
 import OrganizationDocumentsDocument from './queries/organizationDocuments.graphql';
 import CreateOrganizationDocumentDocument from './mutations/createOrganizationDocument.graphql';
+import {
+  UpdateDocumentMutation,
+  UpdateDocumentMutationVariables,
+} from './mutations/updateDocument.generated';
 import {
   OrganizationDocumentsQuery,
   OrganizationDocumentsQueryVariables,
@@ -42,5 +47,12 @@ export class DocumentRepository {
       CreateOrganizationDocumentMutation,
       CreateOrganizationDocumentMutationVariables
     >(CreateOrganizationDocumentDocument, variables);
+  }
+
+  async updateDocument(variables: UpdateDocumentMutationVariables) {
+    return this.transport.graphql.request<
+      UpdateDocumentMutation,
+      UpdateDocumentMutationVariables
+    >(UpdateDocumentDocument, variables);
   }
 }

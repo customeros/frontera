@@ -1,0 +1,12 @@
+mutation updateDocument($input: UpdateDocumentInput!) {
+  updateDocument(input: $input) {
+    id
+    name
+    tenant
+    userId
+    icon
+    color
+    insertedAt
+    updatedAt
+  }
+}

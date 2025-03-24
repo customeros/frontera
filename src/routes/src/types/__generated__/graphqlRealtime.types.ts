@@ -29,6 +29,7 @@ export type Scalars = {
 
 export type CreateDocumentInput = {
   body: Scalars['String']['input'];
+  color: Scalars['String']['input'];
   icon: Scalars['String']['input'];
   lexicalState: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -40,6 +41,7 @@ export type CreateDocumentInput = {
 export type Document = {
   __typename?: 'Document';
   body?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   insertedAt: Scalars['String']['output'];
@@ -53,10 +55,15 @@ export type Document = {
 export type RootMutationType = {
   __typename?: 'RootMutationType';
   createDocument?: Maybe<Document>;
+  updateDocument?: Maybe<Document>;
 };
 
 export type RootMutationTypeCreateDocumentArgs = {
   input: CreateDocumentInput;
+};
+
+export type RootMutationTypeUpdateDocumentArgs = {
+  input: UpdateDocumentInput;
 };
 
 export type RootQueryType = {
@@ -66,4 +73,11 @@ export type RootQueryType = {
 
 export type RootQueryTypeOrganizationDocumentsArgs = {
   organizationId: Scalars['ID']['input'];
+};
+
+export type UpdateDocumentInput = {
+  color: Scalars['String']['input'];
+  icon: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
 };

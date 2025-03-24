@@ -5,6 +5,7 @@ mutation createOrganizationDocument($input: CreateDocumentInput!) {
     tenant
     userId
     icon
+    color
     insertedAt
     updatedAt
   }
