@@ -216,6 +216,7 @@ export const ProductItemEdit = observer(
           {sliCurrencySymbol}
 
           <MaskedResizableInput
+            name='plm'
             mask={`num`}
             placeholder='0'
             className={inputClasses}

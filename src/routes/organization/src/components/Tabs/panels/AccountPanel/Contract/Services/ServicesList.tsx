@@ -56,7 +56,7 @@ const ServiceItem = observer(
 
     const price =
       typeof contractLineItem?.price === 'string'
-        ? parseFloat((contractLineItem.price as string).replace(',', ''))
+        ? parseFloat((contractLineItem.price as string).replace(/,/g, ''))
         : contractLineItem?.price;
 
     return (
