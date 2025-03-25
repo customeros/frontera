@@ -3,11 +3,12 @@ name: frontera
 on:
   push:
     branches: ['main']
-    tags: ['v*'] # release.yaml is manually creating a release tag
   pull_request:
     branches: ['main']
   release:
     types: [created, edited]
+  create:
+    tags: ['v*']
 
 env:
   REGISTRY: ghcr.io
