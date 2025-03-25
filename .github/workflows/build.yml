@@ -44,7 +44,7 @@ jobs:
 
   build-frontera-dev-amd64:
     runs-on: ubicloud-standard-2
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release'
     needs: [prepare]
     outputs:
       digest: ${{ steps.digest.outputs.value }}
@@ -110,7 +110,7 @@ jobs:
 
   build-frontera-dev-arm64:
     runs-on: ubicloud-standard-2-arm
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release'
     needs: [prepare]
     outputs:
       digest: ${{ steps.digest.outputs.value }}
@@ -214,7 +214,7 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v6.13.0
         with:
-          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) }}
+          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release' }}
           platforms: linux/amd64
           tags: ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64
           labels: ${{ steps.meta.outputs.labels }}
@@ -279,7 +279,7 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v6.13.0
         with:
-          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) }}
+          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release' }}
           platforms: linux/arm64
           tags: ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64
           labels: ${{ steps.meta.outputs.labels }}
@@ -347,7 +347,7 @@ jobs:
         uses: docker/build-push-action@v6.13.0
         with:
           context: middleware/
-          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) }}
+          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release' }}
           platforms: linux/amd64
           tags: ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64
           labels: ${{ steps.meta.outputs.labels }}
@@ -409,7 +409,7 @@ jobs:
         uses: docker/build-push-action@v6.13.0
         with:
           context: middleware/
-          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) }}
+          push: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release' }}
           platforms: linux/arm64
           tags: ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64
           labels: ${{ steps.meta.outputs.labels }}
@@ -431,7 +431,7 @@ jobs:
   # Create multi-arch manifest for frontera-dev
   create-frontera-dev-manifest:
     needs: [prepare, build-frontera-dev-amd64, build-frontera-dev-arm64]
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release'
     runs-on: ubicloud-standard-2
     steps:
       - name: Checkout
@@ -492,7 +492,7 @@ jobs:
   # Create multi-arch manifest for frontera-prod
   create-frontera-prod-manifest:
     needs: [prepare, build-frontera-prod-amd64, build-frontera-prod-arm64]
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release'
     runs-on: ubicloud-standard-2
     steps:
       - name: Checkout
@@ -553,7 +553,7 @@ jobs:
   # Create multi-arch manifest for middleware
   create-middleware-manifest:
     needs: [prepare, build-middleware-amd64, build-middleware-arm64]
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || github.event_name == 'release'
     runs-on: ubicloud-standard-2
     steps:
       - name: Checkout
