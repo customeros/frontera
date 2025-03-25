@@ -23,7 +23,7 @@ jobs:
   # Generate common metadata for all builds
   prepare:
     runs-on: ubicloud-standard-2
-    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     outputs:
       safe-tag: ${{ steps.safe-tag.outputs.value }}
     steps:
