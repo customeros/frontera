@@ -20,8 +20,33 @@ permissions:
   packages: write
 
 jobs:
-  build-frontera-dev:
+  # Generate common metadata for all builds
+  prepare:
     runs-on: ubicloud-standard-2
+    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    outputs:
+      safe-tag: ${{ steps.safe-tag.outputs.value }}
+    steps:
+      # Create a safe tag string from the branch name (replace / with -)
+      - name: Set safe tag
+        id: safe-tag
+        run: |
+          # For PR events, use pr-NUMBER format instead of the branch name
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "value=pr-${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          else
+            # For normal branches, replace / with - to make it safe for tags
+            SAFE_TAG=$(echo "${{ github.ref_name }}" | sed 's/\//-/g')
+            echo "value=$SAFE_TAG" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+  build-frontera-dev-amd64:
+    runs-on: ubicloud-standard-2
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: [prepare]
+    outputs:
+      digest: ${{ steps.digest.outputs.value }}
     steps:
       - name: Delete huge unnecessary tools folder
         run: rm -rf /opt/hostedtoolcache
@@ -57,8 +82,9 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v6.13.0
         with:
-          push: ${{ github.ref_name == 'main' || github.event_name == 'release' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          push: true
+          platforms: linux/amd64
+          tags: ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-amd64
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: |
             type=gha,scope=frontera-build
@@ -71,9 +97,88 @@ jobs:
             "VITE_REALTIME_WS_PATH=${{ secrets.DEV_VITE_REALTIME_WS_PATH }}"
             "VITE_REALTIME_WS_API_KEY=${{ secrets.DEV_VITE_REALTIME_WS_API_KEY }}"
             "VITE_STRIPE_PUBLIC_KEY=${{ secrets.DEV_VITE_STRIPE_PUBLIC_KEY }}"
+          outputs: type=registry,name=${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}
 
-  build-frontera-prod:
+      # Get image digest
+      - name: Get image digest
+        id: digest
+        run: |
+          digest=$(docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-amd64 --format "{{json .Manifest}}" | jq -r '.digest')
+          echo "value=$digest" >> $GITHUB_OUTPUT
+        shell: bash
+
+  build-frontera-dev-arm64:
+    runs-on: ubicloud-standard-2-arm
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: [prepare]
+    outputs:
+      digest: ${{ steps.digest.outputs.value }}
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
+
+      - uses: ubicloud/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REPOSITORY_READ_WRITE_USERNAME }}
+          password: ${{ secrets.REPOSITORY_READ_WRITE_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5.6.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}
+
+      - name: Push Docker image
+        uses: docker/build-push-action@v6.13.0
+        with:
+          push: true
+          platforms: linux/arm64
+          tags: ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-arm64
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: |
+            type=gha,scope=frontera-build
+            type=gha,scope=frontera-build-${{ github.job }}
+          cache-to: |
+            type=gha,mode=max,scope=frontera-build-${{ github.job }}
+          build-args: |
+            "VITE_MIDDLEWARE_API_URL=${{ secrets.DEV_VITE_MIDDLEWARE_API_URL }}"
+            "VITE_CLIENT_APP_URL=${{ secrets.DEV_VITE_CLIENT_APP_URL }}"
+            "VITE_REALTIME_WS_PATH=${{ secrets.DEV_VITE_REALTIME_WS_PATH }}"
+            "VITE_REALTIME_WS_API_KEY=${{ secrets.DEV_VITE_REALTIME_WS_API_KEY }}"
+            "VITE_STRIPE_PUBLIC_KEY=${{ secrets.DEV_VITE_STRIPE_PUBLIC_KEY }}"
+          outputs: type=registry,name=${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}
+
+      # Get image digest
+      - name: Get image digest
+        id: digest
+        run: |
+          digest=$(docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-arm64 --format "{{json .Manifest}}" | jq -r '.digest')
+          echo "value=$digest" >> $GITHUB_OUTPUT
+        shell: bash
+
+  build-frontera-prod-amd64:
     runs-on: ubicloud-standard-2
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: [prepare]
+    outputs:
+      digest: ${{ steps.digest.outputs.value }}
     steps:
       - name: Delete huge unnecessary tools folder
         run: rm -rf /opt/hostedtoolcache
@@ -109,8 +214,9 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v6.13.0
         with:
-          push: ${{ github.ref_name == 'main' || github.event_name == 'release' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          push: true
+          platforms: linux/amd64
+          tags: ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: |
             type=gha,scope=frontera-build
@@ -123,9 +229,88 @@ jobs:
             "VITE_REALTIME_WS_PATH=${{ secrets.PROD_VITE_REALTIME_WS_PATH }}"
             "VITE_REALTIME_WS_API_KEY=${{ secrets.PROD_VITE_REALTIME_WS_API_KEY }}"
             "VITE_STRIPE_PUBLIC_KEY=${{ secrets.PROD_VITE_STRIPE_PUBLIC_KEY }}"
+          outputs: type=registry,name=${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}
 
-  build-middleware:
+      # Get image digest
+      - name: Get image digest
+        id: digest
+        run: |
+          digest=$(docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64 --format "{{json .Manifest}}" | jq -r '.digest')
+          echo "value=$digest" >> $GITHUB_OUTPUT
+        shell: bash
+
+  build-frontera-prod-arm64:
+    runs-on: ubicloud-standard-2-arm
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: [prepare]
+    outputs:
+      digest: ${{ steps.digest.outputs.value }}
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
+
+      - uses: ubicloud/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REPOSITORY_READ_WRITE_USERNAME }}
+          password: ${{ secrets.REPOSITORY_READ_WRITE_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5.6.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}
+
+      - name: Push Docker image
+        uses: docker/build-push-action@v6.13.0
+        with:
+          push: true
+          platforms: linux/arm64
+          tags: ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: |
+            type=gha,scope=frontera-build
+            type=gha,scope=frontera-build-${{ github.job }}
+          cache-to: |
+            type=gha,mode=max,scope=frontera-build-${{ github.job }}
+          build-args: |
+            "VITE_MIDDLEWARE_API_URL=${{ secrets.PROD_VITE_MIDDLEWARE_API_URL }}"
+            "VITE_CLIENT_APP_URL=${{ secrets.PROD_VITE_CLIENT_APP_URL }}"
+            "VITE_REALTIME_WS_PATH=${{ secrets.PROD_VITE_REALTIME_WS_PATH }}"
+            "VITE_REALTIME_WS_API_KEY=${{ secrets.PROD_VITE_REALTIME_WS_API_KEY }}"
+            "VITE_STRIPE_PUBLIC_KEY=${{ secrets.PROD_VITE_STRIPE_PUBLIC_KEY }}"
+          outputs: type=registry,name=${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}
+
+      # Get image digest
+      - name: Get image digest
+        id: digest
+        run: |
+          digest=$(docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64 --format "{{json .Manifest}}" | jq -r '.digest')
+          echo "value=$digest" >> $GITHUB_OUTPUT
+        shell: bash
+
+  build-middleware-amd64:
     runs-on: ubicloud-standard-2
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: [prepare]
+    outputs:
+      digest: ${{ steps.digest.outputs.value }}
     steps:
       - name: Delete huge unnecessary tools folder
         run: rm -rf /opt/hostedtoolcache
@@ -164,11 +349,208 @@ jobs:
         uses: docker/build-push-action@v6.13.0
         with:
           context: middleware/
-          push: ${{ github.ref_name == 'main' || github.event_name == 'release' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          push: true
+          platforms: linux/amd64
+          tags: ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: |
             type=gha,scope=frontera-build
             type=gha,scope=frontera-build-${{ github.job }}
           cache-to: |
             type=gha,mode=max,scope=frontera-build-${{ github.job }}
+          outputs: type=registry,name=${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}
+
+      # Get image digest
+      - name: Get image digest
+        id: digest
+        run: |
+          digest=$(docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64 --format "{{json .Manifest}}" | jq -r '.digest')
+          echo "value=$digest" >> $GITHUB_OUTPUT
+        shell: bash
+
+  build-middleware-arm64:
+    runs-on: ubicloud-standard-2-arm
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: [prepare]
+    outputs:
+      digest: ${{ steps.digest.outputs.value }}
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
+
+      - uses: ubicloud/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './middleware/package-lock.json'
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REPOSITORY_READ_WRITE_USERNAME }}
+          password: ${{ secrets.REPOSITORY_READ_WRITE_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5.6.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}
+
+      - name: Push Docker image
+        uses: docker/build-push-action@v6.13.0
+        with:
+          context: middleware/
+          push: true
+          platforms: linux/arm64
+          tags: ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: |
+            type=gha,scope=frontera-build
+            type=gha,scope=frontera-build-${{ github.job }}
+          cache-to: |
+            type=gha,mode=max,scope=frontera-build-${{ github.job }}
+          outputs: type=registry,name=${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}
+
+      # Get image digest
+      - name: Get image digest
+        id: digest
+        run: |
+          digest=$(docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64 --format "{{json .Manifest}}" | jq -r '.digest')
+          echo "value=$digest" >> $GITHUB_OUTPUT
+        shell: bash
+
+  # Create multi-arch manifests
+  create-manifests:
+    needs: [
+      prepare,
+      build-frontera-dev-amd64,
+      build-frontera-dev-arm64,
+      build-frontera-prod-amd64,
+      build-frontera-prod-arm64,
+      build-middleware-amd64,
+      build-middleware-arm64
+    ]
+    #if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    runs-on: ubicloud-standard-2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Log in to the Container registry
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REPOSITORY_READ_WRITE_USERNAME }}
+          password: ${{ secrets.REPOSITORY_READ_WRITE_TOKEN }}
+
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Create and push manifests for all images
+      - name: Create and push manifests
+        run: |
+          # Create manifests for frontera-dev image
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }} \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ needs.prepare.outputs.safe-tag }} \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+          # Create manifests for frontera-prod image
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }} \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ needs.prepare.outputs.safe-tag }} \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+          # Create manifests for middleware image
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }} \
+            ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ needs.prepare.outputs.safe-tag }} \
+            ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+          # If this is the main branch, also tag as latest for all images
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            # For frontera-dev
+            docker buildx imagetools create \
+              --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:latest \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+            # For frontera-prod
+            docker buildx imagetools create \
+              --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:latest \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+            # For middleware
+            docker buildx imagetools create \
+              --tag ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:latest \
+              ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+              ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64
+          fi
+          
+          # For releases, also tag with the release tag for all images
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            # Get the release tag
+            RELEASE_TAG=$(echo "${{ github.ref_name }}" | sed 's/\//-/g')
+          
+            # For frontera-dev
+            docker buildx imagetools create \
+              --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:$RELEASE_TAG \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+            # For frontera-prod
+            docker buildx imagetools create \
+              --tag ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:$RELEASE_TAG \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+              ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ github.sha }}-arm64
+          
+            # For middleware
+            docker buildx imagetools create \
+              --tag ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:$RELEASE_TAG \
+              ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-amd64 \
+              ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ github.sha }}-arm64
+          fi
+        shell: bash
+
+      # Inspect the created manifests
+      - name: Inspect manifests
+        run: |
+          echo "Inspecting frontera-dev manifest:"
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.FRONTERA_DEV_IMAGE_NAME }}:${{ needs.prepare.outputs.safe-tag }}
+          
+          echo "Inspecting frontera-prod manifest:"
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.FRONTERA_PROD_IMAGE_NAME }}:${{ needs.prepare.outputs.safe-tag }}
+          
+          echo "Inspecting middleware manifest:"
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.MIDDLEWARE_IMAGE_NAME }}:${{ needs.prepare.outputs.safe-tag }}
+        shell: bash
