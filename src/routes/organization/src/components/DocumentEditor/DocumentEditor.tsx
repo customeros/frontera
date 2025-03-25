@@ -1,20 +1,40 @@
-import { useMemo, useState, useCallback } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { Portal } from '@radix-ui/react-portal';
+import { UpdateDocumentUsecase } from '@domain/usecases/organization-details/update-document.usecase';
+import { DeleteDocumentUsecase } from '@domain/usecases/organization-details/delete-document.usecase';
 
 import { cn } from '@ui/utils/cn';
+import { Input } from '@ui/form/Input';
 import { Avatar } from '@ui/media/Avatar';
 import { Icon, IconName } from '@ui/media/Icon';
 import { Editor } from '@ui/form/Editor/Editor';
+import { Button } from '@ui/form/Button/Button';
 import { IconButton } from '@ui/form/IconButton';
 import { IconPicker } from '@ui/form/IconPicker';
 import { useStore } from '@shared/hooks/useStore';
 import { useChannel } from '@shared/hooks/useChannel';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
+import { ConfirmDialog } from '@ui/overlay/AlertDialog/ConfirmDialog';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
+import {
+  ScrollAreaRoot,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+} from '@ui/utils/ScrollArea';
+import {
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalContent,
+  ModalOverlay,
+  ModalCloseButton,
+} from '@ui/overlay/Modal';
 
 export const DocumentEditor = observer(() => {
   const store = useStore();
@@ -44,6 +64,12 @@ export const DocumentEditor = observer(() => {
   const authorPhoto =
     author && store.files.getById(author.value.profilePhotoUrl);
 
+  const usecase = useMemo(() => doc && new UpdateDocumentUsecase(doc)!, [doc]);
+  const deleteUsecase = useMemo(
+    () => doc && new DeleteDocumentUsecase(docId, store.documents)!,
+    [docId, store.documents],
+  );
+
   const closeEditor = () => {
     setParams((prev) => {
       prev.delete('doc');
@@ -53,35 +79,46 @@ export const DocumentEditor = observer(() => {
   };
 
   const Wrapper = useCallback(
-    ({ children }: { children: React.ReactNode }) => {
-      return viewMode === 'fullscreen' ? (
+    observer(({ children }: { children: React.ReactNode }) =>
+      viewMode === 'fullscreen' ? (
         <Portal
           container={document.getElementById('organization-profile-main')}
         >
           {children}
         </Portal>
       ) : (
-        children
-      );
-    },
-    [viewMode],
+        <ScrollAreaRoot>
+          <ScrollAreaViewport>{children}</ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation='vertical'>
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+        </ScrollAreaRoot>
+      ),
+    ),
+    [docId, viewMode, doc],
   );
 
-  const [_ring, bg, iconColor] = colorMap['grayModern'];
+  const [_ring, bg, iconColor] =
+    colorMap[(doc?.value?.color as string) ?? 'grayModern'];
+
+  useEffect(() => {
+    usecase?.init();
+  }, [docId]);
 
   return (
     <Wrapper>
       <div
         className={cn(
           'relative w-full h-full bg-white',
-          isFullscreen && 'absolute top-0 left-0 bottom-0 right-0 z-10',
+          isFullscreen &&
+            'absolute top-0 left-0 bottom-0 right-0 z-10 overflow-auto',
         )}
       >
         <div className='relative bg-white h-full w-[41rem] mx-auto pt-2'>
           <div className='flex items-center w-full justify-between mb-3'>
             <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
               <PopoverTrigger className={'group'}>
-                {'edit-04' && (
+                {doc?.value.icon && (
                   <div
                     className={cn(
                       'flex items-center rounded-md p-[5px] bg-grayModern-100',
@@ -92,7 +129,7 @@ export const DocumentEditor = observer(() => {
                     )}
                   >
                     <Icon
-                      name={'edit-04' as IconName}
+                      name={doc?.value.icon as IconName}
                       className={cn('size-5', iconColor, {
                         [iconColor?.replace('group-hover:', '')]:
                           showIconPicker,
@@ -107,14 +144,10 @@ export const DocumentEditor = observer(() => {
                 className='p-4 bg-grayModern-700 border-0'
               >
                 <IconPicker
-                  iconOptions={[]}
-                  icon={'activity'}
-                  color='grayModern'
-                  iconSearchValue={''}
-                  onIconSearch={() => {}}
-                  onIconChange={() => {}}
-                  onColorChange={() => {}}
-                  colorsMap={iconPickerColorMap}
+                  icon={doc?.value.icon as IconName}
+                  color={doc?.value.color ?? 'grayModern'}
+                  onIconChange={(i) => usecase?.executeIconChange(i)}
+                  onColorChange={(c) => usecase?.executeColorChange(c)}
                 />
               </PopoverContent>
             </Popover>
@@ -161,14 +194,20 @@ export const DocumentEditor = observer(() => {
                   />
                 </MenuButton>
                 <MenuList align='start'>
-                  <MenuItem className='group/rename'>
+                  <MenuItem
+                    className='group/rename'
+                    onClick={() => usecase?.toggleRename(true)}
+                  >
                     <Icon
                       name='edit-03'
                       className='text-grayModern-500 group-hover/rename:text-grayModern-700'
                     />{' '}
                     Rename
                   </MenuItem>
-                  <MenuItem className='group/archive'>
+                  <MenuItem
+                    className='group/archive'
+                    onClick={() => deleteUsecase?.toggleConfirmation(true)}
+                  >
                     <Icon
                       name='archive'
                       className='text-grayModern-500 group-hover/archive:text-grayModern-700'
@@ -208,24 +247,56 @@ export const DocumentEditor = observer(() => {
           />
         </div>
       </div>
+
+      <Modal
+        open={usecase?.isRenameModalOpen}
+        onOpenChange={(v) => usecase?.toggleRename(v)}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader className='font-medium'>Rename document</ModalHeader>
+          <ModalBody>
+            <Input
+              size='xs'
+              placeholder='Document name'
+              value={usecase?.renameValue}
+              invalid={!!usecase?.renameValidation}
+              onChange={(e) => usecase?.setRenameValue(e.target.value)}
+            />
+            {!!usecase?.renameValidation && <p>{usecase?.renameValidation}</p>}
+          </ModalBody>
+          <ModalFooter className='flex gap-3 justify-between'>
+            <Button
+              className='flex-1'
+              onClick={() => usecase?.toggleRename(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              className='flex-1'
+              colorScheme='primary'
+              onClick={usecase?.execute}
+              isDisabled={!!usecase?.renameValidation}
+            >
+              Rename
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <ConfirmDialog
+        confirmButtonLabel='Archive'
+        title='Archive this document?'
+        onConfirm={() => deleteUsecase?.execute()}
+        onClose={() => deleteUsecase?.toggleConfirmation(false)}
+        isOpen={deleteUsecase?.isDeleteConfirmationOpen ?? false}
+      ></ConfirmDialog>
     </Wrapper>
   );
 });
 
-const iconPickerColorMap = {
-  grayModern: 'bg-grayModern-400 ring-grayModern-400',
-  error: 'bg-error-400 ring-error-400',
-  warning: 'bg-warning-400 ring-warning-400',
-  success: 'bg-success-400 ring-success-400',
-  grayWarm: 'bg-grayWarm-400 ring-grayWarm-400',
-  moss: 'bg-moss-400 ring-moss-400',
-  blueLight: 'bg-blueLight-400 ring-blueLight-400',
-  indigo: 'bg-indigo-400 ring-indigo-400',
-  violet: 'bg-violet-400 ring-violet-400',
-  pink: 'bg-pink-400 ring-pink-400',
-};
-
-const colorMap = {
+const colorMap: Record<string, string[]> = {
   grayModern: [
     'hover:ring-grayModern-400',
     'group-hover:bg-grayModern-50',

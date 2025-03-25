@@ -11,4 +11,13 @@ export class Document extends Entity<DocumentDatum> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     super(store as any, data);
   }
+
+  toUpdatePayload() {
+    return {
+      id: this.value.id!,
+      name: this.value.name!,
+      icon: this.value.icon!,
+      color: this.value.color!,
+    };
+  }
 }

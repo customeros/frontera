@@ -1,0 +1,12 @@
+mutation deleteDocument($id: ID!) {
+  deleteDocument(id: $id) {
+    id
+    name
+    tenant
+    userId
+    icon
+    color
+    insertedAt
+    updatedAt
+  }
+}

@@ -31,7 +31,7 @@ export type CreateDocumentInput = {
   body: Scalars['String']['input'];
   color: Scalars['String']['input'];
   icon: Scalars['String']['input'];
-  lexicalState: Scalars['String']['input'];
+  lexicalState?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   organizationId: Scalars['ID']['input'];
   tenant: Scalars['String']['input'];
@@ -55,11 +55,16 @@ export type Document = {
 export type RootMutationType = {
   __typename?: 'RootMutationType';
   createDocument?: Maybe<Document>;
+  deleteDocument?: Maybe<Document>;
   updateDocument?: Maybe<Document>;
 };
 
 export type RootMutationTypeCreateDocumentArgs = {
   input: CreateDocumentInput;
+};
+
+export type RootMutationTypeDeleteDocumentArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type RootMutationTypeUpdateDocumentArgs = {

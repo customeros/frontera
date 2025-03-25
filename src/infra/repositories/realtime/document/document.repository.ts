@@ -1,8 +1,13 @@
 import { Transport } from '@infra/transport';
 
+import DeleteDocumentDocument from './mutations/deleteDocument.graphql';
 import UpdateDocumentDocument from './mutations/updateDocument.graphql';
 import OrganizationDocumentsDocument from './queries/organizationDocuments.graphql';
 import CreateOrganizationDocumentDocument from './mutations/createOrganizationDocument.graphql';
+import {
+  DeleteDocumentMutation,
+  DeleteDocumentMutationVariables,
+} from './mutations/deleteDocument.generated';
 import {
   UpdateDocumentMutation,
   UpdateDocumentMutationVariables,
@@ -54,5 +59,12 @@ export class DocumentRepository {
       UpdateDocumentMutation,
       UpdateDocumentMutationVariables
     >(UpdateDocumentDocument, variables);
+  }
+
+  async deleteDocument(variables: DeleteDocumentMutationVariables) {
+    return this.transport.graphql.request<
+      DeleteDocumentMutation,
+      DeleteDocumentMutationVariables
+    >(DeleteDocumentDocument, variables);
   }
 }
