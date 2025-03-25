@@ -149,7 +149,7 @@ jobs:
         with:
           tag_name: ${{ steps.generate_version.outputs.next_version }}
           generate_release_notes: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TRIGGER_FRONTERA_BUILD_TOKEN }}
 
       # Save outputs for the deploy workflow
       - name: Save workflow outputs
