@@ -295,7 +295,7 @@ export class ContractLineItemsStore implements GroupStore<ServiceLineItem> {
             billingCycle: payload.billingCycle,
             price:
               typeof payload.price === 'string'
-                ? parseFloat(payload.price)
+                ? parseFloat((payload.price as string).replace(/,/g, ''))
                 : payload.price,
             quantity: payload.quantity,
             serviceEnded: payload.serviceEnded,
