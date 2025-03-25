@@ -13,12 +13,6 @@ import { LatestDiff } from './types';
 
 type ApiRealm = 'core' | 'realtime' | 'mailstack';
 
-export interface TransportOptions {
-  email: string;
-  userId: string;
-  sessionToken: string;
-}
-
 const isTestMode = import.meta.env.MODE === 'test';
 const defaultGraphqlHeaders: Record<string, string> = isTestMode
   ? {
