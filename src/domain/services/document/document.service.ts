@@ -62,7 +62,8 @@ export class DocumentService {
           icon: 'file-05',
           name: 'New document',
           organizationId,
-          // lexicalState: '',
+          lexicalState:
+            '{"root":{"type":"root","children":[{"type":"paragraph","__format":0,"__style":0,"__indent":0,"__dir":"ltr","__textFormat":0,"__textStyle":"","children":[]}]}}',
           tenant,
           userId,
         },

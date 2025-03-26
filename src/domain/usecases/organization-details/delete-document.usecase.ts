@@ -1,15 +1,18 @@
 import { Tracer } from '@infra/tracer';
-import { action, observable } from 'mobx';
 import { inject } from '@infra/container';
+import { UtilService } from '@domain/services';
+import { action, observable, runInAction } from 'mobx';
 import { DocumentsStore } from '@store/Documents/Documents.store';
 import { DocumentService } from '@domain/services/document/document.service';
 
 export class DeleteDocumentUsecase {
   @inject(DocumentService) private service!: DocumentService;
+  @inject(UtilService) private util!: UtilService;
 
+  @observable public accessor id: string | null = null;
   @observable public accessor isDeleteConfirmationOpen = false;
 
-  constructor(private id: string, private store: DocumentsStore) {}
+  constructor(private store: DocumentsStore) {}
 
   @action
   toggleConfirmation = (value: boolean) => {
@@ -20,15 +23,26 @@ export class DeleteDocumentUsecase {
   };
 
   @action
-  init = () => {
+  init = (id: string) => {
     const span = Tracer.span('DeleteDocumentUsecase.init');
 
+    this.id = id;
     this.toggleConfirmation(false);
     span.end();
   };
 
   execute = async () => {
     const span = Tracer.span('DeleteDocumentUsecase.execute');
+
+    if (!this.id) {
+      console.error(
+        'DeleteDocumentUsecase.execute: document ID is missing. Aborting usecase.',
+      );
+
+      span.end();
+
+      return;
+    }
 
     const [_, err] = await this.service.deleteDocument(this.id);
 
@@ -37,12 +51,17 @@ export class DeleteDocumentUsecase {
 
       span.end();
 
+      this.util.toastError('We’re unable to archive this document');
+
       return;
     }
 
-    this.store.value.delete(this.id);
-
-    this.init();
+    runInAction(() => {
+      this.id && this.store.value.delete(this.id);
+    });
+    this.store.sync({ action: 'DELETE', ids: [this.id] });
+    this.util.toastSuccess('Archived document');
+    this.toggleConfirmation(false);
 
     span.end();
   };

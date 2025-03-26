@@ -14,6 +14,7 @@ export type UpdateDocumentMutation = {
     userId: string;
     icon?: string | null;
     color?: string | null;
+    organizationId?: string | null;
     insertedAt: string;
     updatedAt: string;
   } | null;

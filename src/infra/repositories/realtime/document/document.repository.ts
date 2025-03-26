@@ -1,8 +1,13 @@
 import { Transport } from '@infra/transport';
 
+import DocumentDocument from './queries/document.graphql';
 import DeleteDocumentDocument from './mutations/deleteDocument.graphql';
 import UpdateDocumentDocument from './mutations/updateDocument.graphql';
 import OrganizationDocumentsDocument from './queries/organizationDocuments.graphql';
+import {
+  DocumentQuery,
+  DocumentQueryVariables,
+} from './queries/document.generated';
 import CreateOrganizationDocumentDocument from './mutations/createOrganizationDocument.graphql';
 import {
   DeleteDocumentMutation,
@@ -34,6 +39,13 @@ export class DocumentRepository {
     }
 
     return DocumentRepository.instance;
+  }
+
+  async getDocument(variables: DocumentQueryVariables) {
+    return this.transport.graphql.request<
+      DocumentQuery,
+      DocumentQueryVariables
+    >(DocumentDocument, variables);
   }
 
   async getOrganizationDocuments(

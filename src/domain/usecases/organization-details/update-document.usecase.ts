@@ -1,19 +1,23 @@
 import { Tracer } from '@infra/tracer';
 import { action, observable } from 'mobx';
 import { inject } from '@infra/container';
+import { UtilService } from '@domain/services';
 import { Document } from '@store/Documents/Document.dto';
+import { DocumentsStore } from '@store/Documents/Documents.store';
 import { DocumentService } from '@domain/services/document/document.service';
 
 import { IconName } from '@ui/media/Icon';
 
 export class UpdateDocumentUsecase {
   @inject(DocumentService) private service!: DocumentService;
+  @inject(UtilService) private util!: UtilService;
 
   @observable public accessor isRenameModalOpen = false;
   @observable public accessor renameValue = '';
   @observable public accessor renameValidation = '';
+  @observable private accessor document: Document | null = null;
 
-  constructor(private document: Document) {
+  constructor(private store: DocumentsStore) {
     const span = Tracer.span('UpdateDocumentUsecase.constructor');
 
     if (!document) {
@@ -59,9 +63,10 @@ export class UpdateDocumentUsecase {
   };
 
   @action
-  init = () => {
+  init = (docId: string) => {
     const span = Tracer.span('UpdateDocumentUsecase.init');
 
+    this.document = this.store.getById(docId)!;
     this.renameValue = this.document.value.name;
     this.validateRenameValue();
     this.toggleRename(false);
@@ -71,6 +76,16 @@ export class UpdateDocumentUsecase {
   @action
   executeIconChange = async (icon: IconName) => {
     const span = Tracer.span('UpdateDocumentUsecase.executeIconChange');
+
+    if (!this.document) {
+      console.error(
+        'UpdateDocumentUsecase.executeIconChange: document must not be null',
+      );
+
+      span.end();
+
+      return;
+    }
 
     this.document.draft();
     this.document.value.icon = icon;
@@ -86,7 +101,7 @@ export class UpdateDocumentUsecase {
       return;
     }
 
-    this.init();
+    this.init(this.document.id);
 
     span.end();
   };
@@ -94,6 +109,16 @@ export class UpdateDocumentUsecase {
   @action
   executeColorChange = async (color: string) => {
     const span = Tracer.span('UpdateDocumentUsecase.executeColorChange');
+
+    if (!this.document) {
+      console.error(
+        'UpdateDocumentUsecase.executeColorChange: document must not be null',
+      );
+
+      span.end();
+
+      return;
+    }
 
     this.document.draft();
     this.document.value.color = color;
@@ -109,13 +134,21 @@ export class UpdateDocumentUsecase {
       return;
     }
 
-    this.init();
+    this.init(this.document.id);
 
     span.end();
   };
 
   execute = async () => {
     const span = Tracer.span('UpdateDocumentUsecase.execute');
+
+    if (!this.document) {
+      console.error('UpdateDocumentUsecase.execute: document must not be null');
+
+      span.end();
+
+      return;
+    }
 
     this.document.draft();
     this.document.value.name = this.renameValue;
@@ -131,7 +164,8 @@ export class UpdateDocumentUsecase {
       return;
     }
 
-    this.init();
+    this.util.toastSuccess('Document renamed');
+    this.init(this.document.id);
 
     span.end();
   };

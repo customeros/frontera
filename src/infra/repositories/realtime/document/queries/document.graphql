@@ -1,11 +1,10 @@
-mutation updateDocument($input: UpdateDocumentInput!) {
-  updateDocument(input: $input) {
+query document($id: ID!) {
+  document(id: $id) {
     id
     name
     tenant
     userId
     icon
-    color
     organizationId
     insertedAt
     updatedAt

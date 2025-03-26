@@ -52,11 +52,13 @@ export class UIStore {
     );
   }
 
+  /** @deprecated - use UtilService.toastSuccess() */
   toastSuccess(text: string, id: string) {
     // redundant call to toastSuccess - should be refactored
     toastSuccess(text, id);
   }
 
+  /** @deprecated - use UtilService.toastError() */
   toastError(text: string, id: string) {
     // redundant call to toastError - should be refactored
     toastError(text, id);

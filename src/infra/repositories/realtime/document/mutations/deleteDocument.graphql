@@ -6,6 +6,7 @@ mutation deleteDocument($id: ID!) {
     userId
     icon
     color
+    organizationId
     insertedAt
     updatedAt
   }

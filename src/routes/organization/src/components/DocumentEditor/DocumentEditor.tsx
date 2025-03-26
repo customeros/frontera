@@ -64,10 +64,13 @@ export const DocumentEditor = observer(() => {
   const authorPhoto =
     author && store.files.getById(author.value.profilePhotoUrl);
 
-  const usecase = useMemo(() => doc && new UpdateDocumentUsecase(doc)!, [doc]);
+  const usecase = useMemo(
+    () => new UpdateDocumentUsecase(store.documents)!,
+    [store.documents],
+  );
   const deleteUsecase = useMemo(
-    () => doc && new DeleteDocumentUsecase(docId, store.documents)!,
-    [docId, store.documents],
+    () => new DeleteDocumentUsecase(store.documents)!,
+    [store.documents],
   );
 
   const closeEditor = () => {
@@ -102,7 +105,8 @@ export const DocumentEditor = observer(() => {
     colorMap[(doc?.value?.color as string) ?? 'grayModern'];
 
   useEffect(() => {
-    usecase?.init();
+    usecase?.init(docId);
+    deleteUsecase?.init(docId);
   }, [docId]);
 
   return (

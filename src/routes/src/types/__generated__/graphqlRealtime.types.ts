@@ -47,6 +47,7 @@ export type Document = {
   insertedAt: Scalars['String']['output'];
   lexicalState?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
+  organizationId?: Maybe<Scalars['String']['output']>;
   tenant?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['String']['output'];
   userId: Scalars['ID']['output'];
@@ -73,7 +74,12 @@ export type RootMutationTypeUpdateDocumentArgs = {
 
 export type RootQueryType = {
   __typename?: 'RootQueryType';
+  document?: Maybe<Document>;
   organizationDocuments?: Maybe<Array<Maybe<Document>>>;
+};
+
+export type RootQueryTypeDocumentArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type RootQueryTypeOrganizationDocumentsArgs = {

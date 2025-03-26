@@ -6,6 +6,7 @@ query organizationDocuments($organizationId: ID!) {
     userId
     icon
     color
+    organizationId
     insertedAt
     updatedAt
   }

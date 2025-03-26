@@ -6,6 +6,7 @@ mutation createOrganizationDocument($input: CreateDocumentInput!) {
     userId
     icon
     color
+    organizationId
     insertedAt
     updatedAt
   }
