@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useStore } from '@shared/hooks/useStore';
 
-import { DocumentEditor } from '../DocumentEditor';
+import { WrappedDocumentEditor } from '../DocumentEditor';
 
 export const MainSection = observer(
   ({ children }: { children?: React.ReactNode }) => {
@@ -20,7 +20,7 @@ export const MainSection = observer(
         className='flex h-full flex-grow flex-shrink border-none rounded-none flex-col overflow-hidden shadow-none relative bg-white min-w-[609px] p-0'
       >
         {displayDocEditor ? (
-          <DocumentEditor />
+          <WrappedDocumentEditor />
         ) : (
           <>
             <div className='px-6 pt-[6px] pb-2 flex items-center flex-row justify-between'>

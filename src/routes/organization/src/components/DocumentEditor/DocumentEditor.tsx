@@ -1,5 +1,5 @@
+import { useMemo, useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { Portal } from '@radix-ui/react-portal';
@@ -25,233 +25,250 @@ import {
   ScrollAreaScrollbar,
 } from '@ui/utils/ScrollArea';
 
-export const DocumentEditor = observer(() => {
-  const store = useStore();
-  const { id } = useParams();
-  const [params, setParams] = useSearchParams();
-  const [showIconPicker, setShowIconPicker] = useState(false);
-  const [openRename, setOpenRename] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [viewMode, setViewMode] = useState<'fullscreen' | 'default'>('default');
-  const { presentUsers, currentUserId } = useChannel(
-    `organization_presence:${id}`,
-  );
+type ViewMode = 'fullscreen' | 'default';
 
-  const presenceUser = useMemo(() => {
-    const found = presentUsers.find((u) => u.user_id === currentUserId);
+interface DocumentEditorProps {
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
+}
 
-    if (!found?.username || !found?.color) return undefined;
+export const DocumentEditor = observer(
+  ({ viewMode, onViewModeChange }: DocumentEditorProps) => {
+    const store = useStore();
+    const { id } = useParams();
+    const [params, setParams] = useSearchParams();
+    const [showIconPicker, setShowIconPicker] = useState(false);
+    const [openRename, setOpenRename] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
 
-    return {
-      username: found.username,
-      cursorColor: found.color,
+    const { presentUsers, currentUserId } = useChannel(
+      `organization_presence:${id}`,
+    );
+
+    const presenceUser = useMemo(() => {
+      const found = presentUsers.find((u) => u.user_id === currentUserId);
+
+      if (!found?.username || !found?.color) return undefined;
+
+      return {
+        username: found.username,
+        cursorColor: found.color,
+      };
+    }, [currentUserId, presentUsers]);
+
+    const docId = params.get('doc')!;
+    const doc = store.documents.getById(docId);
+    const author = doc && store.users.getById(doc.value.userId);
+    const isFullscreen = viewMode === 'fullscreen';
+    const authorPhoto =
+      author && store.files.getById(author.value.profilePhotoUrl);
+
+    const usecase = useMemo(
+      () => new DocumentIconChangeUsecase(store.documents)!,
+      [store.documents],
+    );
+
+    const closeEditor = () => {
+      setParams((prev) => {
+        prev.delete('doc');
+
+        return prev;
+      });
     };
-  }, [currentUserId, presentUsers]);
 
-  const docId = params.get('doc')!;
-  const doc = store.documents.getById(docId);
-  const author = doc && store.users.getById(doc.value.userId);
-  const isFullscreen = viewMode === 'fullscreen';
-  const authorPhoto =
-    author && store.files.getById(author.value.profilePhotoUrl);
+    const [_ring, bg, iconColor] =
+      colorMap[(doc?.value?.color as string) ?? 'grayModern'];
 
-  const usecase = useMemo(
-    () => new DocumentIconChangeUsecase(store.documents)!,
-    [store.documents],
-  );
+    useEffect(() => {
+      usecase?.init(docId);
+    }, [docId, doc]);
 
-  const closeEditor = () => {
-    setParams((prev) => {
-      prev.delete('doc');
-
-      return prev;
-    });
-  };
-
-  const Wrapper = useCallback(
-    observer(({ children }: { children: React.ReactNode }) =>
-      viewMode === 'fullscreen' ? (
-        <Portal
-          container={document.getElementById('organization-profile-main')}
+    return (
+      <>
+        <div
+          className={cn(
+            'relative w-full h-full bg-white',
+            isFullscreen &&
+              'absolute top-0 left-0 bottom-0 right-0 z-10 overflow-auto',
+          )}
         >
-          {children}
-        </Portal>
-      ) : (
-        <ScrollAreaRoot>
-          <ScrollAreaViewport>{children}</ScrollAreaViewport>
-          <ScrollAreaScrollbar orientation='vertical'>
-            <ScrollAreaThumb />
-          </ScrollAreaScrollbar>
-        </ScrollAreaRoot>
-      ),
-    ),
-    [docId, viewMode, doc],
-  );
+          <div className='relative bg-white h-full w-[41rem] mx-auto pt-2'>
+            <div className='flex items-center w-full justify-between mb-3'>
+              <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
+                <PopoverTrigger className={'group'}>
+                  {doc?.value.icon && (
+                    <div
+                      className={cn(
+                        'flex items-center rounded-md p-[5px] bg-grayModern-100',
+                        bg,
+                        {
+                          [bg?.replace('group-hover:', '')]: showIconPicker,
+                        },
+                      )}
+                    >
+                      <Icon
+                        name={doc?.value.icon as IconName}
+                        className={cn('size-5', iconColor, {
+                          [iconColor?.replace('group-hover:', '')]:
+                            showIconPicker,
+                        })}
+                      />
+                    </div>
+                  )}
+                </PopoverTrigger>
 
-  const [_ring, bg, iconColor] =
-    colorMap[(doc?.value?.color as string) ?? 'grayModern'];
+                <PopoverContent
+                  align='start'
+                  className='p-4 bg-grayModern-700 border-0'
+                >
+                  <IconPicker
+                    icon={doc?.value.icon as IconName}
+                    color={doc?.value.color ?? 'grayModern'}
+                    onIconChange={(i) => usecase?.executeIconChange(i)}
+                    onColorChange={(c) => usecase?.executeColorChange(c)}
+                  />
+                </PopoverContent>
+              </Popover>
 
-  useEffect(() => {
-    usecase?.init(docId);
-  }, [docId, doc]);
-
-  return (
-    <Wrapper>
-      <div
-        className={cn(
-          'relative w-full h-full bg-white',
-          isFullscreen &&
-            'absolute top-0 left-0 bottom-0 right-0 z-10 overflow-auto',
-        )}
-      >
-        <div className='relative bg-white h-full w-[41rem] mx-auto pt-2'>
-          <div className='flex items-center w-full justify-between mb-3'>
-            <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
-              <PopoverTrigger className={'group'}>
-                {doc?.value.icon && (
-                  <div
-                    className={cn(
-                      'flex items-center rounded-md p-[5px] bg-grayModern-100',
-                      bg,
-                      {
-                        [bg?.replace('group-hover:', '')]: showIconPicker,
-                      },
-                    )}
-                  >
+              <div className='flex items-center gap-1'>
+                <IconButton
+                  size='xs'
+                  variant='ghost'
+                  aria-label='toggle view mode'
+                  onClick={() =>
+                    onViewModeChange(
+                      viewMode === 'default' ? 'fullscreen' : 'default',
+                    )
+                  }
+                  icon={
                     <Icon
-                      name={doc?.value.icon as IconName}
-                      className={cn('size-5', iconColor, {
-                        [iconColor?.replace('group-hover:', '')]:
-                          showIconPicker,
-                      })}
+                      name={
+                        viewMode === 'default' ? 'expand-01' : 'collapse-01'
+                      }
+                    />
+                  }
+                />
+
+                <IconButton
+                  size='xs'
+                  variant='ghost'
+                  onClick={closeEditor}
+                  icon={<Icon name='x' />}
+                  aria-label='close document'
+                />
+              </div>
+            </div>
+
+            <div className='w-full flex gap-4 items-center justify-between mb-4'>
+              <div className='flex items-center gap-1'>
+                <h1 className='text-lg font-medium line-clamp-1'>
+                  {doc?.value.name}
+                </h1>
+                <Menu>
+                  <MenuButton asChild>
+                    <IconButton
+                      size='xs'
+                      variant='ghost'
+                      aria-label='more actions'
+                      icon={<Icon name='dots-vertical' />}
+                    />
+                  </MenuButton>
+                  <MenuList align='start'>
+                    <MenuItem
+                      className='group/rename'
+                      onClick={() => setOpenRename(true)}
+                    >
+                      <Icon
+                        name='edit-03'
+                        className='text-grayModern-500 group-hover/rename:text-grayModern-700'
+                      />{' '}
+                      Rename
+                    </MenuItem>
+                    <MenuItem
+                      className='group/archive'
+                      onClick={() => setOpenDelete(true)}
+                    >
+                      <Icon
+                        name='archive'
+                        className='text-grayModern-500 group-hover/archive:text-grayModern-700'
+                      />{' '}
+                      Archive
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <Tooltip hasArrow side='bottom' label={author?.value.name}>
+                  <div>
+                    <Avatar
+                      size='xs'
+                      src={authorPhoto}
+                      variant='outlineCircle'
+                      name={author?.value.name}
+                      icon={
+                        <Icon name='user-01' className='text-grayModern-500' />
+                      }
                     />
                   </div>
-                )}
-              </PopoverTrigger>
+                </Tooltip>
 
-              <PopoverContent
-                align='start'
-                className='p-4 bg-grayModern-700 border-0'
-              >
-                <IconPicker
-                  icon={doc?.value.icon as IconName}
-                  color={doc?.value.color ?? 'grayModern'}
-                  onIconChange={(i) => usecase?.executeIconChange(i)}
-                  onColorChange={(c) => usecase?.executeColorChange(c)}
-                />
-              </PopoverContent>
-            </Popover>
+                <span className='text-sm text-nowrap text-grayModern-500'>
+                  created 12 Jan 2025
+                </span>
+              </div>
+            </div>
 
-            <div className='flex items-center gap-1'>
-              <IconButton
-                size='xs'
-                variant='ghost'
-                aria-label='toggle view mode'
-                icon={
-                  <Icon
-                    name={viewMode === 'default' ? 'expand-01' : 'collapse-01'}
-                  />
-                }
-                onClick={() =>
-                  setViewMode((prev) =>
-                    prev === 'default' ? 'fullscreen' : 'default',
-                  )
-                }
+            {doc?.value.id && (
+              <Editor
+                useYjs
+                user={presenceUser}
+                documentId={doc?.value.id}
+                namespace='organization-document-editor'
               />
-
-              <IconButton
-                size='xs'
-                variant='ghost'
-                onClick={closeEditor}
-                icon={<Icon name='x' />}
-                aria-label='close document'
-              />
-            </div>
+            )}
           </div>
-
-          <div className='w-full flex gap-4 items-center justify-between mb-4'>
-            <div className='flex items-center gap-1'>
-              <h1 className='text-lg font-medium line-clamp-1'>
-                {doc?.value.name}
-              </h1>
-              <Menu>
-                <MenuButton asChild>
-                  <IconButton
-                    size='xs'
-                    variant='ghost'
-                    aria-label='more actions'
-                    icon={<Icon name='dots-vertical' />}
-                  />
-                </MenuButton>
-                <MenuList align='start'>
-                  <MenuItem
-                    className='group/rename'
-                    onClick={() => setOpenRename(true)}
-                  >
-                    <Icon
-                      name='edit-03'
-                      className='text-grayModern-500 group-hover/rename:text-grayModern-700'
-                    />{' '}
-                    Rename
-                  </MenuItem>
-                  <MenuItem
-                    className='group/archive'
-                    onClick={() => setOpenDelete(true)}
-                  >
-                    <Icon
-                      name='archive'
-                      className='text-grayModern-500 group-hover/archive:text-grayModern-700'
-                    />{' '}
-                    Archive
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </div>
-
-            <div className='flex items-center gap-2'>
-              <Tooltip hasArrow side='bottom' label={author?.value.name}>
-                <div>
-                  <Avatar
-                    size='xs'
-                    src={authorPhoto}
-                    variant='outlineCircle'
-                    name={author?.value.name}
-                    icon={
-                      <Icon name='user-01' className='text-grayModern-500' />
-                    }
-                  />
-                </div>
-              </Tooltip>
-
-              <span className='text-sm text-nowrap text-grayModern-500'>
-                created 12 Jan 2025
-              </span>
-            </div>
-          </div>
-
-          <Editor
-            useYjs
-            user={presenceUser}
-            documentId={doc?.value.id}
-            namespace='organization-document-editor'
-          />
         </div>
-      </div>
 
-      <DocumentRenameModal
-        docId={docId}
-        open={openRename}
-        onOpenChange={setOpenRename}
-      />
+        <DocumentRenameModal
+          docId={docId}
+          open={openRename}
+          onOpenChange={setOpenRename}
+        />
 
-      <DocumentDeleteDialog
-        docId={docId}
-        open={openDelete}
-        onOpenChange={setOpenDelete}
-      />
-    </Wrapper>
+        <DocumentDeleteDialog
+          docId={docId}
+          open={openDelete}
+          onOpenChange={setOpenDelete}
+        />
+      </>
+    );
+  },
+);
+
+/**
+ * It's necessary to toggle the viewmode here and not inside the editor in order to force a full remount
+ * of the DocumentEditor. In production, document breaks down when toggling from one viewMode to another
+ * Remounting entirely solves this problem as any Editor related caching or memoization is garbage-collected.
+ */
+export const WrappedDocumentEditor = () => {
+  const [viewMode, setViewMode] = useState<'fullscreen' | 'default'>('default');
+
+  return viewMode === 'fullscreen' ? (
+    <Portal container={document.getElementById('organization-profile-main')}>
+      <DocumentEditor viewMode={viewMode} onViewModeChange={setViewMode} />
+    </Portal>
+  ) : (
+    <ScrollAreaRoot>
+      <ScrollAreaViewport>
+        <DocumentEditor viewMode={viewMode} onViewModeChange={setViewMode} />
+      </ScrollAreaViewport>
+      <ScrollAreaScrollbar orientation='vertical'>
+        <ScrollAreaThumb />
+      </ScrollAreaScrollbar>
+    </ScrollAreaRoot>
   );
-});
+};
 
 const colorMap: Record<string, string[]> = {
   grayModern: [

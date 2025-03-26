@@ -187,6 +187,9 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
     const [_yjsProvider, setYjsProvider] =
       useState<PhoenixChannelProvider | null>(null);
     const [undoManager, setUndoManager] = useState<UndoManager | null>(null);
+    const [_connectionStatus, setConnectionStatus] = useState<
+      'disconnected' | 'connecting' | 'connected'
+    >('disconnected');
 
     const { socket } = useContext(PhoenixSocketContext);
 
@@ -272,8 +275,8 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
           doc,
         );
 
-        provider.on('status', (_event) => {
-          // console.log('event status', event);
+        provider.on('status', (e) => {
+          setConnectionStatus(e.status);
         });
 
         const yXmlFragment = doc.get('lexical', Y.XmlFragment);
