@@ -11,6 +11,6 @@ export const timeAgo = (date: string) => {
   } else if (diffInHours < 24) {
     return `${diffInHours}hours`;
   } else {
-    return `${diffInDays}days`;
+    return `${diffInDays}d ago`;
   }
 };

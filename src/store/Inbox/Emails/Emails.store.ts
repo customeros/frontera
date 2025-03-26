@@ -1,7 +1,7 @@
 import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
-import { EmailDatum } from '@infra/repositories/mailstack/allEmailsInThread/allEmailsInThread.datum';
+import { EmailDatum } from '@infra/repositories/mailstack/Emails/email.datum';
 
 import { Email } from './Email.dto';
 

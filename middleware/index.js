@@ -232,7 +232,7 @@ async function createServer() {
     changeOrigin: true,
     headers: {
       'X-CUSTOMER-OS-API-KEY': process.env.MAILSTACK_API_KEY,
-      TENANT: 'test',
+      TENANT: 'PureThePhantom',
     },
     logger: console,
     preserveHeaderKeyCase: true,
