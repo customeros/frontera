@@ -58,7 +58,7 @@ export const EmailInbox = observer(() => {
               className='flex gap-2 p-2 cursor-pointer items-center hover:bg-grayModern-100 hover:rounded-md'
               onClick={() => {
                 setSearchParams((prev) => {
-                  prev.set('email', email.id);
+                  prev.set('id', email.id);
 
                   return prev;
                 });

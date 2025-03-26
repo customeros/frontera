@@ -1,11 +1,11 @@
 import { Email } from '@store/Inbox/Emails/Email.dto';
 import { action, observable, runInAction } from 'mobx';
 import { Emails } from '@store/Inbox/Emails/Emails.store';
-import { AllEmailsInThreadRepository } from '@infra/repositories/mailstack/allEmailsInThread';
+import { EmailsRepository } from '@infra/repositories/mailstack/Emails/emails.repository';
 
 export class EmailsInThreadUsecase {
-  private repository = AllEmailsInThreadRepository.getInstance();
-  @observable accessor expand: string = '';
+  private repository = EmailsRepository.getInstance();
+  @observable accessor expand: Set<string> = new Set();
 
   constructor(public threadId: string, public store: Emails) {
     this.init = this.init.bind(this);
@@ -14,10 +14,10 @@ export class EmailsInThreadUsecase {
 
   @action
   toggleExpand(emailId: string) {
-    if (this.expand === emailId) {
-      this.expand = '';
+    if (this.expand.has(emailId)) {
+      this.expand.delete(emailId);
     } else {
-      this.expand = emailId;
+      this.expand.add(emailId);
     }
   }
 

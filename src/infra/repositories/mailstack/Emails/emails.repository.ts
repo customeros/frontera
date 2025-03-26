@@ -6,16 +6,16 @@ import {
   GetAllEmailsInThreadQueryVariables,
 } from './query/getAllEmailsInThread.generated';
 
-export class AllEmailsInThreadRepository {
-  static instance: AllEmailsInThreadRepository | null = null;
+export class EmailsRepository {
+  static instance: EmailsRepository | null = null;
   private transport = Transport.getInstance('mailstack');
 
   public static getInstance() {
-    if (!AllEmailsInThreadRepository.instance) {
-      AllEmailsInThreadRepository.instance = new AllEmailsInThreadRepository();
+    if (!EmailsRepository.instance) {
+      EmailsRepository.instance = new EmailsRepository();
     }
 
-    return AllEmailsInThreadRepository.instance;
+    return EmailsRepository.instance;
   }
 
   async getAllEmailsInThread(payload: GetAllEmailsInThreadQueryVariables) {

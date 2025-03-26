@@ -1,5 +1,5 @@
 import { Entity } from '@store/record';
-import { EmailDatum } from '@infra/repositories/mailstack/allEmailsInThread/allEmailsInThread.datum';
+import { EmailDatum } from '@infra/repositories/mailstack/Emails/email.datum';
 
 import { Emails } from './Emails.store';
 

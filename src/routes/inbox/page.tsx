@@ -1,12 +1,24 @@
+import { useSearchParams } from 'react-router-dom';
+
+import { observer } from 'mobx-react-lite';
+
 import { Icon } from '@ui/media/Icon';
 import { Switch } from '@ui/form/Switch';
 import { Button } from '@ui/form/Button/Button';
 import { IconButton } from '@ui/form/IconButton';
+import { useStore } from '@shared/hooks/useStore';
 
 import { EmailInbox } from './components/EmailInbox';
 import { ThreadsView } from './components/ThreadsView';
 
-export const InboxPage = () => {
+export const InboxPage = observer(() => {
+  const store = useStore();
+  const [searchParams] = useSearchParams();
+
+  const threadId = searchParams.get('id');
+
+  const thread = store.emails.getEmailsByThreadId(threadId ?? '')?.[0];
+
   return (
     <div className='flex h-full'>
       <div className='border-r border-r-grayModern-200 h-full flex-1 min-w-[400px] max-w-[500px]'>
@@ -34,7 +46,9 @@ export const InboxPage = () => {
       </div>
       <div className='border-r border-r-grayModern-200 h-full flex-2'>
         <div className='border-b border-b-grayModern-200 px-3 py-[7px] flex justify-between items-center'>
-          <p className='text-md font-medium'>Two weeks of your life back</p>
+          <p className='text-md font-medium'>
+            {thread?.value?.subject || 'No subject yet...'}
+          </p>
           <div className='flex items-center gap-2'>
             <IconButton
               size='xs'
@@ -55,4 +69,4 @@ export const InboxPage = () => {
       </div>
     </div>
   );
-};
+});

@@ -5,9 +5,7 @@ import { Icon } from '@ui/media/Icon';
 import { Plus } from '@ui/media/icons/Plus';
 import { Combobox } from '@ui/form/Combobox';
 import { Menu } from '@ui/overlay/Menu/Menu';
-// import { useStore } from '@shared/hooks/useStore';
 import { SelectOption } from '@shared/types/SelectOptions';
-import { Tag, TagLabel, TagRightElement } from '@ui/presentation/Tag';
 import { MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import {
   Popover,
@@ -43,8 +41,6 @@ export const CreatebleEmailAdress = observer(
     inputValue,
     setInputValue,
   }: CreatebleEmailAddressProps) => {
-    // const store = useStore();
-
     const handleClear = (id: string) => {
       onChange?.(value.filter((o) => o.value !== id));
     };
@@ -60,38 +56,31 @@ export const CreatebleEmailAdress = observer(
             {value.length ? (
               value.map((option) => {
                 return (
-                  <Tag
-                    size={'md'}
-                    variant='subtle'
-                    key={option.value}
-                    colorScheme={'grayModern'}
-                  >
-                    <TagLabel>{option.label}</TagLabel>
-                    <TagRightElement>
-                      <Menu>
-                        <MenuButton>
-                          <Icon name={'menu-01'} className='ml-1' />
-                        </MenuButton>
-                        <MenuList>
-                          <MenuItem onClick={() => handleClear(option.value)}>
-                            <div className='flex items-center gap-1'>
-                              <p>Remove address</p>
-                            </div>
-                          </MenuItem>
-                          <MenuItem>
-                            <p>{option.label}</p>
-                            <Icon
-                              name='copy-03'
-                              className='text-grayModern-400 size-4'
-                            />
-                          </MenuItem>
-                          <MenuItem>
-                            <p>Add to contacts</p>
-                          </MenuItem>
-                        </MenuList>
-                      </Menu>
-                    </TagRightElement>
-                  </Tag>
+                  <div className='flex items-center gap-[2px] hover:bg-grayModern-100 rounded-md p-[4px]'>
+                    <p className='text-sm font-medium '>{option.label}</p>
+                    <Menu>
+                      <MenuButton>
+                        <Icon className='ml-1' name={'chevron-down'} />
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem onClick={() => handleClear(option.value)}>
+                          <div className='flex items-center gap-1'>
+                            <p>Remove address</p>
+                          </div>
+                        </MenuItem>
+                        <MenuItem>
+                          <p>{option.label}</p>
+                          <Icon
+                            name='copy-03'
+                            className='text-grayModern-400 size-4'
+                          />
+                        </MenuItem>
+                        <MenuItem>
+                          <p>Add to contacts</p>
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </div>
                 );
               })
             ) : (
@@ -105,6 +94,7 @@ export const CreatebleEmailAdress = observer(
             value={value}
             options={options}
             onChange={onChange}
+            backspaceRemovesValue
             inputValue={inputValue}
             onInputChange={setInputValue}
             placeholder={inputPlaceholder}
@@ -123,7 +113,7 @@ export const CreatebleEmailAdress = observer(
                 }}
               >
                 <Plus />
-                <span>{`Create "${inputValue}"`}</span>
+                <span>{`Add new email:"${inputValue}"`}</span>
               </div>
             )}
           />

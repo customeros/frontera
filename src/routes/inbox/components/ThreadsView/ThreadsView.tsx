@@ -17,28 +17,29 @@ export const ThreadsView = observer(() => {
 
   return (
     <>
-      <div className='flex flex-col items-center w-full justify-between h-[calc(100vh-40px)] p-4'>
-        <div className='flex flex-col gap-2 w-full'>
+      <div className='flex flex-col items-center overflow-y-auto w-full justify-between h-[calc(100vh-40px)] p-4'>
+        <div className='flex flex-col gap-2  w-[700px]'>
           <MailStub />
         </div>
-        <div className='border border-grayModern-200 rounded-md p-2  w-[70%]'>
+        <div className='border border-grayModern-200 rounded-md p-3 w-[70%]'>
           <div className='w-[100%]'>
             <MailboxList />
           </div>
 
-          <div className='flex items-start gap-2 '>
+          <div className='flex items-start gap-2'>
             <Avatar
               size='xs'
               src={imgSrc}
-              textSize='sm'
-              className='mr-5'
+              textSize='xs'
               variant='outlineCircle'
               name={user?.name ?? ''}
               icon={<Icon name='user-03' />}
             />
             <div className='mt-[-12px] w-full'>
               <Editor
+                size='sm'
                 namespace='inbox'
+                showToolbarBottom
                 defaultHtmlValue={''}
                 placeholder='Write a email...'
               >
