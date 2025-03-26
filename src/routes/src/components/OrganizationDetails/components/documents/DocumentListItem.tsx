@@ -40,7 +40,7 @@ export const DocumentListItem = observer(
         <p className='text-sm truncate'>{doc.value.name}</p>
 
         <Menu
-          onOpenChange={(v) => {
+          onOpenChange={() => {
             onClick(doc.id);
           }}
         >
