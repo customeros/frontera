@@ -5,6 +5,7 @@ query getInboxQuery($userId: String!, $pagination: PaginationInput) {
       isDone
       isViewed
       lastMessageAt
+      lastMessageAt
       lastSender
       lastSenderDomain
       mailboxId
@@ -13,10 +14,10 @@ query getInboxQuery($userId: String!, $pagination: PaginationInput) {
       userId
     }
     pageInfo {
-      endCursor
       hasNextPage
-      hasPreviousPage
+      endCursor
       startCursor
+      hasPreviousPage
     }
     totalCount
   }

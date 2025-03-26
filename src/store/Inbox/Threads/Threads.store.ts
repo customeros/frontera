@@ -2,8 +2,8 @@ import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
 import { observable, runInAction } from 'mobx';
-import { ThreadsDatum } from '@infra/repositories/mailstack/EmailInbox/emailInbox.datum';
-import { EmailInboxRepository } from '@infra/repositories/mailstack/EmailInbox/emailInbox.repository';
+import { ThreadsDatum } from '@infra/repositories/mailstack/Threads/threads.datum';
+import { EmailInboxRepository } from '@infra/repositories/mailstack/Threads/threads.repository';
 
 import { Thread } from './Thread.dto';
 

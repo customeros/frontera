@@ -6,17 +6,17 @@ import { EmailsInThreadUsecase } from '@domain/usecases/inbox/emails-in-thread.u
 
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
-import { Avatar } from '@ui/media/Avatar';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
-import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 
 import { timeAgo } from '../../../../utils/timeAgo';
+import { MarkdownRenderer, EmailParticipants } from './components';
+
 export const MailStub = observer(() => {
   const store = useStore();
   const [searchParams] = useSearchParams();
 
-  const threadId = searchParams.get('email');
+  const threadId = searchParams.get('id');
 
   const _useCase = useMemo(() => {
     if (threadId) {
@@ -34,63 +34,71 @@ export const MailStub = observer(() => {
   const emailsInThread = store.emails.getEmailsByThreadId(threadId!);
 
   return (
-    <div className='flex flex-col gap-2 min-w-[90%] items-center'>
+    <div className='flex flex-col gap-2 justify-center items-center w-full '>
       {emailsInThread.map((email, idx) => (
         <div
           key={idx}
           className={cn(
-            'flex border border-grayModern-200 rounded-md items-center w-[95%]  p-3 ml-10',
+            'flex border border-grayModern-200 rounded-md self-start p-3  ml-0 w-[calc(100%-32px)]',
             `group`,
+            email.value.direction === 'outbound' &&
+              'self-end w-[calc(100%-32px)]',
           )}
         >
-          <div className='flex w-full'>
-            <div className='flex flex-col'>
-              <Tooltip
-                className='flex flex-col'
-                label={
-                  <>
-                    From: {email.value.from}
-                    <br />
-                    To: {email.value.to.join(', ')}
-                    <br />
-                    {email.value.cc && email.value.cc?.length > 0 && (
-                      <>
-                        CC: {email.value.cc}
-                        <br />
-                      </>
-                    )}
-                  </>
-                }
-              >
-                <div>
-                  <Avatar
-                    src={''}
-                    size='xs'
-                    className='mr-2'
-                    alt={email.fromName}
-                    variant='outlineCircle'
-                    icon={<Icon name='user-03' />}
-                    name={email.fromName || 'Nic John'}
-                  />
-                </div>
-              </Tooltip>
-            </div>
-            {/* <div className='flex flex-col items-center font-medium mr-1'>
-              {email.fromName || 'Nic'}:
-            </div> */}
+          <div className='flex w-full items-center'>
             <div
               className={cn(
-                'flex flex-col items-center line-clamp-1',
-                _useCase?.expand === email.id && 'line-clamp-none',
+                'flex flex-col items-start justify-start self-start',
               )}
             >
-              <span className='font-medium mr-1'>
-                {email.fromName || 'Nic John'}:
-              </span>
-              {email.body}
+              <EmailParticipants
+                from={email.value.from}
+                to={email.value.to ?? []}
+                cc={email.value.cc ?? []}
+                fromName={email.fromName}
+                bcc={email.value.bcc ?? []}
+              />
+            </div>
+
+            <div
+              className={cn(
+                'flex flex-col items-start justify-center ',
+                _useCase?.expand?.has(email.id) &&
+                  email.body.length > 0 &&
+                  'mt-[3px]',
+              )}
+            >
+              <div
+                className={cn(
+                  'flex items-start',
+                  _useCase?.expand?.has(email.id) && '',
+                )}
+              >
+                <p className='font-medium text-sm mr-1 min-w-fit '>
+                  {email.fromName || 'Nic John'}:
+                </p>
+                {!_useCase?.expand?.has(email.id) && (
+                  <MarkdownRenderer
+                    content={email.body}
+                    className={cn(
+                      !_useCase?.expand?.has(email.id) && 'line-clamp-1',
+                      'w-[455px]',
+                    )}
+                  />
+                )}
+              </div>
+              {_useCase?.expand?.has(email.id) && (
+                <MarkdownRenderer
+                  content={email.body}
+                  className={cn(
+                    !_useCase?.expand?.has(email.id) && 'line-clamp-1',
+                    'w-[555px]',
+                  )}
+                />
+              )}
             </div>
           </div>
-          <div className='flex flex-col text-center items-start w-[50px] self-start pt-0.5'>
+          <div className='flex flex-col text-center items-end w-[90px] self-start pt-0.5'>
             <p className='text-grayModern-500 text-sm group-hover:hidden group-hover:visible '>
               {timeAgo(email.value.receivedAt)}
             </p>
@@ -104,7 +112,7 @@ export const MailStub = observer(() => {
                 <Icon
                   className='size-4'
                   name={
-                    _useCase?.expand === email.id
+                    _useCase?.expand?.has(email.id)
                       ? 'chevron-collapse'
                       : 'chevron-expand'
                   }
