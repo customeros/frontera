@@ -5,7 +5,7 @@ import { Document } from '@store/Documents/Document.dto';
 import { DocumentsStore } from '@store/Documents/Documents.store';
 import { DocumentService } from '@domain/services/document/document.service';
 
-export class DocumentsUsecase {
+export class DocumentsListByOrganizationUsecase {
   @inject(DocumentService) private service!: DocumentService;
 
   constructor(private organizationId: string, private store: DocumentsStore) {}

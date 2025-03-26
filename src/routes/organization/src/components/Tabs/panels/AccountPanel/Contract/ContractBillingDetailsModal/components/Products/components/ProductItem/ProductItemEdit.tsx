@@ -216,9 +216,9 @@ export const ProductItemEdit = observer(
           {sliCurrencySymbol}
 
           <MaskedResizableInput
-            name='priceInput'
             mask={`num`}
             placeholder='0'
+            name='priceInput'
             className={inputClasses}
             measureValue={displayPrice}
             onFocus={(e) => e.target.select()}

@@ -7,7 +7,7 @@ import { SessionStore } from '@store/Session/Session.store';
 import { DocumentsStore } from '@store/Documents/Documents.store';
 import { DocumentService } from '@domain/services/document/document.service';
 
-export class CreateDocumentUsecase {
+export class DocumentCreateUsecase {
   @inject(DocumentService) private service!: DocumentService;
   @inject(UtilService) private util!: UtilService;
 

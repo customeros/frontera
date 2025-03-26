@@ -9,8 +9,8 @@ import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 interface DocumentListItemProps {
   id: string;
   isActive: boolean;
-  onRename: () => void;
-  onArchive: () => void;
+  onOpenRename: () => void;
+  onOpenArchive: () => void;
   onClick: (id: string) => void;
 }
 
@@ -18,8 +18,8 @@ export const DocumentListItem = observer(
   ({
     id,
     onClick,
-    onRename,
-    onArchive,
+    onOpenRename,
+    onOpenArchive,
     isActive = false,
   }: DocumentListItemProps) => {
     const store = useStore();
@@ -54,14 +54,14 @@ export const DocumentListItem = observer(
             />
           </MenuButton>
           <MenuList align='start'>
-            <MenuItem onClick={onRename} className='group/rename'>
+            <MenuItem onClick={onOpenRename} className='group/rename'>
               <Icon
                 name='edit-03'
                 className='text-grayModern-500 group-hover/rename:text-grayModern-700'
               />{' '}
               Rename
             </MenuItem>
-            <MenuItem onClick={onArchive} className='group/archive'>
+            <MenuItem onClick={onOpenArchive} className='group/archive'>
               <Icon
                 name='archive'
                 className='text-grayModern-500 group-hover/archive:text-grayModern-700'
