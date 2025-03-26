@@ -8,13 +8,10 @@ import { DocumentService } from '@domain/services/document/document.service';
 
 import { IconName } from '@ui/media/Icon';
 
-export class UpdateDocumentUsecase {
+export class DocumentIconChangeUsecase {
   @inject(DocumentService) private service!: DocumentService;
   @inject(UtilService) private util!: UtilService;
 
-  @observable public accessor isRenameModalOpen = false;
-  @observable public accessor renameValue = '';
-  @observable public accessor renameValidation = '';
   @observable private accessor document: Document | null = null;
 
   constructor(private store: DocumentsStore) {
@@ -32,44 +29,10 @@ export class UpdateDocumentUsecase {
   }
 
   @action
-  toggleRename = (value: boolean) => {
-    const span = Tracer.span('UpdateDocumentUsecase.toggleRename');
-
-    this.isRenameModalOpen = value;
-    span.end();
-  };
-
-  @action
-  setRenameValue = (value: string) => {
-    const span = Tracer.span('UpdateDocumentUsecase.setRenameValue');
-
-    this.renameValue = value;
-    this.validateRenameValue();
-
-    span.end();
-  };
-
-  @action
-  validateRenameValue = () => {
-    const span = Tracer.span('UpdateDocumentUsecase.validateRenameValue');
-
-    if (this.renameValue.length === 0) {
-      this.renameValidation = 'Even classified docs have names';
-    } else {
-      this.renameValidation = '';
-    }
-
-    span.end();
-  };
-
-  @action
   init = (docId: string) => {
     const span = Tracer.span('UpdateDocumentUsecase.init');
 
     this.document = this.store.getById(docId)!;
-    this.renameValue = this.document.value.name;
-    this.validateRenameValue();
-    this.toggleRename(false);
     span.end();
   };
 
@@ -134,37 +97,6 @@ export class UpdateDocumentUsecase {
       return;
     }
 
-    this.init(this.document.id);
-
-    span.end();
-  };
-
-  execute = async () => {
-    const span = Tracer.span('UpdateDocumentUsecase.execute');
-
-    if (!this.document) {
-      console.error('UpdateDocumentUsecase.execute: document must not be null');
-
-      span.end();
-
-      return;
-    }
-
-    this.document.draft();
-    this.document.value.name = this.renameValue;
-    this.document.commit({ syncOnly: true });
-
-    const [_, err] = await this.service.updateDocument(this.document);
-
-    if (err) {
-      console.error('UpdateDocumentUsecase.execute', err);
-
-      span.end();
-
-      return;
-    }
-
-    this.util.toastSuccess('Document renamed');
     this.init(this.document.id);
 
     span.end();

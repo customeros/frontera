@@ -3,21 +3,19 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { Portal } from '@radix-ui/react-portal';
-import { UpdateDocumentUsecase } from '@domain/usecases/organization-details/update-document.usecase';
-import { DeleteDocumentUsecase } from '@domain/usecases/organization-details/delete-document.usecase';
+import { DocumentRenameModal } from '@domain/components/document';
+import { DocumentDeleteDialog } from '@domain/components/document/document-delete-dialog';
+import { DocumentIconChangeUsecase } from '@domain/usecases/document/document-icon-change.usecase';
 
 import { cn } from '@ui/utils/cn';
-import { Input } from '@ui/form/Input';
 import { Avatar } from '@ui/media/Avatar';
 import { Icon, IconName } from '@ui/media/Icon';
 import { Editor } from '@ui/form/Editor/Editor';
-import { Button } from '@ui/form/Button/Button';
 import { IconButton } from '@ui/form/IconButton';
 import { IconPicker } from '@ui/form/IconPicker';
 import { useStore } from '@shared/hooks/useStore';
 import { useChannel } from '@shared/hooks/useChannel';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
-import { ConfirmDialog } from '@ui/overlay/AlertDialog/ConfirmDialog';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 import {
@@ -26,21 +24,14 @@ import {
   ScrollAreaViewport,
   ScrollAreaScrollbar,
 } from '@ui/utils/ScrollArea';
-import {
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  ModalContent,
-  ModalOverlay,
-  ModalCloseButton,
-} from '@ui/overlay/Modal';
 
 export const DocumentEditor = observer(() => {
   const store = useStore();
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
   const [showIconPicker, setShowIconPicker] = useState(false);
+  const [openRename, setOpenRename] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [viewMode, setViewMode] = useState<'fullscreen' | 'default'>('default');
   const { presentUsers, currentUserId } = useChannel(
     `organization_presence:${id}`,
@@ -65,11 +56,7 @@ export const DocumentEditor = observer(() => {
     author && store.files.getById(author.value.profilePhotoUrl);
 
   const usecase = useMemo(
-    () => new UpdateDocumentUsecase(store.documents)!,
-    [store.documents],
-  );
-  const deleteUsecase = useMemo(
-    () => new DeleteDocumentUsecase(store.documents)!,
+    () => new DocumentIconChangeUsecase(store.documents)!,
     [store.documents],
   );
 
@@ -106,8 +93,7 @@ export const DocumentEditor = observer(() => {
 
   useEffect(() => {
     usecase?.init(docId);
-    deleteUsecase?.init(docId);
-  }, [docId]);
+  }, [docId, doc]);
 
   return (
     <Wrapper>
@@ -200,7 +186,7 @@ export const DocumentEditor = observer(() => {
                 <MenuList align='start'>
                   <MenuItem
                     className='group/rename'
-                    onClick={() => usecase?.toggleRename(true)}
+                    onClick={() => setOpenRename(true)}
                   >
                     <Icon
                       name='edit-03'
@@ -210,7 +196,7 @@ export const DocumentEditor = observer(() => {
                   </MenuItem>
                   <MenuItem
                     className='group/archive'
-                    onClick={() => deleteUsecase?.toggleConfirmation(true)}
+                    onClick={() => setOpenDelete(true)}
                   >
                     <Icon
                       name='archive'
@@ -252,50 +238,17 @@ export const DocumentEditor = observer(() => {
         </div>
       </div>
 
-      <Modal
-        open={usecase?.isRenameModalOpen}
-        onOpenChange={(v) => usecase?.toggleRename(v)}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalHeader className='font-medium'>Rename document</ModalHeader>
-          <ModalBody>
-            <Input
-              size='xs'
-              placeholder='Document name'
-              value={usecase?.renameValue}
-              invalid={!!usecase?.renameValidation}
-              onChange={(e) => usecase?.setRenameValue(e.target.value)}
-            />
-            {!!usecase?.renameValidation && <p>{usecase?.renameValidation}</p>}
-          </ModalBody>
-          <ModalFooter className='flex gap-3 justify-between'>
-            <Button
-              className='flex-1'
-              onClick={() => usecase?.toggleRename(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              className='flex-1'
-              colorScheme='primary'
-              onClick={usecase?.execute}
-              isDisabled={!!usecase?.renameValidation}
-            >
-              Rename
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <DocumentRenameModal
+        docId={docId}
+        open={openRename}
+        onOpenChange={setOpenRename}
+      />
 
-      <ConfirmDialog
-        confirmButtonLabel='Archive'
-        title='Archive this document?'
-        onConfirm={() => deleteUsecase?.execute()}
-        onClose={() => deleteUsecase?.toggleConfirmation(false)}
-        isOpen={deleteUsecase?.isDeleteConfirmationOpen ?? false}
-      ></ConfirmDialog>
+      <DocumentDeleteDialog
+        docId={docId}
+        open={openDelete}
+        onOpenChange={setOpenDelete}
+      />
     </Wrapper>
   );
 });

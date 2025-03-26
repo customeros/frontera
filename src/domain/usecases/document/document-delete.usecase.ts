@@ -5,7 +5,7 @@ import { action, observable, runInAction } from 'mobx';
 import { DocumentsStore } from '@store/Documents/Documents.store';
 import { DocumentService } from '@domain/services/document/document.service';
 
-export class DeleteDocumentUsecase {
+export class DocumentDeleteUsecase {
   @inject(DocumentService) private service!: DocumentService;
   @inject(UtilService) private util!: UtilService;
 
