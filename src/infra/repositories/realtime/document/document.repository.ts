@@ -1,11 +1,26 @@
 import { Transport } from '@infra/transport';
 
+import DocumentDocument from './queries/document.graphql';
+import DeleteDocumentDocument from './mutations/deleteDocument.graphql';
+import UpdateDocumentDocument from './mutations/updateDocument.graphql';
 import OrganizationDocumentsDocument from './queries/organizationDocuments.graphql';
+import {
+  DocumentQuery,
+  DocumentQueryVariables,
+} from './queries/document.generated';
 import CreateOrganizationDocumentDocument from './mutations/createOrganizationDocument.graphql';
+import {
+  DeleteDocumentMutation,
+  DeleteDocumentMutationVariables,
+} from './mutations/deleteDocument.generated';
+import {
+  UpdateDocumentMutation,
+  UpdateDocumentMutationVariables,
+} from './mutations/updateDocument.generated';
 import {
   OrganizationDocumentsQuery,
   OrganizationDocumentsQueryVariables,
-} from './queries/oranizationDocuments.generated';
+} from './queries/organizationDocuments.generated';
 import {
   CreateOrganizationDocumentMutation,
   CreateOrganizationDocumentMutationVariables,
@@ -26,6 +41,13 @@ export class DocumentRepository {
     return DocumentRepository.instance;
   }
 
+  async getDocument(variables: DocumentQueryVariables) {
+    return this.transport.graphql.request<
+      DocumentQuery,
+      DocumentQueryVariables
+    >(DocumentDocument, variables);
+  }
+
   async getOrganizationDocuments(
     variables: OrganizationDocumentsQueryVariables,
   ) {
@@ -42,5 +64,19 @@ export class DocumentRepository {
       CreateOrganizationDocumentMutation,
       CreateOrganizationDocumentMutationVariables
     >(CreateOrganizationDocumentDocument, variables);
+  }
+
+  async updateDocument(variables: UpdateDocumentMutationVariables) {
+    return this.transport.graphql.request<
+      UpdateDocumentMutation,
+      UpdateDocumentMutationVariables
+    >(UpdateDocumentDocument, variables);
+  }
+
+  async deleteDocument(variables: DeleteDocumentMutationVariables) {
+    return this.transport.graphql.request<
+      DeleteDocumentMutation,
+      DeleteDocumentMutationVariables
+    >(DeleteDocumentDocument, variables);
   }
 }

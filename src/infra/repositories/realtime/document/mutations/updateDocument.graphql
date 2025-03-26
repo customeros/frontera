@@ -1,5 +1,5 @@
-query organizationDocuments($organizationId: ID!) {
-  organizationDocuments(organizationId: $organizationId) {
+mutation updateDocument($input: UpdateDocumentInput!) {
+  updateDocument(input: $input) {
     id
     name
     tenant

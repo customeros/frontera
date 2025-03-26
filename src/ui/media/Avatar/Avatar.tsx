@@ -1,4 +1,4 @@
-import { useState, cloneElement } from 'react';
+import { cloneElement } from 'react';
 
 import { twMerge } from 'tailwind-merge';
 import * as RadixAvatar from '@radix-ui/react-avatar';
@@ -170,10 +170,9 @@ interface AvatarProps
   extends VariantProps<typeof avatarStyle>,
     VariantProps<typeof avatarBadgeSize>,
     VariantProps<typeof textSizeVariant>,
-    AvatarImageProps {
-  src?: string;
-  name?: string;
-  className?: string;
+    Omit<AvatarImageProps, 'name' | 'src'> {
+  src?: string | null;
+  name?: string | null;
   icon?: React.ReactNode;
   badge?: React.ReactElement;
 }
@@ -191,55 +190,32 @@ export const Avatar = ({
   badge,
   ...props
 }: AvatarProps) => {
-  const [imageLoaded, setImageLoaded] = useState(() => false);
-  const emptyFallbackWords = name?.trim().split(' ');
+  const emptyFallbackWords = name?.trim().split(' ') ?? ['N', 'A'];
 
-  if (!emptyFallbackWords) return null;
-
-  const [a = '', b = ''] = emptyFallbackWords ?? [];
+  const [a = '', b = ''] = emptyFallbackWords;
   const emptyFallbackLetters = `${a[0] ?? ''}${b[0] ?? ''}`
     .trim()
     .toLocaleUpperCase();
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
 
   return (
     <RadixAvatar.Root
       id='img-container'
       className={twMerge(avatarStyle({ size, variant, className }))}
     >
-      {src && (
-        <RadixAvatar.Image
-          {...props}
-          src={src}
-          onLoadedData={handleImageLoad}
-          className={'h-full w-full relative rounded-[inherit] object-cover '}
-        />
-      )}
-      {icon && !name && !src && (
-        <RadixAvatar.Fallback
-          {...props}
-          className={twMerge(
-            'leading-1 flex h-full w-full items-center justify-center font-medium',
-            textSizeVariant({ textSize }),
-          )}
-        >
-          {icon}
-        </RadixAvatar.Fallback>
-      )}
-      {(!icon || name) && !imageLoaded && (
-        <RadixAvatar.Fallback
-          {...props}
-          className={twMerge(
-            'leading-1 flex h-full w-full items-center justify-center font-medium',
-            textSizeVariant({ textSize }),
-          )}
-        >
-          {emptyFallbackLetters}
-        </RadixAvatar.Fallback>
-      )}
+      <RadixAvatar.Image
+        {...props}
+        src={src ?? undefined}
+        className={'h-full w-full relative rounded-[inherit] object-cover '}
+      />
+      <RadixAvatar.Fallback
+        {...props}
+        className={twMerge(
+          'leading-1 flex h-full w-full items-center justify-center font-medium',
+          textSizeVariant({ textSize }),
+        )}
+      >
+        {name ? emptyFallbackLetters : icon ?? emptyFallbackLetters}
+      </RadixAvatar.Fallback>
       {badge &&
         cloneElement(badge, {
           className: twMerge(

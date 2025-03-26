@@ -13,6 +13,16 @@ export class FilesStore {
     makeAutoObservable(this);
   }
 
+  getById(fileId: string | null | undefined) {
+    if (!fileId) return;
+
+    if (this.values.has(fileId)) {
+      return this.values.get(fileId);
+    }
+
+    this.download(fileId);
+  }
+
   async download(fileId: string) {
     if (this.values.has(fileId)) return;
 

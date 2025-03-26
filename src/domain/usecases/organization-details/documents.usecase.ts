@@ -1,3 +1,4 @@
+import { computed } from 'mobx';
 import { Tracer } from '@infra/tracer';
 import { inject } from '@infra/container';
 import { Document } from '@store/Documents/Document.dto';
@@ -8,6 +9,13 @@ export class DocumentsUsecase {
   @inject(DocumentService) private service!: DocumentService;
 
   constructor(private organizationId: string, private store: DocumentsStore) {}
+
+  @computed
+  get list() {
+    return this.store.toComputedArray((arr) => {
+      return arr.filter((i) => i.value.organizationId === this.organizationId);
+    });
+  }
 
   async init() {
     const span = Tracer.span('DocumentsUsecase.init');

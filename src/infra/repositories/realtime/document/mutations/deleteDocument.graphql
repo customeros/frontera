@@ -1,5 +1,5 @@
-query organizationDocuments($organizationId: ID!) {
-  organizationDocuments(organizationId: $organizationId) {
+mutation deleteDocument($id: ID!) {
+  deleteDocument(id: $id) {
     id
     name
     tenant

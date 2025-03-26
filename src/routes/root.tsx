@@ -1,5 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 
+import { Editor } from '@ui/form/Editor/Editor';
 import { Layout } from '@shared/components/Layout/Layout';
 
 import { AuthRoute } from './auth/route';
@@ -24,6 +25,18 @@ export const RootRoute: RouteObject = {
   path: '/',
   element: <Layout />,
   children: [
+    {
+      path: '/test',
+      element: (
+        <div>
+          <Editor
+            useYjs
+            namespace='test-editor'
+            documentId='e55afc79-a0da-4c30-8ddb-07bf0bad3a39'
+          />
+        </div>
+      ),
+    },
     AuthRoute,
     AgentRoute,
     AgentsRoute,

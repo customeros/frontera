@@ -1,12 +1,12 @@
 import * as Types from '../../../../../routes/src/types/__generated__/graphqlRealtime.types';
 
-export type CreateOrganizationDocumentMutationVariables = Types.Exact<{
-  input: Types.CreateDocumentInput;
+export type UpdateDocumentMutationVariables = Types.Exact<{
+  input: Types.UpdateDocumentInput;
 }>;
 
-export type CreateOrganizationDocumentMutation = {
+export type UpdateDocumentMutation = {
   __typename?: 'RootMutationType';
-  createDocument?: {
+  updateDocument?: {
     __typename?: 'Document';
     id: string;
     name: string;

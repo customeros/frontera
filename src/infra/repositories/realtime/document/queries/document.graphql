@@ -1,0 +1,12 @@
+query document($id: ID!) {
+  document(id: $id) {
+    id
+    name
+    tenant
+    userId
+    icon
+    organizationId
+    insertedAt
+    updatedAt
+  }
+}
