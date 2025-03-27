@@ -71,7 +71,7 @@ export const Documents = observer(({ id }: { id: string }) => {
           }
         />
       </div>
-      <div className='flex flex-col gap-2 max-w-[32rem]'>
+      <div className='flex flex-col gap-2 max-w-[28rem]'>
         {listUsecase.list.map((doc) => {
           return (
             <DocumentListItem

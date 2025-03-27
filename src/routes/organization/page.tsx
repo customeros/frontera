@@ -13,8 +13,8 @@ import { StagePicker } from '@organization/components/StagePicker';
 import { LoadingScreen } from '@shared/components/SplashScreen/components';
 import { TimelineContextsProvider } from '@organization/components/TimelineContextsProvider';
 
-import { SideSection } from './src/components/SideSection';
 import { MainSection } from './src/components/MainSection';
+import { SideSection } from './src/components/SideSection';
 import { Panels, TabsContainer } from './src/components/Tabs';
 import { RelationshipPicker } from './src/components/RelationshipPicker';
 import { OrganizationTimelineWithActionsContext } from './src/components/Timeline/OrganizationTimelineWithActionsContext';
@@ -92,7 +92,7 @@ export const OrganizationPage = observer(() => {
           />
         )}
       </div>
-      <div id='organization-profile-main' className='relative flex h-full'>
+      <div className='relative flex h-full'>
         <TimelineContextsProvider id={id}>
           <SideSection>
             <TabsContainer>

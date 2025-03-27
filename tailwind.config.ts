@@ -88,6 +88,14 @@ export default {
           from: { opacity: '0', transform: 'translateX(-2px)' },
           to: { opacity: '1', transform: 'translateX(0)' },
         },
+        slideOutLeftFade: {
+          '0%': { opacity: '1', transform: 'translateX(0)', width: '100%' },
+          '100%': { opacity: '0', transform: 'translateX(-100%)', width: '0%' },
+        },
+        slideInRightFade: {
+          '0%': { opacity: '0', transform: 'translateX(-100%)', width: '0%' },
+          '100%': { opacity: '1', transform: 'translateX(0)', width: '100%' },
+        },
         overlayShow: {
           from: { opacity: '0' },
           to: { opacity: '1' },
@@ -183,9 +191,15 @@ export default {
           'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         slideLeftAndFade:
           'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideLeftFullAndFade:
+          'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
         slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         slideRightAndFade:
           'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideOutLeftFade:
+          'slideOutLeftFade 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        slideInRightFade:
+          'slideInRightFade 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
         overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
         contentShowTop: 'contentShowTop 150ms cubic-bezier(0.16, 1, 0.3, 1)',
         contentShowCenter:

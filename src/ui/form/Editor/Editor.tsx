@@ -213,7 +213,7 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
     useImperativeHandle(ref, () => editor.current as LexicalEditor);
 
     useEffect(() => {
-      // if (useYjs) return;
+      if (useYjs) return;
 
       editor.current?.update(() => {
         if (!editor?.current || hasLoadedDefaultHtmlValue.current) return;
@@ -315,7 +315,7 @@ export const Editor = forwardRef<LexicalEditor | null, EditorProps>(
     return (
       <div
         ref={containerRef}
-        className='relative w-full h-full lexical-editor cursor-text'
+        className='relative w-full h-full lexical-editor cursor-text animate-fadeIn'
       >
         <LexicalComposer initialConfig={initialConfig}>
           <EditorRefPlugin editorRef={editor} />
