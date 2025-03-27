@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+
 import { Icon } from '@ui/media/Icon';
 import { useCopyToClipboard } from '@shared/hooks/useCopyToClipboard';
 
@@ -12,6 +14,9 @@ const menuState = {
 
 export const EmailMenuActionsPlugin = () => {
   const instanceId = useRef(Math.random().toString(36).substr(2, 9));
+
+  const [editor] = useLexicalComposerContext();
+
   const [activeEmail, setActiveEmail] = useState<string | null>(null);
   const [position, setPosition] = useState<DOMRect | null>(null);
   const [_, copyToClipboard] = useCopyToClipboard();
@@ -140,11 +145,22 @@ export const EmailMenuActionsPlugin = () => {
                 <p className='text-grayModern-700 text-sm'>{activeEmail}</p>
               </div>
               <div
+                className='flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-grayModern-100 cursor-pointer hover:text-grayModern-700 text-grayModern-600'
                 onClick={() => {
-                  // TODO: Implement remove email functionality
+                  editor.update(() => {
+                    const nodesState = editor
+                      .getEditorState()
+                      ._nodeMap.entries();
+
+                    for (const [_key, value] of nodesState) {
+                      if (value.getTextContent() === activeEmail) {
+                        value.remove();
+                      }
+                    }
+                  });
+
                   closeMenu();
                 }}
-                className='flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-grayModern-100 cursor-pointer hover:text-grayModern-700 text-grayModern-600'
               >
                 <Icon name='trash-01' className='size-4' />
                 <p className='text-grayModern-700 text-sm'>Remove email</p>
@@ -152,6 +168,7 @@ export const EmailMenuActionsPlugin = () => {
               <div
                 onClick={() => {
                   // TODO: Implement send email functionality
+
                   closeMenu();
                 }}
                 className='flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-grayModern-100 cursor-pointer hover:text-grayModern-700 text-grayModern-600'
