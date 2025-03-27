@@ -262,7 +262,8 @@ export type IconName =
   | 'collapse-01'
   | 'layout-right-drawer-panel'
   | 'chevron-expand'
-  | 'chevron-collapse';
+  | 'chevron-collapse'
+  | 'edit-05';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

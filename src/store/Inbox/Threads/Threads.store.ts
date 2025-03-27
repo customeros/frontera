@@ -2,13 +2,13 @@ import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
 import { observable, runInAction } from 'mobx';
+import { ThreadsService } from '@domain/services/inbox/threads/threads.service';
 import { ThreadsDatum } from '@infra/repositories/mailstack/Threads/threads.datum';
-import { EmailInboxRepository } from '@infra/repositories/mailstack/Threads/threads.repository';
 
 import { Thread } from './Thread.dto';
 
 export class Threads extends Store<ThreadsDatum, Thread> {
-  private repository = EmailInboxRepository.getInstance();
+  private service = new ThreadsService();
   private currentOffset = 0;
   private limit = 20;
   @observable accessor endCursor: string | null = null;
@@ -43,7 +43,7 @@ export class Threads extends Store<ThreadsDatum, Thread> {
 
   async loadMoreThreads() {
     try {
-      const { getAllThreads } = await this.repository.getInboxes({
+      const res = await this.service.getThreads({
         userId: '1',
         pagination: {
           limit: this.limit,
@@ -52,12 +52,12 @@ export class Threads extends Store<ThreadsDatum, Thread> {
       });
 
       runInAction(() => {
-        getAllThreads.edges.forEach((thread) => {
+        res?.getAllThreads.edges.forEach((thread) => {
           this.value.set(thread.id, new Thread(this, thread));
         });
         this.currentOffset += this.limit;
-        this.endCursor = getAllThreads.pageInfo.endCursor ?? null;
-        this.hasNextPage = getAllThreads.pageInfo.hasNextPage;
+        this.endCursor = res?.getAllThreads.pageInfo.endCursor ?? null;
+        this.hasNextPage = res?.getAllThreads.pageInfo.hasNextPage ?? false;
         this.totalElements = this.value.size;
       });
     } catch (error) {

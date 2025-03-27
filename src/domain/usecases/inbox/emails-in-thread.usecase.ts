@@ -1,10 +1,10 @@
 import { Email } from '@store/Inbox/Emails/Email.dto';
 import { action, observable, runInAction } from 'mobx';
 import { Emails } from '@store/Inbox/Emails/Emails.store';
-import { EmailsRepository } from '@infra/repositories/mailstack/Emails/emails.repository';
+import { EmailsService } from '@domain/services/inbox/emails/emails.service';
 
 export class EmailsInThreadUsecase {
-  private repository = EmailsRepository.getInstance();
+  private service = new EmailsService();
   @observable accessor expand: Set<string> = new Set();
 
   constructor(public threadId: string, public store: Emails) {
@@ -22,11 +22,9 @@ export class EmailsInThreadUsecase {
   }
 
   async init() {
-    const result = await this.repository.getAllEmailsInThread({
-      threadId: this.threadId,
-    });
+    const result = await this.service.getEmailsByThreadId(this.threadId);
 
-    result.getAllEmailsInThread.forEach((email) => {
+    result?.getAllEmailsInThread.forEach((email) => {
       const foundEmail = this.store.value.get(email.id);
 
       if (!foundEmail) {
