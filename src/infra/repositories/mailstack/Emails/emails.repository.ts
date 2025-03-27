@@ -1,5 +1,8 @@
 import { Transport } from '@infra/transport';
 
+import SendEmailDocument from './mutations/sedEmail.graphql';
+import { SendEmailMutation } from './mutations/sedEmail.generated';
+import { SendEmailMutationVariables } from './mutations/sedEmail.generated';
 import GetAllEmailsInThreadDocument from './query/getAllEmailsInThread.graphql';
 import {
   GetAllEmailsInThreadQuery,
@@ -23,5 +26,12 @@ export class EmailsRepository {
       GetAllEmailsInThreadQuery,
       GetAllEmailsInThreadQueryVariables
     >(GetAllEmailsInThreadDocument, payload);
+  }
+
+  async sendEmail(payload: SendEmailMutationVariables) {
+    return this.transport.graphql.request<
+      SendEmailMutation,
+      SendEmailMutationVariables
+    >(SendEmailDocument, payload);
   }
 }
