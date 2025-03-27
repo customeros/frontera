@@ -52,7 +52,11 @@ export const DocumentRenameModal = observer(
               invalid={!!usecase?.renameValidation}
               onChange={(e) => usecase?.setRenameValue(e.target.value)}
             />
-            {!!usecase?.renameValidation && <p>{usecase?.renameValidation}</p>}
+            {!!usecase?.renameValidation && (
+              <p className='text-xs text-error-500 mt-0.5'>
+                {usecase?.renameValidation}
+              </p>
+            )}
           </ModalBody>
           <ModalFooter className='flex gap-3 justify-between'>
             <Button className='flex-1' onClick={() => onOpenChange(false)}>

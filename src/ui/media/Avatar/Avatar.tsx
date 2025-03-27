@@ -211,7 +211,7 @@ export const Avatar = ({
         {...props}
         className={twMerge(
           'leading-1 flex h-full w-full items-center justify-center font-medium',
-          textSizeVariant({ textSize }),
+          textSizeVariant({ textSize: size }),
         )}
       >
         {name ? emptyFallbackLetters : icon ?? emptyFallbackLetters}
