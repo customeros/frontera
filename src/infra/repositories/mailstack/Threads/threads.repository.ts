@@ -6,19 +6,19 @@ import {
   GetInboxQueryQueryVariables,
 } from './query/getInbox.generated';
 
-export class EmailInboxRepository {
-  static instance: EmailInboxRepository | null = null;
+export class ThreadsRepository {
+  static instance: ThreadsRepository | null = null;
   private transport = Transport.getInstance('mailstack');
 
   public static getInstance() {
-    if (!EmailInboxRepository.instance) {
-      EmailInboxRepository.instance = new EmailInboxRepository();
+    if (!ThreadsRepository.instance) {
+      ThreadsRepository.instance = new ThreadsRepository();
     }
 
-    return EmailInboxRepository.instance;
+    return ThreadsRepository.instance;
   }
 
-  async getInboxes(
+  async getThreads(
     payload: GetInboxQueryQueryVariables,
   ): Promise<GetInboxQueryQuery> {
     return this.transport.graphql.request<

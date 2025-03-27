@@ -25,10 +25,10 @@ export type GetInboxQueryQuery = {
     }>;
     pageInfo: {
       __typename?: 'PageInfo';
-      endCursor?: string | null;
       hasNextPage: boolean;
-      hasPreviousPage: boolean;
+      endCursor?: string | null;
       startCursor?: string | null;
+      hasPreviousPage: boolean;
     };
   };
 };

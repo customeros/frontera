@@ -1,7 +1,7 @@
 import { merge } from 'lodash';
 import { observable } from 'mobx';
 import { Entity } from '@store/record';
-import { ThreadsDatum } from '@infra/repositories/mailstack/EmailInbox/emailInbox.datum';
+import { ThreadsDatum } from '@infra/repositories/mailstack/Threads/threads.datum';
 
 import { Threads } from './Threads.store';
 
