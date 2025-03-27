@@ -58,7 +58,7 @@ export const OrganizationPage = observer(() => {
   const src = organization?.value.iconUrl || organization?.value.logoUrl;
 
   return (
-    <div className='relative flex flex-col h-full'>
+    <div className='relative flex flex-col h-[calc(100vh-42px)]'>
       <div className='w-full bg-white border-b border-grayModern-200 px-4 min-h-[42px] flex items-center gap-2'>
         <div className='flex items-center gap-2'>
           {src && imgStatus !== 'error' ? (
