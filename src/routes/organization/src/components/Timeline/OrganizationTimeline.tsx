@@ -235,10 +235,10 @@ export const OrganizationTimeline = observer(() => {
     );
   }
 
-  if (isPending && !isFetchingNextPage && !store.demoMode) {
+  if (isPending && !isFetchingNextPage) {
     return (
       <>
-        <div className='flex flex-col mt-4 pl-6 w-full'>
+        <div className='flex flex-col mt-4 pl-6 w-full animate-fadeIn'>
           <TimelineItemSkeleton />
           <TimelineItemSkeleton />
         </div>
@@ -264,6 +264,7 @@ export const OrganizationTimeline = observer(() => {
         atTopThreshold={100}
         increaseViewportBy={300}
         context={virtuosoContext}
+        className='animate-fadeIn'
         data={(timelineEmailEvents as TimelineEvent[]) ?? []}
         initialTopMostItemIndex={{
           align: 'start',

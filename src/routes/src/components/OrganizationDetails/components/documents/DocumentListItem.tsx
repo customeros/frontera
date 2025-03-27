@@ -36,7 +36,7 @@ export const DocumentListItem = observer(
           isActive && 'bg-grayModern-100',
         )}
       >
-        <Icon name={doc.value.icon as IconName} />
+        <Icon className='min-w-4' name={doc.value.icon as IconName} />
         <p className='text-sm truncate'>{doc.value.name}</p>
 
         <Menu
