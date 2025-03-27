@@ -34,7 +34,9 @@ export const inputVariants = cva(
           'focus:border-b',
           'focus:hover:border-primary-500',
           'focus:border-primary-500',
-          'invalid:border-error-500',
+          'data-[invalid=true]:border-error-500',
+          'data-[invalid=true]:focus:border-error-500',
+          'data-[invalid=true]:focus:hover:border-error-500',
         ],
         group: [
           'text-grayModern-700',

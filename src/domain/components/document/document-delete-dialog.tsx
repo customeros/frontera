@@ -28,11 +28,12 @@ export const DocumentDeleteDialog = observer(
     return (
       <ConfirmDialog
         isOpen={open}
+        colorScheme='error'
         confirmButtonLabel='Archive'
         title='Archive this document?'
         onClose={() => onOpenChange(false)}
         onConfirm={() => usecase?.execute()}
-      ></ConfirmDialog>
+      />
     );
   },
 );
