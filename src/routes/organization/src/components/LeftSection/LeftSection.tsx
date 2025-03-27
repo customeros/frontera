@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { cn } from '@ui/utils/cn';
 
-export function SideSection({ children }: { children: React.ReactNode }) {
+export function LeftSection({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams();
   const viewMode = searchParams.get('viewMode');
 
