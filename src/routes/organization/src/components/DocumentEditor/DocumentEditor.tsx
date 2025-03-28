@@ -75,6 +75,7 @@ export const DocumentEditor = observer(() => {
   const closeEditor = () => {
     setParams((prev) => {
       prev.delete('doc');
+      prev.delete('viewMode');
 
       return prev;
     });
