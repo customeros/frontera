@@ -150,16 +150,14 @@ export const ContractCard = observer(
             onModalOpen={onEditModalOpen}
             data={contract?.contractLineItems}
           />
-          {!!contract?.upcomingInvoices?.length && (
-            <>
-              <Divider className='my-3' />
-              <UpcomingInvoices
-                data={contract}
-                onOpenBillingDetailsModal={handleOpenBillingDetails}
-                onOpenServiceLineItemsModal={handleOpenContractDetails}
-              />
-            </>
-          )}
+          <>
+            <Divider className='my-3' />
+            <UpcomingInvoices
+              data={contract}
+              onOpenBillingDetailsModal={handleOpenBillingDetails}
+              onOpenServiceLineItemsModal={handleOpenContractDetails}
+            />
+          </>
 
           <EditContractModal
             isOpen={isEditModalOpen}

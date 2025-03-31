@@ -55,7 +55,7 @@ export const UpcomingInvoice = observer(
         role='button'
         key={invoice.metadata.id}
         className='flex text-sm flex-wrap'
-        onClick={() => handleOpenInvoice(invoice.metadata.id)}
+        onClick={() => handleOpenInvoice(invoice.invoiceNumber)}
       >
         <div className='whitespace-nowrap mr-1'>
           {renewalPeriod} {autoRenewal ? 'recurring' : ''}:
