@@ -100,7 +100,12 @@ export const PaymentStatusSelect = observer(
             </MenuItem>
           )}
           {invoiceStatus !== InvoiceStatus.OnHold && (
-            <MenuItem>
+            <MenuItem
+              onClick={() => {
+                invoice.value.status = InvoiceStatus.OnHold;
+                invoice?.commit();
+              }}
+            >
               <div className='flex gap-2 items-center'>
                 <Icon name='pause-circle' className='text-grayModern-500' />
                 <span>On Hold</span>
