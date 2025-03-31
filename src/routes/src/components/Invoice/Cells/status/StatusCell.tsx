@@ -74,6 +74,16 @@ export function renderStatusNode(type: InvoiceStatus | null | undefined) {
           <TagLabel>Processing</TagLabel>
         </Tag>
       );
+    case InvoiceStatus.OnHold:
+      return (
+        <Tag variant='outline' colorScheme='grayModern'>
+          <TagLeftIcon>
+            <Icon name='pause-circle' />
+          </TagLeftIcon>
+          <TagLabel>On Hold</TagLabel>
+        </Tag>
+      );
+
     default:
       return null;
   }

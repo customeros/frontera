@@ -3,6 +3,7 @@ import { cloneElement } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { cn } from '@ui/utils/cn';
+import { Icon } from '@ui/media/Icon';
 import { Clock } from '@ui/media/icons/Clock';
 import { InvoiceStatus } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
@@ -95,6 +96,14 @@ export const PaymentStatusSelect = observer(
               <div className='flex gap-2 items-center'>
                 <Clock className='text-grayModern-500' />
                 <span>Due</span>
+              </div>
+            </MenuItem>
+          )}
+          {invoiceStatus !== InvoiceStatus.OnHold && (
+            <MenuItem>
+              <div className='flex gap-2 items-center'>
+                <Icon name='pause-circle' className='text-grayModern-500' />
+                <span>On Hold</span>
               </div>
             </MenuItem>
           )}
