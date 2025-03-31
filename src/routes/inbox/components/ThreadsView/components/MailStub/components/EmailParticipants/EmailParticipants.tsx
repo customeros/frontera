@@ -13,15 +13,16 @@ interface EmailParticipantsProps {
   cc: string[];
   bcc: string[];
   fromName: string;
+  className?: string;
 }
 
 export const EmailParticipants = observer(
-  ({ fromName, from, to, cc, bcc }: EmailParticipantsProps) => {
+  ({ fromName, from, to, cc, bcc, className }: EmailParticipantsProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
       <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <PopoverTrigger>
+        <PopoverTrigger className={cn('self-center mb-[2px]', className)}>
           <Avatar
             src={''}
             size='xs'

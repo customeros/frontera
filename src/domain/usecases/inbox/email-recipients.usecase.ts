@@ -23,7 +23,7 @@ export class EmailRecipientsSectionUsecase {
   @observable accessor selectedBcc: { label: string; value: string }[] = [];
   @observable accessor selectedTo: { label: string; value: string }[] = [];
   @observable accessor subject = '';
-
+  @observable accessor body = '';
   constructor(public threadId: string | null, public emails: Emails) {
     this.toggleCc = this.toggleCc.bind(this);
     this.toggleBcc = this.toggleBcc.bind(this);
@@ -31,6 +31,7 @@ export class EmailRecipientsSectionUsecase {
     this.setBccValue = this.setBccValue.bind(this);
     this.selectMailbox = this.selectMailbox.bind(this);
     this.setToValue = this.setToValue.bind(this);
+    this.setBody = this.setBody.bind(this);
   }
 
   @action
@@ -150,7 +151,7 @@ export class EmailRecipientsSectionUsecase {
     this.selectedTo = [];
     this.selectedCC = [];
     this.selectedBcc = [];
-
+    this.body = '';
     span.end();
   }
 
@@ -202,6 +203,11 @@ export class EmailRecipientsSectionUsecase {
   @action
   public setSubject(subject: string) {
     this.subject = subject;
+  }
+
+  @action
+  public setBody(body: string) {
+    this.body = body;
   }
 
   @action
