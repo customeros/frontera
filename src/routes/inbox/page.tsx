@@ -29,13 +29,13 @@ export const InboxPage = observer(() => {
         <div className='border-b border-b-grayModern-200 px-3 py-[10px] flex justify-between items-center'>
           <p className='text-md font-medium'>Inbox</p>
           <div className='flex items-center gap-2'>
-            <span className='text-sm text-grayModern-500'>Include done</span>
+            <span className='text-sm text-grayModern-500'>Exclude done</span>
             <Switch checked={filterActive} onCheckedChange={setFilterActive} />
           </div>
         </div>
         <div className='flex flex-col overflow-y-auto h-full'>
           <div className='p-2'>
-            <EmailInbox includeDone={filterActive} />
+            <EmailInbox excludeDone={filterActive} />
           </div>
         </div>
       </div>
@@ -52,7 +52,11 @@ export const InboxPage = observer(() => {
               {thread?.value?.subject || 'No subject yet...'}
             </p>
           ) : (
-            <Input size='sm' variant='unstyled' placeholder='Search...' />
+            <Input
+              size='sm'
+              variant='unstyled'
+              defaultValue='No subject yet...'
+            />
           )}
           <div className='flex items-center gap-2'>
             <IconButton
