@@ -122,7 +122,7 @@ export const UpcomingInvoices = ({
 
   return (
     <article className='w-full'>
-      <span className='text-sm font-medium mb-1 flex'>
+      <div className='text-sm font-medium mb-1 flex'>
         <span className='whitespace-nowrap'>Next invoice</span>
         {isPaused && (
           <div className='flex w-full justify-between'>
@@ -134,7 +134,7 @@ export const UpcomingInvoices = ({
             {getActionButton()}
           </div>
         )}
-      </span>
+      </div>
       <div>
         {data?.upcomingInvoices.map((invoice: Invoice) => (
           <UpcomingInvoice

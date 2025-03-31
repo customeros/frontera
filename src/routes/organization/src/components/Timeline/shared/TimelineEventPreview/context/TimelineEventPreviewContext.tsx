@@ -113,12 +113,12 @@ export const TimelineEventPreviewContextContextProvider = ({
   };
 
   // TODO refactor candidate added to open invoice in timeline preview modal
-  const handleOpenInvoice = (timelineEventId: string) => {
+  const handleOpenInvoice = (invoiceId: string) => {
     setIsModalOpen(true);
 
     const params = new URLSearchParams(searchParams?.toString() ?? '');
 
-    params.set('invoice', timelineEventId);
+    params.set('invoice', invoiceId);
     setSearchParams(params);
 
     setLastActivePosition({ ...lastActivePosition, [id]: params.toString() });
