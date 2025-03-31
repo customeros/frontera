@@ -42,11 +42,7 @@ export const ProductCard = observer(
       );
     });
 
-    const liveServices = thisGroupLineItems?.filter(
-      (service) =>
-        !service?.tempValue?.serviceEnded ||
-        !DateTimeUtils.isPast(service?.tempValue?.serviceEnded),
-    );
+    const liveServices = thisGroupLineItems;
 
     const closedServices = thisGroupLineItems?.filter(
       (service) => service?.tempValue?.closed,

@@ -9,7 +9,6 @@ import { Store, makeAutoSyncable } from '@store/store.ts';
 import { toJS, runInAction, makeAutoObservable } from 'mobx';
 import { ContractLineItemService } from '@store/ContractLineItems/ContractLineItem.service.ts';
 
-import { DateTimeUtils } from '@utils/date.ts';
 import {
   BilledType,
   DataSource,
@@ -164,7 +163,13 @@ const getDefaultValue = (): ServiceLineItem => ({
   serviceEnded: null,
   paused: false,
   parentId: '',
-  serviceStarted: DateTimeUtils.addDays(new Date().toISOString(), 1),
+  serviceStarted: (() => {
+    const date = new Date();
+
+    date.setDate(date.getDate() + 2);
+
+    return date.toISOString();
+  })(),
   tax: {
     salesTax: false,
     vat: false,
