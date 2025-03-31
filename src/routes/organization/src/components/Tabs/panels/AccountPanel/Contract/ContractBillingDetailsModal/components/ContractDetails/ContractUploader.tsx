@@ -7,12 +7,11 @@ import { cn } from '@ui/utils/cn.ts';
 import { Icon } from '@ui/media/Icon';
 import { Plus } from '@ui/media/icons/Plus.tsx';
 import { useStore } from '@shared/hooks/useStore';
-import { Delete } from '@ui/media/icons/Delete.tsx';
-import { Button } from '@ui/form/Button/Button.tsx';
 import { toastError } from '@ui/presentation/Toast';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip.tsx';
 import { Spinner } from '@ui/feedback/Spinner/Spinner.tsx';
 import { Divider } from '@ui/presentation/Divider/Divider.tsx';
+import { Tag, TagLabel, TagRightIcon } from '@ui/presentation/Tag';
 import { outlineButton } from '@ui/form/Button/Button.variants.ts';
 import { FileDropUploader, FileUploadTrigger } from '@ui/form/FileUploader';
 
@@ -188,29 +187,27 @@ const AttachmentItem = observer(
 
     return (
       <div className='flex  items-center group mt-2 mb-3'>
-        <Button
-          size='xs'
-          variant='ghost'
-          onClick={handleDownload}
-          className={
-            'text-base pt-0 pb-0 leading-none font-normal text-grayModern-500 underline hover:bg-transparent focus:bg-transparent group-hovergrayModernt-grayModern-700'
-          }
-        >
-          {fileName}
-        </Button>
+        <Tag size='sm' colorScheme='grayModern' onClick={handleDownload}>
+          <TagLabel className='line-clamp-1'>{fileName}</TagLabel>
+          <TagRightIcon className='cursor-pointer'>
+            <div>
+              <Icon
+                name='x-close'
+                className='size-3 pointer'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove?.(id);
+                }}
+              />
+            </div>
+          </TagRightIcon>
+        </Tag>
 
-        {isLoading ? (
+        {isLoading && (
           <Spinner
             size='sm'
             label='loading'
             className='text-grayModern-300grayModernl-grayModern-700'
-          />
-        ) : (
-          <Delete
-            role='button'
-            aria-label='Delete attachment'
-            onClick={() => onRemove?.(id)}
-            className='hidden size-4 text-grayModern-500 cursor-pointer group-hover:inline-block hovergrayModernt-grayModern-700'
           />
         )}
       </div>
