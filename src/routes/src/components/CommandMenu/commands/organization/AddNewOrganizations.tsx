@@ -69,22 +69,6 @@ export const AddNewOrganization = observer(() => {
       <CommandCancelIconButton onClose={handleClose} />
 
       <Command.List>
-        {usecase.mixedOptions.length === 0 &&
-          !usecase.isLoading &&
-          !usecase.isValidatingDomain &&
-          !usecase.domainValidationError &&
-          usecase.searchTerm.length > 0 && (
-            <CommandItem
-              data-test={'add-org-modal-add-org'}
-              leftAccessory={<PlusCircle className='text-primary-700' />}
-              onSelect={() => {
-                usecase.addNewOrganization();
-              }}
-            >
-              Add {usecase.searchTerm}
-            </CommandItem>
-          )}
-
         {usecase.mixedOptions.length > 0 &&
           usecase.mixedOptions.map((option, index) => {
             const isBeingAdded =
@@ -144,6 +128,20 @@ export const AddNewOrganization = observer(() => {
               </CommandItem>
             );
           })}
+        {!usecase.isLoading &&
+          !usecase.isValidatingDomain &&
+          !usecase.domainValidationError &&
+          usecase.searchTerm.length > 0 && (
+            <CommandItem
+              data-test={'add-org-modal-add-org'}
+              leftAccessory={<PlusCircle className='text-primary-700' />}
+              onSelect={() => {
+                usecase.addNewOrganization();
+              }}
+            >
+              Add {usecase.searchTerm}
+            </CommandItem>
+          )}
       </Command.List>
     </Command>
   );
