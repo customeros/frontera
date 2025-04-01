@@ -300,6 +300,18 @@ async function createServer() {
     followRedirects: true,
   });
 
+  const upcomingInvoiceProxy = createProxyMiddleware({
+    pathFilter: '/upcoming-invoice',
+    pathRewrite: { '^/upcoming-invoice': '' },
+    target:
+      process.env.CUSTOMER_OS_API_PATH +
+      '/billing/v1/invoices/upcoming/download',
+    changeOrigin: true,
+    logger: console,
+    preserveHeaderKeyCase: true,
+    followRedirects: true,
+  });
+
   const basConfigProxy = createProxyMiddleware({
     pathFilter: '/bas',
     pathRewrite: { '^/bas': '' },
@@ -318,6 +330,7 @@ async function createServer() {
   app.use(filesApiProxy);
   app.use(basConfigProxy);
   app.use(realtimeApiProxy);
+  app.use(upcomingInvoiceProxy);
 
   //login button
   app.use('/google-auth', (req, res) => {
