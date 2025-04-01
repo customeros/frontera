@@ -1079,4 +1079,7 @@
   <symbol id='collapse-01'>
     <path d="M3 21L10 14M10 14L4 14M10 14L10 20M21 3L14 10M14 10L20 10M14 10L14 4" />
   </symbol>
+  <symbol id='download-02'>
+    <path d="M21 21H3M18 11L12 17M12 17L6 11M12 17V3" />
+  </symbol>
 </svg>

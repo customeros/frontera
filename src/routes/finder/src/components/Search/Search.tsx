@@ -10,6 +10,7 @@ import { TableViewsToggleNavigation } from '@finder/components/TableViewsToggleN
 import { SearchBarFilterData } from '@finder/components/SearchBarFilterData/SearchBarFilterData';
 
 import { cn } from '@ui/utils/cn';
+import { Icon } from '@ui/media/Icon';
 import { Plus } from '@ui/media/icons/Plus';
 import { Input } from '@ui/form/Input/Input';
 import { useStore } from '@shared/hooks/useStore';
@@ -18,6 +19,7 @@ import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { BuildingAdd } from '@ui/media/icons/BuildingAdd';
 import { UserPlus01 } from '@ui/media/icons/UserPlus01.tsx';
 import { TableIdType, TableViewType } from '@graphql/types';
+import { IconButton } from '@ui/form/IconButton/IconButton';
 import { UserPresence } from '@shared/components/UserPresence';
 import { Tooltip, TooltipProps } from '@ui/overlay/Tooltip/Tooltip';
 import {
@@ -279,6 +281,18 @@ export const Search = observer(() => {
 
       {tableViewDef?.value.tableId === TableIdType.FlowActions && (
         <CreateSequenceButton />
+      )}
+
+      {tableViewDef?.value.tableId === TableIdType.UpcomingInvoices && (
+        <IconButton
+          size='xs'
+          variant='outline'
+          icon={<Icon name='download-02' />}
+          aria-label='Download upcoming invoices'
+          onClick={() => {
+            store.files.downloadUpcomingInvoice();
+          }}
+        />
       )}
 
       {tableViewDef?.value.tableId !== TableIdType.FlowActions && (

@@ -115,8 +115,10 @@ export class FilesStore {
     }
   }
 
-  async downloadUpcomingInvoice(invoiceId: string) {
-    const res = await this.transport.http.get(`/upcoming-invoice/${invoiceId}`);
+  async downloadUpcomingInvoice() {
+    const res = await this.transport.http.get(`/upcoming-invoice`, {
+      responseType: 'blob',
+    });
 
     const blobUrl = window.URL.createObjectURL(res.data);
 
@@ -124,7 +126,7 @@ export class FilesStore {
 
     a.href = blobUrl;
 
-    a.download = `${invoiceId}.pdf`;
+    a.download = `upcoming-invoice.pdf`;
 
     document.body.appendChild(a);
 

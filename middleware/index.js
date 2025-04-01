@@ -306,6 +306,9 @@ async function createServer() {
     target:
       process.env.CUSTOMER_OS_API_PATH +
       '/billing/v1/invoices/upcoming/download',
+    headers: {
+      'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
+    },
     changeOrigin: true,
     logger: console,
     preserveHeaderKeyCase: true,
