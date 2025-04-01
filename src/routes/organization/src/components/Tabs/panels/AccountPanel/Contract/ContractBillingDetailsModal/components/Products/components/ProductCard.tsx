@@ -42,7 +42,11 @@ export const ProductCard = observer(
       );
     });
 
-    const liveServices = thisGroupLineItems;
+    const liveServices = thisGroupLineItems?.filter(
+      (service) =>
+        !service?.tempValue?.serviceEnded ||
+        !DateTimeUtils.isPast(service?.tempValue?.serviceEnded),
+    );
 
     const closedServices = thisGroupLineItems?.filter(
       (service) => service?.tempValue?.closed,
@@ -57,13 +61,7 @@ export const ProductCard = observer(
       liveServices.every((service) => service?.tempValue?.closed);
 
     const handleCloseChange = (closed: boolean) => {
-      liveServices?.forEach((service) => {
-        (service as ContractLineItemStore)?.updateTemp((prev) => ({
-          ...prev,
-          closed,
-        }));
-      });
-      closedServices?.forEach((service) => {
+      thisGroupLineItems?.forEach((service) => {
         (service as ContractLineItemStore)?.updateTemp((prev) => ({
           ...prev,
           closed,
