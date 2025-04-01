@@ -1,0 +1,24 @@
+query getInboxQuery($userId: String!, $pagination: PaginationInput) {
+  getAllThreads(userId: $userId, pagination: $pagination) {
+    edges {
+      id
+      isDone
+      isViewed
+      lastMessageAt
+      lastMessageAt
+      lastSender
+      lastSenderDomain
+      mailboxId
+      subject
+      summary
+      userId
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+      hasPreviousPage
+    }
+    totalCount
+  }
+}

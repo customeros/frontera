@@ -63,6 +63,21 @@ export const NavigationSections = ({
             />
           )}
         />
+        <SidenavItem
+          label='Inbox'
+          dataTest={`side-nav-item-inbox`}
+          isActive={checkIsActive('inbox')}
+          onClick={() => handleItemClick('inbox')}
+          icon={(isActive) => (
+            <Icon
+              name='inbox-01'
+              className={cn(
+                'size-4 min-w-4 text-grayModern-500',
+                isActive && 'text-grayModern-700',
+              )}
+            />
+          )}
+        />
       </div>
 
       <TeamViewsSectionSection

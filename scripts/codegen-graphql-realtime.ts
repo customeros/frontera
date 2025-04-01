@@ -14,7 +14,7 @@ const config: CodegenConfig = {
       [`${process.env.REALTIME_API_PATH}/graphql`]: {
         headers: {
           'X-Tenant': 'randomtenant',
-          'X-Username': 'randomusername',
+          'X-User': 'randomuser',
         },
       },
     },

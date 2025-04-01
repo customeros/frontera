@@ -32,10 +32,19 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
     { size, children, className, colorScheme, variant = 'outline', ...props },
     ref,
   ) => {
-    const [leftIconSlot, rightIconSlot, labelSlot, closeButtonSlot] = useSlots(
+    const [
+      leftIconSlot,
+      leftElementSlot,
+      rightIconSlot,
+      rightElementSlot,
+      labelSlot,
+      closeButtonSlot,
+    ] = useSlots(
       children,
       TagLeftIcon,
+      TagLeftElement,
       TagRightIcon,
+      TagRightElement,
       TagLabel,
       TagRightButton,
     );
@@ -54,8 +63,10 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         {...props}
       >
         {leftIconSlot}
+        {leftElementSlot}
         {labelSlot}
         {rightIconSlot}
+        {rightElementSlot}
         {closeButtonSlot &&
           cloneElement(closeButtonSlot, { size, colorScheme })}
       </div>
@@ -76,6 +87,19 @@ export const TagLeftIcon = forwardRef<
   });
 });
 
+export const TagLeftElement = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...rest }, ref) => {
+  if (!isValidElement(children)) return <>{children}</>;
+
+  return cloneElement(children as React.ReactElement, {
+    ref,
+    className: twMerge('flex items-center mr-2', className),
+    ...rest,
+  });
+});
+
 export const TagRightIcon = forwardRef<
   SVGElement,
   React.SVGAttributes<SVGElement>
@@ -85,6 +109,19 @@ export const TagRightIcon = forwardRef<
   return cloneElement(children as React.ReactElement, {
     ref,
 
+    className: twMerge('flex items-center ml-2', className),
+    ...rest,
+  });
+});
+
+export const TagRightElement = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...rest }, ref) => {
+  if (!isValidElement(children)) return <>{children}</>;
+
+  return cloneElement(children as React.ReactElement, {
+    ref,
     className: twMerge('flex items-center ml-2', className),
     ...rest,
   });
