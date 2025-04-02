@@ -115,7 +115,9 @@ export const TaskCommands = observer(() => {
           rightAccessory={
             <>
               <CommandKbd />
-              <Kbd>D</Kbd>
+              <Kbd>
+                <Icon name='delete' className='text-inherit size-3' />
+              </Kbd>
             </>
           }
         >
