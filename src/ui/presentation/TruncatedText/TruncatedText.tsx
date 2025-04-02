@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 
 import { cn } from '@ui/utils/cn.ts';
 
@@ -15,18 +15,20 @@ export const TruncatedText = ({
 }: TruncatedTextProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const textRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (textRef.current) {
-      const lineHeight = parseInt(
-        getComputedStyle(textRef.current).lineHeight,
-        10,
-      );
-      const maxHeight = lineHeight * maxLines;
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      if (textRef.current) {
+        const lineHeight = parseInt(
+          getComputedStyle(textRef.current).lineHeight,
+          10,
+        );
+        const maxHeight = lineHeight * maxLines;
 
-      setShowButton(textRef.current.scrollHeight > maxHeight);
-    }
+        setShowButton(textRef.current.scrollHeight > maxHeight);
+      }
+    }, 100);
   }, [text, maxLines]);
 
   const toggleExpand = () => {
