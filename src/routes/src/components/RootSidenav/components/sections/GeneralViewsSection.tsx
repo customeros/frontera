@@ -44,9 +44,6 @@ export const GeneralViewsSection = observer(
     const contractsView = store.tableViewDefs.getById(
       store.tableViewDefs.contractsPreset ?? '',
     );
-    const opportunitiesView = store.tableViewDefs.getById(
-      store.tableViewDefs.opportunitiesTablePreset ?? '',
-    );
 
     const invoicesViews = [
       store.tableViewDefs.getById(
@@ -118,11 +115,7 @@ export const GeneralViewsSection = observer(
               label='Opportunities'
               isActive={isOpportinitiesActive}
               dataTest={`side-nav-item-opportunities`}
-              onClick={() =>
-                handleItemClick(
-                  `prospects?show=finder&preset=${opportunitiesView?.value?.id}`,
-                )
-              }
+              onClick={() => handleItemClick(`prospects`)}
               icon={(isActive) => (
                 <Icon
                   name='coins-stacked-01'
