@@ -154,7 +154,7 @@ export const Domains = observer(({ id }: { id: string }) => {
                   />
                 </MenuButton>
 
-                <MenuList className='min-w-[100px]'>
+                <MenuList side='bottom' align='start' className='min-w-[100px]'>
                   {index === 0 && (
                     <MenuItem
                       onClick={() => {
