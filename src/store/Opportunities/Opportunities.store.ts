@@ -131,6 +131,7 @@ export class OpportunitiesStore implements GroupStore<Opportunity> {
           organizationId: payload.id,
           internalType: draft.value.internalType,
           externalStage: draft.value.externalStage,
+          taskIds: draft.value.taskIds,
         } as OpportunityCreateInput,
       });
 
@@ -158,6 +159,7 @@ export class OpportunitiesStore implements GroupStore<Opportunity> {
         ids: [serverId],
       });
       this.value.get(serverId)?.invalidate();
+
       this.root.ui.toastSuccess(
         `Opportunity created for ${payload.organization?.name}`,
         'create-opportunity-success',
