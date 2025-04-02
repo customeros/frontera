@@ -118,6 +118,9 @@ export class FilesStore {
   async downloadUpcomingInvoice() {
     const res = await this.transport.http.get(`/upcoming-invoice`, {
       responseType: 'blob',
+      headers: {
+        'X-Tenant-Id': this.root.session.value.tenant,
+      },
     });
 
     const blobUrl = window.URL.createObjectURL(res.data);

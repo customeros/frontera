@@ -30,10 +30,10 @@ import {
 
 export const Search = observer(() => {
   const store = useStore();
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const measureRef = useRef<HTMLDivElement>(null);
-  const floatingActionPropmterRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const measureRef = useRef<HTMLDivElement | null>(null);
+  const floatingActionPropmterRef = useRef<HTMLDivElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const preset = searchParams.get('preset');
   const timeoutRef = useRef<NodeJS.Timeout>();
