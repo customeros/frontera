@@ -23,12 +23,20 @@ import { RelationshipPicker } from './src/components/RelationshipPicker';
 import { OrganizationTimelineWithActionsContext } from './src/components/Timeline/OrganizationTimelineWithActionsContext';
 
 export const OrganizationPage = observer(() => {
+  const store = useStore();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [lastKnownIndex, setLastKnownIndex] = useState<number>(0);
   const params = useParams();
+  const { id } = params;
+
   const [lastActivePosition] = useLocalStorage(
     `customeros-player-last-position`,
     { root: 'finder' },
+  );
+
+  const [lastKnownIndex, setLastKnownIndex] = useState<number>(0);
+  const [imgStatus, setImgStatus] = useState<'loading' | 'loaded' | 'error'>(
+    'loading',
   );
 
   const getLastPreset = useCallback(() => {
@@ -41,14 +49,7 @@ export const OrganizationPage = observer(() => {
     return store.tableViewDefs.organizationsPreset;
   }, [lastActivePosition.root]);
 
-  const [searchParams] = useSearchParams();
-  const [imgStatus, setImgStatus] = useState<'loading' | 'loaded' | 'error'>(
-    'loading',
-  );
-
-  const store = useStore();
-
-  const { id } = params;
+  const panel = searchParams.get('tab') ?? 'about';
 
   if (typeof id === 'undefined') {
     navigate('/finder');
@@ -128,7 +129,7 @@ export const OrganizationPage = observer(() => {
       );
     }
 
-    navigate(`/organization/${data[newIndex].id}`);
+    navigate(`/organization/${data[newIndex].id}?tab=${panel}`);
   };
 
   useKey('d', (e) => {
@@ -177,9 +178,9 @@ export const OrganizationPage = observer(() => {
         <div className='flex items-center gap-1 ml-2 text-sm'>
           <span>{currentIndex + 1}</span>
           <span>/</span>
-          <span className='text-grayModern-500'>{total}</span>
+          <span className='text-grayModern-500'>{total?.toLocaleString()}</span>
         </div>
-        <div className='flex items-center gap-1 ml-2'>
+        <div className='flex items-center gap-1'>
           <IconButton
             size='xxs'
             title='Previous company (A)'
@@ -210,7 +211,7 @@ export const OrganizationPage = observer(() => {
           <LeftSection>
             <TabsContainer>
               <TopNav />
-              <Panels tab={searchParams.get('tab') ?? 'about'} />
+              <Panels tab={panel} />
             </TabsContainer>
           </LeftSection>
 

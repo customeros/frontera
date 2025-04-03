@@ -286,7 +286,7 @@ export const Search = observer(() => {
       {tableViewDef?.value.tableId === TableIdType.UpcomingInvoices && (
         <IconButton
           size='xs'
-          variant='outline'
+          variant='ghost'
           icon={<Icon name='download-02' />}
           aria-label='Download upcoming invoices'
           onClick={() => {

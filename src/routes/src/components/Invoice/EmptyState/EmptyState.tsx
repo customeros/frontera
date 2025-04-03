@@ -55,7 +55,7 @@ export const EmptyState = observer(
           <p className='text-grayModern-700 text-md font-semibold mb-1'>
             No paper trails yet
           </p>
-          <p className='text-sm my-1 max-w-[360px] text-center'>
+          <div className='text-sm my-1 max-w-[360px] text-center'>
             {cashflowAgent?.isActive ? (
               <>
                 <p>
@@ -90,7 +90,7 @@ export const EmptyState = observer(
                 </span>
               </>
             )}
-          </p>
+          </div>
           <Button
             variant='outline'
             colorScheme='primary'
