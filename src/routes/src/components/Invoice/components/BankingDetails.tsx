@@ -74,9 +74,11 @@ export const BankingDetails = ({
     <div
       className='flex flex-col border-t border-grayModern-300 py-2 cursor-pointer'
       onClick={() => {
-        navigate(
-          `/agents/${cashflowGuardianAgent?.id}/${getGenerateInvoiceCapability?.id}`,
-        );
+        if (getGenerateInvoiceCapability) {
+          navigate(
+            `/agents/${cashflowGuardianAgent?.id}/${getGenerateInvoiceCapability?.id}`,
+          );
+        }
       }}
     >
       <span className='text-xs font-semibold'>Bank transfer</span>
