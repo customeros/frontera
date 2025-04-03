@@ -1,7 +1,5 @@
 import type { TableViewDef } from '@store/TableViewDefs/TableViewDef.dto';
 
-import { useLocation } from 'react-router-dom';
-
 import { observer } from 'mobx-react-lite';
 
 import { cn } from '@ui/utils/cn';
@@ -18,7 +16,7 @@ interface GeneralViewsSectionProps {
   handleItemClick: (data: string) => void;
   togglePreference: (data: keyof Preferences) => void;
   checkIsActive: (
-    path: string,
+    path: string[],
     options?: { preset: string | Array<string> },
   ) => boolean;
 }
@@ -31,7 +29,6 @@ export const GeneralViewsSection = observer(
     checkIsActive,
   }: GeneralViewsSectionProps) => {
     const store = useStore();
-    const { pathname } = useLocation();
 
     const tableViewDefsList = store.tableViewDefs.toArray();
     const allOrganizationsView = tableViewDefsList.filter(
@@ -55,7 +52,7 @@ export const GeneralViewsSection = observer(
     const upcomingInvoices = invoicesViews[0];
     const allOrganizationsActivePreset = [allOrganizationsView?.[0]?.value?.id];
     // const showInvoices = store.settings.tenant.value?.billingEnabled;
-    const isOpportinitiesActive = pathname.includes('prospects');
+
     const tasksView = store.tableViewDefs.getById(
       store.tableViewDefs.tasksPreset ?? '',
     );
@@ -74,7 +71,7 @@ export const GeneralViewsSection = observer(
             <RootSidenavItem
               label='Companies'
               dataTest={`side-nav-item-all-orgs`}
-              isActive={checkIsActive('finder', {
+              isActive={checkIsActive(['finder'], {
                 preset: allOrganizationsActivePreset,
               })}
               onClick={() =>
@@ -98,7 +95,7 @@ export const GeneralViewsSection = observer(
               onClick={() =>
                 handleItemClick(`finder?preset=${allContactsView?.value?.id}`)
               }
-              isActive={checkIsActive('finder', {
+              isActive={checkIsActive(['finder'], {
                 preset: allContactsView?.value?.id ?? '',
               })}
               icon={(isActive) => (
@@ -113,7 +110,7 @@ export const GeneralViewsSection = observer(
             />
             <RootSidenavItem
               label='Opportunities'
-              isActive={isOpportinitiesActive}
+              isActive={checkIsActive(['prospects'])}
               dataTest={`side-nav-item-opportunities`}
               onClick={() => handleItemClick(`prospects`)}
               icon={(isActive) => (
@@ -132,7 +129,7 @@ export const GeneralViewsSection = observer(
               onClick={() =>
                 handleItemClick(`finder?preset=${tasksView?.value?.id}`)
               }
-              isActive={checkIsActive('finder', {
+              isActive={checkIsActive(['finder'], {
                 preset: tasksView?.value?.id ?? '',
               })}
               icon={(isActive) => (
@@ -151,7 +148,7 @@ export const GeneralViewsSection = observer(
               onClick={() =>
                 handleItemClick(`finder?preset=${contractsView?.value?.id}`)
               }
-              isActive={checkIsActive('finder', {
+              isActive={checkIsActive(['finder'], {
                 preset: contractsView?.value?.id ?? '',
               })}
               icon={(isActive) => (
@@ -173,7 +170,7 @@ export const GeneralViewsSection = observer(
                 onClick={() =>
                   handleItemClick(`finder?preset=${upcomingInvoices.value.id}`)
                 }
-                isActive={checkIsActive('finder', {
+                isActive={checkIsActive(['finder'], {
                   preset: invoicesViews.map((e) => e?.value?.id),
                 })}
                 icon={(isActive) => (
@@ -193,7 +190,7 @@ export const GeneralViewsSection = observer(
               onClick={() =>
                 handleItemClick(`finder?preset=${flowsView?.value?.id}`)
               }
-              isActive={checkIsActive('finder', {
+              isActive={checkIsActive(['finder'], {
                 preset: flowsView?.value?.id ?? '',
               })}
               icon={(isActive) => (

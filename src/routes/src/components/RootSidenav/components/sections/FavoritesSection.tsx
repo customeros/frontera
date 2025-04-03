@@ -17,7 +17,7 @@ interface FavoritesSectionProps {
   handleItemClick: (data: string) => void;
   togglePreference: (data: keyof Preferences) => void;
   checkIsActive: (
-    path: string,
+    path: string[],
     options?: { preset: string | Array<string> },
   ) => boolean;
 }
@@ -75,7 +75,7 @@ export const FavoritesSection = observer(
               label={view.value.name}
               dataTest={`side-nav-item-${view.value.name}`}
               onClick={() => handleItemClick(`finder?preset=${view.value.id}`)}
-              isActive={checkIsActive('finder', {
+              isActive={checkIsActive(['finder'], {
                 preset: view.value.id,
               })}
               icon={(isActive) => (

@@ -116,7 +116,7 @@ export class FilesStore {
   }
 
   async downloadUpcomingInvoice() {
-    const res = await this.transport.http.get(`/upcoming-invoice`, {
+    const res = await this.transport.http.get(`/invoices/upcoming/download`, {
       responseType: 'blob',
       headers: {
         'X-Tenant-Id': this.root.session.value.tenant,
@@ -129,7 +129,34 @@ export class FilesStore {
 
     a.href = blobUrl;
 
-    a.download = `upcoming-invoice.csv`;
+    a.download = `upcoming-invoices-${new Date().toLocaleDateString()}.csv`;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    setTimeout(() => {
+      window.URL.revokeObjectURL(blobUrl);
+    }, 100);
+  }
+
+  async downloadPastInvoice() {
+    const res = await this.transport.http.get(`/invoices/past/download`, {
+      responseType: 'blob',
+      headers: {
+        'X-Tenant-Id': this.root.session.value.tenant,
+      },
+    });
+
+    const blobUrl = window.URL.createObjectURL(res.data);
+
+    const a = document.createElement('a');
+
+    a.href = blobUrl;
+
+    a.download = `past-invoices-${new Date().toLocaleDateString()}.csv`;
 
     document.body.appendChild(a);
 

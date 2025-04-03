@@ -15,7 +15,7 @@ interface TeamViewsSectionSectionProps {
   handleItemClick: (data: string) => void;
   togglePreference: (data: keyof Preferences) => void;
   checkIsActive: (
-    path: string,
+    path: string[],
     options?: { preset: string | Array<string> },
   ) => boolean;
 }
@@ -28,6 +28,7 @@ export const TeamViewsSectionSection = observer(
     checkIsActive,
   }: TeamViewsSectionSectionProps) => {
     const store = useStore();
+
     const tableViewDefsList = store.tableViewDefs.toArray();
     const lifecycleStagesView = [
       store.tableViewDefs.getById(store.tableViewDefs.targetsPreset ?? ''),
@@ -56,7 +57,7 @@ export const TeamViewsSectionSection = observer(
                 key={view.value.id}
                 label={view.value.name}
                 dataTest={`side-nav-item-${view.value.name}`}
-                isActive={checkIsActive('finder', {
+                isActive={checkIsActive(['finder'], {
                   preset: view.value.id,
                 })}
                 onClick={() =>

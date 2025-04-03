@@ -1,10 +1,9 @@
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useLocalStorage } from 'usehooks-ts';
 
 export const useNavigationManager = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const [lastActivePosition, setLastActivePosition] = useLocalStorage(
     'customeros-player-last-position',
@@ -32,25 +31,34 @@ export const useNavigationManager = () => {
   };
 
   const checkIsActive = (
-    path: string,
+    path: string[],
     options?: { preset: string | Array<string> },
   ) => {
-    const _pathName = path.split('?')[0];
-    const presetParam = searchParams.get('preset');
+    const presetParam =
+      searchParams.get('preset') || lastActivePosition.root.split('=')?.[1];
+
+    const lastActivePath = lastActivePosition.root.split('?')?.[0];
+
+    const lastActivePreset = lastActivePosition.root.split('=')?.[1];
+
+    const isCorrectPath = path.includes(`${lastActivePath}`);
 
     if (options?.preset) {
       if (Array.isArray(options.preset)) {
         return (
-          pathname.startsWith(`/${_pathName}`) &&
-          options.preset.includes(presetParam ?? '')
+          isCorrectPath &&
+          (options.preset.includes(presetParam ?? '') ||
+            options.preset.includes(lastActivePreset ?? ''))
         );
       } else {
         return (
-          pathname.startsWith(`/${_pathName}`) && presetParam === options.preset
+          isCorrectPath &&
+          (presetParam === options.preset ||
+            lastActivePreset === options.preset)
         );
       }
     } else {
-      return pathname.startsWith(`/${_pathName}`) && !presetParam;
+      return isCorrectPath && !presetParam;
     }
   };
 
