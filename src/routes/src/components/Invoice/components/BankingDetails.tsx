@@ -1,6 +1,12 @@
-import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Currency, BankAccount } from '@graphql/types';
+import { useStore } from '@shared/hooks/useStore';
+import {
+  Currency,
+  AgentType,
+  BankAccount,
+  CapabilityType,
+} from '@graphql/types';
 
 type InvoiceHeaderProps = {
   currency?: string;
@@ -37,11 +43,13 @@ const getBankDetails = (
   return details;
 };
 
-export const BankingDetails: FC<InvoiceHeaderProps> = ({
+export const BankingDetails = ({
   availableBankAccount,
   currency,
   invoiceNumber,
-}) => {
+}: InvoiceHeaderProps) => {
+  const store = useStore();
+  const navigate = useNavigate();
   const bankDetails: { label: string; value: string } = getBankDetails(
     currency,
     availableBankAccount,
@@ -53,9 +61,24 @@ export const BankingDetails: FC<InvoiceHeaderProps> = ({
     currency === Currency.Eur
       ? availableBankAccount?.iban
       : availableBankAccount?.accountNumber;
+  const cashflowGuardianAgent = store.agents.getFirstAgentByType(
+    AgentType.CashflowGuardian,
+  );
+  const getGenerateInvoiceCapability = store.agents
+    .getById(cashflowGuardianAgent?.id ?? '')
+    ?.value.capabilities.find(
+      (capability) => capability.type === CapabilityType.GenerateInvoice,
+    );
 
   return (
-    <div className='flex flex-col border-t border-grayModern-300 py-2'>
+    <div
+      className='flex flex-col border-t border-grayModern-300 py-2 cursor-pointer'
+      onClick={() => {
+        navigate(
+          `/agents/${cashflowGuardianAgent?.id}/${getGenerateInvoiceCapability?.id}`,
+        );
+      }}
+    >
       <span className='text-xs font-semibold'>Bank transfer</span>
       <div className='flex justify-between'>
         <div className='flex flex-col'>
