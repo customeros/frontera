@@ -300,12 +300,10 @@ async function createServer() {
     followRedirects: true,
   });
 
-  const upcomingInvoiceProxy = createProxyMiddleware({
-    pathFilter: '/upcoming-invoice',
-    pathRewrite: { '^/upcoming-invoice': '' },
-    target:
-      process.env.CUSTOMER_OS_API_PATH +
-      '/billing/v1/invoices/upcoming/download',
+  const invoiceProxy = createProxyMiddleware({
+    pathFilter: '/invoices',
+    pathRewrite: { '^/invoices': '' },
+    target: process.env.CUSTOMER_OS_API_PATH + '/billing/v1/invoices',
     headers: {
       'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
     },
@@ -333,7 +331,7 @@ async function createServer() {
   app.use(filesApiProxy);
   app.use(basConfigProxy);
   app.use(realtimeApiProxy);
-  app.use(upcomingInvoiceProxy);
+  app.use(invoiceProxy);
 
   //login button
   app.use('/google-auth', (req, res) => {

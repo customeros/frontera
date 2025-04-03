@@ -283,14 +283,16 @@ export const Search = observer(() => {
         <CreateSequenceButton />
       )}
 
-      {tableViewDef?.value.tableId === TableIdType.UpcomingInvoices && (
+      {tableViewDef?.value.tableType === TableViewType.Invoices && (
         <IconButton
           size='xs'
           variant='ghost'
           icon={<Icon name='download-02' />}
           aria-label='Download upcoming invoices'
           onClick={() => {
-            store.files.downloadUpcomingInvoice();
+            tableViewDef?.value.tableId === TableIdType.UpcomingInvoices
+              ? store.files.downloadUpcomingInvoice()
+              : store.files.downloadPastInvoice();
           }}
         />
       )}

@@ -14,7 +14,7 @@ interface NavigationSectionsProps {
   handleItemClick: (data: string) => void;
   togglePreference: (data: keyof Preferences) => void;
   checkIsActive: (
-    path: string,
+    path: string[],
     options?: { preset: string | Array<string> },
   ) => boolean;
 }
@@ -34,7 +34,7 @@ export const NavigationSections = ({
           <SidenavItem
             label='Customer map'
             dataTest={`side-nav-item-customer-map`}
-            isActive={checkIsActive('customer-map')}
+            isActive={checkIsActive(['customer-map'])}
             onClick={() => handleItemClick('customer-map')}
             icon={(isActive) => (
               <Icon
@@ -50,7 +50,7 @@ export const NavigationSections = ({
 
         <SidenavItem
           label='Agents'
-          isActive={checkIsActive('agents')}
+          isActive={checkIsActive(['agents'])}
           dataTest={`side-nav-item-all-agents`}
           onClick={() => handleItemClick('agents')}
           icon={(isActive) => (
