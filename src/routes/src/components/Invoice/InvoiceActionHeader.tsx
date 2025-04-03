@@ -5,7 +5,6 @@ import { InvoiceStatus } from '@graphql/types';
 import { Download02 } from '@ui/media/icons/Download02';
 import { renderStatusNode } from '@shared/components/Invoice/Cells';
 import { DownloadFile } from '@ui/media/DownloadFile/DownloadFile.tsx';
-
 type InvoiceProps = {
   id?: string | null;
   number?: string | null;
