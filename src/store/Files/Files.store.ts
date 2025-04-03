@@ -129,7 +129,7 @@ export class FilesStore {
 
     a.href = blobUrl;
 
-    a.download = `upcoming-invoice.pdf`;
+    a.download = `upcoming-invoice.csv`;
 
     document.body.appendChild(a);
 
