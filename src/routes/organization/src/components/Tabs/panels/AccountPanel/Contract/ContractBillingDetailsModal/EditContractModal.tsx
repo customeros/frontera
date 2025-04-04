@@ -30,7 +30,6 @@ interface SubscriptionServiceModalProps {
 
 export const EditContractModal = ({
   contractId,
-  organizationName,
   status,
   serviceStarted,
   opportunityId,
