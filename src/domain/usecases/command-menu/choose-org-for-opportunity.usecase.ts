@@ -86,6 +86,7 @@ export class ChooseOrgForOpportunityUsecase {
         `${org.value.name}'s opportunity`,
       internalType: InternalType.Nbo,
       externalStage: isInternalStage ? '' : stage,
+      taskIds: [this.store.ui.commandMenu.context?.meta?.taskId],
     });
 
     span.end();
