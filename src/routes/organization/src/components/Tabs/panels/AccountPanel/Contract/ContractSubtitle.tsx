@@ -85,8 +85,8 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   if (isJustCreated) {
     return (
-      <p className='font-normal shadow-none text-sm  text-grayModern-500 focus:text-grayModern-500 hover:text-grayModern-500 hover:no-underline focus:no-underline'>
-        Contract starting... Edit contract
+      <p className='font-normal shadow-none text-sm  text-grayModern-500 focus:text-grayModern-500 hover:text-grayModern-500 hover:underline focus:no-underline'>
+        Fill out contract
       </p>
     );
   }

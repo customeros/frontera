@@ -58,7 +58,12 @@ export const ContractStatusTag = ({
   return (
     <>
       <Menu>
-        <MenuButton disabled={status === ContractStatus.Scheduled}>
+        <MenuButton
+          disabled={
+            status === ContractStatus.Scheduled ||
+            status === ContractStatus.Ended
+          }
+        >
           <Tag colorScheme={statusColorScheme[status] as 'primary'}>
             {icon && (
               <TagLeftIcon>

@@ -24,7 +24,7 @@ export const DetectSupportWebVisit = observer(() => {
   const navigate = useNavigate();
 
   const { id } = useParams<{ id: string }>();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const usecase = useMemo(() => new DetectSupportWebVistUsecase(id!), [id]);
 
   const agentByType = store.agents.getFirstAgentByType(

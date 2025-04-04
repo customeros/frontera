@@ -193,10 +193,10 @@ export const EmailsInputGroup = observer(
 
         {showTo || !billingDetails?.billingEmail?.length ? (
           <EmailSelect
-            entryType='To'
             isMulti={false}
             value={valueTO}
             ref={toInputRef}
+            entryType='To (required)'
             placeholder='To email address'
             options={organizationContacts}
             autofocus={focusedItemIndex === 0}
@@ -215,8 +215,8 @@ export const EmailsInputGroup = observer(
               'flex-1': !billingDetails?.billingEmailBCC?.length,
             })}
           >
-            <span className='text-sm font-semibold text-grayModern-700 mr-1'>
-              To
+            <span className='text-sm font-medium text-grayModern-700 mr-1'>
+              To (required)
             </span>
             <EmailList emailList={valueTO} />{' '}
           </div>
@@ -266,7 +266,7 @@ export const EmailsInputGroup = observer(
                   'flex-1': !billingDetails?.billingEmailBCC?.length,
                 })}
               >
-                <span className='text-sm font-semibold text-grayModern-700 mr-1'>
+                <span className='text-sm font-medium text-grayModern-700 mr-1'>
                   CC
                 </span>
                 <EmailList emailList={billingDetails?.billingEmailCC ?? []} />
@@ -281,7 +281,7 @@ export const EmailsInputGroup = observer(
                   'flex-1': !billingDetails?.billingEmailBCC?.length,
                 })}
               >
-                <span className='text-sm font-semibold text-grayModern-700 mr-1'>
+                <span className='text-sm font-medium text-grayModern-700 mr-1'>
                   BCC
                 </span>
                 <EmailList emailList={billingDetails?.billingEmailBCC ?? []} />

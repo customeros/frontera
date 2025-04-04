@@ -48,27 +48,28 @@ export const ContractMenu = ({
             Edit contract
           </MenuItem>
 
-          {status !== ContractStatus.Scheduled && (
-            <>
-              {status === ContractStatus.Live && (
-                <MenuItem
-                  className='group'
-                  onClick={() =>
-                    onStatusModalOpen(ContractStatusModalMode.Renew)
-                  }
-                >
-                  <Icon
-                    name='refresh-ccw-02'
-                    className='text-grayModern-500 group-hover:text-grayModern-700'
-                  />
-                  Renew contract
+          {status !== ContractStatus.Scheduled &&
+            status !== ContractStatus.Ended && (
+              <>
+                {status === ContractStatus.Live && (
+                  <MenuItem
+                    className='group'
+                    onClick={() =>
+                      onStatusModalOpen(ContractStatusModalMode.Renew)
+                    }
+                  >
+                    <Icon
+                      name='refresh-ccw-02'
+                      className='text-grayModern-500 group-hover:text-grayModern-700'
+                    />
+                    Renew contract
+                  </MenuItem>
+                )}
+                <MenuItem onClick={onHandleStatusChange}>
+                  {statusContent}
                 </MenuItem>
-              )}
-              <MenuItem onClick={onHandleStatusChange}>
-                {statusContent}
-              </MenuItem>
-            </>
-          )}
+              </>
+            )}
           <MenuItem
             className='group'
             data-test='contract-menu-delete-contract'

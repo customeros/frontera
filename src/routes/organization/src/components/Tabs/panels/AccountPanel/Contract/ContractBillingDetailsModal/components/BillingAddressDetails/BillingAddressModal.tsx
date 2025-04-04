@@ -16,7 +16,6 @@ import { BillingDetailsForm } from './BillingAddressDetailsForm.tsx';
 
 interface BillingAddressModalProps {
   contractId: string;
-  organizationName: string;
 }
 
 const variants = {
@@ -39,7 +38,7 @@ const variants = {
 };
 
 export const BillingAddressModal = observer(
-  ({ contractId, organizationName }: BillingAddressModalProps) => {
+  ({ contractId }: BillingAddressModalProps) => {
     const store = useStore();
     const contractStore = store.contracts.value.get(
       contractId,
@@ -166,12 +165,10 @@ export const BillingAddressModal = observer(
               <ModalHeader className='p-0 text-base font-semibold'>
                 <div>
                   {contractStore?.tempValue?.billingDetails
-                    ?.organizationLegalName ||
-                    organizationName ||
-                    "Unnamed's "}{' '}
+                    ?.organizationLegalName || "Unnamed's "}{' '}
                 </div>
                 <span className='text-sm font-normal'>
-                  These details are required to issue invoices
+                  Complete these details to invoice this company
                 </span>
               </ModalHeader>
 
