@@ -3,6 +3,7 @@ import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
 import { GroupOperation } from '@store/types';
 import { when, runInAction, makeAutoObservable } from 'mobx';
+import { TaskRepository } from '@infra/repositories/core/task';
 import { GroupStore, makeAutoSyncableGroup } from '@store/group-store';
 
 import {
@@ -27,6 +28,7 @@ export class OpportunitiesStore implements GroupStore<Opportunity> {
   subscribe = makeAutoSyncableGroup.subscribe;
   load = makeAutoSyncableGroup.load<Opportunity>();
   private service: OpportunitiesService;
+  private taskRepository = TaskRepository.getInstance();
 
   constructor(public root: RootStore, public transport: Transport) {
     this.service = OpportunitiesService.getInstance(transport);
@@ -157,7 +159,20 @@ export class OpportunitiesStore implements GroupStore<Opportunity> {
         action: 'APPEND',
         ids: [serverId],
       });
+
+      if (draft.value.taskIds.length > 0) {
+        this.taskRepository.saveTask({
+          input: {
+            id: draft.value.taskIds[0],
+            opportunityIds: [serverId],
+          },
+        });
+        this.root.tasks
+          .getById(draft.value.taskIds[0])
+          ?.value.opportunityIds.push(serverId);
+      }
       this.value.get(serverId)?.invalidate();
+
       this.root.ui.toastSuccess(
         `Opportunity created for ${payload.organization?.name}`,
         'create-opportunity-success',

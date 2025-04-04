@@ -24,6 +24,7 @@ const config: CodegenConfig = {
     './src/store/**/*.graphql',
     './src/infra/**/*.graphql',
     '!./src/infra/repositories/mailstack',
+    '!./src/infra/repositories/realtime',
   ],
   generates: {
     'src/routes/src/types/__generated__/graphql.types.ts': {

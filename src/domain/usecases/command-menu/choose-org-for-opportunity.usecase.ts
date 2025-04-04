@@ -81,14 +81,18 @@ export class ChooseOrgForOpportunityUsecase {
       // @ts-expect-error this will be autofixed when Opportunity store will use OpportunityDatum
       organization: org.value,
       id: org.value.id,
-      name: `${org.value.name}'s opportunity`,
+      name:
+        this.store.ui.commandMenu.context?.meta?.name ||
+        `${org.value.name}'s opportunity`,
       internalType: InternalType.Nbo,
       externalStage: isInternalStage ? '' : stage,
+      taskIds: [this.store.ui.commandMenu.context?.meta?.taskId],
     });
 
     span.end();
 
     this.store.ui.commandMenu.setOpen(false);
     this.store.ui.commandMenu.setType('OpportunityHub');
+    this.store.ui.commandMenu.clearContext();
   }
 }

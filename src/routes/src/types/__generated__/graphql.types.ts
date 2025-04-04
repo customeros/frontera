@@ -1621,6 +1621,14 @@ export type EmailParticipant = {
   type?: Maybe<Scalars['String']['output']>;
 };
 
+export type EmailProfile = {
+  __typename?: 'EmailProfile';
+  email: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  profilePhotoUrl: Scalars['String']['output'];
+  profilePhotoUrlId: Scalars['String']['output'];
+};
+
 /**
  * Describes an email address associated with a `Contact` in customerOS.
  * **An `update` object.**
@@ -3767,6 +3775,7 @@ export type OpportunitySaveInput = {
   opportunityId?: InputMaybe<Scalars['ID']['input']>;
   organizationId?: InputMaybe<Scalars['ID']['input']>;
   ownerId?: InputMaybe<Scalars['ID']['input']>;
+  taskId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type OpportunityUpdateInput = {
@@ -4345,6 +4354,7 @@ export type Query = {
   dashboard_RevenueAtRisk?: Maybe<DashboardRevenueAtRisk>;
   dashboard_TimeToOnboard?: Maybe<DashboardTimeToOnboard>;
   email: Email;
+  email_ProfilePhoto: Array<EmailProfile>;
   externalMeetings: MeetingsPage;
   externalSystemInstances: Array<ExternalSystemInstance>;
   flow: Flow;
@@ -4501,6 +4511,10 @@ export type QueryDashboard_TimeToOnboardArgs = {
 
 export type QueryEmailArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type QueryEmail_ProfilePhotoArgs = {
+  emails: Array<Scalars['String']['input']>;
 };
 
 export type QueryExternalMeetingsArgs = {
