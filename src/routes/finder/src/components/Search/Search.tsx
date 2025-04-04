@@ -288,7 +288,12 @@ export const Search = observer(() => {
           size='xs'
           variant='ghost'
           icon={<Icon name='download-02' />}
-          aria-label='Download upcoming invoices'
+          aria-label='Download csv invoices'
+          title={
+            tableViewDef?.value.tableId === TableIdType.UpcomingInvoices
+              ? 'Download CSV of future invoices'
+              : 'Download CSV of past invoices'
+          }
           onClick={() => {
             tableViewDef?.value.tableId === TableIdType.UpcomingInvoices
               ? store.files.downloadUpcomingInvoice()
