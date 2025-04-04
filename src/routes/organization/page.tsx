@@ -148,7 +148,7 @@ export const OrganizationPage = observer(() => {
     <div className='relative flex flex-col h-[calc(100vh-42px)]'>
       <div className='w-full bg-white border-b border-grayModern-200 px-4 min-h-[42px] flex items-center gap-2'>
         <div className='flex items-center gap-2'>
-          {src && imgStatus !== 'error' ? (
+          {src ? (
             <Image
               src={src}
               width={22}
