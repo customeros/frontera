@@ -30,7 +30,6 @@ interface SubscriptionServiceModalProps {
 
 export const EditContractModal = ({
   contractId,
-  organizationName,
   status,
   serviceStarted,
   opportunityId,
@@ -76,10 +75,7 @@ export const EditContractModal = ({
               opportunityId={opportunityId}
               serviceStarted={serviceStarted}
             />
-            <BillingAddressModal
-              contractId={contractId}
-              organizationName={organizationName}
-            />
+            <BillingAddressModal contractId={contractId} />
           </div>
         </ModalContent>
       </ModalPortal>

@@ -1,12 +1,10 @@
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { Input } from '@ui/form/Input';
 import { Select } from '@ui/form/Select';
-import { AgentType } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
 import { countryOptions } from '@shared/util/countryOptions.ts';
 import { EmailsInputGroup } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractBillingDetailsModal/components/EmailsInputGroup/EmailsInputGroup.tsx';
@@ -18,15 +16,13 @@ interface BillingAddressDetailsForm {
 export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
   ({ contractId }) => {
     const store = useStore();
-    const id = useParams()?.id as string;
-    const cashflowGuardianAgent = store.agents.getFirstAgentByType(
-      AgentType.CashflowGuardian,
-    );
+    // const cashflowGuardianAgent = store.agents.getFirstAgentByType(
+    //   AgentType.CashflowGuardian,
+    // );
 
     const contractStore = store.contracts.value.get(
       contractId,
     ) as ContractStore;
-    const organizationName = store.organizations.value.get(id)?.value?.name;
 
     const handleUpdateBillingDetails = (key: string, value: string) => {
       contractStore?.updateTemp((contract) => ({
@@ -40,31 +36,29 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
 
     return (
       <div className='flex flex-col mt-2'>
-        <label className='text-sm font-semibold'>
-          Organization legal name
+        <label className='text-sm font-medium'>
+          Organization legal name (required)
           <Input
             size='sm'
             autoComplete='off'
             name='organizationLegalName'
             placeholder='Organization legal name'
             className='overflow-hidden overflow-ellipsis mb-2 font-normal'
+            value={
+              contractStore?.tempValue?.billingDetails?.organizationLegalName ||
+              ''
+            }
             onChange={(e) => {
               handleUpdateBillingDetails(
                 'organizationLegalName',
                 e.target.value,
               );
             }}
-            value={
-              (contractStore?.tempValue?.billingDetails
-                ?.organizationLegalName ||
-                organizationName) ??
-              ''
-            }
           />
         </label>
 
         <div className='flex flex-col'>
-          <p className='text-sm font-semibold'>Billing address</p>
+          <p className='text-sm font-medium'>Billing address</p>
           <Select
             size='sm'
             isSearchable
@@ -153,9 +147,7 @@ export const BillingDetailsForm: FC<BillingAddressDetailsForm> = observer(
           </div>
         </div>
 
-        {cashflowGuardianAgent?.value.isActive && (
-          <EmailsInputGroup contractId={contractId} />
-        )}
+        <EmailsInputGroup contractId={contractId} />
       </div>
     );
   },

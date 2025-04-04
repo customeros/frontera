@@ -10,6 +10,7 @@ import { Icon, IconName } from '@ui/media/Icon';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
 import { Button } from '@ui/form/Button/Button.tsx';
+import { AgentType } from '@shared/types/__generated__/graphql.types';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog';
@@ -161,8 +162,13 @@ export const Header = observer(() => {
 
             <div className='ml-2 flex items-center'>
               <Switch
-                onChange={usecase.toggleActive}
                 checked={agent?.value?.isActive ?? false}
+                onChange={
+                  agent.value.type === AgentType.CashflowGuardian &&
+                  agent.value.isActive
+                    ? usecase.toggleModal
+                    : usecase.toggleActive
+                }
               />{' '}
             </div>
           </div>
@@ -173,7 +179,11 @@ export const Header = observer(() => {
         onClose={usecase.toggleModal}
         confirmButtonLabel='Disable agent'
         label='Disable Cashflow Guardian?'
-        onConfirm={usecase.toggleAgentStatus}
+        onConfirm={() => {
+          usecase.toggleAgentStatus();
+          usecase.toggleActive();
+          usecase.toggleModal();
+        }}
         body={
           <p className='text-sm '>
             If you turn off the Cashflow Guardian agent, any customers with

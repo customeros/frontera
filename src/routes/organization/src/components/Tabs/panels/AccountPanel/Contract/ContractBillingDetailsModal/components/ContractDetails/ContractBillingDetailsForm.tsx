@@ -175,23 +175,34 @@ export const ContractBillingDetailsForm = observer(
           contractStatus={contractStatus}
           currency={currency ?? Currency.Usd}
         />
-        {cashflowAgent?.isActive && (
-          <>
-            <Divider className='my-3' />
+        <>
+          <Divider className='my-3' />
 
-            <div className='flex text-sm font-medium items-center mb-1'>
+          <div className='flex text-sm font-medium items-center mb-1 justify-between '>
+            <div>
               <Icon
                 name='invoice'
                 className='w-4 h-4 mr-2 text-grayModern-500'
               />
-              Billing policy
+              <span>Invoicing</span>
             </div>
 
+            <Switch
+              checked={contractStore.tempValue.billingEnabled ?? false}
+              onChange={() =>
+                contractStore?.updateTemp((contract) => ({
+                  ...contract,
+                  billingEnabled: !contractStore.tempValue.billingEnabled,
+                }))
+              }
+            />
+          </div>
+          {contractStore.tempValue.billingEnabled && (
             <ul className='list-disc ml-5'>
               <li className='text-sm mb-[1px]'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap mr-1'>
-                    Billing starts{' '}
+                    Invoicing starts{' '}
                   </span>
 
                   <DatePickerUnderline
@@ -265,32 +276,7 @@ export const ContractBillingDetailsForm = observer(
                   <span className='whitespace-nowrap ml-0.5'>to pay</span>
                 </div>
               </li>
-              <li className='text-sm mb-[1px]'>
-                <div className='flex items-baseline'>
-                  <span className='whitespace-nowrap '>Billing is </span>
-                  <div>
-                    <Button
-                      size='sm'
-                      variant='ghost'
-                      className='font-normal text-sm p-0 ml-1 relative text-grayModern-500 hover:bg-transparent focus:bg-transparent underline'
-                      onClick={() =>
-                        contractStore?.updateTemp((contract) => ({
-                          ...contract,
-                          billingEnabled:
-                            !contractStore?.tempValue.billingEnabled,
-                        }))
-                      }
-                    >
-                      {contractStore?.tempValue.billingEnabled
-                        ? 'enabled'
-                        : 'disabled'}
-                    </Button>
-                  </div>
-                  <span className='whitespace-nowrap ml-0.5'>
-                    in CustomerOS
-                  </span>
-                </div>
-              </li>
+
               <li className='text-sm'>
                 <div className='flex items-baseline'>
                   <span className='whitespace-nowrap '>
@@ -311,114 +297,114 @@ export const ContractBillingDetailsForm = observer(
                 </div>
               </li>
             </ul>
-            <Divider className='my-3' />
+          )}
+          <Divider className='my-3' />
 
-            <div className='flex text-sm font-medium items-center mb-1'>
-              <Icon
-                name='bank-note-01'
-                className='w-4 h-4 mr-2 text-grayModern-500'
-              />
-              Payment options
-            </div>
+          <div className='flex text-sm font-medium items-center mb-1'>
+            <Icon
+              name='bank-note-01'
+              className='w-4 h-4 mr-2 text-grayModern-500'
+            />
+            Payment options
+          </div>
 
-            <div className='flex flex-col gap-2 mb-2'>
-              <Tooltip
-                align='start'
-                label={
-                  isStripeEnabled
-                    ? ''
-                    : 'Enable Stripe in the Cashflow Guardian agent'
-                }
-              >
-                <div className='flex flex-col w-full justify-between items-start'>
-                  <div className='flex  items-center justify-between w-full'>
-                    <div className='text-sm font-normal whitespace-nowrap'>
-                      Checkout with Stripe (Card & ACH)
-                    </div>
-
-                    <Switch
-                      size='sm'
-                      name='payAutomatically'
-                      isInvalid={!isStripeEnabled}
-                      isChecked={
-                        !!contractStore?.tempValue?.billingDetails?.payOnline
-                      }
-                      onChange={(value) => {
-                        contractStore?.updateTemp((contract) => ({
-                          ...contract,
-                          billingDetails: {
-                            ...contract.billingDetails,
-                            payOnline: value,
-                            payAutomatically: value,
-                          },
-                        }));
-                      }}
-                    />
+          <div className='flex flex-col gap-2 mb-2'>
+            <Tooltip
+              align='start'
+              label={
+                isStripeEnabled
+                  ? ''
+                  : 'Enable Stripe in the Cashflow Guardian agent'
+              }
+            >
+              <div className='flex flex-col w-full justify-between items-start'>
+                <div className='flex  items-center justify-between w-full'>
+                  <div className='text-sm font-normal whitespace-nowrap'>
+                    Checkout with Stripe (Card & ACH)
                   </div>
-                </div>
-              </Tooltip>
 
-              {contractStore?.tempValue.billingDetails?.payOnline && (
-                <RadioGroup
-                  name='created-date'
-                  value={`${!!contractStore.tempValue.billingDetails
-                    ?.payAutomatically}`}
-                  onValueChange={(newValue) => {
-                    contractStore?.updateTemp((contract) => ({
-                      ...contract,
-                      billingDetails: {
-                        ...contract.billingDetails,
-                        payAutomatically: newValue === 'true',
-                      },
-                    }));
-                  }}
-                >
-                  <div className='text-sm flex flex-col gap-2 items-start'>
-                    <Radio value={'true'}>
-                      <span>Auto-charge invoices</span>
-                    </Radio>
-                    <Radio value={'false'}>
-                      <span>One-off payment link</span>
-                    </Radio>
-                  </div>
-                </RadioGroup>
-              )}
-
-              <Tooltip
-                align='start'
-                label={
-                  isBankPaymentEnabled
-                    ? ''
-                    : 'Enable bank transfer in the Cashflow Guardian agent'
-                }
-              >
-                <div className='flex w-full justify-between items-center'>
-                  <div className='font-normal text-sm whitespace-nowrap'>
-                    Bank transfer
-                  </div>
                   <Switch
                     size='sm'
-                    name='canPayWithBankTransfer'
-                    isInvalid={!isBankPaymentEnabled}
+                    name='payAutomatically'
+                    isInvalid={!isStripeEnabled}
                     isChecked={
-                      !!contractStore?.tempValue?.billingDetails
-                        ?.canPayWithBankTransfer
+                      !!contractStore?.tempValue?.billingDetails?.payOnline
                     }
-                    onChange={(value) =>
+                    onChange={(value) => {
                       contractStore?.updateTemp((contract) => ({
                         ...contract,
                         billingDetails: {
                           ...contract.billingDetails,
-                          canPayWithBankTransfer: value,
+                          payOnline: value,
+                          payAutomatically: value,
                         },
-                      }))
-                    }
+                      }));
+                    }}
                   />
                 </div>
-              </Tooltip>
-            </div>
-          </>
-        )}
+              </div>
+            </Tooltip>
+
+            {contractStore?.tempValue.billingDetails?.payOnline && (
+              <RadioGroup
+                name='created-date'
+                value={`${!!contractStore.tempValue.billingDetails
+                  ?.payAutomatically}`}
+                onValueChange={(newValue) => {
+                  contractStore?.updateTemp((contract) => ({
+                    ...contract,
+                    billingDetails: {
+                      ...contract.billingDetails,
+                      payAutomatically: newValue === 'true',
+                    },
+                  }));
+                }}
+              >
+                <div className='text-sm flex flex-col gap-2 items-start'>
+                  <Radio value={'true'}>
+                    <span>Auto-charge invoices</span>
+                  </Radio>
+                  <Radio value={'false'}>
+                    <span>One-off payment link</span>
+                  </Radio>
+                </div>
+              </RadioGroup>
+            )}
+
+            <Tooltip
+              align='start'
+              label={
+                isBankPaymentEnabled
+                  ? ''
+                  : 'Enable bank transfer in the Cashflow Guardian agent'
+              }
+            >
+              <div className='flex w-full justify-between items-center'>
+                <div className='font-normal text-sm whitespace-nowrap'>
+                  Bank transfer
+                </div>
+                <Switch
+                  size='sm'
+                  name='canPayWithBankTransfer'
+                  isInvalid={!isBankPaymentEnabled}
+                  isChecked={
+                    !!contractStore?.tempValue?.billingDetails
+                      ?.canPayWithBankTransfer
+                  }
+                  onChange={(value) =>
+                    contractStore?.updateTemp((contract) => ({
+                      ...contract,
+                      billingDetails: {
+                        ...contract.billingDetails,
+                        canPayWithBankTransfer: value,
+                      },
+                    }))
+                  }
+                />
+              </div>
+            </Tooltip>
+          </div>
+        </>
 
         <ContractUploader contractId={contractId} />
       </ModalBody>

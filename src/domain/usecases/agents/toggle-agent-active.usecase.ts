@@ -52,7 +52,7 @@ export class ToggleAgentActiveUsecase {
     }
 
     if (this.agent.value.type === AgentType.CashflowGuardian) {
-      if (!this.agent.value.isActive) {
+      if (!this.agent.value.isActive && !this.isOpen) {
         this.agent.toggleStatus();
       } else {
         this.toggleModal();

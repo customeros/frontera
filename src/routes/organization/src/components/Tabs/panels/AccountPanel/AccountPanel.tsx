@@ -66,7 +66,7 @@ const AccountPanelComponent = observer(() => {
 
   return (
     <OrganizationPanel
-      title='Account'
+      title='Contracts'
       shouldBlockPanelScroll={isModalOpen}
       actionItem={
         <div className='flex items-center'>
@@ -74,8 +74,8 @@ const AccountPanelComponent = observer(() => {
             <Button
               size='xxs'
               variant='outline'
-              colorScheme='primary'
               onClick={handleCreate}
+              colorScheme='grayModern'
               aria-label='Add new contract'
               loadingText='Adding contract...'
               isLoading={store.contracts.isLoading}

@@ -4,9 +4,10 @@ import { observer } from 'mobx-react-lite';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { Input } from '@ui/form/Input';
+import { DateTimeUtils } from '@utils/date';
 import { useStore } from '@shared/hooks/useStore';
-import { Contract, ContractStatus } from '@graphql/types';
 import { Divider } from '@ui/presentation/Divider/Divider';
+import { Contract, AgentType, ContractStatus } from '@graphql/types';
 import { Card, CardFooter, CardHeader } from '@ui/presentation/Card/Card';
 import { UpcomingInvoices } from '@organization/components/Tabs/panels/AccountPanel/Contract/UpcomingInvoices/UpcomingInvoices';
 import { useUpdatePanelModalStateContext } from '@organization/components/Tabs/panels/AccountPanel/context/AccountModalsContext';
@@ -74,6 +75,21 @@ export const ContractCard = observer(
         contract?.opportunities?.[0]?.id
       );
     }, []);
+
+    const isJustCreated =
+      DateTimeUtils.differenceInMins(
+        contract?.metadata.lastUpdated,
+        contract?.metadata.created,
+      ) === 0;
+    const noInvoicesYet =
+      contract.upcomingInvoices.length === 0 || contract.invoices.length === 0;
+
+    const cashFlowAgent = store.agents.getFirstAgentByType(
+      AgentType.CashflowGuardian,
+    );
+    const cashflowAgentStatus = cashFlowAgent?.value.isActive;
+    const invoicingStatus = contract.billingEnabled;
+    const contractEnded = contract.contractStatus === ContractStatus.Ended;
 
     return (
       <Card className='px-4 py-3 w-full text-lg bg-grayModern-25 transition-all-0.2s-ease-out border border-grayModern-200 text-grayModern-700 '>
@@ -150,14 +166,20 @@ export const ContractCard = observer(
             onModalOpen={onEditModalOpen}
             data={contract?.contractLineItems}
           />
-          <>
-            <Divider className='my-3' />
-            <UpcomingInvoices
-              data={contract}
-              onOpenBillingDetailsModal={handleOpenBillingDetails}
-              onOpenServiceLineItemsModal={handleOpenContractDetails}
-            />
-          </>
+          {!isJustCreated &&
+            noInvoicesYet &&
+            !contractEnded &&
+            (cashflowAgentStatus || invoicingStatus) && (
+              <>
+                <Divider className='my-3' />
+                <UpcomingInvoices
+                  data={contract}
+                  cashflowGuardianAgent={cashFlowAgent?.value ?? null}
+                  onOpenBillingDetailsModal={handleOpenBillingDetails}
+                  onOpenServiceLineItemsModal={handleOpenContractDetails}
+                />
+              </>
+            )}
 
           <EditContractModal
             isOpen={isEditModalOpen}

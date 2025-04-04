@@ -299,7 +299,6 @@ export class ContractStore implements Store<Contract> {
   async updateBillingAddress() {
     try {
       this.isLoading = true;
-
       await this.service.updateContract({
         input: {
           contractName: this.value.contractName,
@@ -312,7 +311,7 @@ export class ContractStore implements Store<Contract> {
             locality: this.value?.billingDetails?.locality,
             postalCode: this.value?.billingDetails?.postalCode,
             region: this.value?.billingDetails?.region,
-            billingEmail: this.value?.billingDetails?.billingEmail,
+            billingEmail: this.value?.billingDetails?.billingEmail || '',
             billingEmailCC: this.value?.billingDetails?.billingEmailCC,
             billingEmailBCC: this.value?.billingDetails?.billingEmailBCC,
           },

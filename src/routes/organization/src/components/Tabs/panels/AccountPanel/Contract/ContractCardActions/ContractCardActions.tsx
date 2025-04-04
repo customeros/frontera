@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 import { Icon } from '@ui/media/Icon';
 import { ContractStatus } from '@graphql/types';
-import { DotLive } from '@ui/media/icons/DotLive';
 import { ContractEndModal } from '@organization/components/Tabs/panels/AccountPanel/Contract/ChangeContractStatusModals';
 import { ContractMenu } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractCardActions/ContractMenu';
 import { ContractStatusTag } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractCardActions/ContractStatusTag';
@@ -42,12 +41,7 @@ export const ContractCardActions = ({
         text = 'End contract...';
         break;
       case ContractStatus.Draft:
-      case ContractStatus.Ended:
-        icon = (
-          <DotLive className='text-gray-500 [&>*:nth-child(1)]:fill-grayModern-200 [&>*:nth-child(1)]:stroke-grayModern-300 [&>*:nth-child(2)]:fill-grayModern-600' />
-        );
-        text = 'Make live';
-        break;
+
       case ContractStatus.OutOfContract:
         icon = (
           <Icon
@@ -80,10 +74,7 @@ export const ContractCardActions = ({
         onStatusModalOpen(ContractStatusModalMode.End);
         break;
       case ContractStatus.Draft:
-      case ContractStatus.Ended:
-        onStatusModalOpen(ContractStatusModalMode.Start);
 
-        break;
       case ContractStatus.OutOfContract:
         onStatusModalOpen(ContractStatusModalMode.Renew);
 

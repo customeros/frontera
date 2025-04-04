@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { useStore } from '@shared/hooks/useStore';
-import { BilledType, ServiceLineItem } from '@graphql/types';
 import { PauseCircle } from '@ui/media/icons/PauseCircle.tsx';
+import { BilledType, ContractStatus, ServiceLineItem } from '@graphql/types';
 import { groupServicesByParentId } from '@organization/components/Tabs/panels/AccountPanel/Contract/Services/utils.ts';
 
 function getBilledTypeLabel(billedType: BilledType): string {
@@ -107,79 +107,85 @@ export const ServicesList = observer(
 
     return (
       <div className='w-full flex flex-col gap-1 mt-2'>
-        {groupedServicesByParentId?.subscription?.length > 0 && (
-          <article className='mb-1'>
-            <h1
-              tabIndex={0}
-              role='button'
-              onClick={onModalOpen}
-              className='font-medium text-sm mb-1'
-              data-test='account-panel-contract-subscription'
-            >
-              Current subscriptions
-            </h1>
-            {groupedServicesByParentId?.subscription
-              ?.sort((a, b) => {
-                const aDate = new Date(a.currentLineItem?.serviceStarted || 0);
-                const bDate = new Date(b.currentLineItem?.serviceStarted || 0);
+        {groupedServicesByParentId?.subscription?.length > 0 &&
+          contractStore.value.contractStatus !== ContractStatus.Ended && (
+            <article className='mb-1'>
+              <h1
+                tabIndex={0}
+                role='button'
+                onClick={onModalOpen}
+                className='font-medium text-sm mb-1'
+                data-test='account-panel-contract-subscription'
+              >
+                Current subscriptions
+              </h1>
+              {groupedServicesByParentId?.subscription
+                ?.sort((a, b) => {
+                  const aDate = new Date(
+                    a.currentLineItem?.serviceStarted || 0,
+                  );
+                  const bDate = new Date(
+                    b.currentLineItem?.serviceStarted || 0,
+                  );
 
-                if (aDate.getTime() !== bDate.getTime()) {
-                  return bDate.getTime() - aDate.getTime();
-                }
+                  if (aDate.getTime() !== bDate.getTime()) {
+                    return bDate.getTime() - aDate.getTime();
+                  }
 
-                return (
-                  (b.currentLineItem?.price || 0) -
-                  (a.currentLineItem?.price || 0)
-                );
-              })
-              .map((service) => (
-                <Fragment
-                  key={`service-item-${service?.currentLineItem?.metadata?.id}`}
-                >
-                  <ServiceItem
-                    currency={currency}
-                    onOpen={onModalOpen}
-                    id={service?.currentLineItem?.metadata?.id}
-                    isPaused={service?.currentLineItem?.paused}
-                  />
-                </Fragment>
-              ))}
-          </article>
-        )}
+                  return (
+                    (b.currentLineItem?.price || 0) -
+                    (a.currentLineItem?.price || 0)
+                  );
+                })
+                .map((service) => (
+                  <Fragment
+                    key={`service-item-${service?.currentLineItem?.metadata?.id}`}
+                  >
+                    <ServiceItem
+                      currency={currency}
+                      onOpen={onModalOpen}
+                      id={service?.currentLineItem?.metadata?.id}
+                      isPaused={service?.currentLineItem?.paused}
+                    />
+                  </Fragment>
+                ))}
+            </article>
+          )}
 
-        {groupedServicesByParentId?.once?.length > 0 && (
-          <article>
-            <h1
-              tabIndex={0}
-              role='button'
-              onClick={onModalOpen}
-              className='font-medium text-sm mb-1'
-              data-test='account-panel-contract-one-time'
-            >
-              One-times for next invoice
-            </h1>
-            {groupedServicesByParentId?.once
-              ?.sort((a, b) => {
-                const aDate = new Date(a?.serviceStarted || 0);
-                const bDate = new Date(b?.serviceStarted || 0);
+        {groupedServicesByParentId?.once?.length > 0 &&
+          contractStore.value.contractStatus !== ContractStatus.Ended && (
+            <article>
+              <h1
+                tabIndex={0}
+                role='button'
+                onClick={onModalOpen}
+                className='font-medium text-sm mb-1'
+                data-test='account-panel-contract-one-time'
+              >
+                One-times for next invoice
+              </h1>
+              {groupedServicesByParentId?.once
+                ?.sort((a, b) => {
+                  const aDate = new Date(a?.serviceStarted || 0);
+                  const bDate = new Date(b?.serviceStarted || 0);
 
-                if (aDate.getTime() !== bDate.getTime()) {
-                  return bDate.getTime() - aDate.getTime();
-                }
+                  if (aDate.getTime() !== bDate.getTime()) {
+                    return bDate.getTime() - aDate.getTime();
+                  }
 
-                return (b?.price || 0) - (a?.price || 0);
-              })
-              .map((service) => (
-                <Fragment key={`service-item-${service?.metadata?.id}`}>
-                  <ServiceItem
-                    currency={currency}
-                    onOpen={onModalOpen}
-                    id={service?.metadata?.id}
-                  />
-                </Fragment>
-              ))}
-          </article>
-        )}
+                  return (b?.price || 0) - (a?.price || 0);
+                })
+                .map((service) => (
+                  <Fragment key={`service-item-${service?.metadata?.id}`}>
+                    <ServiceItem
+                      currency={currency}
+                      onOpen={onModalOpen}
+                      id={service?.metadata?.id}
+                    />
+                  </Fragment>
+                ))}
+            </article>
+          )}
       </div>
     );
   },
