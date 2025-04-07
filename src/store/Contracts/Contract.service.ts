@@ -240,6 +240,11 @@ const CONTRACTS_QUERY = gql`
             taxRate
           }
         }
+        invoices {
+          metadata {
+            id
+          }
+        }
         attachments {
           id
           createdAt
