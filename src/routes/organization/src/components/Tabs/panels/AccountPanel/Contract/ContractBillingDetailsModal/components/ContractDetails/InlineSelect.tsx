@@ -23,6 +23,7 @@ export const InlineSelect = <T,>({
   value,
 }: InlineSelectProps<T>): JSX.Element => {
   const [inputValue, setInputValue] = useState('');
+  const [open, setOpen] = useState(false);
 
   const selectedOption = options?.find((option) => option.value === value);
 
@@ -30,8 +31,8 @@ export const InlineSelect = <T,>({
     <div className='w-full'>
       <label className='absolute top-[-999999px]'>{label}</label>
 
-      <Popover modal={false}>
-        <PopoverTrigger className={'flex items-center w-full'}>
+      <Popover open={open} modal={false} onOpenChange={setOpen}>
+        <PopoverTrigger className='flex items-center w-full'>
           <span
             className={cn(
               'underline ml-1 text-grayModern-500 hover:text-grayModern-700 focus:text-grayModern-700',
@@ -51,11 +52,11 @@ export const InlineSelect = <T,>({
             isSearchable={false}
             value={selectedOption}
             inputValue={inputValue}
-            closeMenuOnSelect={true}
             placeholder={placeholder}
             onInputChange={setInputValue}
             onChange={(newValue) => {
               onChange(newValue);
+              setOpen(false);
             }}
             noOptionsMessage={({ inputValue }) => (
               <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>

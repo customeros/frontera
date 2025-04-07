@@ -32,7 +32,7 @@ export const Contracts = observer(() => {
             <ContractModalStatusContextProvider id={c.metadata.id}>
               <ContractModalsContextProvider id={c.metadata.id}>
                 <ContractCard
-                  values={c}
+                  contractId={c.metadata.id}
                   organizationName={organization?.value.name || ''}
                 />
               </ContractModalsContextProvider>

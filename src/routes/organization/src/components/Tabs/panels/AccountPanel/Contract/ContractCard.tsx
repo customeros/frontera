@@ -1,13 +1,13 @@
 import { useMemo, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { differenceInMilliseconds } from 'date-fns';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { Input } from '@ui/form/Input';
-import { DateTimeUtils } from '@utils/date';
 import { useStore } from '@shared/hooks/useStore';
 import { Divider } from '@ui/presentation/Divider/Divider';
-import { Contract, AgentType, ContractStatus } from '@graphql/types';
+import { AgentType, ContractStatus } from '@graphql/types';
 import { Card, CardFooter, CardHeader } from '@ui/presentation/Card/Card';
 import { UpcomingInvoices } from '@organization/components/Tabs/panels/AccountPanel/Contract/UpcomingInvoices/UpcomingInvoices';
 import { useUpdatePanelModalStateContext } from '@organization/components/Tabs/panels/AccountPanel/context/AccountModalsContext';
@@ -23,15 +23,15 @@ import { RenewalARRCard } from './RenewalARR/RenewalARRCard';
 import { EditContractModal } from './ContractBillingDetailsModal/EditContractModal';
 
 interface ContractCardProps {
-  values: Contract;
+  contractId: string;
   organizationName: string;
 }
 
 export const ContractCard = observer(
-  ({ organizationName, values }: ContractCardProps) => {
+  ({ organizationName, contractId }: ContractCardProps) => {
     const store = useStore();
     const contractStore = store.contracts.value.get(
-      values.metadata.id,
+      contractId,
     ) as ContractStore;
 
     const [isExpanded, setIsExpanded] = useState(
@@ -77,12 +77,10 @@ export const ContractCard = observer(
     }, []);
 
     const isJustCreated =
-      DateTimeUtils.differenceInMins(
+      differenceInMilliseconds(
         contract?.metadata.lastUpdated,
         contract?.metadata.created,
       ) === 0;
-    const noInvoicesYet =
-      contract.upcomingInvoices.length === 0 || contract.invoices.length === 0;
 
     const cashFlowAgent = store.agents.getFirstAgentByType(
       AgentType.CashflowGuardian,
@@ -167,13 +165,12 @@ export const ContractCard = observer(
             data={contract?.contractLineItems}
           />
           {!isJustCreated &&
-            noInvoicesYet &&
             !contractEnded &&
             (cashflowAgentStatus || invoicingStatus) && (
               <>
                 <Divider className='my-3' />
                 <UpcomingInvoices
-                  data={contract}
+                  contractId={contractId}
                   cashflowGuardianAgent={cashFlowAgent?.value ?? null}
                   onOpenBillingDetailsModal={handleOpenBillingDetails}
                   onOpenServiceLineItemsModal={handleOpenContractDetails}

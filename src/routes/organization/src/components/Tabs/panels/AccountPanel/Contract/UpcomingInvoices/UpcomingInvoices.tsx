@@ -1,24 +1,24 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMemo, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { useDeepCompareEffect } from 'rooks';
 
 import { Play } from '@ui/media/icons/Play';
 import { Plus } from '@ui/media/icons/Plus';
 import { Edit03 } from '@ui/media/icons/Edit03';
 import { Button } from '@ui/form/Button/Button';
+import { useStore } from '@shared/hooks/useStore';
 import { RefreshCw05 } from '@ui/media/icons/RefreshCw05';
+import { Agent, Invoice, ContractStatus } from '@graphql/types';
 import { ArrowNarrowRight } from '@ui/media/icons/ArrowNarrowRight';
-import { Agent, Invoice, Contract, ContractStatus } from '@graphql/types';
 import { UpcomingInvoice } from '@organization/components/Tabs/panels/AccountPanel/Contract/UpcomingInvoices/UpcomingInvoice.tsx';
 import {
   ContractStatusModalMode,
   useContractModalStatusContext,
 } from '@organization/components/Tabs/panels/AccountPanel/context/ContractStatusModalsContext';
 
-interface ContractCardProps {
-  data: Contract;
+interface UpcomingInvoicesProps {
+  contractId: string;
   cashflowGuardianAgent: Agent | null;
   onOpenBillingDetailsModal: () => void;
   onOpenServiceLineItemsModal: () => void;
@@ -26,34 +26,37 @@ interface ContractCardProps {
 
 export const UpcomingInvoices = observer(
   ({
-    data,
     cashflowGuardianAgent,
     onOpenBillingDetailsModal,
     onOpenServiceLineItemsModal,
-  }: ContractCardProps) => {
-    const [isPaused, setIsPaused] = useState(false);
+    contractId,
+  }: UpcomingInvoicesProps) => {
+    const store = useStore();
     const navigate = useNavigate();
-
+    const [isPaused, setIsPaused] = useState(false);
+    const contract = store.contracts.value.get(contractId);
     const { onStatusModalOpen } = useContractModalStatusContext();
 
-    const getIsPaused = (): boolean => {
+    if (!contract) return null;
+
+    const getIsPaused = useMemo((): boolean => {
       if (
         [
           ContractStatus.OutOfContract,
           ContractStatus.Draft,
           ContractStatus.Ended,
-        ].includes(data.contractStatus)
+        ].includes(contract.value?.contractStatus)
       ) {
         return true;
       }
 
-      if (!data.billingEnabled) {
+      if (!contract.value?.billingEnabled) {
         return true;
       }
 
       const hasAllRequiredFields = [
-        data?.billingDetails?.billingEmail,
-        data?.billingDetails?.organizationLegalName,
+        contract.value?.billingDetails?.billingEmail,
+        contract.value?.billingDetails?.organizationLegalName,
       ].every((field) => !!field);
 
       if (!hasAllRequiredFields) {
@@ -62,19 +65,21 @@ export const UpcomingInvoices = observer(
 
       if (!cashflowGuardianAgent?.isActive) return true;
 
-      return !data?.contractLineItems?.length;
-    };
+      return !contract.value?.contractLineItems?.length;
+    }, [
+      contract.value.billingEnabled,
+      cashflowGuardianAgent,
+      contract.value?.contractLineItems,
+    ]);
 
-    useDeepCompareEffect(() => {
-      const paused = getIsPaused();
-
-      setIsPaused(paused);
-    }, [data]);
+    useEffect(() => {
+      setIsPaused(getIsPaused);
+    }, [getIsPaused]);
 
     const getActionButton = () => {
       if (
-        !data?.billingDetails?.billingEmail &&
-        !data?.billingDetails?.organizationLegalName
+        !contract.value?.billingDetails?.billingEmail &&
+        !contract.value?.billingDetails?.organizationLegalName
       ) {
         return (
           <Button
@@ -89,7 +94,7 @@ export const UpcomingInvoices = observer(
         );
       }
 
-      if (!data?.billingDetails?.billingEmail) {
+      if (!contract.value?.billingDetails?.billingEmail) {
         return (
           <Button
             size='xxs'
@@ -103,7 +108,7 @@ export const UpcomingInvoices = observer(
         );
       }
 
-      if (!data?.billingEnabled) {
+      if (!contract.value?.billingEnabled) {
         return (
           <Button
             size='xxs'
@@ -116,7 +121,7 @@ export const UpcomingInvoices = observer(
         );
       }
 
-      if (!data?.contractLineItems?.length) {
+      if (!contract.value?.contractLineItems?.length) {
         return (
           <Button
             size='xxs'
@@ -125,12 +130,12 @@ export const UpcomingInvoices = observer(
             onClick={onOpenServiceLineItemsModal}
             leftIcon={<Plus className='size-3' />}
           >
-            Add a service
+            Add a product
           </Button>
         );
       }
 
-      if (data.contractStatus === ContractStatus.OutOfContract) {
+      if (contract.value?.contractStatus === ContractStatus.OutOfContract) {
         return (
           <Button
             size='xxs'
@@ -144,7 +149,7 @@ export const UpcomingInvoices = observer(
         );
       }
 
-      if (data.contractStatus === ContractStatus.Draft) {
+      if (contract.value?.contractStatus === ContractStatus.Draft) {
         return (
           <Button
             size='xxs'
@@ -187,13 +192,17 @@ export const UpcomingInvoices = observer(
           )}
         </div>
         <div>
-          {data?.upcomingInvoices.map((invoice: Invoice) => (
-            <UpcomingInvoice
-              id={invoice?.invoiceNumber}
-              key={invoice?.invoiceNumber}
-              contractId={data?.metadata?.id}
-            />
-          ))}
+          {contract.value?.upcomingInvoices.length > 0 ? (
+            contract.value?.upcomingInvoices.map((invoice: Invoice) => (
+              <UpcomingInvoice
+                contractId={contractId}
+                id={invoice?.invoiceNumber}
+                key={invoice?.invoiceNumber}
+              />
+            ))
+          ) : (
+            <p className='text-sm text-grayModern-500'>No invoices yet</p>
+          )}
         </div>
       </article>
     );

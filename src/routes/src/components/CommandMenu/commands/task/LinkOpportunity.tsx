@@ -35,8 +35,8 @@ export const LinkOpportunity = observer(() => {
     <Command shouldFilter={false} label='Assign task...'>
       <CommandInput
         label={label}
-        placeholder='Asign to...'
         value={usecase.searchTerm}
+        placeholder='Assign or create new...'
         onValueChange={usecase.setSearchTerm}
         onKeyDownCapture={(e) => {
           if (e.key === ' ') {

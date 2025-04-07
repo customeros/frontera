@@ -40,7 +40,7 @@ export const ChooseOpportunityOrganization = observer(() => {
               <Avatar
                 size='xxs'
                 className='mr-2'
-                name={org.value.name}
+                name={org.value?.name}
                 variant='outlineSquare'
                 src={org.value.logoUrl ?? ''}
               />

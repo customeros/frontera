@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { toZonedTime } from 'date-fns-tz';
 import { observer } from 'mobx-react-lite';
+import { differenceInMilliseconds } from 'date-fns';
 
 import { DateTimeUtils } from '@utils/date';
 import { Button } from '@ui/form/Button/Button';
@@ -78,7 +79,7 @@ export const ContractSubtitle = observer(({ id }: { id: string }) => {
 
   const renewalPeriod = getCommittedPeriodLabel(data?.committedPeriodInMonths);
   const isJustCreated =
-    DateTimeUtils.differenceInMins(
+    differenceInMilliseconds(
       data.metadata.lastUpdated,
       data.metadata.created,
     ) === 0;
