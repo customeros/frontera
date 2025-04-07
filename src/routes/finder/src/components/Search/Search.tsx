@@ -168,7 +168,7 @@ export const Search = observer(() => {
           }),
       },
       {
-        label: <span>Add one or more</span>,
+        label: <span>Create a task</span>,
       },
     ])
     .otherwise(() => [false, {}, { label: null }]);
