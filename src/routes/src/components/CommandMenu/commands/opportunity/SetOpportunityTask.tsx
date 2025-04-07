@@ -43,7 +43,7 @@ export const SetOpportunityTask = observer(() => {
       <CommandInput
         label={label}
         value={usecase?.taskName}
-        placeholder='Set next steps'
+        placeholder='Link a task'
         onValueChange={usecase?.setTaskName}
       />
 

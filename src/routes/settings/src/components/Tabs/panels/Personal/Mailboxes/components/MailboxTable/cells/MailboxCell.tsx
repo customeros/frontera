@@ -73,7 +73,7 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
               />
             </Tooltip>
           )}
-          <Tooltip label='Unlink this account'>
+          <Tooltip label='Disconnect this account'>
             <div>
               <IconButton
                 size='xxs'

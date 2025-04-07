@@ -70,8 +70,8 @@ export const EmptyState = observer(
                   agent.
                 </p>
                 <p className='mt-4'>
-                  To send invoices, add products to this company’s contract and
-                  complete their billing details.
+                  To send invoices, you need a live contract with products added
+                  to it.
                 </p>
               </>
             ) : (

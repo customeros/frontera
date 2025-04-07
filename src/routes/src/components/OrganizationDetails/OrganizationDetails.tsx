@@ -166,7 +166,7 @@ export const OrganizationDetails = observer(
               <Tooltip align='start' label='Number of employees'>
                 <p className='text-sm flex items-center cursor-default '>
                   <Icon name='users-02' className='text-grayModern-500 mr-3' />
-                  {organization.value!.employees}{' '}
+                  {organization.value!.employees.toLocaleString()}{' '}
                   {organization.value!.employees === 1
                     ? 'employee'
                     : 'employees'}
