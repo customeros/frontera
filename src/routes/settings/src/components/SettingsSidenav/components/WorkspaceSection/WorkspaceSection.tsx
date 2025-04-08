@@ -26,6 +26,11 @@ export const WorkspaceSection = ({
           onClick={handleItemClick('general')}
         />
         <SidenavItem
+          label='Team'
+          isActive={checkIsActive('team')}
+          onClick={handleItemClick('team')}
+        />
+        <SidenavItem
           label='Tags'
           isActive={checkIsActive('tags')}
           onClick={handleItemClick('tags')}
@@ -35,7 +40,6 @@ export const WorkspaceSection = ({
           isActive={checkIsActive('api')}
           onClick={handleItemClick('api')}
         />
-
         <SidenavItem
           label='Products'
           dataTest='sideNav-settings-products'
