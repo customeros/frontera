@@ -2,7 +2,7 @@
 import { Channel } from 'phoenix';
 import { runInAction, ObservableMap } from 'mobx';
 
-type PhoenixStoreEvent =
+export type PhoenixStoreEvent =
   | { key: any; value: any; source: string; type: 'store:set' }
   | { key: any; source: string; type: 'store:delete' }
   | { source: string; type: 'store:clear' }
@@ -10,7 +10,7 @@ type PhoenixStoreEvent =
 
 export class PhoenixMap<K = any, V = any> extends ObservableMap<K, V> {
   private channel: Channel;
-  private readonly clientId: string;
+  public readonly clientId: string;
   private readonly handleRefs = {
     'store:set': 0,
     'store:clear': 2,
@@ -57,9 +57,17 @@ export class PhoenixMap<K = any, V = any> extends ObservableMap<K, V> {
   private getVersion(value: V): number | undefined {
     const field = this.options?.versionBy;
 
-    return field && typeof value === 'object' && value !== null
-      ? (value[field] as unknown as number)
-      : undefined;
+    if (!field || typeof value !== 'object' || value === null) {
+      return undefined;
+    }
+
+    const raw = (value as any)[field];
+
+    if (typeof raw === 'string') {
+      return new Date(raw).getTime();
+    }
+
+    return typeof raw === 'number' ? raw : undefined;
   }
 
   override set(key: K, value: V): this {
@@ -126,6 +134,9 @@ export class PhoenixMap<K = any, V = any> extends ObservableMap<K, V> {
   }
 
   private init() {
+    // if (this.channel.state !== 'joined') {
+    //   this.channel?.join();
+    // }
     this.handleRefs['store:set'] = this.channel.on(
       'store:set',
       ({

@@ -15,6 +15,8 @@ import { AgentType, CapabilityType } from '@graphql/types';
 
 import { SyncInvoiceToAccountingUsecase } from './sync-invoice-to-accounting.usecase';
 
+import 'fake-indexeddb/auto';
+
 class CommonService {
   public requestQuickbooksAccess = vi.fn();
   public revokeQuickbooksAccess = vi.fn();
@@ -53,6 +55,8 @@ const agent = Agent.default({
       config: JSON.stringify({
         quickbooks: { value: false, error: '' },
         accountingMethodAccrual: { value: false, error: '' },
+        arIncomeAccountName: { value: 'arAccountName', error: '' },
+        paymentIncomeAccountName: { value: 'paymentAccountName', error: '' },
       }),
       errors: '',
     },
@@ -94,6 +98,8 @@ describe('Sync invoice to accounting usecase', () => {
     expect(usecase.isRevokeOpen).toBe(false);
     expect(usecase.isRevoking).toBe(false);
     expect(usecase.accountingMethod).toBe('cash');
+    expect(usecase.arIncomeAccountName).toBe('arAccountName');
+    expect(usecase.paymentIncomeAccountName).toBe('paymentAccountName');
   });
 
   // 2. Toggle Enabled Functionality
