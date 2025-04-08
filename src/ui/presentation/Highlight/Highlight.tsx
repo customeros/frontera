@@ -9,10 +9,13 @@ interface HighlightProps {
 export const Highlight = ({ term, className, children }: HighlightProps) => {
   if (typeof children !== 'string') return <>{children}</>;
 
+  // Strip spaces from the term
+  const strippedTerm = term.replace(/\s+/g, '');
+
   if (
-    !term ||
-    term.length === 0 ||
-    !children.toLowerCase().includes(term.toLowerCase())
+    !strippedTerm ||
+    strippedTerm.length === 0 ||
+    !children.toLowerCase().includes(strippedTerm.toLowerCase())
   ) {
     return <>{children}</>;
   }
@@ -21,7 +24,7 @@ export const Highlight = ({ term, className, children }: HighlightProps) => {
   const escapeRegex = (str: string) =>
     str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-  const safeTerm = escapeRegex(term);
+  const safeTerm = escapeRegex(strippedTerm);
   const regex = new RegExp(`(${safeTerm})`, 'gi');
   const parts = children.split(regex);
 
