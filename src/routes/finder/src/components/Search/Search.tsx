@@ -284,22 +284,25 @@ export const Search = observer(() => {
       )}
 
       {tableViewDef?.value.tableType === TableViewType.Invoices && (
-        <IconButton
-          size='xs'
-          variant='ghost'
-          icon={<Icon name='download-02' />}
-          aria-label='Download csv invoices'
-          title={
+        <Tooltip
+          label={
             tableViewDef?.value.tableId === TableIdType.UpcomingInvoices
               ? 'Download CSV of future invoices'
               : 'Download CSV of past invoices'
           }
-          onClick={() => {
-            tableViewDef?.value.tableId === TableIdType.UpcomingInvoices
-              ? store.files.downloadUpcomingInvoice()
-              : store.files.downloadPastInvoice();
-          }}
-        />
+        >
+          <IconButton
+            size='xs'
+            variant='ghost'
+            icon={<Icon name='download-02' />}
+            aria-label='Download csv invoices'
+            onClick={() => {
+              tableViewDef?.value.tableId === TableIdType.UpcomingInvoices
+                ? store.files.downloadUpcomingInvoice()
+                : store.files.downloadPastInvoice();
+            }}
+          />
+        </Tooltip>
       )}
 
       {tableViewDef?.value.tableId !== TableIdType.FlowActions && (
