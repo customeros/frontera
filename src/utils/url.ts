@@ -6,7 +6,7 @@
 export function validateDomain(domain: string): boolean {
   // Regular expression to match valid URL domain names
   const domainRegex =
-    /^(?!-)(?!.*\.-)(?!.*-\.)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/;
+    /^(?!-)(?!.*\.-)(?!.*-\.)[a-zA-Z0-9- ]+(\.[a-zA-Z0-9- ]+)*$/;
 
   // Test if the domain matches the regex
   return domainRegex.test(domain);
