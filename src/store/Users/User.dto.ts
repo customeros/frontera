@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 import { Entity } from '@store/record';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { GetUsersQuery } from '@infra/repositories/core/user/queries/getUsers.generated';
 
 import { UserUpdateInput } from '@shared/types/__generated__/graphql.types';
@@ -20,10 +20,12 @@ export class User extends Entity<UserDatum> {
     return this.value.id;
   }
 
+  @computed
   get name() {
-    return this.value.name ?? `${this.value.firstName} ${this.value.lastName}`;
+    return this.value.name || `${this.value.firstName} ${this.value.lastName}`;
   }
 
+  @computed
   get profilePhotoUrl() {
     return this.value.profilePhotoUrl;
   }
