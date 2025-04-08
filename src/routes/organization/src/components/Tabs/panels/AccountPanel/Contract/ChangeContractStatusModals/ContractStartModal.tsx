@@ -27,10 +27,9 @@ export const ContractStartModal = ({
 }: ContractStartModalProps) => {
   const store = useStore();
   const contractStore = store.contracts.value.get(contractId) as ContractStore;
-  const nextInvoice: Invoice | undefined =
-    contractStore?.value?.upcomingInvoices?.find(
-      (invoice: Invoice) => invoice.issued === nextInvoice,
-    );
+  const nextInvoice = contractStore?.value?.upcomingInvoices?.find(
+    (invoice: Invoice) => invoice.issued === true,
+  );
 
   const [serviceStartedData, setServiceStarted] = useState<
     string | Date | null | undefined
