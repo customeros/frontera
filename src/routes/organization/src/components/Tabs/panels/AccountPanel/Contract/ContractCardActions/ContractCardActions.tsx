@@ -41,7 +41,9 @@ export const ContractCardActions = ({
         text = 'End contract...';
         break;
       case ContractStatus.Draft:
-
+        icon = <Icon name='play' />;
+        text = 'Make live';
+        break;
       case ContractStatus.OutOfContract:
         icon = (
           <Icon
@@ -74,6 +76,8 @@ export const ContractCardActions = ({
         onStatusModalOpen(ContractStatusModalMode.End);
         break;
       case ContractStatus.Draft:
+        onStatusModalOpen(ContractStatusModalMode.Start);
+        break;
 
       case ContractStatus.OutOfContract:
         onStatusModalOpen(ContractStatusModalMode.Renew);
