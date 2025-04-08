@@ -50,13 +50,14 @@ export class EditOrganizationTagUsecase {
   @computed
   get selectedTags() {
     return (
-      this.organization?.value?.tags.map(
-        (tag) =>
-          ({
-            label: tag.name,
-            value: tag?.metadata.id,
-          } as SelectOption),
-      ) ?? []
+      this.organization?.value?.tags.map((tag) => {
+        const matchedTag = this.root.tags.getById(tag.metadata.id);
+
+        return {
+          label: matchedTag?.value.name ?? tag.name,
+          value: tag.metadata.id,
+        } as SelectOption;
+      }) ?? []
     );
   }
 
