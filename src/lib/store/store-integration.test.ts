@@ -5,7 +5,7 @@ import { autorun, runInAction } from 'mobx';
 import { vi, it, Mock, expect, describe, beforeEach } from 'vitest';
 
 import { Store } from './store';
-import { PhoenixMap } from './phoenix-map';
+import { PhoenixMap } from '../map/phoenix-map';
 
 const createChannelMock = (handlers: Record<string, Function>) => {
   return {

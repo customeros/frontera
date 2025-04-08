@@ -1,4 +1,4 @@
-import { CacheOption, normalizeCacheFactory } from './util';
+import { CacheOption, normalizeCacheFactory } from '../util';
 
 interface StoreOptions<T> {
   cache?: CacheOption<T>;
@@ -29,14 +29,16 @@ export class Store<T> {
     }
   }
 
-  set(key: string | number, value: T) {
-    let res;
+  get size() {
+    return this.cache.size;
+  }
 
+  set(key: string | number, value: T) {
     this.mutate(() => {
-      res = this.cache.set(key, value);
+      this.cache.set(key, value);
     });
 
-    return res;
+    return this.cache;
   }
 
   get(key: string | number) {
@@ -48,6 +50,20 @@ export class Store<T> {
 
     this.mutate(() => {
       res = this.cache.delete(key);
+    });
+
+    return res;
+  }
+
+  has(key: string | number) {
+    return this.cache.has(key);
+  }
+
+  clear() {
+    let res;
+
+    this.mutate(() => {
+      res = this.cache.clear();
     });
 
     return res;

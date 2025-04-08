@@ -38,7 +38,8 @@
       "@invoices/*": ["src/routes/invoices/src/*"],
       "@opportunities/*": ["src/routes/prospects/src/*"],
       "@domain/*": ["src/domain/*"],
-      "@infra/*": ["src/infra/*"]
+      "@infra/*": ["src/infra/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": ["src"],
