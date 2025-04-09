@@ -214,6 +214,7 @@ export const CustomFieldModal = observer(
                         id='type'
                         className='mt-1'
                         autoFocus={false}
+                        isSearchable={true}
                         defaultValue={options[0]}
                         onKeyDown={(e) => e.stopPropagation()}
                         components={{ Option, ValueContainer }}
