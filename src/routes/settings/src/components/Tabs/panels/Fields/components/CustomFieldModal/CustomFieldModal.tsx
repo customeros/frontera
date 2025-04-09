@@ -264,7 +264,7 @@ export const CustomFieldModal = observer(
                   />
                   {isError && (
                     <span className='text-error-500 text-sm ml-2'>
-                      Huston, we have a blank...
+                      Houston, we have a blank...
                     </span>
                   )}
                 </div>
