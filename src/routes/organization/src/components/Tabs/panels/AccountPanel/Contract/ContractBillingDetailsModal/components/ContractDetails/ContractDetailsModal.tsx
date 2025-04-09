@@ -11,6 +11,7 @@ import { cn } from '@ui/utils/cn';
 import { Input } from '@ui/form/Input';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
+import { useModKey } from '@shared/hooks/useModKey';
 import { ModalFooter, ModalHeader } from '@ui/overlay/Modal/Modal';
 import { calculateMaxArr } from '@organization/components/Tabs/panels/AccountPanel/utils';
 import {
@@ -293,6 +294,8 @@ export const ContractDetailsModal = observer(
       }
     }, [canAllowPayWithBankTransfer]);
 
+    useModKey('Enter', handleApplyChanges);
+
     return (
       <>
         <motion.div
@@ -320,6 +323,11 @@ export const ContractDetailsModal = observer(
               placeholder='Add contract name'
               onFocus={(e) => e.target.select()}
               value={contractStore?.tempValue?.contractName}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  handleCloseModal();
+                }
+              }}
               className='font-semibold text-base no-border-bottom hover:border-none focus:border-none max-h-6 min-h-0 w-full overflow-hidden overflow-ellipsis truncate'
               onChange={(e) =>
                 contractStore?.updateTemp((prev) => ({

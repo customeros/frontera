@@ -77,6 +77,19 @@ export const UpcomingInvoices = observer(
     }, [getIsPaused]);
 
     const getActionButton = () => {
+      if (!contract.value?.billingEnabled) {
+        return (
+          <Button
+            size='xxs'
+            colorScheme='grayModern'
+            className='ml-2 font-normal rounded'
+            onClick={onOpenServiceLineItemsModal}
+          >
+            Enable invoicing
+          </Button>
+        );
+      }
+
       if (
         !contract.value?.billingDetails?.billingEmail &&
         !contract.value?.billingDetails?.organizationLegalName
@@ -104,19 +117,6 @@ export const UpcomingInvoices = observer(
             leftIcon={<Edit03 className='size-3' />}
           >
             Add email
-          </Button>
-        );
-      }
-
-      if (!contract.value?.billingEnabled) {
-        return (
-          <Button
-            size='xxs'
-            colorScheme='grayModern'
-            className='ml-2 font-normal rounded'
-            onClick={onOpenServiceLineItemsModal}
-          >
-            Enable invoicing
           </Button>
         );
       }
