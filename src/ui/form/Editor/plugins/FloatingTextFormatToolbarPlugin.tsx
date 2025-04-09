@@ -189,7 +189,7 @@ export function FloatingMenu({ editor }: FloatingMenuComponentProps) {
   return (
     <div
       ref={menuRef}
-      className='flex items-center justify-between bg-grayModern-700 text-grayModern-25 border-[1px] border-grayModern-200 rounded-md p-1 gap-1 '
+      className='flex items-center justify-between bg-grayModern-700 text-grayModern-25 border-[1px] border-grayModern-200 rounded-md p-1 gap-1'
     >
       <>
         <Tooltip label='Bold: ⌘ + B'>
