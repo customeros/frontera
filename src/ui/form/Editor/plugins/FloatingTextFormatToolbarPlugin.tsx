@@ -440,6 +440,7 @@ export function FloatingMenuPlugin({
       aria-hidden={!show}
       style={{
         position: 'absolute',
+        zIndex: 9999,
         top: coords?.y,
         left: coords?.x,
         visibility: show ? 'visible' : 'hidden',
