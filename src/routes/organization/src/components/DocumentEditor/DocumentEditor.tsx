@@ -2,11 +2,12 @@ import { useMemo, useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
-import { DocumentRenameModal } from '@domain/components/document';
 import { DocumentDeleteDialog } from '@domain/components/document/document-delete-dialog';
 import { DocumentIconChangeUsecase } from '@domain/usecases/document/document-icon-change.usecase';
+import { DocumentRenameInlineUsecase } from '@domain/usecases/document/document-rename-inline.usecase';
 
 import { cn } from '@ui/utils/cn';
+import { Input } from '@ui/form/Input';
 import { Avatar } from '@ui/media/Avatar';
 import { Icon, IconName } from '@ui/media/Icon';
 import { Editor } from '@ui/form/Editor/Editor';
@@ -16,7 +17,6 @@ import { useStore } from '@shared/hooks/useStore';
 import { Divider } from '@ui/presentation/Divider';
 import { useChannel } from '@shared/hooks/useChannel';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
-import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 import {
   ScrollAreaRoot,
@@ -30,7 +30,6 @@ export const DocumentEditor = observer(() => {
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
   const [showIconPicker, setShowIconPicker] = useState(false);
-  const [openRename, setOpenRename] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const viewMode = params.get('viewMode') ?? 'default';
 
@@ -60,6 +59,11 @@ export const DocumentEditor = observer(() => {
     [store.documents],
   );
 
+  const renameUsecase = useMemo(
+    () => new DocumentRenameInlineUsecase(store.documents),
+    [store.documents],
+  );
+
   const handleViewModeChange = () => {
     setParams((p) => {
       if (viewMode === 'default') {
@@ -86,13 +90,14 @@ export const DocumentEditor = observer(() => {
 
   useEffect(() => {
     usecase?.init(docId);
+    renameUsecase?.init(docId);
   }, [docId, doc]);
 
   return (
     <>
       <ScrollAreaRoot>
         <ScrollAreaViewport>
-          <div className={cn('relative w-full h-full bg-white animate-fadeIn')}>
+          <div className='relative w-full h-full bg-white animate-fadeIn'>
             <div className='relative bg-white h-full mx-auto max-w-[680px] pt-2'>
               <div className='flex items-center w-full justify-between mb-3'>
                 <Popover open={showIconPicker} onOpenChange={setShowIconPicker}>
@@ -126,39 +131,13 @@ export const DocumentEditor = observer(() => {
                 </Popover>
 
                 <div className='flex items-center gap-1'>
-                  <Menu>
-                    <MenuButton asChild>
-                      <IconButton
-                        size='xs'
-                        variant='ghost'
-                        aria-label='more actions'
-                        icon={<Icon name='dots-vertical' />}
-                      />
-                    </MenuButton>
-                    <MenuList align='start'>
-                      <MenuItem
-                        className='group/rename'
-                        onClick={() => setOpenRename(true)}
-                      >
-                        <Icon
-                          name='edit-03'
-                          className='text-grayModern-500 group-hover/rename:text-grayModern-700'
-                        />{' '}
-                        Rename
-                      </MenuItem>
-                      <MenuItem
-                        className='group/archive'
-                        onClick={() => setOpenDelete(true)}
-                      >
-                        <Icon
-                          name='archive'
-                          className='text-grayModern-500 group-hover/archive:text-grayModern-700'
-                        />{' '}
-                        Archive
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-
+                  <IconButton
+                    size='xs'
+                    variant='ghost'
+                    aria-label='archive document'
+                    icon={<Icon name='archive' />}
+                    onClick={() => setOpenDelete(true)}
+                  />
                   <IconButton
                     size='xs'
                     variant='ghost'
@@ -172,7 +151,6 @@ export const DocumentEditor = observer(() => {
                       />
                     }
                   />
-
                   <IconButton
                     size='xs'
                     variant='ghost'
@@ -184,9 +162,22 @@ export const DocumentEditor = observer(() => {
               </div>
 
               <div className='w-full flex flex-col justify-between'>
-                <h1 className='text-lg font-medium line-clamp-2'>
-                  {doc?.value.name}
-                </h1>
+                <Input
+                  size='lg'
+                  variant='unstyled'
+                  spellCheck={false}
+                  className='font-medium'
+                  value={doc?.value.name}
+                  onChange={(e) =>
+                    renameUsecase.setDocumentName(e.target.value)
+                  }
+                  onBlur={(e) => {
+                    if (e.target.value === '') {
+                      renameUsecase.setDocumentName('New document');
+                    }
+                    renameUsecase.execute();
+                  }}
+                />
 
                 <div className='flex items-center gap-2'>
                   <Tooltip
@@ -238,12 +229,6 @@ export const DocumentEditor = observer(() => {
           <ScrollAreaThumb />
         </ScrollAreaScrollbar>
       </ScrollAreaRoot>
-
-      <DocumentRenameModal
-        docId={docId}
-        open={openRename}
-        onOpenChange={setOpenRename}
-      />
 
       <DocumentDeleteDialog
         docId={docId}

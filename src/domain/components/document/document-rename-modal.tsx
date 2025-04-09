@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  ModalPortal,
   ModalContent,
   ModalOverlay,
   ModalCloseButton,
@@ -40,40 +41,42 @@ export const DocumentRenameModal = observer(
 
     return (
       <Modal open={open} onOpenChange={onOpenChange}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalHeader className='font-medium'>Rename document</ModalHeader>
-          <ModalBody>
-            <Input
-              size='xs'
-              placeholder='Document name'
-              value={usecase?.renameValue}
-              invalid={!!usecase?.renameValidation}
-              onChange={(e) => usecase?.setRenameValue(e.target.value)}
-            />
-            {!!usecase?.renameValidation && (
-              <p className='text-xs text-error-500 mt-0.5'>
-                {usecase?.renameValidation}
-              </p>
-            )}
-          </ModalBody>
-          <ModalFooter className='flex gap-3 justify-between'>
-            <Button className='flex-1' onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
-            <Button
-              className='flex-1'
-              colorScheme='primary'
-              isDisabled={!!usecase?.renameValidation}
-              onClick={() =>
-                usecase?.execute({ onSuccess: () => onOpenChange(false) })
-              }
-            >
-              Rename
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+        <ModalPortal>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalHeader className='font-medium'>Rename document</ModalHeader>
+            <ModalBody>
+              <Input
+                size='xs'
+                placeholder='Document name'
+                value={usecase?.renameValue}
+                invalid={!!usecase?.renameValidation}
+                onChange={(e) => usecase?.setRenameValue(e.target.value)}
+              />
+              {!!usecase?.renameValidation && (
+                <p className='text-xs text-error-500 mt-0.5'>
+                  {usecase?.renameValidation}
+                </p>
+              )}
+            </ModalBody>
+            <ModalFooter className='flex gap-3 justify-between'>
+              <Button className='flex-1' onClick={() => onOpenChange(false)}>
+                Cancel
+              </Button>
+              <Button
+                className='flex-1'
+                colorScheme='primary'
+                isDisabled={!!usecase?.renameValidation}
+                onClick={() =>
+                  usecase?.execute({ onSuccess: () => onOpenChange(false) })
+                }
+              >
+                Rename
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </ModalPortal>
       </Modal>
     );
   },

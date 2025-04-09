@@ -72,6 +72,12 @@ export const HtmlContentRenderer = ({
         if (domNode.attribs) {
           newAttribs = Object.keys(domNode.attribs).reduce(
             (result: Record<string, string>, key) => {
+              if (key === 'class') {
+                result['className'] = domNode.attribs[key];
+
+                return result;
+              }
+
               if (key !== 'style') {
                 result[key] = domNode.attribs[key];
               }
