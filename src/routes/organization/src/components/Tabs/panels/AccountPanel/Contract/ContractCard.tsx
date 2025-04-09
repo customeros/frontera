@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { differenceInMilliseconds } from 'date-fns';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
-import { Input } from '@ui/form/Input';
 import { useStore } from '@shared/hooks/useStore';
 import { Divider } from '@ui/presentation/Divider/Divider';
 import { AgentType, ContractStatus } from '@graphql/types';
@@ -96,31 +95,16 @@ export const ContractCard = observer(
           className='p-0 w-full flex flex-col'
           onClick={() => (!isExpanded ? setIsExpanded(true) : null)}
         >
-          <article
+          <div
             data-test='contract-card-header'
             className='flex justify-between flex-1 w-full'
           >
-            <Input
-              name='contractName'
-              value={contract?.contractName}
-              placeholder='Add contract name'
-              onFocus={(e) => e.target.select()}
-              onBlur={(e) => {
-                contractStore?.updateContractName(e.target.value);
-              }}
-              className='font-medium hover:border-none focus:border-none max-h-6 min-h-0 w-full overflow-hidden overflow-ellipsis border-0'
-              onChange={(e) => {
-                contractStore?.update(
-                  (prev) => ({
-                    ...prev,
-                    contractName: e.target.value,
-                  }),
-                  {
-                    mutate: false,
-                  },
-                );
-              }}
-            />
+            <p
+              className='font-medium text-[16px]'
+              onClick={handleOpenContractDetails}
+            >
+              {contract?.contractName}
+            </p>
 
             <ContractCardActions
               status={contract?.contractStatus}
@@ -133,7 +117,7 @@ export const ContractCard = observer(
                 'Unnamed'
               }
             />
-          </article>
+          </div>
 
           <div
             tabIndex={1}

@@ -7,6 +7,8 @@ import {
   PropsWithChildren,
 } from 'react';
 
+import { useKey } from 'rooks';
+
 import { useDisclosure } from '@ui/utils/hooks/useDisclosure';
 import { useTimelineEventPreviewMethodsContext } from '@organization/components/Timeline/shared/TimelineEventPreview/context/TimelineEventPreviewContext.tsx';
 
@@ -52,6 +54,8 @@ export const ContractModalsContextProvider = ({
   } = useDisclosure({
     id: `edit-contract-modal-${id}`,
   });
+
+  useKey('Escape', onEditModalClose);
 
   const handleOpen = () => {
     onEditModalOpen();
