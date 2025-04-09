@@ -6,6 +6,7 @@ import { RootStore } from '@store/root.ts';
 import { Transport } from '@infra/transport.ts';
 import { GroupOperation } from '@store/types.ts';
 import { when, runInAction, makeAutoObservable } from 'mobx';
+import { UtilService } from '@domain/services/util/util.service';
 import { ContractService } from '@store/Contracts/Contract.service.ts';
 import { GroupStore, makeAutoSyncableGroup } from '@store/group-store.ts';
 
@@ -28,9 +29,11 @@ export class ContractsStore implements GroupStore<Contract> {
   load = makeAutoSyncableGroup.load<Contract>();
   totalElements = 0;
   private service: ContractService;
+  private utilService: UtilService;
 
   constructor(public root: RootStore, public transport: Transport) {
     this.service = new ContractService(transport);
+    this.utilService = new UtilService();
     makeAutoSyncableGroup(this, {
       channelName: 'Contracts',
       getItemId: (item: Contract) => item?.metadata?.id,
@@ -207,6 +210,15 @@ export class ContractsStore implements GroupStore<Contract> {
   };
 
   delete = async (contractId: string, organizationId: string) => {
+    const contract = this.value.get(contractId);
+
+    if (!contract) return;
+
+    if (contract.value.upcomingInvoices.length > 0) {
+      this.utilService.toastError(`Contracts with invoices can’t be archived`);
+
+      return;
+    }
     const record = this.root.organizations.getById(organizationId);
 
     record?.draft();
