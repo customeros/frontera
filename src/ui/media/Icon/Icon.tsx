@@ -260,7 +260,11 @@ export type IconName =
   | 'circle'
   | 'expand-01'
   | 'collapse-01'
-  | 'download-02';
+  | 'download-02'
+  | 'layout-right-drawer-panel'
+  | 'chevron-expand'
+  | 'chevron-collapse'
+  | 'edit-05';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

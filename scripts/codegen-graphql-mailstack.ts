@@ -14,6 +14,8 @@ const config: CodegenConfig = {
       [`${process.env.MAILSTACK_API_PATH}/query`]: {
         headers: {
           'X-CUSTOMER-OS-API-KEY': process.env.MAILSTACK_API_KEY as string,
+          'Content-Type': 'application/json',
+          TENANT: 'test',
         },
       },
     },

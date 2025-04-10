@@ -35,7 +35,6 @@ import { FlowParticipantsStore } from './FlowParticipants/FlowParticipants.store
 import { ContractLineItemsStore } from './ContractLineItems/ContractLineItems.store';
 import { FlowEmailVariablesStore } from './FlowEmailVariables/FlowEmailVariables.store';
 import { ExternalSystemInstancesStore } from './ExternalSystemInstances/ExternalSystemInstances.store';
-
 const RETRY_DELAY = 1000;
 const MAX_BOOTSTRAP_RETRIES = 3;
 
@@ -58,7 +57,9 @@ export class RootStore {
   settings: SettingsStore;
   session: SessionStore;
   invoices: InvoicesStore;
+  // emails: Emails;
   contacts: ContactsStore;
+  // threads: Threads;
   flowSenders: FlowSendersStore;
   contracts: ContractsStore;
   reminders: RemindersStore;
@@ -104,6 +105,8 @@ export class RootStore {
     this.contacts = new ContactsStore(this, this.transport);
     this.contracts = new ContractsStore(this, this.transport);
     this.reminders = new RemindersStore(this, this.transport);
+    // this.threads = new Threads(this, this.transport);
+    // this.emails = new Emails(this, this.transport);
     this.customFields = new CustomFieldsStore(this, this.transport);
     this.globalCache = new GlobalCacheStore(this, this.transport);
     this.flowSenders = new FlowSendersStore(this, this.transport);
@@ -151,6 +154,7 @@ export class RootStore {
         this.mailboxes.bootstrap(),
         this.tags.bootstrap(),
         this.opportunities.bootstrap(),
+        // this.threads.bootstrap(),
         this.invoices.bootstrap(),
         this.contracts.bootstrap(),
         this.externalSystemInstances.bootstrap(),

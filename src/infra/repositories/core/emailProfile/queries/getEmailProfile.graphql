@@ -1,0 +1,8 @@
+query getEmailProfile($emails: [String!]!) {
+  email_ProfilePhoto(emails: $emails) {
+    email
+    profilePhotoUrl
+    profilePhotoUrlId
+    name
+  }
+}
