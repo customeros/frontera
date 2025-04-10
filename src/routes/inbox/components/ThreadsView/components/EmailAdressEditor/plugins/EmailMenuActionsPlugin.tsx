@@ -1,11 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
 
+import { $getNearestNodeFromDOMNode } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 import { Icon } from '@ui/media/Icon';
 import { useCopyToClipboard } from '@shared/hooks/useCopyToClipboard';
 
-import { EmailMenuActionsNode } from '../nodes/EmailMenuActionsNode';
+import { $isEmailNode } from '../nodes/EmailNode';
 
 // Create a singleton to track the active menu across all instances
 const menuState = {
@@ -49,13 +50,15 @@ export const EmailMenuActionsPlugin = () => {
     setPosition(rect);
   };
 
+  const closeMenu = () => {
+    if (menuState.activeInstance === instanceId.current) {
+      menuState.activeInstance = null;
+    }
+    setActiveEmail(null);
+    setPosition(null);
+  };
+
   useEffect(() => {
-    const handleCustomEvent = (event: CustomEvent) => {
-      const { email, rect } = event.detail;
-
-      handleEmailClick(email, rect);
-    };
-
     const handleCloseAllMenus = (event: CustomEvent) => {
       if (event.detail.except !== instanceId.current) {
         closeMenu();
@@ -63,19 +66,11 @@ export const EmailMenuActionsPlugin = () => {
     };
 
     document.addEventListener(
-      'email-node-click',
-      handleCustomEvent as EventListener,
-    );
-    document.addEventListener(
       'close-all-email-menus',
       handleCloseAllMenus as EventListener,
     );
 
     return () => {
-      document.removeEventListener(
-        'email-node-click',
-        handleCustomEvent as EventListener,
-      );
       document.removeEventListener(
         'close-all-email-menus',
         handleCloseAllMenus as EventListener,
@@ -107,17 +102,34 @@ export const EmailMenuActionsPlugin = () => {
     };
   }, [activeEmail]);
 
-  const closeMenu = () => {
-    if (menuState.activeInstance === instanceId.current) {
-      menuState.activeInstance = null;
-    }
-    setActiveEmail(null);
-    setPosition(null);
-  };
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      const domNode = event.target as HTMLElement;
+
+      if (!domNode.closest('[data-lexical-email]')) {
+        return;
+      }
+
+      editor.update(() => {
+        const node = $getNearestNodeFromDOMNode(domNode);
+
+        if (node && $isEmailNode(node)) {
+          const domRect = domNode.getBoundingClientRect();
+
+          handleEmailClick(node.__email, domRect);
+        }
+      });
+    };
+
+    document.addEventListener('click', handler);
+
+    return () => {
+      document.removeEventListener('click', handler);
+    };
+  }, [editor, handleEmailClick]);
 
   return (
     <>
-      <EmailMenuActionsNode onEmailClick={handleEmailClick} />
       {activeEmail &&
         position &&
         menuState.activeInstance === instanceId.current && (
