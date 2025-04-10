@@ -8,7 +8,6 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { EditorRefPlugin } from '@lexical/react/LexicalEditorRefPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { ThemeConfig } from 'node_modules/react-select/dist/declarations/src/theme';
 import {
   LexicalComposer,
   InitialConfigType,
@@ -52,10 +51,10 @@ interface EmailAdressEditorProps {
   dataTest?: string;
   className?: string;
   namespace?: string;
-  theme?: ThemeConfig;
   placeholder?: string;
   isReadOnly?: boolean;
   usePlainText?: boolean;
+  theme?: EditorThemeClasses;
   defaultHtmlValue?: string[];
   placeholderClassName?: string;
   emailsOptions?: SelectOption[];
