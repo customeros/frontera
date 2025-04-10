@@ -98,6 +98,7 @@ export const OwnerCell = observer(({ id }: OwnerProps) => {
       autoFocus
       isDisabled
       isClearable
+      isSearchable
       value={value}
       onBlur={close}
       defaultMenuIsOpen
