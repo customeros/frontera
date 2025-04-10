@@ -63,7 +63,7 @@ export const NavigationSections = ({
             />
           )}
         />
-        <SidenavItem
+        {/* <SidenavItem
           label='Inbox'
           dataTest={`side-nav-item-inbox`}
           isActive={checkIsActive('inbox')}
@@ -77,7 +77,7 @@ export const NavigationSections = ({
               )}
             />
           )}
-        />
+        /> */}
       </div>
 
       <TeamViewsSectionSection
