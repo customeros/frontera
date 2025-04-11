@@ -22,7 +22,7 @@ export class User extends Entity<UserDatum> {
 
   @computed
   get name() {
-    return this.value.name || `${this.value.firstName} ${this.value.lastName}`;
+    return this.value.name;
   }
 
   @computed
