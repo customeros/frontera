@@ -48,7 +48,7 @@ export const RootRoute: RouteObject = {
             schedulerPreviewLink={`${window.location.origin}/book?config_id={config.id}`}
             nylasSessionsConfig={{
               clientId: '6ff9c91b-3b9d-4980-ace1-949313d0a475', // Replace with your Nylas client ID from the previous
-              redirectUri: `http://localhost:5173/scheduler-editor`,
+              redirectUri: `https://app.customeros.ai/scheduler-editor`,
               domain: 'https://api.eu.nylas.com/v3', // or 'https://api.eu.nylas.com/v3' for EU data center
               hosted: false,
               accessType: 'offline',
