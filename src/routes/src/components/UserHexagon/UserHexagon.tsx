@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+
 import { observer } from 'mobx-react-lite';
 
+import { cn } from '@ui/utils/cn';
 import { Image } from '@ui/media/Image/Image';
 import { useStore } from '@shared/hooks/useStore';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
-
 interface UserHexagonProps {
   id: string;
   name: string;
@@ -14,17 +16,39 @@ interface UserHexagonProps {
 export const UserHexagon = observer(
   ({ name, isCurrent, color, id }: UserHexagonProps) => {
     const store = useStore();
+
     const url = store.users.getById(id)?.value?.profilePhotoUrl;
 
-    if (url) {
-      return <ClippedImage name={name} color={color} url={url ?? ''} />;
+    const navigate = useNavigate();
+
+    if (url && url?.length > 0) {
+      return (
+        <ClippedImage
+          name={name}
+          color={color}
+          url={url ?? ''}
+          isCurrent={isCurrent ?? false}
+        />
+      );
     }
 
     return (
       <Tooltip hasArrow label={name}>
-        <div className='flex relative size-7 items-center justify-center cursor-default'>
+        <div
+          className={cn(
+            'flex relative size-7 items-center justify-center cursor-default',
+            isCurrent && 'cursor-pointer',
+          )}
+        >
           <p
-            className='text-sm z-[2] rounded-full size-7 flex items-center justify-center'
+            className={cn(
+              'text-sm z-[2] rounded-full size-7 flex items-center justify-center',
+            )}
+            onClick={() => {
+              if (isCurrent) {
+                navigate(`/settings/?tab=profile`);
+              }
+            }}
             style={{
               color: isCurrent ? 'white' : color,
               backgroundColor: isCurrent ? color : 'white',
@@ -44,14 +68,28 @@ const ClippedImage = ({
   name,
   color,
   url,
+  isCurrent,
 }: {
   url: string;
   name: string;
   color: string;
+  isCurrent: boolean;
 }) => {
+  const navigate = useNavigate();
+
   return (
     <Tooltip hasArrow label={name}>
-      <div className='flex size-7 items-center justify-center rounded-full relative'>
+      <div
+        onClick={() => {
+          if (isCurrent) {
+            navigate(`/settings/?tab=profile`);
+          }
+        }}
+        className={cn(
+          'flex size-7 items-center justify-center rounded-full relative cursor-default',
+          isCurrent && 'cursor-pointer',
+        )}
+      >
         <Image
           src={url}
           aria-label={name}
