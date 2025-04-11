@@ -24,21 +24,22 @@ export class Threads extends Store<ThreadsDatum, Thread> {
 
   async bootstrap() {
     if (this.isBootstrapped || this.isLoading) return;
+    this.isBootstrapped = true;
 
-    try {
-      this.isLoading = true;
-      await this.loadMoreThreads();
-      this.isBootstrapped = true;
-    } catch (error) {
-      runInAction(() => {
-        this.error = (error as Error)?.message;
-      });
-      throw error;
-    } finally {
-      runInAction(() => {
-        this.isLoading = false;
-      });
-    }
+    // try {
+    //   this.isLoading = true;
+    //   await this.loadMoreThreads();
+    //   this.isBootstrapped = true;
+    // } catch (error) {
+    //   runInAction(() => {
+    //     this.error = (error as Error)?.message;
+    //   });
+    //   throw error;
+    // } finally {
+    //   runInAction(() => {
+    //     this.isLoading = false;
+    //   });
+    // }
   }
 
   async loadMoreThreads() {
