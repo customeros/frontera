@@ -92,6 +92,7 @@ export const OwnerCell = observer(({ id, owner }: OwnerProps) => {
       size='xs'
       autoFocus
       isClearable
+      isSearchable
       value={value}
       onBlur={close}
       defaultMenuIsOpen
