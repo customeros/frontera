@@ -9,6 +9,7 @@ import { createColumnHelper } from '@ui/presentation/Table';
 import { Task, TableViewDef, ColumnViewType } from '@graphql/types';
 import THead, { getTHeadProps } from '@ui/presentation/Table/THead';
 
+import { Assignees } from './cells/Assignees';
 import {
   DueDateCell,
   TaskNameCell,
@@ -53,13 +54,7 @@ export const columns: Record<string, Column> = {
     enableColumnFilter: false,
     enableResizing: false,
     cell: (props) => {
-      const asigness = props.getValue().firstAssignee?.name;
-
-      return asigness ? (
-        <p>{asigness}</p>
-      ) : (
-        <p className='text-grayModern-400'>Not assigned yet</p>
-      );
+      return <Assignees assignees={props.getValue().firstAssignee?.name} />;
     },
     header: (props) => (
       <THead<HTMLInputElement>
