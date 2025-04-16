@@ -1,9 +1,24 @@
+import { useStore } from '@shared/hooks/useStore';
+
 interface DueDateCellProps {
   dueDate: string;
 }
 
 export const DueDateCell = ({ dueDate }: DueDateCellProps) => {
-  if (!dueDate) return <span className='text-grayModern-400'>No due date</span>;
+  const store = useStore();
+
+  if (!dueDate)
+    return (
+      <span
+        className='text-grayModern-400 cursor-pointer'
+        onClick={() => {
+          store.ui.commandMenu.setType('SetDueDate');
+          store.ui.commandMenu.setOpen(true);
+        }}
+      >
+        No due date
+      </span>
+    );
 
   const dueDateObj = new Date(dueDate);
   const today = new Date();
@@ -24,7 +39,15 @@ export const DueDateCell = ({ dueDate }: DueDateCellProps) => {
 
   return (
     <div className='flex items-center gap-1'>
-      <span>{dueDateText}</span>
+      <span
+        className='cursor-pointer'
+        onClick={() => {
+          store.ui.commandMenu.setType('SetDueDate');
+          store.ui.commandMenu.setOpen(true);
+        }}
+      >
+        {dueDateText}
+      </span>
     </div>
   );
 };

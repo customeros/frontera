@@ -37,15 +37,17 @@ export const ContractStatusTag = ({
   const selected = contractStatusOptions.find((e) => e.value === status);
 
   return (
-    <Tag colorScheme={statusColorScheme[status] as 'primary'}>
-      {icon && (
-        <TagLeftIcon>
-          <Icon name={icon} />
-        </TagLeftIcon>
-      )}
+    <div className='flex items-center '>
+      <Tag size='md' colorScheme={statusColorScheme[status] as 'primary'}>
+        {icon && (
+          <TagLeftIcon>
+            <Icon name={icon} />
+          </TagLeftIcon>
+        )}
 
-      <TagLabel className='whitespace-nowrap'>{selected?.label}</TagLabel>
-    </Tag>
+        <TagLabel className='whitespace-nowrap'>{selected?.label}</TagLabel>
+      </Tag>
+    </div>
   );
 };
 const contractOptionIcon: Record<ContractStatus, IconName | null> = {
