@@ -37,6 +37,7 @@ export const UpcomingInvoice = observer(
 
     if (!invoice?.metadata.id) return null;
     const contract = store.contracts.value.get(contractId)?.value as Contract;
+
     const renewalPeriod = getCommittedPeriodLabel(
       contract?.billingDetails?.billingCycleInMonths,
     );
@@ -56,7 +57,7 @@ export const UpcomingInvoice = observer(
         className='flex text-sm flex-wrap'
         onClick={() => handleOpenInvoice(invoice.invoiceNumber)}
       >
-        <div className='whitespace-nowrap mr-1'>{renewalPeriod}:</div>
+        <div className='whitespace-nowrap mr-1'>{renewalPeriod} recurring:</div>
         <div className='whitespace-nowrap text-grayModern-500 underline'>
           {formatCurrency(invoice.amountDue, 2, invoice?.currency)} on{' '}
           {format(nextInvoiceDate, 'd MMM ’yy')} (
