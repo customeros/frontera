@@ -86,5 +86,13 @@ export const getContractSortFn = (columnId: string) =>
 
       return amount || null;
     })
+    .with(
+      ColumnViewType.ContractsOrganizationLegalName,
+      () => (row: ContractStore) => {
+        const legalName = row.value.billingDetails?.organizationLegalName;
+
+        return legalName?.trim().toLowerCase();
+      },
+    )
 
     .otherwise(() => (_row: ContractStore) => false);
