@@ -385,6 +385,23 @@ export type Calendar = {
   updatedAt: Scalars['Time']['output'];
 };
 
+/** Input for calendar availability query */
+export type CalendarAvailabilityInput = {
+  duration: Scalars['Int']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
+  endTime: Scalars['Time']['input'];
+  startTime: Scalars['Time']['input'];
+  timezone: Scalars['String']['input'];
+};
+
+/** Response for calendar availability query */
+export type CalendarAvailabilityResponse = {
+  __typename?: 'CalendarAvailabilityResponse';
+  availableUsers: Scalars['Int']['output'];
+  timeSlots: Array<TimeSlot>;
+  totalUsers: Scalars['Int']['output'];
+};
+
 export enum CalendarType {
   Calcom = 'CALCOM',
   Google = 'GOOGLE',
@@ -500,6 +517,7 @@ export enum ColumnViewType {
   ContractsHealth = 'CONTRACTS_HEALTH',
   ContractsLtv = 'CONTRACTS_LTV',
   ContractsName = 'CONTRACTS_NAME',
+  ContractsOrganizationLegalName = 'CONTRACTS_ORGANIZATION_LEGAL_NAME',
   ContractsOwner = 'CONTRACTS_OWNER',
   ContractsPeriod = 'CONTRACTS_PERIOD',
   ContractsRenewal = 'CONTRACTS_RENEWAL',
@@ -611,6 +629,11 @@ export enum ComparisonOperator {
   NotIn = 'NOT_IN',
   StartsWith = 'STARTS_WITH',
 }
+
+export type Connection = {
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
 
 /**
  * A contact represents an individual in customerOS.
@@ -1579,10 +1602,28 @@ export type Email = {
   work?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type EmailAttachment = {
+  __typename?: 'EmailAttachment';
+  contentType: Scalars['String']['output'];
+  filename: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type EmailBody = {
+  html?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum EmailDeliverable {
   Deliverable = 'DELIVERABLE',
   Undeliverable = 'UNDELIVERABLE',
   Unknown = 'UNKNOWN',
+}
+
+export enum EmailDirection {
+  Inbound = 'inbound',
+  Outbound = 'outbound',
 }
 
 /**
@@ -1614,6 +1655,23 @@ export enum EmailLabel {
   Personal = 'PERSONAL',
   Work = 'WORK',
 }
+
+export type EmailMessage = {
+  __typename?: 'EmailMessage';
+  attachmentCount: Scalars['Int']['output'];
+  bcc?: Maybe<Array<Scalars['String']['output']>>;
+  body: Scalars['String']['output'];
+  cc?: Maybe<Array<Scalars['String']['output']>>;
+  direction: EmailDirection;
+  from: Scalars['String']['output'];
+  fromName: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  mailboxId: Scalars['String']['output'];
+  receivedAt: Scalars['Time']['output'];
+  subject: Scalars['String']['output'];
+  threadId: Scalars['String']['output'];
+  to: Array<Scalars['String']['output']>;
+};
 
 export type EmailParticipant = {
   __typename?: 'EmailParticipant';
@@ -1648,6 +1706,49 @@ export type EmailRelationUpdateInput = {
    * **Required.**
    */
   primary?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type EmailResult = {
+  __typename?: 'EmailResult';
+  emailId: Scalars['String']['output'];
+  error?: Maybe<Scalars['String']['output']>;
+  status: EmailStatus;
+};
+
+export enum EmailSecurity {
+  None = 'none',
+  Ssl = 'ssl',
+  Tls = 'tls',
+}
+
+export enum EmailStatus {
+  Bounced = 'bounced',
+  Failed = 'failed',
+  Queued = 'queued',
+  Received = 'received',
+  Scheduled = 'scheduled',
+  Sent = 'sent',
+}
+
+export type EmailThread = {
+  __typename?: 'EmailThread';
+  id: Scalars['String']['output'];
+  isDone: Scalars['Boolean']['output'];
+  isViewed: Scalars['Boolean']['output'];
+  lastMessageAt?: Maybe<Scalars['Time']['output']>;
+  lastSender: Scalars['String']['output'];
+  lastSenderDomain: Scalars['String']['output'];
+  mailboxId: Scalars['String']['output'];
+  subject: Scalars['String']['output'];
+  summary: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type EmailThreadConnection = Connection & {
+  __typename?: 'EmailThreadConnection';
+  edges: Array<EmailThread>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
 };
 
 export type EmailUpdateAddressInput = {
@@ -2011,6 +2112,23 @@ export enum IcpFit {
   IcpNotFit = 'ICP_NOT_FIT',
   IcpNotSet = 'ICP_NOT_SET',
 }
+
+export type ImapConfig = {
+  __typename?: 'ImapConfig';
+  imapPassword?: Maybe<Scalars['String']['output']>;
+  imapPort?: Maybe<Scalars['Int']['output']>;
+  imapSecurity?: Maybe<EmailSecurity>;
+  imapServer?: Maybe<Scalars['String']['output']>;
+  imapUsername?: Maybe<Scalars['String']['output']>;
+};
+
+export type ImapConfigInput = {
+  imapPassword?: InputMaybe<Scalars['String']['input']>;
+  imapPort?: InputMaybe<Scalars['Int']['input']>;
+  imapSecurity?: InputMaybe<EmailSecurity>;
+  imapServer?: InputMaybe<Scalars['String']['input']>;
+  imapUsername?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type Industry = {
   __typename?: 'Industry';
@@ -2479,6 +2597,45 @@ export type LogEntryUpdateInput = {
 
 export type Mailbox = {
   __typename?: 'Mailbox';
+  connectionErrorMessage?: Maybe<Scalars['String']['output']>;
+  connectionStatus: MailboxConnectionStatus;
+  emailAddress: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  inboundEnabled: Scalars['Boolean']['output'];
+  lastConnectionCheck: Scalars['Time']['output'];
+  outboundEnabled: Scalars['Boolean']['output'];
+  provider: MailboxProvider;
+  replyToAddress?: Maybe<Scalars['String']['output']>;
+  senderId?: Maybe<Scalars['String']['output']>;
+};
+
+export enum MailboxConnectionStatus {
+  Active = 'active',
+  NotActive = 'not_active',
+}
+
+export type MailboxInput = {
+  emailAddress: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  imapConfig?: InputMaybe<ImapConfigInput>;
+  inboundEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  outboundEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  provider: MailboxProvider;
+  replyToAddress?: InputMaybe<Scalars['String']['input']>;
+  senderId?: InputMaybe<Scalars['String']['input']>;
+  smtpConfig?: InputMaybe<SmtpConfigInput>;
+  syncFolders?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export enum MailboxProvider {
+  Generic = 'generic',
+  GoogleWorkspace = 'google_workspace',
+  Mailstack = 'mailstack',
+  Outlook = 'outlook',
+}
+
+export type MailstackMailbox = {
+  __typename?: 'MailstackMailbox';
   mailbox: Scalars['String']['output'];
   needsManualRefresh: Scalars['Boolean']['output'];
   provider: MailboxProvider;
@@ -2487,12 +2644,6 @@ export type Mailbox = {
   rampUpRate: Scalars['Int']['output'];
   usedInFlows: Scalars['Boolean']['output'];
 };
-
-export enum MailboxProvider {
-  Google = 'GOOGLE',
-  Mailstack = 'MAILSTACK',
-  Microsoft = 'MICROSOFT',
-}
 
 export type MarkdownEvent = {
   __typename?: 'MarkdownEvent';
@@ -2630,6 +2781,7 @@ export type MetadataInterface = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addMailbox: Mailbox;
   addTag: Scalars['ID']['output'];
   admin_addWorkspaceAccess: Scalars['Boolean']['output'];
   admin_removeWorkspaceAccess: Scalars['Boolean']['output'];
@@ -2756,6 +2908,10 @@ export type Mutation = {
   note_LinkAttachment: Note;
   note_UnlinkAttachment: Note;
   note_Update: Note;
+  /** Connect a user's email to Nylas service */
+  nylasConnect: Scalars['Boolean']['output'];
+  /** Disconnect a user's email from Nylas service */
+  nylasDisconnect: Scalars['Boolean']['output'];
   opportunityRenewalUpdate: Opportunity;
   opportunityRenewal_UpdateAllForOrganization: Organization;
   opportunity_Archive: ActionResponse;
@@ -2798,6 +2954,8 @@ export type Mutation = {
   reminder_Create?: Maybe<Scalars['ID']['output']>;
   reminder_Update?: Maybe<Scalars['ID']['output']>;
   removeTag?: Maybe<Result>;
+  removeTags?: Maybe<Result>;
+  sendEmail: EmailResult;
   serviceLineItem_Delete: DeleteResponse;
   sku_Archive: Result;
   sku_Save: Sku;
@@ -2817,8 +2975,13 @@ export type Mutation = {
   tenant_UpdateSettings: TenantSettings;
   tenant_UpdateSettingsOpportunityStage: ActionResponse;
   testMutation: Scalars['Boolean']['output'];
+  updateMailbox: Mailbox;
   user_Update: User;
   user_UpdateOnboardingDetails: User;
+};
+
+export type MutationAddMailboxArgs = {
+  input: MailboxInput;
 };
 
 export type MutationAddTagArgs = {
@@ -3356,6 +3519,14 @@ export type MutationNote_UpdateArgs = {
   input: NoteUpdateInput;
 };
 
+export type MutationNylasConnectArgs = {
+  email: Scalars['String']['input'];
+};
+
+export type MutationNylasDisconnectArgs = {
+  email: Scalars['String']['input'];
+};
+
 export type MutationOpportunityRenewalUpdateArgs = {
   input: OpportunityRenewalUpdateInput;
   ownerUserId?: InputMaybe<Scalars['ID']['input']>;
@@ -3522,6 +3693,14 @@ export type MutationRemoveTagArgs = {
   input: RemoveTagInput;
 };
 
+export type MutationRemoveTagsArgs = {
+  input: RemoveTagsInput;
+};
+
+export type MutationSendEmailArgs = {
+  input: SendEmailInput;
+};
+
 export type MutationServiceLineItem_DeleteArgs = {
   id: Scalars['ID']['input'];
 };
@@ -3596,6 +3775,11 @@ export type MutationTenant_UpdateSettingsOpportunityStageArgs = {
 
 export type MutationTestMutationArgs = {
   input: TestInput;
+};
+
+export type MutationUpdateMailboxArgs = {
+  id: Scalars['String']['input'];
+  input: MailboxInput;
 };
 
 export type MutationUser_UpdateArgs = {
@@ -4196,6 +4380,14 @@ export type OrganizationWithJobRole = {
   organization: Organization;
 };
 
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['String']['output']>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPreviousPage: Scalars['Boolean']['output'];
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 export type PageView = Node &
   SourceFields & {
     __typename?: 'PageView';
@@ -4243,6 +4435,11 @@ export type Pagination = {
    * **Required.**
    */
   page: Scalars['Int']['input'];
+};
+
+export type PaginationInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**
@@ -4321,6 +4518,8 @@ export type Query = {
   attachment: Attachment;
   bankAccounts: Array<BankAccount>;
   billableInfo: TenantBillableInfo;
+  /** Get availability across all users in the tenant for a given time range */
+  calendar_availability: CalendarAvailabilityResponse;
   checkDomain: DomainCheckDetails;
   contact?: Maybe<Contact>;
   contact_ByEmail?: Maybe<Contact>;
@@ -4362,6 +4561,9 @@ export type Query = {
   flow_emailVariables: Array<EmailVariableEntity>;
   flow_testEmailSender: Scalars['String']['output'];
   flows: Array<Flow>;
+  getAllEmailsInThread: Array<EmailMessage>;
+  getAllThreads: EmailThreadConnection;
+  getThreadMetadata: ThreadMetadata;
   globalOrganizations_Search: Array<GlobalOrganization>;
   global_Cache: GlobalCache;
   industries_InUse: Array<Industry>;
@@ -4375,9 +4577,11 @@ export type Query = {
   mailstack_CheckUnavailableDomains: Array<Scalars['String']['output']>;
   mailstack_DomainPurchaseSuggestions: Array<Scalars['String']['output']>;
   mailstack_Domains: Array<Scalars['String']['output']>;
-  mailstack_Mailboxes: Array<Mailbox>;
+  mailstack_Mailboxes: Array<MailstackMailbox>;
   mailstack_UniqueUsernames: Array<Scalars['String']['output']>;
   meeting: Meeting;
+  /** Get the Nylas account ID for a given email */
+  nylasIsConnected: Scalars['Boolean']['output'];
   opportunities_LinkedToOrganizations: OpportunityPage;
   opportunity?: Maybe<Opportunity>;
   organization?: Maybe<Organization>;
@@ -4425,6 +4629,10 @@ export type QueryAgentArgs = {
 
 export type QueryAttachmentArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type QueryCalendar_AvailabilityArgs = {
+  input: CalendarAvailabilityInput;
 };
 
 export type QueryCheckDomainArgs = {
@@ -4533,6 +4741,19 @@ export type QueryFlowParticipantArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type QueryGetAllEmailsInThreadArgs = {
+  threadId: Scalars['String']['input'];
+};
+
+export type QueryGetAllThreadsArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+  userId: Scalars['String']['input'];
+};
+
+export type QueryGetThreadMetadataArgs = {
+  threadId: Scalars['String']['input'];
+};
+
 export type QueryGlobalOrganizations_SearchArgs = {
   limit: Scalars['Int']['input'];
   searchTerm: Scalars['String']['input'];
@@ -4579,6 +4800,10 @@ export type QueryMailstack_DomainPurchaseSuggestionsArgs = {
 
 export type QueryMeetingArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type QueryNylasIsConnectedArgs = {
+  email: Scalars['String']['input'];
 };
 
 export type QueryOpportunities_LinkedToOrganizationsArgs = {
@@ -4729,6 +4954,11 @@ export type RemoveTagInput = {
   tagId: Scalars['ID']['input'];
 };
 
+export type RemoveTagsInput = {
+  entityId: Scalars['ID']['input'];
+  entityType: EntityType;
+};
+
 export type RenewalRecord = {
   __typename?: 'RenewalRecord';
   contract: Contract;
@@ -4772,6 +5002,21 @@ export enum Role {
   PlatformOwner = 'PLATFORM_OWNER',
   User = 'USER',
 }
+
+export type SendEmailInput = {
+  attachmentIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  bccAddresses?: InputMaybe<Array<Scalars['String']['input']>>;
+  body: EmailBody;
+  ccAddresses?: InputMaybe<Array<Scalars['String']['input']>>;
+  fromAddress: Scalars['String']['input'];
+  fromName?: InputMaybe<Scalars['String']['input']>;
+  mailboxId?: InputMaybe<Scalars['String']['input']>;
+  replyTo?: InputMaybe<Scalars['String']['input']>;
+  scheduleFor?: InputMaybe<Scalars['Time']['input']>;
+  subject: Scalars['String']['input'];
+  toAddresses: Array<Scalars['String']['input']>;
+  trackClicks?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 export enum ServiceInvoicingStatus {
   Invoiced = 'INVOICED',
@@ -4882,6 +5127,23 @@ export type SlackChannelPage = Pages & {
   totalAvailable: Scalars['Int64']['output'];
   totalElements: Scalars['Int64']['output'];
   totalPages: Scalars['Int']['output'];
+};
+
+export type SmtpConfig = {
+  __typename?: 'SmtpConfig';
+  smtpPassword?: Maybe<Scalars['String']['output']>;
+  smtpPort?: Maybe<Scalars['Int']['output']>;
+  smtpSecurity?: Maybe<EmailSecurity>;
+  smtpServer?: Maybe<Scalars['String']['output']>;
+  smtpUsername?: Maybe<Scalars['String']['output']>;
+};
+
+export type SmtpConfigInput = {
+  smtpPassword?: InputMaybe<Scalars['String']['input']>;
+  smtpPort?: InputMaybe<Scalars['Int']['input']>;
+  smtpSecurity?: InputMaybe<EmailSecurity>;
+  smtpServer?: InputMaybe<Scalars['String']['input']>;
+  smtpUsername?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Social = Node &
@@ -5308,6 +5570,15 @@ export type TestInput = {
   stringParam?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ThreadMetadata = {
+  __typename?: 'ThreadMetadata';
+  attachments?: Maybe<Array<Maybe<Attachment>>>;
+  hasAttachments: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  participants: Array<Scalars['String']['output']>;
+  summary: Scalars['String']['output'];
+};
+
 export type TimeRange = {
   /**
    * The start time of the time range.
@@ -5319,6 +5590,14 @@ export type TimeRange = {
    * **Required.**
    */
   to: Scalars['Time']['input'];
+};
+
+/** Represents a time slot in calendar availability */
+export type TimeSlot = {
+  __typename?: 'TimeSlot';
+  endTime: Scalars['Time']['output'];
+  isAvailable: Scalars['Boolean']['output'];
+  startTime: Scalars['Time']['output'];
 };
 
 export type TimelineEvent =
@@ -5384,7 +5663,7 @@ export type User = {
    */
   lastName: Scalars['String']['output'];
   mailboxes: Array<Scalars['String']['output']>;
-  mailboxesV2: Array<Mailbox>;
+  mailboxesV2: Array<MailstackMailbox>;
   name?: Maybe<Scalars['String']['output']>;
   onboarding: UserOnboardingDetails;
   phoneNumbers: Array<PhoneNumber>;
