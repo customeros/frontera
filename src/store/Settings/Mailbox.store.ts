@@ -47,7 +47,7 @@ export class MailboxStore extends Syncable<Mailbox> {
 
   static getDefaultValue(): Mailbox {
     return {
-      provider: MailboxProvider.Google,
+      provider: MailboxProvider.GoogleWorkspace,
       mailbox: '',
       usedInFlows: false,
       rampUpRate: 0,

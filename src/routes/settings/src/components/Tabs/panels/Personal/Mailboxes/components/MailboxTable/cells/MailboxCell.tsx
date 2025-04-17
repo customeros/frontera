@@ -53,7 +53,8 @@ export const MailboxCell = observer(({ mailbox }: MailboxCellProps) => {
           {mailboxStore?.value?.needsManualRefresh && (
             <Tooltip
               label={`Your conversations and meetings are no longer syncing because access to your ${
-                mailboxStore?.value?.provider === MailboxProvider.Google
+                mailboxStore?.value?.provider ===
+                MailboxProvider.GoogleWorkspace
                   ? 'Google Workspace'
                   : 'Microsoft Outlook'
               } account has expired`}
