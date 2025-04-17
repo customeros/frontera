@@ -21,6 +21,21 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
       },
     )
     .with(
+      { property: ColumnViewType.ContractsOrganizationLegalName },
+      (filter) => (row: ContractStore) => {
+        if (!filter?.active) return true;
+        const value = row.value?.billingDetails?.organizationLegalName;
+
+        if (!value)
+          return (
+            filter.operation === ComparisonOperator.IsEmpty ||
+            filter.operation === ComparisonOperator.NotContains
+          );
+
+        return filterTypeText(filter, value);
+      },
+    )
+    .with(
       { property: ColumnViewType.ContractsEnded },
       (filter) => (row: ContractStore) => {
         if (!filter.active) return true;

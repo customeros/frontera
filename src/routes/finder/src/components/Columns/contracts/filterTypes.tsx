@@ -24,6 +24,7 @@ import { Calendar } from '@ui/media/icons/Calendar';
 import { Activity } from '@ui/media/icons/Activity';
 import { ClockCheck } from '@ui/media/icons/ClockCheck';
 import { Calculator } from '@ui/media/icons/Calculator';
+import { Building07 } from '@ui/media/icons/Building07';
 import { ClockFastForward } from '@ui/media/icons/ClockFastForward';
 import { CurrencyDollarCircle } from '@ui/media/icons/CurrencyDollarCircle';
 
@@ -206,6 +207,20 @@ export const getFilterTypes = (store?: RootStore) => {
         label: user?.name,
         avatar: user?.value?.profilePhotoUrl,
       })),
+    },
+    [ColumnViewType.ContractsOrganizationLegalName]: {
+      filterType: 'text',
+      filterName: 'Legal name',
+      filterAccesor: ColumnViewType.ContractsOrganizationLegalName,
+      filterOperators: [
+        ComparisonOperator.Contains,
+        ComparisonOperator.NotContains,
+        ComparisonOperator.IsEmpty,
+        ComparisonOperator.IsNotEmpty,
+      ],
+      icon: (
+        <Building07 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
+      ),
     },
   };
 
