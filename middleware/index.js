@@ -901,6 +901,8 @@ async function createServer() {
       });
     }
 
+    const integrations_token = createIntegrationAppToken(req.query.tenant);
+
     const newSessionToken = jwt.sign(
       {
         tenant: req.query.tenant,
@@ -908,7 +910,7 @@ async function createServer() {
         campaign: req.session.campaign,
         access_token: req.session.access_token,
         refresh_token: req.session.refresh_token,
-        integrations_token: req.session.integrations_token, //TODO we need to fetch a new integration app token for this tenant
+        integrations_token: integrations_token, //TODO we need to fetch a new integration app token for this tenant
         profile: {
           ...req.session.profile,
           id: currentUserRes.data.user_Current.id,
