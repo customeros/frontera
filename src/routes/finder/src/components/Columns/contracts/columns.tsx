@@ -313,6 +313,38 @@ const columns: Record<string, Column> = {
       />
     ),
   }),
+  [ColumnViewType.ContractsOrganizationLegalName]: columnHelper.accessor(
+    (row) => row,
+    {
+      id: ColumnViewType.ContractsOrganizationLegalName,
+      minSize: 125,
+      maxSize: 650,
+      enableResizing: true,
+      enableColumnFilter: false,
+      enableSorting: true,
+      cell: (props) => {
+        if (!props.getValue()?.value?.billingDetails?.organizationLegalName) {
+          return <p className='text-grayModern-400'>Not set yet</p>;
+        }
+
+        return (
+          <p>
+            {props.getValue()?.value?.billingDetails?.organizationLegalName}
+          </p>
+        );
+      },
+      skeleton: () => <Skeleton className='w-[100px] h-[14px]' />,
+
+      header: (props) => (
+        <THead<HTMLInputElement>
+          title='Legal name'
+          filterWidth='14rem'
+          id={ColumnViewType.ContractsOrganizationLegalName}
+          {...getTHeadProps<ContractStore>(props)}
+        />
+      ),
+    },
+  ),
 };
 export const getContractColumnsConfig = (
   tableViewDef?: Array<TableViewDef>[0],

@@ -180,6 +180,7 @@ export const contractsMap: Record<string, string> = {
   [ColumnViewType.ContractsStatus]: 'Status',
   [ColumnViewType.ContractsRenewal]: 'Renewal',
   [ColumnViewType.ContractsLtv]: 'LTV',
+  [ColumnViewType.ContractsOrganizationLegalName]: 'Legal Name',
 };
 
 export const contractsHelperTextMap: Record<string, string> = {
@@ -194,6 +195,7 @@ export const contractsHelperTextMap: Record<string, string> = {
   [ColumnViewType.ContractsHealth]: 'E.g. High',
   [ColumnViewType.ContractsRenewalDate]: 'E.g 12 Oct 2026',
   [ColumnViewType.ContractsForecastArr]: 'E.g. $120,930',
+  [ColumnViewType.ContractsOrganizationLegalName]: 'E.g. Figma, Inc',
 };
 
 export const opportunitiesMap: Record<string, string> = {

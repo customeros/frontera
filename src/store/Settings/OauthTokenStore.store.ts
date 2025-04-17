@@ -112,7 +112,7 @@ export class OauthTokenStore {
 
   private onDisableError(err: Error, provider: string) {
     const providerLabel =
-      provider === MailboxProvider.Google ? 'Google' : 'Microsoft 365';
+      provider === MailboxProvider.GoogleWorkspace ? 'Google' : 'Microsoft 365';
 
     this.error = err.message;
     this.isLoading = false;
