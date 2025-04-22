@@ -2,8 +2,10 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { ContactDatum } from '@store/Contacts/Contact.dto';
 import { ContractStore } from '@store/Contracts/Contract.store';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { cn } from '@ui/utils/cn';
 import { InputProps } from '@ui/form/Input';
@@ -54,6 +56,12 @@ export const EmailsInputGroup = observer(
     ) as ContractStore;
     const billingDetails = contractStore?.tempValue?.billingDetails;
     const organizationId = useParams()?.id as string;
+    const organizationStore = registry.get('organizations');
+    const organization = organizationStore.get(organizationId);
+    const organizationAggregate = new OrganizationAggregate(
+      organization!,
+      store,
+    );
 
     const [showTo, setShowTo] = useState(false);
     const [showCC, setShowCC] = useState(false);
@@ -69,7 +77,7 @@ export const EmailsInputGroup = observer(
       id: string;
       label: string;
       value: string;
-    }[] = (store.organizations.value.get(organizationId)?.contacts ?? [])
+    }[] = (organizationAggregate.contacts ?? [])
       .map((e: ContactDatum) => {
         const contactName = store.contacts.value.get(e.id)?.name;
 

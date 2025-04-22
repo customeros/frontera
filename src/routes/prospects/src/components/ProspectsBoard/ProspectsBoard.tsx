@@ -159,13 +159,13 @@ export const ProspectsBoard = observer(() => {
             return (
               <KanbanColumn
                 key={column.name}
+                isLoading={false}
                 onBlur={handleBlur}
                 focusedId={focused}
                 stage={column.stage}
                 onFocus={handleFocus}
                 columnId={column.columnId}
                 filterFns={column.filterFns ?? []}
-                isLoading={store.organizations.isLoading}
               />
             );
           })}

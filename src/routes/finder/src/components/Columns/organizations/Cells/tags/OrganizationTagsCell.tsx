@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 
 import type { Tag } from '@graphql/types';
 
@@ -13,9 +14,9 @@ interface OrganizationTagsCellProps {
 export const OrganizationsTagsCell = observer(
   ({ id }: OrganizationTagsCellProps) => {
     const store = useStore();
-    const entity = store.organizations.getById(id);
-
-    const tags = (entity?.value?.tags ?? []).filter((d) => !!d?.name);
+    const organizationStore = registry.get('organizations');
+    const entity = organizationStore.get(id);
+    const tags = (entity?.tags ?? []).filter((d) => !!d?.name);
 
     return (
       <div

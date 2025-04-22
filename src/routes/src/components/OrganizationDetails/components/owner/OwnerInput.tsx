@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 import { EditOwnerOrganizationUsecase } from '@domain/usecases/organization-details/edit-owner.usecase';
 
 import { cn } from '@ui/utils/cn.ts';
@@ -15,16 +16,18 @@ interface OwnerProps {
 }
 
 export const OwnerInput = observer(({ id, dataTest }: OwnerProps) => {
+  const organization = registry.get('organizations').get(id);
+
   const ownerUseCase = useMemo(
-    () => new EditOwnerOrganizationUsecase(id),
-    [id],
+    () => organization && new EditOwnerOrganizationUsecase(organization),
+    [organization],
   );
 
   return (
     <>
       <Popover
-        open={ownerUseCase.isMenuOpen}
-        onOpenChange={(open) => ownerUseCase.toggleMenu(open)}
+        open={ownerUseCase?.isMenuOpen}
+        onOpenChange={(open) => ownerUseCase?.toggleMenu(open)}
       >
         <Tooltip label='Owner' align='start'>
           <PopoverTrigger className={cn('flex items-center')}>
@@ -33,8 +36,10 @@ export const OwnerInput = observer(({ id, dataTest }: OwnerProps) => {
               data-test={dataTest}
               className='flex flex-wrap  w-fit items-center'
             >
-              {ownerUseCase.selectedUser ? (
-                <div className='text-sm'>{ownerUseCase.selectedUser.label}</div>
+              {ownerUseCase?.selectedUser ? (
+                <div className='text-sm'>
+                  {ownerUseCase?.selectedUser.label}
+                </div>
               ) : (
                 <span className='text-grayModern-400 text-sm'>Owner</span>
               )}
@@ -44,13 +49,13 @@ export const OwnerInput = observer(({ id, dataTest }: OwnerProps) => {
         <PopoverContent align='start' className='min-w-[264px] max-w-[320px]'>
           <Combobox
             isMulti
-            options={ownerUseCase.userOptions}
-            inputValue={ownerUseCase.searchTerm}
-            value={ownerUseCase.selectedUser?.value}
-            onInputChange={ownerUseCase.setSearchTerm}
+            options={ownerUseCase?.userOptions}
+            inputValue={ownerUseCase?.searchTerm}
+            value={ownerUseCase?.selectedUser?.value}
+            onInputChange={ownerUseCase?.setSearchTerm}
             onChange={(newValue) => {
-              ownerUseCase.execute(newValue[0]);
-              ownerUseCase.toggleMenu(false);
+              ownerUseCase?.execute(newValue[0]);
+              ownerUseCase?.toggleMenu(false);
             }}
             noOptionsMessage={({ inputValue }) => (
               <div className='text-grayModern-700 px-3 py-1 mt-0.5 rounded-md bg-grayModern-100 gap-1 flex items-center'>

@@ -5,7 +5,9 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
-import { EditEmailCase } from '@domain/usecases/command-menu/edit-email.usecase';
+import { registry } from '@/domain/stores/registry';
+import { EditEmailCase } from '@/domain/usecases/command-menu/edit-email.usecase';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { cn } from '@ui/utils/cn';
 import { validateEmail } from '@utils/email';
@@ -34,9 +36,12 @@ export const MultiValueWithActionMenu: FC<MultiValueWithActionMenuProps> =
 
     const [searchParams, setSearchParams] = useSearchParams();
     const organizationId = useParams()?.id as string;
-    const existingContacts =
-      store.organizations.getById(organizationId)?.contacts;
-
+    const organization = registry.get('organizations').get(organizationId);
+    const organizationAggregate = new OrganizationAggregate(
+      organization!,
+      store,
+    );
+    const existingContacts = organizationAggregate.contacts;
     const [_d, setExpandedCardId] = useContactCardMeta();
 
     const [_, copyToClipboard] = useCopyToClipboard();

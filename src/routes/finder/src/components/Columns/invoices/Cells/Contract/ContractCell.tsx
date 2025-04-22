@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 
 import { useStore } from '@shared/hooks/useStore';
 import { TableCellTooltip } from '@ui/presentation/Table';
@@ -16,8 +17,9 @@ export const ContractCell = observer(
   }) => {
     const store = useStore();
     const itemRef = useRef<HTMLAnchorElement>(null);
+    const organizationStore = registry.get('organizations');
 
-    const organization = store.organizations?.getById(organizationId)?.value;
+    const organization = organizationStore.get(organizationId);
     const contract = store.contracts?.value?.get(contractId)?.value;
     const name = contract?.contractName || `${organization?.name}'s contract`;
     const orgName = organization?.name;

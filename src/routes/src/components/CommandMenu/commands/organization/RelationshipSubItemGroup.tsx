@@ -1,5 +1,6 @@
+import { registry } from '@domain/stores/registry';
+
 import { Check } from '@ui/media/icons/Check';
-import { useStore } from '@shared/hooks/useStore';
 import { CommandSubItem } from '@ui/overlay/CommandMenu';
 import { OrganizationRelationship } from '@graphql/types';
 import { AlignHorizontalCentre02 } from '@ui/media/icons/AlignHorizontalCentre02';
@@ -18,15 +19,15 @@ export const RelationshipSubItemGroup = ({
     relationship: OrganizationRelationship,
   ) => void;
 }) => {
-  const store = useStore();
+  const organizationStore = registry.get('organizations');
 
   const isSelected = () => {
     if (selectedIds.length > 1) {
       return;
     } else {
-      const organization = store.organizations.value.get(selectedIds[0]);
+      const organization = organizationStore.get(selectedIds[0]);
 
-      return organization?.value.relationship;
+      return organization?.relationship;
     }
   };
 

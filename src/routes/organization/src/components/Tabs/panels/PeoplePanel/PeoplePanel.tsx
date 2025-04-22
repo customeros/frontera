@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { differenceInCalendarMonths } from 'date-fns';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 import { SearchSortContact } from '@domain/usecases/contact-details/search-sort-contacts.usecase';
 
 import { Input } from '@ui/form/Input';
@@ -26,8 +28,9 @@ export const PeoplePanel = observer(() => {
   const store = useStore();
   const id = useParams()?.id as string;
   const [expandAll, setExpandAll] = useState(false);
-  const organization = store.organizations.getById(id);
-  const contacts = organization?.contacts;
+  const organization = registry.get('organizations').get(id);
+  const organizationAggregate = new OrganizationAggregate(organization!, store);
+  const contacts = organizationAggregate?.contacts;
 
   const searchSortContact = searchSortContactUseCase;
 
@@ -49,8 +52,8 @@ export const PeoplePanel = observer(() => {
     }).length === 0 && search;
 
   useEffect(() => {
-    if (organization?.value.contacts.length) {
-      store.contacts.preload(organization?.value.contacts);
+    if (organization?.contacts.length) {
+      store.contacts.preload(organization?.contacts);
     }
   }, []);
 
@@ -75,8 +78,8 @@ export const PeoplePanel = observer(() => {
               Assemble the team
             </p>
             <p className='text-sm my-1 max-w-[360px] text-center'>
-              Start by adding people that work at {organization?.value.name},
-              and keep track of everyone from decision-makers to day-to-day
+              Start by adding people that work at {organization?.name}, and keep
+              track of everyone from decision-makers to day-to-day
               collaborators.
             </p>
             <Button

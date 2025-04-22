@@ -14,16 +14,16 @@ export class EditLatestOrganizationActive {
   }
 
   @action
-  setSearchTerm(searchTerm: string) {
+  setSearchTerm = (searchTerm: string) => {
     this.search = searchTerm;
-  }
+  };
 
   @computed
   get searchTerm() {
     return this.search;
   }
 
-  public async executeSearch() {
+  executeSearch = async () => {
     await this.service.searchTenant(this.search);
-  }
+  };
 }

@@ -1,7 +1,9 @@
 import { useState, createRef } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { TagDatum, TagStore } from '@store/Tags/Tag.store';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { Input } from '@ui/form/Input';
 import { EntityType } from '@graphql/types';
@@ -47,15 +49,18 @@ export const TagList = observer(
       null,
     );
     const { open: isOpen, onOpen, onClose } = useDisclosure();
+    const organizationStore = registry.get('organizations');
 
     const handleDeleteTag = (tagId: string) => {
       const tag = store.tags.getById(tagId);
 
       if (tag) {
         if (tag.value.entityType === EntityType.Organization) {
-          store.organizations.toArray().forEach((organization) => {
-            organization.deleteTag(tagId);
-          });
+          Array.from(organizationStore.cache.values()).forEach(
+            (organization) => {
+              new OrganizationAggregate(organization, store).deleteTag(tagId);
+            },
+          );
         } else if (tag.value.entityType === EntityType.Contact) {
           store.contacts.toArray().forEach((contact) => {
             contact.deletePersona(tagId);

@@ -3,9 +3,6 @@ import { Policy } from './policy';
 import { Store } from '../store/store';
 import { PolicyManager } from './policy-manager';
 
-type ExtractAggregateType<Policies extends Policy<any>[]> =
-  Policies[number] extends { _aggregateType: infer A } ? A : never;
-
 export function applyPolicies<
   Key extends string | number = string | number,
   Value = unknown,
@@ -15,14 +12,12 @@ export function applyPolicies<
   policies: Policies,
 ): Store<Value> & {
   destroy(): void;
+  suspendSync(fn: () => void): void;
   revalidate(key: Key): Promise<void>;
-  getOrFetch(key: Key): Promise<Value | undefined>;
-  getAggregate(key: Key): ExtractAggregateType<Policies> | undefined;
-  policyManager: PolicyManager<Value, ExtractAggregateType<Policies>>;
+  policyManager: PolicyManager<Value>;
+  getOrFetch(key: Key): Value | undefined;
 } {
-  const manager = new PolicyManager<Value, ExtractAggregateType<Policies>>(
-    store,
-  );
+  const manager = new PolicyManager<Value>(store);
 
   policies.forEach((policy) => {
     manager.register(policy);
@@ -58,10 +53,8 @@ export function applyPolicies<
     destroy() {
       manager.detachAll();
     },
-    getAggregate(key: Key) {
-      return manager.getAggregate(key) as
-        | ExtractAggregateType<Policies>
-        | undefined;
+    suspendSync(fn: () => void) {
+      return manager.suspendSync(fn);
     },
   });
 }

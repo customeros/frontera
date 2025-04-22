@@ -1,6 +1,6 @@
 import { StoreRegistry } from '@/lib/store';
 
-import { OrganizationStore } from './organization';
+import { OrganizationStore } from './organization.store';
 
 interface StoresMap {
   organizations: typeof OrganizationStore;

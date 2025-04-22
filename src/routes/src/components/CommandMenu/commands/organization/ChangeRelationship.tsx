@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
-import { Organization } from '@store/Organizations/Organization.dto';
-import { EditOrganizationRelationshipUseCase } from '@domain/usecases/command-menu/organization/edit-organization-relationship.usecase';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services/organization/organizations.service';
 
 import { Check } from '@ui/media/icons/Check.tsx';
 import { useStore } from '@shared/hooks/useStore';
@@ -14,6 +15,7 @@ import { ActivityHeart } from '@ui/media/icons/ActivityHeart';
 import { MessageXCircle } from '@ui/media/icons/MessageXCircle';
 import { Command, CommandItem, CommandInput } from '@ui/overlay/CommandMenu';
 import { relationshipOptions } from '@organization/components/Tabs/panels/AboutPanel/util';
+
 const iconMap = {
   Customer: <ActivityHeart className='text-grayModern-500' />,
   Prospect: <Seeding className='text-grayModern-500' />,
@@ -25,29 +27,25 @@ export const ChangeRelationship = observer(() => {
   const store = useStore();
   const context = store.ui.commandMenu.context;
 
-  const relationshipUseCase = useMemo(
-    () => new EditOrganizationRelationshipUseCase(context?.ids?.[0] as string),
-    [context?.ids?.[0]],
-  );
+  const organizationStore = registry.get('organizations');
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const entity = match(context.entity)
     .returnType<Organization | Organization[] | undefined>()
     .with('Organization', () =>
-      store.organizations.value.get(context.ids?.[0] as string),
+      organizationStore.get(context.ids?.[0] as string),
     )
     .with(
       'Organizations',
       () =>
         context.ids?.map((e: string) =>
-          store.organizations.value.get(e),
+          organizationStore.get(e),
         ) as Organization[],
     )
     .otherwise(() => undefined);
+
   const label = match(context.entity)
-    .with(
-      'Organization',
-      () => `Company - ${(entity as Organization)?.value?.name}`,
-    )
+    .with('Organization', () => `Company - ${(entity as Organization)?.name}`)
     .with('Organizations', () => `${context.ids?.length} companies`)
     .otherwise(() => '');
 
@@ -58,10 +56,12 @@ export const ChangeRelationship = observer(() => {
 
     match(context.entity)
       .with('Organization', () => {
-        relationshipUseCase.execute(value);
+        const organization = entity as Organization;
+
+        organizationService.setRelationship(organization, value);
       })
       .with('Organizations', () => {
-        store.organizations?.updateRelationship(context.ids as string[], value);
+        organizationService.setReltionshipBulk(context.ids as string[], value);
       })
       .otherwise(() => '');
 
@@ -71,8 +71,7 @@ export const ChangeRelationship = observer(() => {
   const selectedRelationshipOption = match(context.entity)
     .with('Organization', () =>
       relationshipOptions.find(
-        (option) =>
-          option.value === (entity as Organization)?.value.relationship,
+        (option) => option.value === (entity as Organization)?.relationship,
       ),
     )
     .with('Organizations', () => undefined)

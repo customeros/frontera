@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { EditEmailCase } from '@domain/usecases/command-menu/edit-email.usecase';
 
 import { Check } from '@ui/media/icons/Check';
@@ -32,6 +33,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
   const [_, copyToClipboard] = useCopyToClipboard();
 
   const contactStore = store.contacts.value.get(contactId);
+  const organizationStore = registry.get('organizations');
 
   if (!contactStore) return;
 
@@ -40,8 +42,7 @@ export const EmailCell = observer(({ contactId }: EmailCellProps) => {
   const ref = useRef(null);
 
   const activeOrgId = contactStore?.value.primaryOrganizationId;
-  const domains =
-    activeOrgId && store.organizations.value.get(activeOrgId)?.value?.domains;
+  const domains = activeOrgId && organizationStore.get(activeOrgId)?.domains;
   const orgActive = contactStore?.value.primaryOrganizationName;
 
   const email = contactStore.value.emails.find((e) => e.primary)?.email;

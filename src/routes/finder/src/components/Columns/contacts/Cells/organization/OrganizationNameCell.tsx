@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
+import { registry } from '@domain/stores/registry';
 
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
@@ -16,6 +17,7 @@ interface OrganizationNameCellProps {
 export const OrganizationNameCell = observer(
   ({ org, contactId, orgId }: OrganizationNameCellProps) => {
     const store = useStore();
+    const organizationStore = registry.get('organizations');
 
     const [tabs] = useLocalStorage<{
       [key: string]: string;
@@ -33,10 +35,8 @@ export const OrganizationNameCell = observer(
 
       if (!contactStore || !organizationId) return;
 
-      if (!store.organizations.value.has(organizationId)) {
-        store.organizations.preload([
-          contactStore.value.primaryOrganizationId!,
-        ]);
+      if (!organizationStore.has(organizationId)) {
+        organizationStore.getOrFetch(organizationId);
       }
     };
 

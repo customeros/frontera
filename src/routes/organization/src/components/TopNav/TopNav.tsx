@@ -2,6 +2,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
+import { registry } from '@/domain/stores/registry';
 
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
@@ -12,7 +13,7 @@ export const TopNav = observer(() => {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const organization = store.organizations.getById(params?.id as string);
+  const organization = registry.get('organizations').get(params?.id as string);
 
   const [lastActivePosition, setLastActivePosition] = useLocalStorage(
     `customeros-player-last-position`,

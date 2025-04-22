@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 import { AddOrganizationDomainCase } from '@domain/usecases/command-menu/organization/add-organization-domain.usecase';
 
 import { cn } from '@ui/utils/cn';
@@ -17,41 +18,41 @@ import {
 
 import { DuplicateDomainInformation } from './DuplicateDomainInformationModal';
 
-const addNewDomainCase = new AddOrganizationDomainCase();
-
 export const AddNewDomain = observer(() => {
-  const { ui, organizations } = useStore();
+  const { ui } = useStore();
   const context = ui.commandMenu.context;
-  const organization = organizations.getById(context.ids?.[0] as string);
+  const organization = registry
+    .get('organizations')
+    .get(context.ids?.[0] as string);
   const [showDuplicateInfo, setShowDuplicateInfo] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const addNewDomainUsecase = useMemo(
+    () => organization && new AddOrganizationDomainCase(organization),
+    [organization],
+  );
+
   const handleConfirm = async () => {
-    addNewDomainCase.resetValidation();
-    addNewDomainCase.checkIfEmpty();
+    addNewDomainUsecase?.resetValidation();
+    addNewDomainUsecase?.checkIfEmpty();
 
-    await addNewDomainCase.validateDomain();
+    await addNewDomainUsecase?.validateDomain();
 
-    if (addNewDomainCase.error) {
-      if (addNewDomainCase.associatedOrg) {
+    if (addNewDomainUsecase?.error) {
+      if (addNewDomainUsecase?.associatedOrg) {
         setShowDuplicateInfo(true);
       }
 
       return;
     }
 
-    addNewDomainCase.submit();
+    addNewDomainUsecase?.submit();
     ui.commandMenu.setOpen(false);
   };
 
   useModKey('Enter', () => {
     ui.commandMenu.setOpen(false);
   });
-  useEffect(() => {
-    if (organization) {
-      addNewDomainCase.setEntity(organization);
-    }
-  }, [organization?.id]);
 
   useEffect(() => {
     const focusTimer = setTimeout(() => {
@@ -64,7 +65,7 @@ export const AddNewDomain = observer(() => {
   }, []); // Run only on mount
 
   const handleClose = () => {
-    addNewDomainCase.reset();
+    addNewDomainUsecase?.reset();
     ui.commandMenu.toggle('AddNewDomain');
     ui.commandMenu.clearCallback();
   };
@@ -104,13 +105,14 @@ export const AddNewDomain = observer(() => {
               ref={inputRef}
               dataTest='add-domain-input'
               placeholder='Company’s domain'
-              value={addNewDomainCase.inputValue}
+              value={addNewDomainUsecase?.inputValue}
               onChange={(e) => {
-                addNewDomainCase.setInputValue(e.target.value);
+                addNewDomainUsecase?.setInputValue(e.target.value);
               }}
               className={cn({
                 'border-error-600 hover:!border-error-600 focus:!border-error-600 active:!border-error-600':
-                  addNewDomainCase.error && !addNewDomainCase.associatedOrg,
+                  addNewDomainUsecase?.error &&
+                  !addNewDomainUsecase?.associatedOrg,
               })}
               onKeyDownCapture={(e) => {
                 e.stopPropagation();
@@ -124,12 +126,13 @@ export const AddNewDomain = observer(() => {
                 }
               }}
             />
-            {addNewDomainCase.error && !addNewDomainCase.associatedOrg && (
-              <p className='text-xs text-error-600'>
-                {' '}
-                {addNewDomainCase.error}
-              </p>
-            )}
+            {addNewDomainUsecase?.error &&
+              !addNewDomainUsecase.associatedOrg && (
+                <p className='text-xs text-error-600'>
+                  {' '}
+                  {addNewDomainUsecase.error}
+                </p>
+              )}
           </div>
 
           <div className='flex justify-between gap-3 mt-6'>
@@ -143,7 +146,7 @@ export const AddNewDomain = observer(() => {
               onClick={handleConfirm}
               dataTest={'add-domain'}
               loadingText={'Adding domain...'}
-              isLoading={addNewDomainCase.isValidating}
+              isLoading={addNewDomainUsecase?.isValidating}
               data-test='contact-actions-confirm-flow-change'
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -160,8 +163,8 @@ export const AddNewDomain = observer(() => {
       <DuplicateDomainInformation
         onClose={handleClose}
         isOpen={showDuplicateInfo}
-        domain={addNewDomainCase.inputValue}
-        associatedOrg={addNewDomainCase.associatedOrg}
+        domain={addNewDomainUsecase?.inputValue}
+        associatedOrg={addNewDomainUsecase?.associatedOrg}
       />
     </Command>
   );

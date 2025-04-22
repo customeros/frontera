@@ -123,7 +123,7 @@ export const SignIn = observer(() => {
     <>
       <div className='h-screen w-screen flex animate-fadeIn overflow-hidden max-h-screen max-w-screen'>
         <div className='flex-1 items-center h-screen overflow-hidden'>
-          <div className='h-full flex items-center justify-center  relative'>
+          <div className='h-full flex items-center justify-center relative'>
             <div className='flex flex-col items-center justify-center w-[450px] h-full px-6 pb-6 bg-white'>
               <img
                 width={264}

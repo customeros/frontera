@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
-import { Organization } from '@store/Organizations/Organization.dto';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store.ts';
-import { EditOwnerUseCase } from '@domain/usecases/command-menu/organization/edit-owner-organization.usecase';
+import { OrganizationService } from '@/domain/services/organization/organizations.service';
 
 import { Check } from '@ui/media/icons/Check.tsx';
 import { useStore } from '@shared/hooks/useStore';
@@ -16,11 +17,8 @@ export const AssignOwner = observer(() => {
   const store = useStore();
   const context = store.ui.commandMenu.context;
   const users = store.users.tenantUsers;
-
-  const orgOwnerUseCase = useMemo(
-    () => new EditOwnerUseCase(context?.ids?.[0] as string),
-    [context?.ids?.[0]],
-  );
+  const organizationStore = registry.get('organizations');
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const entity = match(context.entity)
     .returnType<
@@ -37,7 +35,7 @@ export const AssignOwner = observer(() => {
       'Organizations',
       () =>
         context.ids?.map((e: string) =>
-          store.organizations.value.get(e),
+          organizationStore.get(e),
         ) as Organization[],
     )
     .with(
@@ -48,7 +46,7 @@ export const AssignOwner = observer(() => {
         ) as OpportunityStore[],
     )
     .with('Organization', () =>
-      store.organizations.value.get((context.ids as string[])?.[0]),
+      organizationStore.get((context.ids as string[])?.[0]),
     )
     .otherwise(() => undefined);
   const label = match(context.entity)
@@ -56,10 +54,7 @@ export const AssignOwner = observer(() => {
       'Opportunity',
       () => `Opportunity - ${(entity as OpportunityStore)?.value?.name}`,
     )
-    .with(
-      'Organization',
-      () => `Company - ${(entity as Organization)?.value?.name}`,
-    )
+    .with('Organization', () => `Company - ${(entity as Organization)?.name}`)
     .with('Organizations', () => `${context.ids?.length} organizations`)
     .with('Opportunities', () => `${context.ids?.length} opportunities`)
     .otherwise(() => undefined);
@@ -88,15 +83,15 @@ export const AssignOwner = observer(() => {
       .with('Organization', () => {
         if (!entity) return;
 
-        orgOwnerUseCase.execute(user.value.id as string);
+        organizationService.setOwner(entity as Organization, user.value.id);
       })
       .with('Organizations', () => {
         if (!(entity as Organization[])?.length) return;
 
         const orgs = entity as Organization[];
 
-        orgs.forEach(() => {
-          orgOwnerUseCase.execute(user.value.id as string);
+        orgs.forEach((o) => {
+          organizationService.setOwner(o, user.value.id);
         });
 
         store.ui.toastSuccess(

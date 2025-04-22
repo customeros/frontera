@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
-import { Organization } from '@store/Organizations/Organization.dto';
-import { EditOrganizationHealthUseCase } from '@domain/usecases/command-menu/edit-health-organization.usecase';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services/organization/organizations.service';
 
 import { Check } from '@ui/media/icons/Check';
 import { useStore } from '@shared/hooks/useStore';
@@ -13,35 +14,29 @@ import { Command, CommandItem, CommandInput } from '@ui/overlay/CommandMenu';
 export const UpdateHealthStatus = observer(() => {
   const store = useStore();
   const context = store.ui.commandMenu.context;
+  const organizationStore = registry.get('organizations');
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const entity = match(context.entity)
     .returnType<Organization | Organization[] | undefined>()
 
     .with('Organization', () =>
-      store.organizations.value.get(context.ids?.[0] as string),
+      organizationStore.get(context.ids?.[0] as string),
     )
     .with(
       'Organizations',
       () =>
         context.ids?.map((e: string) =>
-          store.organizations.value.get(e),
+          organizationStore.get(e),
         ) as Organization[],
     )
     .otherwise(() => undefined);
 
   const label = match(context.entity)
-    .with(
-      'Organization',
-      () => `Company - ${(entity as Organization)?.value?.name}`,
-    )
+    .with('Organization', () => `Company - ${(entity as Organization)?.name}`)
     .with('Organizations', () => `${context.ids?.length} companies`)
 
     .otherwise(() => '');
-
-  const healthUseCase = useMemo(
-    () => new EditOrganizationHealthUseCase(context?.ids?.[0] as string),
-    [context?.ids?.[0]],
-  );
 
   const handleSelect =
     (renewalLikelihood: OpportunityRenewalLikelihood) => () => {
@@ -51,14 +46,19 @@ export const UpdateHealthStatus = observer(() => {
 
       match(context.entity)
         .with('Organization', () => {
-          healthUseCase.execute(renewalLikelihood);
-        })
-        .with('Organizations', () =>
-          store.organizations.updateHealth(
-            context.ids as string[],
+          organizationService.setHealth(
+            entity as Organization,
             renewalLikelihood,
-          ),
-        )
+          );
+        })
+        .with('Organizations', () => {
+          (context.ids as string[]).forEach((id) => {
+            const org = organizationStore.get(id);
+
+            if (!org) return;
+            organizationService.setHealth(org, renewalLikelihood);
+          });
+        })
         .otherwise(() => undefined);
 
       store.ui.commandMenu.toggle('UpdateHealthStatus');
@@ -66,7 +66,7 @@ export const UpdateHealthStatus = observer(() => {
 
   const healthStatus =
     context.entity === 'Organization' &&
-    (entity as Organization)?.value.renewalSummaryRenewalLikelihood;
+    (entity as Organization)?.renewalSummaryRenewalLikelihood;
 
   return (
     <Command label='Change health status...'>

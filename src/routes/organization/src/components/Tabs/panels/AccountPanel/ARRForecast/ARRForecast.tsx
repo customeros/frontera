@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 
 import { cn } from '@ui/utils/cn';
-import { useStore } from '@shared/hooks/useStore';
 import { HelpCircle } from '@ui/media/icons/HelpCircle';
 import { FeaturedIcon } from '@ui/media/Icon/FeaturedIcon';
 import { IconButton } from '@ui/form/IconButton/IconButton';
@@ -30,8 +29,6 @@ export const ARRForecast = observer(
     renewalLikelihood,
     currency = 'USD',
   }: ARRForecastProps) => {
-    const store = useStore();
-
     const { modal } = useARRInfoModalContext();
     const formattedMaxAmount = formatCurrency(
       maxArrForecast ?? 0,
@@ -84,15 +81,13 @@ export const ARRForecast = observer(
               <div className='flex flex-col'>
                 <h2
                   className={cn(
-                    store.organizations.isLoading
-                      ? 'text-grayModern-400'
-                      : 'text-grayModern-700',
+                    'text-grayModern-700',
                     'text-2xl font-semibold transition-opacity duration-250 ease-in',
                   )}
                 >
                   {formattedAmount}
                 </h2>
-                {hasForecastChanged && !store.organizations?.isLoading && (
+                {hasForecastChanged && (
                   <p className='text-sm  text-right line-through'>
                     {formattedMaxAmount}
                   </p>

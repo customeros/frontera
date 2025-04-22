@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { useKeys, useKeyBindings } from 'rooks';
+import { Organization } from '@/domain/entities';
+import { OrganizationService } from '@domain/services';
 import { CommandMenuType } from '@store/UI/CommandMenu.store.ts';
-import { Organization } from '@store/Organizations/Organization.dto';
 import { ActionItem } from '@finder/components/Actions/components/ActionItem.tsx';
 
 import { X } from '@ui/media/icons/X';
@@ -38,6 +39,7 @@ export const OrganizationTableActions = observer(
     const store = useStore();
 
     const [_targetId, setTargetId] = useState<string | null>(null);
+    const organizationService = useMemo(() => new OrganizationService(), []);
 
     const selectCount = selection?.length;
 
@@ -88,7 +90,7 @@ export const OrganizationTableActions = observer(
       if (!selectCount && !focusedId) return;
 
       if (!selectCount && focusedId) {
-        store.organizations.updateStage(
+        organizationService.setStageBulk(
           [focusedId],
           OrganizationStage.Unqualified,
         );
@@ -96,7 +98,10 @@ export const OrganizationTableActions = observer(
         return;
       }
 
-      store.organizations.updateStage(selection, OrganizationStage.Unqualified);
+      organizationService.setStageBulk(
+        selection,
+        OrganizationStage.Unqualified,
+      );
       clearSelection();
     };
 
@@ -104,11 +109,11 @@ export const OrganizationTableActions = observer(
       if (!selectCount && !focusedId) return;
 
       if (!selectCount && focusedId) {
-        store.organizations.updateStage([focusedId], OrganizationStage.Target);
+        organizationService.setStageBulk([focusedId], OrganizationStage.Target);
 
         return;
       }
-      store.organizations.updateStage(selection, OrganizationStage.Target);
+      organizationService.setStageBulk(selection, OrganizationStage.Target);
       clearSelection();
     };
 
@@ -116,11 +121,14 @@ export const OrganizationTableActions = observer(
       if (!selectCount && !focusedId) return;
 
       if (!selectCount && focusedId) {
-        store.organizations.updateStage([focusedId], OrganizationStage.Engaged);
+        organizationService.setStageBulk(
+          [focusedId],
+          OrganizationStage.Engaged,
+        );
 
         return;
       }
-      store.organizations.updateStage(selection, OrganizationStage.Engaged);
+      organizationService.setStageBulk(selection, OrganizationStage.Engaged);
       clearSelection();
     };
 

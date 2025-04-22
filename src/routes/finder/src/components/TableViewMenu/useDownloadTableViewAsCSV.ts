@@ -1,9 +1,9 @@
 import { useSearchParams } from 'react-router-dom';
 
 import { match } from 'ts-pattern';
+import { Organization } from '@/domain/entities';
 import { Contact } from '@store/Contacts/Contact.dto';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
-import { Organization } from '@store/Organizations/Organization.dto';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store.ts';
 import { csvDataMapper as contactCsvDataMapper } from '@finder/components/Columns/contacts';
 import { csvDataMapper as orgCsvDataMapper } from '@finder/components/Columns/organizations';

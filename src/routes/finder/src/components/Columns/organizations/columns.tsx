@@ -1,4 +1,4 @@
-import { Organization } from '@store/Organizations/Organization.dto';
+import { Organization } from '@/domain/entities/organization.entity';
 import { CountryCell } from '@finder/components/Columns/Cells/country';
 import { OrganizationStageCell } from '@finder/components/Columns/Cells/stage';
 import { DateCell } from '@finder/components/Columns/shared/Cells/DateCell/DateCell';
@@ -42,7 +42,7 @@ type Column = ColumnDefinition<ColumnDatum, any>;
 const columnHelper = createColumnHelper<ColumnDatum>();
 
 export const columns: Record<string, Column> = {
-  [ColumnViewType.OrganizationsAvatar]: columnHelper.accessor((row) => row, {
+  [ColumnViewType.OrganizationsAvatar]: columnHelper.accessor('id', {
     id: ColumnViewType.OrganizationsAvatar,
     size: 29,
     minSize: 29,
@@ -50,26 +50,12 @@ export const columns: Record<string, Column> = {
     enableColumnFilter: false,
     enableResizing: false,
     cell: (props) => {
-      const enrichedOrg = props.getValue()?.value;
-
-      const icon = enrichedOrg?.iconUrl;
-      const logo = enrichedOrg?.logoUrl;
-      const isEnriching = props.getValue()?.isEnriching;
-
-      return (
-        <AvatarCell
-          icon={icon}
-          logo={logo}
-          isEnriching={isEnriching}
-          id={props.getValue()?.value?.id}
-          name={props.getValue()?.value?.name}
-        />
-      );
+      return <AvatarCell id={props.getValue()} />;
     },
     header: AvatarHeader,
     skeleton: () => <Skeleton className='size-[24px]' />,
   }),
-  [ColumnViewType.OrganizationsName]: columnHelper.accessor('value.id', {
+  [ColumnViewType.OrganizationsName]: columnHelper.accessor('id', {
     id: ColumnViewType.OrganizationsName,
     minSize: 160,
     size: 160,
@@ -89,7 +75,7 @@ export const columns: Record<string, Column> = {
     skeleton: () => <Skeleton className='w-[100px] h-[14px]' />,
   }),
   [ColumnViewType.OrganizationsPrimaryDomains]: columnHelper.accessor(
-    'value.domainsDetails',
+    'domainsDetails',
     {
       id: ColumnViewType.OrganizationsPrimaryDomains,
       minSize: 152,
@@ -98,7 +84,7 @@ export const columns: Record<string, Column> = {
       enableResizing: true,
       enableSorting: false,
       cell: (props) => {
-        const organizationId = props.row.original.value.id;
+        const organizationId = props.row.original.id;
 
         return <DomainsCell organizationId={organizationId} />;
       },
@@ -113,7 +99,7 @@ export const columns: Record<string, Column> = {
     },
   ),
   [ColumnViewType.OrganizationsRelationship]: columnHelper.accessor(
-    'value.relationship',
+    'relationship',
     {
       id: ColumnViewType.OrganizationsRelationship,
       minSize: 119,
@@ -128,7 +114,7 @@ export const columns: Record<string, Column> = {
         />
       ),
       cell: (props) => {
-        const id = props.row.original.value?.id;
+        const id = props.row.original.id;
 
         return (
           <OrganizationRelationshipCell
@@ -141,7 +127,7 @@ export const columns: Record<string, Column> = {
     },
   ),
   [ColumnViewType.OrganizationsOnboardingStatus]: columnHelper.accessor(
-    'value',
+    (entity) => entity,
     {
       id: ColumnViewType.OrganizationsOnboardingStatus,
       minSize: 114,
@@ -194,64 +180,70 @@ export const columns: Record<string, Column> = {
       </div>
     ),
   }),
-  [ColumnViewType.OrganizationsRenewalDate]: columnHelper.accessor('value', {
-    id: ColumnViewType.OrganizationsRenewalDate,
-    minSize: 156,
-    size: 156,
-    maxSize: 400,
-    enableColumnFilter: false,
-    enableResizing: true,
-    enableSorting: true,
-    cell: (props) => {
-      const nextRenewalDate = props.getValue()?.renewalSummaryNextRenewalAt;
+  [ColumnViewType.OrganizationsRenewalDate]: columnHelper.accessor(
+    (entity) => entity,
+    {
+      id: ColumnViewType.OrganizationsRenewalDate,
+      minSize: 156,
+      size: 156,
+      maxSize: 400,
+      enableColumnFilter: false,
+      enableResizing: true,
+      enableSorting: true,
+      cell: (props) => {
+        const nextRenewalDate = props.getValue()?.renewalSummaryNextRenewalAt;
 
-      return <TimeToRenewalCell nextRenewalDate={nextRenewalDate} />;
-    },
+        return <TimeToRenewalCell nextRenewalDate={nextRenewalDate} />;
+      },
 
-    header: (props) => (
-      <THead
-        title='Renewal Date'
-        id={ColumnViewType.OrganizationsRenewalDate}
-        {...getTHeadProps<Organization>(props)}
-      />
-    ),
-    skeleton: () => <Skeleton className='w-[50%] h-[14px]' />,
-  }),
-  [ColumnViewType.OrganizationsForecastArr]: columnHelper.accessor('value', {
-    id: ColumnViewType.OrganizationsForecastArr,
-    minSize: 154,
-    size: 154,
-    maxSize: 400,
-    enableColumnFilter: false,
-    enableResizing: true,
-    enableSorting: true,
-    cell: (props) => {
-      const value = props.getValue();
-      const amount = value?.renewalSummaryArrForecast;
-      const potentialAmount = value?.renewalSummaryMaxArrForecast;
-
-      return (
-        <RenewalForecastCell
-          id={value?.id}
-          amount={amount}
-          potentialAmount={potentialAmount}
+      header: (props) => (
+        <THead
+          title='Renewal Date'
+          id={ColumnViewType.OrganizationsRenewalDate}
+          {...getTHeadProps<Organization>(props)}
         />
-      );
+      ),
+      skeleton: () => <Skeleton className='w-[50%] h-[14px]' />,
     },
-    header: (props) => (
-      <THead<HTMLInputElement>
-        title='ARR Forecast'
-        id={ColumnViewType.OrganizationsForecastArr}
-        {...getTHeadProps<Organization>(props)}
-      />
-    ),
-    skeleton: () => (
-      <div className='flex flex-col gap-1'>
-        <Skeleton className='w-[50%] h-[14px]' />
-        <Skeleton className='w-[25%] h-[14px]' />
-      </div>
-    ),
-  }),
+  ),
+  [ColumnViewType.OrganizationsForecastArr]: columnHelper.accessor(
+    (entity) => entity,
+    {
+      id: ColumnViewType.OrganizationsForecastArr,
+      minSize: 154,
+      size: 154,
+      maxSize: 400,
+      enableColumnFilter: false,
+      enableResizing: true,
+      enableSorting: true,
+      cell: (props) => {
+        const value = props.getValue();
+        const amount = value?.renewalSummaryArrForecast;
+        const potentialAmount = value?.renewalSummaryMaxArrForecast;
+
+        return (
+          <RenewalForecastCell
+            id={value?.id}
+            amount={amount}
+            potentialAmount={potentialAmount}
+          />
+        );
+      },
+      header: (props) => (
+        <THead<HTMLInputElement>
+          title='ARR Forecast'
+          id={ColumnViewType.OrganizationsForecastArr}
+          {...getTHeadProps<Organization>(props)}
+        />
+      ),
+      skeleton: () => (
+        <div className='flex flex-col gap-1'>
+          <Skeleton className='w-[50%] h-[14px]' />
+          <Skeleton className='w-[25%] h-[14px]' />
+        </div>
+      ),
+    },
+  ),
   [ColumnViewType.OrganizationsOwner]: columnHelper.accessor((row) => row, {
     id: ColumnViewType.OrganizationsOwner,
     minSize: 82,
@@ -262,7 +254,7 @@ export const columns: Record<string, Column> = {
     cell: (props) => {
       const row = props.getValue();
 
-      const owner = row?.value?.owner;
+      const owner = row?.owner;
 
       return <OwnerCell ownerId={owner?.id} />;
     },
@@ -276,7 +268,7 @@ export const columns: Record<string, Column> = {
     skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
   }),
   [ColumnViewType.OrganizationsLeadSource]: columnHelper.accessor(
-    'value.leadSource',
+    'leadSource',
     {
       id: ColumnViewType.OrganizationsLeadSource,
       minSize: 84,
@@ -306,7 +298,7 @@ export const columns: Record<string, Column> = {
     },
   ),
   [ColumnViewType.OrganizationsCreatedDate]: columnHelper.accessor(
-    'value.createdAt',
+    'createdAt',
     {
       id: ColumnViewType.OrganizationsCreatedDate,
       size: 145,
@@ -330,7 +322,7 @@ export const columns: Record<string, Column> = {
     },
   ),
   [ColumnViewType.OrganizationsYearFounded]: columnHelper.accessor(
-    'value.yearFounded',
+    'yearFounded',
     {
       id: ColumnViewType.OrganizationsYearFounded,
       size: 120,
@@ -365,7 +357,7 @@ export const columns: Record<string, Column> = {
     },
   ),
   [ColumnViewType.OrganizationsEmployeeCount]: columnHelper.accessor(
-    'value.employees',
+    'employees',
     {
       id: ColumnViewType.OrganizationsEmployeeCount,
       size: 125,
@@ -416,29 +408,26 @@ export const columns: Record<string, Column> = {
       skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
     },
   ),
-  [ColumnViewType.OrganizationsSocials]: columnHelper.accessor(
-    'value.socialMedia',
-    {
-      id: ColumnViewType.OrganizationsSocials,
-      size: 125,
-      minSize: 94,
-      maxSize: 400,
-      enableResizing: true,
-      enableColumnFilter: false,
-      enableSorting: false,
-      cell: (props) => (
-        <OrganizationLinkedInCell organizationId={props.row.original.id} />
-      ),
-      header: (props) => (
-        <THead<HTMLInputElement>
-          title='LinkedIn'
-          id={ColumnViewType.OrganizationsSocials}
-          {...getTHeadProps<Organization>(props)}
-        />
-      ),
-      skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
-    },
-  ),
+  [ColumnViewType.OrganizationsSocials]: columnHelper.accessor('socialMedia', {
+    id: ColumnViewType.OrganizationsSocials,
+    size: 125,
+    minSize: 94,
+    maxSize: 400,
+    enableResizing: true,
+    enableColumnFilter: false,
+    enableSorting: false,
+    cell: (props) => (
+      <OrganizationLinkedInCell organizationId={props.row.original.id} />
+    ),
+    header: (props) => (
+      <THead<HTMLInputElement>
+        title='LinkedIn'
+        id={ColumnViewType.OrganizationsSocials}
+        {...getTHeadProps<Organization>(props)}
+      />
+    ),
+    skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
+  }),
   [ColumnViewType.OrganizationsLastTouchpoint]: columnHelper.accessor(
     (row) => row,
     {
@@ -451,8 +440,8 @@ export const columns: Record<string, Column> = {
       enableSorting: true,
       cell: (props) => (
         <LastTouchpointCell
-          lastTouchPointAt={props.row.original?.value?.lastTouchPointAt}
-          lastTouchPointType={props.row.original?.value?.lastTouchPointType}
+          lastTouchPointAt={props.row.original?.lastTouchPointAt}
+          lastTouchPointType={props.row.original?.lastTouchPointType}
         />
       ),
       header: (props) => (
@@ -471,7 +460,7 @@ export const columns: Record<string, Column> = {
     },
   ),
   [ColumnViewType.OrganizationsLastTouchpointDate]: columnHelper.accessor(
-    'value.lastTouchPointAt',
+    'lastTouchPointAt',
     {
       id: ColumnViewType.OrganizationsLastTouchpointDate,
       size: 154,
@@ -498,30 +487,27 @@ export const columns: Record<string, Column> = {
       ),
     },
   ),
-  [ColumnViewType.OrganizationsChurnDate]: columnHelper.accessor(
-    'value.churnedAt',
-    {
-      id: ColumnViewType.OrganizationsChurnDate,
-      size: 115,
-      minSize: 110,
-      maxSize: 400,
-      enableResizing: true,
-      enableColumnFilter: false,
-      enableSorting: true,
-      cell: (props) => {
-        return <DateCell value={props.getValue()} />;
-      },
-      header: (props) => (
-        <THead<HTMLInputElement>
-          title='Churn Date'
-          id={ColumnViewType.OrganizationsChurnDate}
-          {...getTHeadProps<Organization>(props)}
-        />
-      ),
-      skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
+  [ColumnViewType.OrganizationsChurnDate]: columnHelper.accessor('churnedAt', {
+    id: ColumnViewType.OrganizationsChurnDate,
+    size: 115,
+    minSize: 110,
+    maxSize: 400,
+    enableResizing: true,
+    enableColumnFilter: false,
+    enableSorting: true,
+    cell: (props) => {
+      return <DateCell value={props.getValue()} />;
     },
-  ),
-  [ColumnViewType.OrganizationsLtv]: columnHelper.accessor('value.ltv', {
+    header: (props) => (
+      <THead<HTMLInputElement>
+        title='Churn Date'
+        id={ColumnViewType.OrganizationsChurnDate}
+        {...getTHeadProps<Organization>(props)}
+      />
+    ),
+    skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
+  }),
+  [ColumnViewType.OrganizationsLtv]: columnHelper.accessor('ltv', {
     id: ColumnViewType.OrganizationsLtv,
     size: 110,
     minSize: 64,
@@ -553,7 +539,7 @@ export const columns: Record<string, Column> = {
     skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
   }),
   [ColumnViewType.OrganizationsIndustry]: columnHelper.accessor(
-    'value.industryName',
+    'industryName',
     {
       id: ColumnViewType.OrganizationsIndustry,
       minSize: 95,
@@ -562,7 +548,7 @@ export const columns: Record<string, Column> = {
       cell: (props) => {
         const value = props.getValue();
         const isEnriching = props.row.original.isEnriching;
-        const flaggedArWrong = props.row.original.value.wrongIndustry;
+        const flaggedArWrong = props.row.original.wrongIndustry;
 
         return (
           <IndustryCell
@@ -583,33 +569,36 @@ export const columns: Record<string, Column> = {
       skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
     },
   ),
-  [ColumnViewType.OrganizationsContactCount]: columnHelper.accessor('value', {
-    id: ColumnViewType.OrganizationsContactCount,
-    minSize: 94,
-    maxSize: 400,
-    enableResizing: true,
-    enableColumnFilter: false,
-    enableSorting: true,
+  [ColumnViewType.OrganizationsContactCount]: columnHelper.accessor(
+    (entity) => entity,
+    {
+      id: ColumnViewType.OrganizationsContactCount,
+      minSize: 94,
+      maxSize: 400,
+      enableResizing: true,
+      enableColumnFilter: false,
+      enableSorting: true,
 
-    cell: (props) => {
-      const value = props.row.original.value.contactCount;
+      cell: (props) => {
+        const value = props.row.original.contactCount;
 
-      return (
-        <div data-test='organization-contacts-in-all-orgs-table'>{value}</div>
-      );
+        return (
+          <div data-test='organization-contacts-in-all-orgs-table'>{value}</div>
+        );
+      },
+      header: (props) => (
+        <THead<HTMLInputElement>
+          title='Contacts'
+          filterWidth='auto'
+          id={ColumnViewType.OrganizationsContactCount}
+          {...getTHeadProps<Organization>(props)}
+        />
+      ),
+      skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
     },
-    header: (props) => (
-      <THead<HTMLInputElement>
-        title='Contacts'
-        filterWidth='auto'
-        id={ColumnViewType.OrganizationsContactCount}
-        {...getTHeadProps<Organization>(props)}
-      />
-    ),
-    skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
-  }),
+  ),
   [ColumnViewType.OrganizationsLinkedinFollowerCount]: columnHelper.accessor(
-    'value',
+    (entity) => entity,
     {
       id: ColumnViewType.OrganizationsLinkedinFollowerCount,
       minSize: 175,
@@ -660,34 +649,31 @@ export const columns: Record<string, Column> = {
     ),
     skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
   }),
-  [ColumnViewType.OrganizationsIsPublic]: columnHelper.accessor(
-    'value.public',
-    {
-      id: ColumnViewType.OrganizationsIsPublic,
-      size: 154,
-      minSize: 142,
-      maxSize: 400,
-      enableResizing: true,
-      enableColumnFilter: false,
-      cell: (props) => {
-        const value = props.getValue();
+  [ColumnViewType.OrganizationsIsPublic]: columnHelper.accessor('public', {
+    id: ColumnViewType.OrganizationsIsPublic,
+    size: 154,
+    minSize: 142,
+    maxSize: 400,
+    enableResizing: true,
+    enableColumnFilter: false,
+    cell: (props) => {
+      const value = props.getValue();
 
-        if (value === undefined) {
-          return <div className='text-grayModern-400'>Unknown</div>;
-        }
+      if (value === undefined) {
+        return <div className='text-grayModern-400'>Unknown</div>;
+      }
 
-        return <div>{value ? 'Public' : 'Private'}</div>;
-      },
-      header: (props) => (
-        <THead<HTMLInputElement>
-          title='Ownership Type'
-          id={ColumnViewType.OrganizationsIsPublic}
-          {...getTHeadProps<Organization>(props)}
-        />
-      ),
-      skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
+      return <div>{value ? 'Public' : 'Private'}</div>;
     },
-  ),
+    header: (props) => (
+      <THead<HTMLInputElement>
+        title='Ownership Type'
+        id={ColumnViewType.OrganizationsIsPublic}
+        {...getTHeadProps<Organization>(props)}
+      />
+    ),
+    skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
+  }),
   [ColumnViewType.OrganizationsStage]: columnHelper.accessor('id', {
     id: ColumnViewType.OrganizationsStage,
     size: 154,
@@ -732,7 +718,7 @@ export const columns: Record<string, Column> = {
     skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
   }),
   [ColumnViewType.OrganizationsUpdatedDate]: columnHelper.accessor(
-    'value.updatedAt',
+    'updatedAt',
     {
       id: ColumnViewType.OrganizationsUpdatedDate,
       minSize: 125,

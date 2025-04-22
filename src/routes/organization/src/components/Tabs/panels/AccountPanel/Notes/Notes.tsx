@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { EditOrganizationNotesUsecase } from '@domain/usecases/organization-details/edit-organization-notes.usecase';
 
 import { Icon } from '@ui/media/Icon';
@@ -11,9 +12,11 @@ interface NotesProps {
 }
 
 export const Notes = observer(({ id }: NotesProps) => {
+  const organization = registry.get('organizations').get(id);
+
   const editNotesUsecase = useMemo(
-    () => new EditOrganizationNotesUsecase(id),
-    [id],
+    () => organization && new EditOrganizationNotesUsecase(organization),
+    [organization],
   );
 
   return (
@@ -27,13 +30,13 @@ export const Notes = observer(({ id }: NotesProps) => {
         variant={'outline'}
         className='py-1 min-h-[72px]'
         data-test='organization-account-notes-editor'
-        defaultValue={editNotesUsecase.defaultNote ?? ''}
+        defaultValue={editNotesUsecase?.defaultNote ?? ''}
         placeholder='Add some notes related to this account...'
         onBlur={() => {
-          editNotesUsecase.execute();
+          editNotesUsecase?.execute();
         }}
         onChange={(note) => {
-          editNotesUsecase.setNotes(note.target.value);
+          editNotesUsecase?.setNotes(note.target.value);
         }}
       />
     </article>

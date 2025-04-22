@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import { useMemo, ReactNode } from 'react';
 
-import { FlagWrongFieldUsecase } from '@domain/usecases/organization-industry-field/flag-wrong-field.usecase';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services';
 
 import { FlagWrongFields } from '@graphql/types';
 import { IconButton } from '@ui/form/IconButton';
@@ -17,8 +18,6 @@ interface FieldMarkerProps {
   flaggedAsIncorrect: boolean;
 }
 
-const flagWrongFieldUsecase = new FlagWrongFieldUsecase();
-
 export const AboutTabField = ({
   field,
   icon,
@@ -29,6 +28,10 @@ export const AboutTabField = ({
   id,
 }: FieldMarkerProps) => {
   const label = fieldLabels[field];
+  const organization = registry.get('organizations').get(id);
+  const organizationService = useMemo(() => new OrganizationService(), []);
+
+  if (!organization) return null;
 
   return (
     <div className='flex group'>
@@ -59,7 +62,9 @@ export const AboutTabField = ({
               icon={<ThumbsDown />}
               aria-label={`Mark this ${label} as incorrect`}
               className='opacity-0 group-hover:opacity-100 ml-2'
-              onClick={() => flagWrongFieldUsecase.flagWrongField(id, field)}
+              onClick={() =>
+                organizationService.flagWrongField(organization, field)
+              }
             />
           </div>
         </Tooltip>

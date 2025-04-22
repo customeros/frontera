@@ -1,4 +1,8 @@
+import { useMemo } from 'react';
+
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
+import { OrganizationService } from '@domain/services';
 
 import { Icon } from '@ui/media/Icon';
 import { Delete } from '@ui/media/icons/Delete';
@@ -24,8 +28,9 @@ export const OrganizationCommands = observer(() => {
   const store = useStore();
   const selectedIds = store.ui.commandMenu.context.ids;
   const id = (store.ui.commandMenu.context.ids as string[])?.[0];
-  const organization = store.organizations.getById(id);
-  const label = `Company - ${organization?.value.name}`;
+  const organization = registry.get('organizations').get(id);
+  const organizationService = useMemo(() => new OrganizationService(), []);
+  const label = `Company - ${organization?.name}`;
 
   return (
     <CommandsContainer label={label}>
@@ -60,16 +65,15 @@ export const OrganizationCommands = observer(() => {
         </CommandItem>
         <AddTagSubItemGroup />
 
-        {!!organization?.value?.tags?.length && (
+        {!!organization?.tags?.length && (
           <CommandItem
             keywords={['change', 'add', 'tags', 'update', 'edit']}
             leftAccessory={<Icon name='tag-01' className='size-4' />}
             onSelect={() => {
-              const tagCount = organization?.value?.tags?.length ?? 0;
+              const tagCount = organization?.tags?.length ?? 0;
 
               for (let i = 0; i < tagCount; i++) {
-                organization?.value?.tags?.pop();
-                organization?.commit();
+                organization?.tags?.pop();
               }
               store.ui.toastSuccess(
                 'All tags were removed',
@@ -105,11 +109,10 @@ export const OrganizationCommands = observer(() => {
         <RelationshipSubItemGroup
           selectedIds={selectedIds}
           closeMenu={() => store.ui.commandMenu.setOpen(false)}
-          updateRelationship={store.organizations.updateRelationship}
+          updateRelationship={organizationService.setReltionshipBulk}
         />
 
-        {organization?.value?.relationship ===
-          OrganizationRelationship.Prospect && (
+        {organization?.relationship === OrganizationRelationship.Prospect && (
           <CommandItem
             leftAccessory={<Icon name='columns-03' />}
             keywords={organizationKeywords.change_org_stage}
@@ -122,7 +125,7 @@ export const OrganizationCommands = observer(() => {
         )}
         <StageSubItemGroup
           selectedIds={selectedIds}
-          updateStage={store.organizations.updateStage}
+          updateStage={organizationService.setStageBulk}
           closeMenu={() => store.ui.commandMenu.setOpen(false)}
         />
 
@@ -170,7 +173,7 @@ export const OrganizationCommands = observer(() => {
         </CommandItem>
         <UpdateHealthStatusSubItemGroup
           selectedIds={selectedIds}
-          updateHealth={store.organizations.updateHealth}
+          updateHealth={organizationService.setHealthBulk}
           closeMenu={() => store.ui.commandMenu.setOpen(false)}
         />
 

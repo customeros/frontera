@@ -1,6 +1,8 @@
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
 import { TagStore } from '@store/Tags/Tag.store';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
 import { action, computed, reaction, observable } from 'mobx';
 import { TagService, OrganizationService } from '@domain/services';
 
@@ -15,30 +17,11 @@ export class EditOrganizationTagUsecase {
   private root = RootStore.getInstance();
   private tagService = new TagService();
   private organizationService = new OrganizationService();
+  private organizationStore = registry.get('organizations');
 
-  constructor() {
-    this.select = this.select.bind(this);
-    this.create = this.create.bind(this);
-    this.setSearchTerm = this.setSearchTerm.bind(this);
-    this.computeInitialTags = this.computeInitialTags.bind(this);
-
+  constructor(private organization: Organization) {
     reaction(() => this.newTags.size, this.computeInitialTags);
     this.computeInitialTags();
-  }
-
-  @computed
-  get organization() {
-    if (
-      !['ChangeTags', 'OrganizationCommands'].includes(
-        this.root.ui.commandMenu.type,
-      )
-    ) {
-      return;
-    }
-
-    return this.root.organizations.getById(
-      this.root.ui.commandMenu.context.ids?.[0] as string,
-    );
   }
 
   @computed
@@ -60,19 +43,17 @@ export class EditOrganizationTagUsecase {
     const organization = this.organization;
 
     return selectedIds?.length === 1
-      ? `Company - ${organization?.value?.name}`
+      ? `Company - ${organization?.name}`
       : `${selectedIds?.length} companies`;
   }
 
   @computed
   get organizationTags() {
-    return new Set(
-      (this.organization?.value?.tags ?? []).map((tag) => tag.name),
-    );
+    return new Set((this.organization?.tags ?? []).map((tag) => tag.name));
   }
 
   @action
-  private computeInitialTags() {
+  private computeInitialTags = () => {
     const span = Tracer.span('EditOrganizationTagUsecase.computeInitialTags');
 
     this.initialTags = this.root.tags
@@ -89,7 +70,7 @@ export class EditOrganizationTagUsecase {
       });
 
     span.end();
-  }
+  };
 
   @computed
   get tagList() {
@@ -111,35 +92,35 @@ export class EditOrganizationTagUsecase {
   }
 
   @action
-  public setSearchTerm(searchTerm: string) {
+  setSearchTerm = (searchTerm: string) => {
     this.searchTerm = searchTerm;
-  }
+  };
 
   @action
-  public reset() {
+  reset = () => {
     this.setSearchTerm('');
     this.newTags.clear();
     this.shouldPreventClose = true;
-  }
+  };
 
   @action
-  public preventClose() {
+  preventClose = () => {
     this.shouldPreventClose = true;
-  }
+  };
 
   @action
-  public allowClose() {
+  allowClose = () => {
     this.shouldPreventClose = false;
-  }
+  };
 
   @action
-  public close() {
+  close = () => {
     this.reset();
     this.root.ui.commandMenu.setOpen(false);
-  }
+  };
 
-  private handleSingleOrganizationTag(tag: TagStore): void {
-    const hasTag = this.organization?.value?.tags?.some(
+  private handleSingleOrganizationTag = (tag: TagStore) => {
+    const hasTag = this.organization?.tags?.some(
       (t) => t.metadata.id === tag.id,
     );
 
@@ -149,28 +130,28 @@ export class EditOrganizationTagUsecase {
     } else {
       this.organizationService.addTag(this.organization!, tag);
     }
-  }
+  };
 
-  private handleMultipleOrganizationsTags(tag: TagStore): void {
+  private handleMultipleOrganizationsTags = (tag: TagStore) => {
     const allOrgsHaveTag = this.contextIds.every((id) => {
-      const org = this.root.organizations.getById(id);
+      const org = this.organizationStore.get(id);
 
-      return org?.value.tags?.some((t) => t.metadata.id === tag.id);
+      return org?.tags?.some((t) => t.metadata.id === tag.id);
     });
 
     this.contextIds.forEach((id) => {
-      const org = this.root.organizations.getById(id);
+      const org = this.organizationStore.get(id);
 
       if (!org) return;
 
       allOrgsHaveTag
-        ? this.organizationService.removeTag(org, tag)
-        : this.organizationService.addTag(org, tag);
+        ? this.organizationService.removeTag(this.organization, tag)
+        : this.organizationService.addTag(this.organization, tag);
     });
-  }
+  };
 
   @action
-  public select(id?: string) {
+  select = (id?: string) => {
     const span = Tracer.span('EditOrganizationTagUsecase.select', { id });
 
     if (!id || !this.organization) {
@@ -200,10 +181,10 @@ export class EditOrganizationTagUsecase {
     }
 
     span.end();
-  }
+  };
 
   @action
-  public create() {
+  create = () => {
     const name = this.searchTerm;
 
     if (!this.organization) return;
@@ -222,5 +203,5 @@ export class EditOrganizationTagUsecase {
         },
       },
     );
-  }
+  };
 }

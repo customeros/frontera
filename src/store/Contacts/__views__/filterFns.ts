@@ -1,6 +1,7 @@
 import { match } from 'ts-pattern';
 import { FilterItem } from '@store/types.ts';
 import { isAfter, isBefore } from 'date-fns';
+import { registry } from '@domain/stores/registry';
 import { EmailVerificationStatus } from '@finder/components/Columns/contacts/filterTypes';
 
 import {
@@ -29,13 +30,14 @@ const getFilterFn = (
         if (!filterValues || !row.value?.primaryOrganizationName) {
           return false;
         }
-        const hasOrgWithMatchingStage =
-          row.store.root.organizations.value.forEach((o) => {
-            const stage = row.store.root?.organizations?.value.get(o.id)?.value
-              ?.stage;
 
-            return filterValues.includes(stage);
-          });
+        const organizationStore = registry.get('organizations');
+
+        const hasOrgWithMatchingStage = organizationStore.cache.forEach((o) => {
+          const stage = organizationStore.get(o.id)?.stage;
+
+          return filterValues.includes(stage);
+        });
 
         return hasOrgWithMatchingStage;
       })
@@ -46,13 +48,15 @@ const getFilterFn = (
         if (!filterValues || !row.value?.primaryOrganizationName) {
           return false;
         }
-        const hasOrgWithMatchingRelationship =
-          row.store.root?.organizations.value.forEach((o) => {
-            const stage = row.store.root?.organizations?.value.get(o.id)?.value
-              ?.relationship;
+        const organizationStore = registry.get('organizations');
+
+        const hasOrgWithMatchingRelationship = organizationStore.cache.forEach(
+          (o) => {
+            const stage = organizationStore.get(o.id)?.relationship;
 
             return filterValues.includes(stage);
-          });
+          },
+        );
 
         return hasOrgWithMatchingRelationship;
       })

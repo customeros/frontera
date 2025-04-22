@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { ContractStore } from '@store/Contracts/Contract.store.ts';
 
 import { cn } from '@ui/utils/cn';
@@ -47,7 +48,8 @@ export const RenewalARRCard = observer(
     const opportunity = opportunityStore?.value;
     const { modal } = useUpdateRenewalDetailsContext();
     const [isLocalOpen, setIsLocalOpen] = useState(false);
-    const organizationStore = store.organizations.value.get(id);
+    const organizationStore = registry.get('organizations');
+    const organization = organizationStore.get(id);
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -73,7 +75,8 @@ export const RenewalARRCard = observer(
 
       setTimeout(() => {
         // needed for now because contract opportunities don't have org data (org comes as null)
-        organizationStore?.invalidate();
+
+        organizationStore?.revalidate(id);
       }, 1500);
       modal.onClose();
     };

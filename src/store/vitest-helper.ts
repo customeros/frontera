@@ -2,7 +2,6 @@
 import { OrganizationRepository } from '@infra/repositories/core/organization';
 import { ContactService } from '@store/Contacts/__service__/Contacts.service.ts';
 import { contactsTestState } from '@store/Contacts/__tests__/contactsTestState.ts';
-import { organizationsTestState } from '@store/Organizations/__tests__/organizationsTestState.ts';
 
 import { SortingDirection } from '@graphql/types';
 
@@ -193,8 +192,8 @@ export class VitestHelper {
   }
 }
 
-export const trackOrganization = (organizationId: string) => {
-  organizationsTestState.createdOrganizationIds.add(organizationId);
+export const trackOrganization = (_organizationId: string) => {
+  // organizationsTestState.createdOrganizationIds.add(organizationId);
 };
 
 export const trackContact = (contactId: string) => {

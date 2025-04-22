@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 
 import { cn } from '@ui/utils/cn';
 import { useStore } from '@shared/hooks/useStore';
@@ -12,14 +13,15 @@ interface RenewalLikelihoodCellProps {
 export const RenewalLikelihoodCell = observer(
   ({ id }: RenewalLikelihoodCellProps) => {
     const store = useStore();
-    const organization = store.organizations.getById(id);
-    const value = organization?.value?.renewalSummaryRenewalLikelihood;
+    const organizationStore = registry.get('organizations');
+    const organization = organizationStore.get(id);
+    const value = organization?.renewalSummaryRenewalLikelihood;
 
     const colors = value ? getLikelihoodColor(value) : 'text-grayModern-400';
 
-    if (!organization?.value) return null;
+    if (!organization) return null;
 
-    const canUpdate = organization.value.contracts?.length;
+    const canUpdate = organization.contracts?.length;
 
     return (
       <div

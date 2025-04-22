@@ -1,20 +1,20 @@
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
 import { action, observable } from 'mobx';
-import { OrganizationRepository } from '@infra/repositories/core/organization';
-import { Organization as OrganizationType } from '@store/Organizations/Organization.dto';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services';
 
 import {
   InternalType,
   InternalStage,
-  SortingDirection,
-  ComparisonOperator,
 } from '@shared/types/__generated__/graphql.types';
+
 export class ChooseOrgForOpportunityUsecase {
-  private orgService = OrganizationRepository.getInstance();
   private store: RootStore;
+  private organizationService = new OrganizationService();
   @observable accessor searchTerm = '';
-  @observable accessor organizations: OrganizationType[] = [];
+  @observable accessor organizations: Organization[] = [];
 
   constructor(store: RootStore) {
     this.setSearchTerm = this.setSearchTerm.bind(this);
@@ -29,36 +29,24 @@ export class ChooseOrgForOpportunityUsecase {
 
   @action
   async searchOrganizations() {
-    const organizations = await this.orgService.searchOrganizations({
-      limit: 30,
-      sort: {
-        by: 'ORGANIZATIONS_NAME',
-        caseSensitive: false,
-        direction: SortingDirection.Asc,
-      },
-      where: {
-        OR: [
-          {
-            filter: {
-              property: 'ORGANIZATIONS_NAME',
-              value: this.searchTerm,
-              caseSensitive: false,
-              includeEmpty: false,
-              operation: ComparisonOperator.Contains,
-            },
-          },
-        ],
-      },
-    });
+    const [res, err] = await this.organizationService.searchTenant(
+      this.searchTerm,
+    );
 
-    const results = organizations.ui_organizations_search?.ids ?? [];
+    if (err) {
+      console.error(
+        'ChooseOrgForOpportunityUsecase.searchOrganizations: Failed searching tenant organizations',
+      );
+    }
+
+    if (!res) return;
+
+    const results = res.ui_organizations_search?.ids ?? [];
 
     if (results.length) {
-      this.store.organizations.retrieve(results);
-
       this.organizations = results.map(
         (id) =>
-          this.store.organizations.getById(id) ?? ({} as OrganizationType),
+          registry.get('organizations').get(id) ?? new Organization({ id }),
       );
     }
   }
@@ -66,7 +54,7 @@ export class ChooseOrgForOpportunityUsecase {
   @action
   execute(orgId: string) {
     const span = Tracer.span('ChooseOrgForOpportunityUsecase.execute');
-    const org = this.store.organizations.getById(orgId);
+    const org = registry.get('organizations').get(orgId);
 
     if (!org) return;
 
@@ -80,10 +68,10 @@ export class ChooseOrgForOpportunityUsecase {
     this.store.opportunities.create({
       // @ts-expect-error this will be autofixed when Opportunity store will use OpportunityDatum
       organization: org.value,
-      id: org.value.id,
+      id: org.id,
       name:
         this.store.ui.commandMenu.context?.meta?.name ||
-        `${org.value.name}'s opportunity`,
+        `${org.name}'s opportunity`,
       internalType: InternalType.Nbo,
       externalStage: isInternalStage ? '' : stage,
       taskIds: [this.store.ui.commandMenu.context?.meta?.taskId],

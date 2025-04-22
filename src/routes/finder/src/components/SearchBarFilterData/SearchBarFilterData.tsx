@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
 import { useTablePlaceholder } from '@finder/hooks/useTablePlaceholder';
+import { viewRegistry } from '@domain/views/organization/organization.views';
 
 import { TableViewType } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
@@ -16,22 +17,20 @@ export const SearchBarFilterData = observer(
     const store = useStore();
     const [searchParams] = useSearchParams();
     const preset = searchParams.get('preset');
-    const tableView = store.tableViewDefs.getById(preset || '');
+    const tableView = store.tableViewDefs.value.get(preset || '');
+    const view = tableView && viewRegistry.get(tableView.value);
 
     const { multi: multiResultPlaceholder, single: singleResultPlaceholder } =
       useTablePlaceholder(tableView?.value.tableId);
 
     const totalResults = match(tableView?.value.tableType)
       .returnType<number>()
-      .with(
-        TableViewType.Organizations,
-        () => store.organizations.availableCounts.get(preset ?? '') ?? 0,
-      )
+      .with(TableViewType.Organizations, () => view?.totalElements ?? 0)
       .with(
         TableViewType.Contacts,
         () => store.contacts.availableCounts.get(preset ?? '') ?? 0,
       )
-      .otherwise(() => store.ui.searchCount);
+      .otherwise(() => 0);
 
     const tableName =
       totalResults === 1 ? singleResultPlaceholder : multiResultPlaceholder;

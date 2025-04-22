@@ -73,7 +73,10 @@ export class CustomView {
 
     const defaultFilters = getContactFilterFns(viewDef.getDefaultFilters());
     const activeFilters = getContactFilterFns(viewDef.getFilters());
-    const sorting = JSON.parse(viewDef.value.sorting);
+
+    const sorting = viewDef.value.sorting
+      ? JSON.parse(viewDef.value.sorting)
+      : { id: '', desc: false };
 
     this.store.setView(preset, (data) => {
       const columnId = sorting?.id as string;

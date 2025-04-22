@@ -16,7 +16,7 @@ export const getContractSortFn = (columnId: string) =>
 
       const org = row.organization;
 
-      return org?.value?.name?.trim().toLowerCase() || null;
+      return org?.name?.trim().toLowerCase() || null;
     })
     .with(
       ColumnViewType.ContractsPeriod,

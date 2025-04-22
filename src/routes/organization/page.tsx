@@ -1,9 +1,11 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useKey } from 'rooks';
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
+import { registry } from '@/domain/stores/registry';
+import { viewRegistry } from '@/domain/views/organization/organization.views';
 
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
@@ -28,13 +30,14 @@ export const OrganizationPage = observer(() => {
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
+  const organizationStore = registry.get('organizations');
 
   const [lastActivePosition] = useLocalStorage(
     `customeros-player-last-position`,
     { root: 'finder' },
   );
 
-  const [lastKnownIndex, setLastKnownIndex] = useState<number>(0);
+  // const [lastKnownIndex, setLastKnownIndex] = useState<number>(0);
   const [imgStatus, setImgStatus] = useState<'loading' | 'loaded' | 'error'>(
     'loading',
   );
@@ -51,36 +54,16 @@ export const OrganizationPage = observer(() => {
 
   const panel = searchParams.get('tab') ?? 'about';
 
-  if (typeof id === 'undefined') {
-    navigate('/finder');
-
-    return;
-  }
-
-  if (!store.organizations.isBootstrapped) {
-    // This should not be used here
-    // TODO: Remove this.
-    return (
-      <LoadingScreen
-        hide={false}
-        isLoaded={false}
-        showSplash={true}
-        isRetrying={false}
-      />
-    );
-  }
-
-  if (!store.organizations.value.has(id)) {
-    throw new Error('Company not found');
-  }
-
-  const organization = store.organizations.getById(id!);
-  const src = organization?.value.iconUrl || organization?.value.logoUrl;
+  const organization = organizationStore.getOrFetch(id!);
+  const src = organization?.iconUrl || organization?.logoUrl;
 
   const preset = (() => {
     const lastPreset = getLastPreset();
+
     const { targetsPreset, organizationsPreset, customersPreset } =
       store.tableViewDefs;
+
+    if (!lastPreset) return organizationsPreset;
 
     if (
       [targetsPreset, organizationsPreset, customersPreset].includes(lastPreset)
@@ -91,43 +74,17 @@ export const OrganizationPage = observer(() => {
     return organizationsPreset;
   })();
 
-  const data = store.organizations.getViewById(preset ?? '');
+  const viewDef = store.tableViewDefs.getById(preset!);
+  const view = viewRegistry.get(viewDef!.value!);
+  const data = view?.data ?? [];
 
-  const currentIndex = useMemo(() => {
-    const index = data.findIndex((item) => item.id === id);
-
-    if (index === -1) {
-      return Math.min(lastKnownIndex, data.length - 1);
-    }
-
-    // If the difference between current index and last known index is greater than 1,
-    // use the last known index to prevent jumping around
-    if (Math.abs(index - lastKnownIndex) > 1) {
-      return lastKnownIndex;
-    }
-
-    setLastKnownIndex(index);
-
-    return index;
-  }, [data, id, store.organizations.version, lastKnownIndex]);
-
-  const total = store.organizations.availableCounts.get(preset ?? '');
+  const currentIndex = data?.findIndex((item) => item.id === id) ?? 0;
 
   const navigateToOrg = async (direction: 'prev' | 'next') => {
     const newIndex =
       direction === 'prev'
         ? (currentIndex - 1 + data.length) % data.length
         : (currentIndex + 1) % data.length;
-
-    if (
-      direction === 'next' &&
-      newIndex === 0 &&
-      data.length < (total ?? data.length)
-    ) {
-      await store.organizations.loadNext(
-        preset ?? store.tableViewDefs.organizationsPreset!,
-      );
-    }
 
     navigate(`/organization/${data[newIndex].id}?tab=${panel}`);
   };
@@ -143,6 +100,25 @@ export const OrganizationPage = observer(() => {
     e.stopPropagation();
     navigateToOrg('prev');
   });
+
+  if (typeof id === 'undefined') {
+    navigate('/finder');
+
+    return;
+  }
+
+  if (!organization) {
+    // This should not be used here
+    // TODO: Remove this.
+    return (
+      <LoadingScreen
+        hide={false}
+        isLoaded={false}
+        showSplash={true}
+        isRetrying={false}
+      />
+    );
+  }
 
   return (
     <div className='relative flex flex-col h-[calc(100vh-42px)]'>
@@ -178,14 +154,15 @@ export const OrganizationPage = observer(() => {
         <div className='flex items-center gap-1 ml-2 text-sm'>
           <span>{currentIndex + 1}</span>
           <span>/</span>
-          <span className='text-grayModern-500'>{total?.toLocaleString()}</span>
+          <span className='text-grayModern-500'>
+            {view?.totalElements?.toLocaleString()}
+          </span>
         </div>
         <div className='flex items-center gap-1'>
           <IconButton
             size='xxs'
             title='Previous company (A)'
             aria-label='Previous company'
-            isDisabled={currentIndex === 0}
             onClick={() => navigateToOrg('prev')}
             className='p-1 hover:bg-grayModern-100 rounded'
             icon={<Icon name='chevron-up' className='text-grayModern-700' />}
@@ -197,7 +174,6 @@ export const OrganizationPage = observer(() => {
             icon={<Icon name='chevron-down' />}
             onClick={() => navigateToOrg('next')}
             className='p-1 hover:bg-grayModern-100 rounded'
-            isDisabled={currentIndex === (total ?? data.length) - 1}
           />
         </div>
         {organization?.id && (

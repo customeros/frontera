@@ -1,12 +1,14 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
 import { Tasks } from '@store/Tasks/Tasks.store';
+import { Organization } from '@/domain/entities';
+import { registry } from '@domain/stores/registry';
 import { FlowStore } from '@store/Flows/Flow.store';
 import { Contact } from '@store/Contacts/Contact.dto';
-import { Organization } from '@store/Organizations/Organization.dto';
+import { OrganizationService } from '@domain/services';
 import { TableViewDef } from '@store/TableViewDefs/TableViewDef.dto';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store';
 
@@ -23,6 +25,8 @@ export const DeleteConfirmationModal = observer(() => {
   const context = store.ui.commandMenu.context;
   const navigate = useNavigate();
   const location = useLocation();
+  const organizationStore = registry.get('organizations');
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -39,7 +43,7 @@ export const DeleteConfirmationModal = observer(() => {
       | null
     >()
     .with('Opportunity', () => store.opportunities.value.get(context.ids?.[0]))
-    .with('Organization', () => store.organizations.value.get(context.ids?.[0]))
+    .with('Organization', () => organizationStore.get(context.ids?.[0]))
     .with('Contact', () => store.contacts.value.get(context.ids?.[0]))
     .with('TableViewDef', () => store.tableViewDefs.getById(context.ids?.[0]))
     .with(
@@ -96,7 +100,7 @@ export const DeleteConfirmationModal = observer(() => {
           (o) => o.value.id,
         );
 
-        store.organizations.hide(context.ids as string[]);
+        organizationService.archiveBulk(context.ids as string[]);
 
         store.opportunities.value.delete(oppotunityIdOfOrgSelected[0]);
         store.ui.commandMenu.setType('OrganizationHub');
@@ -105,7 +109,7 @@ export const DeleteConfirmationModal = observer(() => {
         context.callback?.();
       })
       .with('Organizations', () => {
-        store.organizations.hide(context.ids as string[]);
+        organizationService.archiveBulk(context.ids as string[]);
         store.ui.commandMenu.setType('OrganizationHub');
         store.ui.commandMenu.clearContextIds();
         store.ui.commandMenu.clearContext();
@@ -187,7 +191,7 @@ export const DeleteConfirmationModal = observer(() => {
   const title = match(context.entity)
     .with(
       'Organization',
-      () => `Archive ${(entity as Organization)?.value.name || 'Unnamed'}?`,
+      () => `Archive ${(entity as Organization)?.name || 'Unnamed'}?`,
     )
     .with('Organizations', () => `Archive ${context.ids?.length} companies?`)
     .with(

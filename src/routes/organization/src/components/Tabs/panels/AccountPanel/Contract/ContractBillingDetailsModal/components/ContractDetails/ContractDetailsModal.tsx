@@ -2,9 +2,12 @@ import { useParams } from 'react-router-dom';
 import { useRef, useMemo, useState, useEffect } from 'react';
 
 import set from 'lodash/set';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { motion, Variants } from 'framer-motion';
+import { registry } from '@domain/stores/registry';
 import { ContractStore } from '@store/Contracts/Contract.store';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 import { ContractLineItemStore } from '@store/ContractLineItems/ContractLineItem.store';
 
 import { cn } from '@ui/utils/cn';
@@ -67,7 +70,8 @@ export const ContractDetailsModal = observer(
       contractId,
     ) as ContractStore;
     const contractNameInputRef = useRef<HTMLInputElement | null>(null);
-    const organizationStore = store.organizations.value.get(organizationId);
+    const organizationStore = registry.get('organizations');
+    const organization = organizationStore.get(organizationId);
     const opportunityStore = opportunityId
       ? store.opportunities.value.get(opportunityId)
       : undefined;
@@ -133,7 +137,8 @@ export const ContractDetailsModal = observer(
         { mutate: false },
       );
 
-      const contracts = organizationStore?.contracts || [];
+      const contracts =
+        new OrganizationAggregate(organization!, store).contracts || [];
 
       const totalArr = contracts.reduce(
         (acc, contract) => {
@@ -158,20 +163,18 @@ export const ContractDetailsModal = observer(
         { maxArrForecast: 0, arrForecast: 0 },
       );
 
-      organizationStore?.draft();
-
-      set(
-        organizationStore!.value,
-        'accountDetails.renewalSummary.arrForecast',
-        totalArr?.arrForecast,
-      );
-      set(
-        organizationStore!.value,
-        'accountDetails.renewalSummary.maxArrForecast',
-        totalArr.maxArrForecast,
-      );
-
-      organizationStore?.commit();
+      runInAction(() => {
+        set(
+          organization!,
+          'accountDetails.renewalSummary.arrForecast',
+          totalArr?.arrForecast,
+        );
+        set(
+          organization!,
+          'accountDetails.renewalSummary.maxArrForecast',
+          totalArr.maxArrForecast,
+        );
+      });
     };
 
     const handleCloseModal = () => {

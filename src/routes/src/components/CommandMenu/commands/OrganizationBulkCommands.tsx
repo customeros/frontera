@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
+
 import { observer } from 'mobx-react-lite';
+import { OrganizationService } from '@domain/services';
 
 import { Tag01 } from '@ui/media/icons/Tag01';
 import { User01 } from '@ui/media/icons/User01';
@@ -26,6 +29,7 @@ import {
 export const OrganizationBulkCommands = observer(() => {
   const store = useStore();
   const selectedIds = store.ui.commandMenu.context.ids;
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const label = `${selectedIds?.length} companies`;
 
@@ -54,7 +58,7 @@ export const OrganizationBulkCommands = observer(() => {
           leftAccessory={<Tag01 />}
           keywords={organizationKeywords.change_or_add_tags}
           onSelect={() => {
-            store.organizations.removeTags(selectedIds);
+            organizationService.clearTagsBulk(selectedIds);
             store.ui.commandMenu.setOpen(false);
           }}
         >
@@ -74,7 +78,7 @@ export const OrganizationBulkCommands = observer(() => {
         <RelationshipSubItemGroup
           selectedIds={selectedIds}
           closeMenu={() => store.ui.commandMenu.setOpen(false)}
-          updateRelationship={store.organizations.updateRelationship}
+          updateRelationship={organizationService.setReltionshipBulk}
         />
 
         <CommandItem
@@ -89,7 +93,7 @@ export const OrganizationBulkCommands = observer(() => {
 
         <StageSubItemGroup
           selectedIds={selectedIds}
-          updateStage={store.organizations.updateStage}
+          updateStage={organizationService.setStageBulk}
           closeMenu={() => store.ui.commandMenu.setOpen(false)}
         />
 
@@ -132,7 +136,7 @@ export const OrganizationBulkCommands = observer(() => {
 
         <UpdateHealthStatusSubItemGroup
           selectedIds={selectedIds}
-          updateHealth={store.organizations.updateHealth}
+          updateHealth={organizationService.setHealthBulk}
           closeMenu={() => store.ui.commandMenu.setOpen(false)}
         />
 
@@ -159,7 +163,7 @@ export const OrganizationBulkCommands = observer(() => {
           leftAccessory={<CoinsStacked01 />}
           keywords={organizationKeywords.create_new_opportunity}
           onSelect={() => {
-            store.organizations.updateStage(
+            organizationService.setStageBulk(
               selectedIds,
               OrganizationStage.Engaged,
             );

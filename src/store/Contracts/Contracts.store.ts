@@ -5,6 +5,7 @@ import { Store } from '@store/store.ts';
 import { RootStore } from '@store/root.ts';
 import { Transport } from '@infra/transport.ts';
 import { GroupOperation } from '@store/types.ts';
+import { registry } from '@domain/stores/registry';
 import { when, runInAction, makeAutoObservable } from 'mobx';
 import { UtilService } from '@domain/services/util/util.service';
 import { ContractService } from '@store/Contracts/Contract.service.ts';
@@ -30,6 +31,7 @@ export class ContractsStore implements GroupStore<Contract> {
   totalElements = 0;
   private service: ContractService;
   private utilService: UtilService;
+  private organizationStore = registry.get('organizations');
 
   constructor(public root: RootStore, public transport: Transport) {
     this.service = new ContractService(transport);
@@ -149,7 +151,7 @@ export class ContractsStore implements GroupStore<Contract> {
 
     this.value.set(tempId, newContract);
 
-    const record = this.root.organizations.getById(payload.organizationId);
+    const record = this.organizationStore.get(payload.organizationId);
 
     if (!record) {
       console.error(
@@ -157,8 +159,7 @@ export class ContractsStore implements GroupStore<Contract> {
       );
     }
 
-    record?.draft();
-    record?.value.contracts?.unshift(newContract.value.metadata.id);
+    record?.addContract(tempId);
 
     try {
       const { contract_Create } = await this.service.createContract({
@@ -173,8 +174,8 @@ export class ContractsStore implements GroupStore<Contract> {
         this.value.set(serverId, newContract);
         this.value.delete(tempId);
 
-        record!.value.contracts[0] = serverId;
-        record?.commit({ syncOnly: true });
+        record?.deleteContract(tempId);
+        record?.addContract(serverId);
 
         this.sync({ action: 'APPEND', ids: [serverId] });
       });
@@ -188,21 +189,16 @@ export class ContractsStore implements GroupStore<Contract> {
       if (serverId) {
         newContract.value.billingDetails = {
           ...newContract.value.billingDetails,
-          organizationLegalName: this.root.organizations.value.get(
+          organizationLegalName: this.organizationStore.get(
             payload.organizationId,
-          )?.value?.name,
+          )?.name,
         };
 
         setTimeout(() => {
           runInAction(() => {
-            this.root.organizations.value.get(organizationId)?.invalidate();
+            this.organizationStore.revalidate(organizationId);
 
             (this.value.get(serverId) as ContractStore)?.updateBillingAddress();
-
-            this.root.organizations.sync({
-              action: 'INVALIDATE',
-              ids: [organizationId],
-            });
           });
         }, 500);
       }
@@ -219,18 +215,9 @@ export class ContractsStore implements GroupStore<Contract> {
 
       return;
     }
-    const record = this.root.organizations.getById(organizationId);
+    const record = this.organizationStore.get(organizationId);
 
-    record?.draft();
-
-    const idx = record?.contracts?.findIndex(
-      (c) => c.metadata.id === contractId,
-    );
-
-    if (typeof idx === 'undefined' || idx < 0) return;
-
-    record?.value.contracts?.splice(idx, 1);
-    record?.commit({ syncOnly: true });
+    record?.deleteContract(contractId);
 
     this.value.delete(contractId);
 

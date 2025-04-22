@@ -23,6 +23,7 @@ export type fieldType = {
 
 import { uniqBy } from 'lodash';
 import { type RootStore } from '@store/root';
+import { registry } from '@domain/stores/registry';
 
 import { Type01 } from '@ui/media/icons/Type01';
 import { Globe01 } from '@ui/media/icons/Globe01';
@@ -235,8 +236,11 @@ export const getDefaultFieldTypes = (store?: RootStore) => {
       fieldName: 'Industry',
       columnAccesor: ColumnViewType.OrganizationsIndustry,
       icon: <RadioButton />,
-      options: uniqBy(store?.organizations.toArray(), 'value.industryName')
-        .map((v) => v.value.industryName)
+      options: uniqBy(
+        Array.from(registry.get('organizations').cache.values()),
+        'industryName',
+      )
+        .map((v) => v.industryName)
         .filter(Boolean)
         .sort((a, b) => (a && b ? a?.localeCompare(b) : -1))
         .map((industry) => ({
@@ -269,9 +273,9 @@ export const getDefaultFieldTypes = (store?: RootStore) => {
       columnAccesor: ColumnViewType.OrganizationsHeadquarters,
       icon: <RadioButton />,
       options: uniqBy(
-        store?.organizations.toArray().map((org) => ({
-          id: org.value.locations?.[0]?.countryCodeA2,
-          label: org.value.locations?.[0]?.country,
+        Array.from(registry.get('organizations').cache.values()).map((org) => ({
+          id: org.locations?.[0]?.countryCodeA2,
+          label: org.locations?.[0]?.country,
         })),
         'id',
       ),

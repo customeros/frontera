@@ -25,7 +25,7 @@ const getFilterFn = (filter: FilterItem | undefined | null) => {
       { property: ColumnViewType.OpportunitiesOrganization },
       (filter) => (row: OpportunityStore) => {
         if (!filter.active) return true;
-        const value = row.organization?.value?.name.toLowerCase().trim();
+        const value = row.organization?.name.toLowerCase().trim();
 
         return filterTypeText(filter, value);
       },

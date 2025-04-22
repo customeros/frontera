@@ -7,9 +7,11 @@ import { useKey } from 'rooks';
 import { match } from 'ts-pattern';
 import { Tracer } from '@infra/tracer';
 import { type RootStore } from '@store/root';
+import { registry } from '@domain/stores/registry';
 import { Observer, observer } from 'mobx-react-lite';
 import { CommonStore } from '@store/Common/Common.store';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { OrganizationStore } from '@/domain/stores/organization.store';
 
 import { cn } from '@ui/utils/cn';
 import { X } from '@ui/media/icons/X';
@@ -33,7 +35,7 @@ import { useStore } from '../../hooks/useStore';
 const devTools = new DevtoolsStore();
 
 type StoreReturnType =
-  | RootStore['organizations']
+  | typeof OrganizationStore
   | RootStore['tableViewDefs']
   | RootStore['contacts']
   | RootStore['contracts']
@@ -115,7 +117,7 @@ export const Devtools = observer(
     const detailedStore = match(devTools.detailedStore)
       .returnType<StoreReturnType>()
       .with('tableViewDefs', () => store.tableViewDefs)
-      .with('organizations', () => store.organizations)
+      .with('organizations', () => registry.get('organizations'))
       .with('contacts', () => store.contacts)
       .with('contracts', () => store.contracts)
       .with('flows', () => store.flows)
@@ -131,13 +133,17 @@ export const Devtools = observer(
         return store.slackChannels;
       }
 
-      return store?.value;
+      if (store === OrganizationStore) {
+        return store.cache;
+      }
+
+      return (store as unknown as { value: Map<string, unknown> }).value;
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getEntityValue = (entity: Record<string, any>) =>
       match(devTools.detailedStore)
-        .with('organizations', () => get(entity, 'value', {}))
+        .with('organizations', () => entity)
         .with('tableViewDefs', () => get(entity, 'value', {}))
         .with('contacts', () => get(entity, 'value', {}))
         .with('contracts', () => get(entity, 'value', {}))
@@ -152,7 +158,7 @@ export const Devtools = observer(
     const getEntityName = (entity: Record<string, string>) =>
       match(devTools.detailedStore)
         .returnType<string>()
-        .with('organizations', () => get(entity, 'value.name', 'Unnamed'))
+        .with('organizations', () => get(entity, 'name', 'Unnamed'))
         .with('tableViewDefs', () => get(entity, 'name', 'Unnamed'))
         .with('contacts', () => get(entity, 'name', 'Unnamed'))
         .with('contracts', () => get(entity, 'value.contractName', 'Unnamed'))
@@ -196,7 +202,7 @@ export const Devtools = observer(
 
                 <div
                   onMouseDown={(e) => startMove(e, true)}
-                  className='border-b rounded-t-lg border-b-grayModern-200 pb-0.5 pl-0.5 w-fugrayModerng-grayModern-50 hover:cursor-grab'
+                  className='border-b rounded-t-lg border-b-grayModern-200 pb-0.5 pl-0.5 w-full bg-grayModern-50 hover:cursor-grab'
                 >
                   <ButtonGroup variant='old'>
                     <Button
@@ -279,7 +285,7 @@ export const Devtools = observer(
                                     devTools.toggleGqlOp(op.id);
                                   }}
                                   className={cn(
-                                    'border-b border-b-grayModern-200 cursor-pointer hovgrayModerng-grayModern-50 pl-1',
+                                    'border-b border-b-grayModern-200 cursor-pointer bg-white hover:bg-grayModern-50 pl-1',
                                     isSelected &&
                                       !hasError &&
                                       'bg-grayModern-100',
@@ -313,7 +319,7 @@ export const Devtools = observer(
                                     devTools.toggleStore(name);
                                   }}
                                   className={cn(
-                                    'border-b border-b-grayModern-200 cursor-pointer hovgrayModerng-grayModern-50 pl-1',
+                                    'border-b border-b-grayModern-200 cursor-pointer bg-white hover:bg-grayModern-50 pl-1',
                                     isSelected && 'bg-grayModern-100',
                                   )}
                                 >
@@ -406,9 +412,11 @@ export const Devtools = observer(
                                     className='flex flex-col space-y-1'
                                   >
                                     <div
-                                      onClick={() => devTools.toggleEntity(k)}
+                                      onClick={() =>
+                                        devTools.toggleEntity(k as string)
+                                      }
                                       className={cn(
-                                        'flex items-center border-b borde-b-grayModern-200 cursor-pointer hovgrayModerng-grayModern-50 py-0.5',
+                                        'flex items-center border-b borde-b-grayModern-200 cursor-pointer hovge:bg-rayModern-100 bg-grayModern-50 py-0.5',
                                         isSelected && 'bg-grayModern-100',
                                       )}
                                     >

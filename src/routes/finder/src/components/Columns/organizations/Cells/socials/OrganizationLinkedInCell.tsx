@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 
-import { useStore } from '@shared/hooks/useStore';
 import { getExternalUrl, getFormattedLink } from '@utils/getExternalLink';
 
 interface SocialsCellProps {
@@ -11,10 +11,9 @@ interface SocialsCellProps {
 
 export const OrganizationLinkedInCell = observer(
   ({ organizationId }: SocialsCellProps) => {
-    const store = useStore();
-    const organization = store.organizations.getById(organizationId);
+    const organization = registry.get('organizations').get(organizationId);
 
-    const linkedIn = organization?.value?.socialMedia.find((social) =>
+    const linkedIn = organization?.socialMedia.find((social) =>
       social.url.includes('linkedin'),
     );
 

@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { useStore } from '@shared/hooks/useStore';
 import { ContractCard } from '@organization/components/Tabs/panels/AccountPanel/Contract/ContractCard';
@@ -9,19 +11,20 @@ import { ContractModalsContextProvider } from '@organization/components/Tabs/pan
 import { ContractModalStatusContextProvider } from '@organization/components/Tabs/panels/AccountPanel/context/ContractStatusModalsContext.tsx';
 
 export const Contracts = observer(() => {
-  const id = useParams()?.id as string;
   const store = useStore();
-  const organization = store.organizations.getById(id);
-  const contracts = organization?.contracts;
+  const id = useParams()?.id as string;
+  const organization = registry.get('organizations').get(id);
+  const organizationAggregate = new OrganizationAggregate(organization!, store);
+  const contracts = organizationAggregate.contracts;
 
   return (
     <>
       <ARRForecast
-        name={organization?.value.name || ''}
+        name={organization?.name || ''}
         currency={contracts?.[0]?.currency || 'USD'}
-        arrForecast={organization?.value?.renewalSummaryArrForecast}
-        maxArrForecast={organization?.value?.renewalSummaryMaxArrForecast}
-        renewalLikelihood={organization?.value?.renewalSummaryRenewalLikelihood}
+        arrForecast={organization?.renewalSummaryArrForecast}
+        maxArrForecast={organization?.renewalSummaryMaxArrForecast}
+        renewalLikelihood={organization?.renewalSummaryRenewalLikelihood}
       />
       {contracts?.map((c) => {
         return (
@@ -33,7 +36,7 @@ export const Contracts = observer(() => {
               <ContractModalsContextProvider id={c.metadata.id}>
                 <ContractCard
                   contractId={c.metadata.id}
-                  organizationName={organization?.value.name || ''}
+                  organizationName={organization?.name || ''}
                 />
               </ContractModalsContextProvider>
             </ContractModalStatusContextProvider>

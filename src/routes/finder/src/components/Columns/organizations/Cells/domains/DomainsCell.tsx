@@ -1,4 +1,6 @@
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationAggregate } from '@/domain/aggregates/organization.aggregate';
 
 import { useStore } from '@shared/hooks/useStore';
 
@@ -8,9 +10,12 @@ interface DomainCellProps {
 
 export const DomainsCell = observer(({ organizationId }: DomainCellProps) => {
   const store = useStore();
-  const organization = store.organizations.getById(organizationId);
+  const organization = registry.get('organizations').get(organizationId);
 
-  const domains = organization?.primaryDomains;
+  if (!organization) return null;
+
+  const organizationAggregate = new OrganizationAggregate(organization, store);
+  const domains = organizationAggregate?.primaryDomains;
 
   return (
     <div className='flex items-center cursor-pointer'>

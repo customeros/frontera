@@ -32,19 +32,16 @@ export const ChooseOpportunityOrganization = observer(() => {
       />
       <Command.List>
         {usecase.organizations.map((org) => (
-          <CommandItem
-            key={org.value.id}
-            onSelect={() => usecase.execute(org.value.id)}
-          >
+          <CommandItem key={org.id} onSelect={() => usecase.execute(org.id)}>
             <div className='flex items-center'>
               <Avatar
                 size='xxs'
+                name={org.name}
                 className='mr-2'
-                name={org.value?.name}
                 variant='outlineSquare'
-                src={org.value.logoUrl ?? ''}
+                src={org.logoUrl ?? ''}
               />
-              {org.value.name}
+              {org.name}
             </div>
           </CommandItem>
         ))}
