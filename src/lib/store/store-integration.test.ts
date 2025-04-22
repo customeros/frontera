@@ -36,7 +36,7 @@ describe('Store - general integrations', () => {
 
     channelMock = createChannelMock(handlers);
 
-    store = new Store<Entity>({
+    store = new Store<object>({
       cache: () => new PhoenixMap(channelMock),
       mutator: runInAction,
     });
