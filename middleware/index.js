@@ -12,6 +12,7 @@ const PUBLIC_PATHS = [
   '/google-auth',
   '/callback/google-auth',
   '/callback/google-auth-email-grant',
+  '/callback/google-auth-calendar-grant',
   '/azure-ad-auth',
   '/magic-link-auth',
   '/validate-magic-code',
@@ -80,6 +81,12 @@ const googleOauthEmailClient = new google.auth.OAuth2(
   process.env.GMAIL_CLIENT_ID,
   process.env.GMAIL_CLIENT_SECRET,
   `${process.env.VITE_MIDDLEWARE_API_URL}/callback/google-auth-email-grant`,
+);
+
+const googleOauthCalendarClient = new google.auth.OAuth2(
+  process.env.GMAIL_CLIENT_ID,
+  process.env.GMAIL_CLIENT_SECRET,
+  'http://localhost:5174/callback/google-auth-calendar-grant',
 );
 
 async function customerOsSignIn(
@@ -446,7 +453,6 @@ async function createServer() {
       'profile',
       'https://www.googleapis.com/auth/gmail.readonly',
       'https://www.googleapis.com/auth/gmail.send',
-      'https://www.googleapis.com/auth/calendar',
       'https://mail.google.com/',
     ];
 
@@ -466,6 +472,37 @@ async function createServer() {
 
     res.json({ url });
   });
+
+  app.get('/enable/google-calendar-sync', async (req, res) => {
+    try {
+      const scopes = [
+        'email',
+        'profile',
+        'https://www.googleapis.com/auth/calendar',
+      ];
+
+      const url = googleOauthCalendarClient.generateAuthUrl({
+        access_type: 'offline',
+        scope: scopes,
+        prompt: 'consent',
+        state: btoa(
+          JSON.stringify({
+            tenant: req.session.tenant,
+            origin: req.query.origin,
+            type: 'calendar',
+            email: req.session.profile.email,
+          }),
+        ),
+      });
+
+      return res.json({ url });
+    } catch (error) {
+      console.error('OAuth URL generation error:', error);
+
+      return res.status(500).json({ message: 'Failed to generate OAuth URL' });
+    }
+  });
+
   app.use('/enable/azure-ad-sync', (req, res) => {
     const scopes = [
       'email',
@@ -669,12 +706,17 @@ async function createServer() {
       const integrations_token = createIntegrationAppToken(
         loginResponse.currentTenant,
       );
+      const currentUserReq = await getCurrentUser(
+        loggedInEmail,
+        stateParsed?.tenant ?? '',
+      );
+      const currentUserRes = await currentUserReq.json();
 
       const campaign =
         new URLSearchParams(stateParsed?.origin).get('campaign') ?? '';
 
       const profile = {
-        id: profileRes?.userId,
+        id: currentUserRes.data.user_Current.id,
         name: profileRes?.displayName ?? '',
         email: loggedInEmail,
         locale: '',
@@ -868,6 +910,81 @@ async function createServer() {
       console.error(err);
       res.redirect(
         `${process.env.VITE_CLIENT_APP_URL}/auth/failure?message=${err.message}`,
+      );
+    }
+  });
+
+  app.use('/callback/google-auth-calendar-grant', async (req, res) => {
+    const { code, state } = req.query;
+    const stateParsed = JSON.parse(atob(state));
+
+    try {
+      const { tokens } = await googleOauthCalendarClient.getToken(code);
+
+      googleOauthLoginClient.setCredentials(tokens);
+
+      const { refresh_token } = tokens;
+
+      const profileRes = await google
+        .oauth2({
+          auth: googleOauthLoginClient,
+          version: 'v2',
+        })
+        .userinfo.get();
+
+      const loggedInEmail = stateParsed?.email ?? profileRes.data.email;
+
+      const resp = await fetch(
+        `${process.env.CUSTOMER_OS_API_PATH + '/query'}`,
+        {
+          method: 'POST',
+          headers: {
+            'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY,
+            'X-Openline-USERNAME': loggedInEmail,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            operationName: 'nylasConnect',
+            query: `
+        mutation nylasConnect {
+          nylasConnect(input: {
+            email: "${loggedInEmail}",
+            refreshToken: "${refresh_token}",
+            provider: NYLAS_PROVIDER_GOOGLE
+          }){
+            email
+            }
+        }`,
+          }),
+        },
+      );
+
+      if (!resp.ok) {
+        console.error('Failed to connect to Nylas', resp);
+        throw new Error('Failed to connect to Nylas');
+      }
+
+      const result = await resp.json();
+
+      if (result.errors) {
+        throw new Error(result.errors.map((error) => error.message).join(', '));
+      }
+
+      const sessionToken = req.session;
+      const redirectURL = `${
+        process.env.VITE_CLIENT_APP_URL
+      }/auth/success?sessionToken=${sessionToken}&origin=${encodeURIComponent(
+        stateParsed.origin,
+      )}`;
+
+      res.redirect(redirectURL);
+    } catch (err) {
+      console.error('Calendar callback error:', err);
+
+      return res.redirect(
+        `${
+          process.env.VITE_CLIENT_APP_URL
+        }/auth/failure?message=${encodeURIComponent(err.message)}`,
       );
     }
   });
