@@ -57,3 +57,5 @@ export function applyPolicies<
     },
   });
 }
+
+export type PolicyEnhancedStore = ReturnType<typeof applyPolicies>;

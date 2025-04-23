@@ -196,12 +196,14 @@ export class RealtimePolicy<T> extends Policy<T> {
   }
 
   suspendSync(fn: () => void) {
+    const wasSuspended = this.isSyncSuspended;
+
     this.isSyncSuspended = true;
 
     try {
       fn();
     } finally {
-      this.isSyncSuspended = false;
+      this.isSyncSuspended = wasSuspended;
     }
   }
 

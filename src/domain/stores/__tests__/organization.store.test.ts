@@ -74,6 +74,7 @@ vi.mock('@/domain/stores/session.store', () => {
   return {
     sessionStore: {
       isAuthenticated: true,
+      tenant: 'test',
       user: {
         id: 1,
         username: 'test-user',

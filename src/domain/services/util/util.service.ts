@@ -6,11 +6,11 @@ import { toastError, toastSuccess } from '@ui/presentation/Toast';
 export class UtilService {
   constructor() {}
 
-  toastSuccess(text: string) {
-    toastSuccess(text, crypto.randomUUID());
+  toastSuccess(text: string, id?: string) {
+    toastSuccess(text, id ?? crypto.randomUUID());
   }
 
-  toastError(text: string) {
-    toastError(text, crypto.randomUUID());
+  toastError(text: string, id?: string) {
+    toastError(text, id ?? crypto.randomUUID());
   }
 }

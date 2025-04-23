@@ -5,6 +5,7 @@ import { match } from 'ts-pattern';
 import { AxiosError } from 'axios';
 import { Persister } from '@store/persister';
 import { Transport } from '@infra/transport.ts';
+import { sessionStore } from '@/domain/stores/session.store';
 import { toJS, autorun, runInAction, makeAutoObservable } from 'mobx';
 
 // temporary - will be removed once we drop react-query and getGraphQLClient
@@ -91,6 +92,8 @@ export class SessionStore {
           'X-Openline-TENANT': this.value.tenant ?? '',
           'X-Openline-USERNAME': this.value.profile.email ?? '',
         };
+
+        sessionStore.setTenant(this.value.tenant);
 
         this.transport.setHeaders(headers);
         Transport.getInstance('mailstack').setHeaders(headers);
