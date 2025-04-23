@@ -1539,6 +1539,21 @@ export enum DataSource {
   ZendeskSupport = 'ZENDESK_SUPPORT',
 }
 
+/** Represents availability settings for a single day */
+export type DayAvailability = {
+  __typename?: 'DayAvailability';
+  enabled: Scalars['Boolean']['output'];
+  endHour: Scalars['String']['output'];
+  startHour: Scalars['String']['output'];
+};
+
+/** Input for day availability settings */
+export type DayAvailabilityInput = {
+  enabled: Scalars['Boolean']['input'];
+  endHour: Scalars['String']['input'];
+  startHour: Scalars['String']['input'];
+};
+
 export type DeleteResponse = {
   __typename?: 'DeleteResponse';
   accepted: Scalars['Boolean']['output'];
@@ -2955,6 +2970,8 @@ export type Mutation = {
   reminder_Update?: Maybe<Scalars['ID']['output']>;
   removeTag?: Maybe<Result>;
   removeTags?: Maybe<Result>;
+  /** Save user's calendar available hours configuration */
+  save_calendar_available_hours: UserCalendarAvailability;
   sendEmail: EmailResult;
   serviceLineItem_Delete: DeleteResponse;
   sku_Archive: Result;
@@ -3520,7 +3537,7 @@ export type MutationNote_UpdateArgs = {
 };
 
 export type MutationNylasConnectArgs = {
-  email: Scalars['String']['input'];
+  input: NylasConnectInput;
 };
 
 export type MutationNylasDisconnectArgs = {
@@ -3697,6 +3714,10 @@ export type MutationRemoveTagsArgs = {
   input: RemoveTagsInput;
 };
 
+export type MutationSave_Calendar_Available_HoursArgs = {
+  input: UserCalendarAvailabilityInput;
+};
+
 export type MutationSendEmailArgs = {
   input: SendEmailInput;
 };
@@ -3827,6 +3848,16 @@ export type NoteUpdateInput = {
   contentType?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
 };
+
+export type NylasConnectInput = {
+  email: Scalars['String']['input'];
+  provider: NylasProvider;
+  refreshToken: Scalars['String']['input'];
+};
+
+export enum NylasProvider {
+  NylasProviderGoogle = 'NYLAS_PROVIDER_GOOGLE',
+}
 
 export type OnboardingDetails = {
   __typename?: 'OnboardingDetails';
@@ -4520,6 +4551,8 @@ export type Query = {
   billableInfo: TenantBillableInfo;
   /** Get availability across all users in the tenant for a given time range */
   calendar_availability: CalendarAvailabilityResponse;
+  /** Get user's calendar available hours configuration */
+  calendar_available_hours?: Maybe<UserCalendarAvailability>;
   checkDomain: DomainCheckDetails;
   contact?: Maybe<Contact>;
   contact_ByEmail?: Maybe<Contact>;
@@ -4633,6 +4666,10 @@ export type QueryAttachmentArgs = {
 
 export type QueryCalendar_AvailabilityArgs = {
   input: CalendarAvailabilityInput;
+};
+
+export type QueryCalendar_Available_HoursArgs = {
+  email: Scalars['String']['input'];
 };
 
 export type QueryCheckDomainArgs = {
@@ -5675,6 +5712,36 @@ export type User = {
   test: Scalars['Boolean']['output'];
   timezone?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Time']['output'];
+};
+
+/** Represents a user's calendar available hours configuration */
+export type UserCalendarAvailability = {
+  __typename?: 'UserCalendarAvailability';
+  createdAt: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  friday: DayAvailability;
+  id: Scalars['ID']['output'];
+  monday: DayAvailability;
+  saturday: DayAvailability;
+  sunday: DayAvailability;
+  thursday: DayAvailability;
+  timezone: Scalars['String']['output'];
+  tuesday: DayAvailability;
+  updatedAt: Scalars['Time']['output'];
+  wednesday: DayAvailability;
+};
+
+/** Input for saving user's calendar available hours */
+export type UserCalendarAvailabilityInput = {
+  email: Scalars['String']['input'];
+  friday: DayAvailabilityInput;
+  monday: DayAvailabilityInput;
+  saturday: DayAvailabilityInput;
+  sunday: DayAvailabilityInput;
+  thursday: DayAvailabilityInput;
+  timezone: Scalars['String']['input'];
+  tuesday: DayAvailabilityInput;
+  wednesday: DayAvailabilityInput;
 };
 
 /**

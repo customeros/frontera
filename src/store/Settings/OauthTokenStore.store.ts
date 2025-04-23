@@ -83,6 +83,22 @@ export class OauthTokenStore {
     }
   }
 
+  async enableCalendarSync() {
+    if (this.root.demoMode) {
+      return;
+    }
+
+    try {
+      const { data } = await this.transport.http.get<{ url: string }>(
+        `/enable/google-calendar-sync?origin=${window.location.pathname}${window.location.search}`,
+      );
+
+      window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async disableSync(email: string, provider: string) {
     if (this.root.demoMode) {
       return;

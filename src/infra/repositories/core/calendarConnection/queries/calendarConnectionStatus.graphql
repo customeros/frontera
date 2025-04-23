@@ -1,0 +1,3 @@
+query calendarConnection($email: String!) {
+  nylasIsConnected(email: $email)
+}

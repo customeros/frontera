@@ -1,0 +1,3 @@
+mutation connectCalendar($input: NylasConnectInput!) {
+  nylasConnect(input: $input)
+}
