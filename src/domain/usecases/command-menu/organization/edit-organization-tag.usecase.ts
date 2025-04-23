@@ -120,6 +120,10 @@ export class EditOrganizationTagUsecase {
   };
 
   private handleSingleOrganizationTag = (tag: TagStore) => {
+    const span = Tracer.span(
+      'EditOrganizationTagUsecase.handleSingleOrganizationTag',
+      tag.value,
+    );
     const hasTag = this.organization?.tags?.some(
       (t) => t.metadata.id === tag.id,
     );
@@ -130,6 +134,8 @@ export class EditOrganizationTagUsecase {
     } else {
       this.organizationService.addTag(this.organization!, tag);
     }
+
+    span.end();
   };
 
   private handleMultipleOrganizationsTags = (tag: TagStore) => {

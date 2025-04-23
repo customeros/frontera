@@ -89,10 +89,12 @@ export class OrganizationAggregate {
     if (!record) return;
 
     this.organization.owner = record.value;
+    this.organization.bumpUpdatedAt();
   };
 
   clearOwner = () => {
     this.organization.owner = null;
+    this.organization.bumpUpdatedAt();
   };
 
   addTag = (id: string) => {
@@ -111,16 +113,19 @@ export class OrganizationAggregate {
     }
 
     this.organization.tags.push(tag.value);
+    this.organization.bumpUpdatedAt();
   };
 
   deleteTag = (id: string) => {
     const index = this.organization.tags.findIndex((t) => t.metadata.id === id);
 
     this.organization.tags.splice(index, 1);
+    this.organization.bumpUpdatedAt();
   };
 
   clearTags = () => {
     this.organization.tags = [];
+    this.organization.bumpUpdatedAt();
   };
 
   mergeOrganizations = (organizations: Organization[]) => {
@@ -129,5 +134,6 @@ export class OrganizationAggregate {
 
   addContact = (contact: Contact) => {
     this.organization.contacts.push(contact?.id);
+    this.organization.bumpUpdatedAt();
   };
 }

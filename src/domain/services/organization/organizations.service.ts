@@ -1,3 +1,4 @@
+import { Tracer } from '@infra/tracer';
 import { Logger } from '@/infra/logger';
 import { RootStore } from '@/store/root';
 import { Social } from '@/domain/objects';
@@ -266,6 +267,10 @@ export class OrganizationService {
   }
 
   public async addTag(organization: Organization, tag: TagStore) {
+    const span = Tracer.span('OrganizationService.addTag', {
+      organizationId: organization.id,
+      tag: tag.value,
+    });
     const organizationAggregate = new OrganizationAggregate(
       organization,
       this.root,
@@ -290,7 +295,10 @@ export class OrganizationService {
 
     if (res) {
       this.organizationStore.sync(organization);
+      this.utilService.toastSuccess('Tag added', 'add-tag');
     }
+
+    span.end();
 
     return [res, err];
   }

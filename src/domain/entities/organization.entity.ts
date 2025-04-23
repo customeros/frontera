@@ -115,6 +115,7 @@ export class Organization implements OrganizationDatum {
 
   flagIncorrectIndustry = () => {
     this.wrongIndustry = true;
+    this.bumpUpdatedAt();
   };
 
   setRenewalAdjustedRate = (
@@ -155,46 +156,57 @@ export class Organization implements OrganizationDatum {
         () => OrganizationStage.Target,
       )
       .otherwise(() => undefined);
+
+    this.bumpUpdatedAt();
   };
 
   setStage = (stage: OrganizationStage) => {
     this.stage = stage;
+    this.bumpUpdatedAt();
   };
 
   removeStage = () => {
     this.stage = null;
+    this.bumpUpdatedAt();
   };
 
   setNotes = (notes: string) => {
     this.notes = notes;
+    this.bumpUpdatedAt();
   };
 
   addSocial = (url: string) => {
     this.socialMedia.push(Social.create({ url }));
+    this.bumpUpdatedAt();
   };
 
   deleteSocial = (id: string) => {
     const index = this.socialMedia.findIndex((s) => s.id === id);
 
     this.socialMedia.splice(index, 1);
+    this.bumpUpdatedAt();
   };
 
   revertSocial = (social: Social) => {
     this.socialMedia.push(social);
+    this.bumpUpdatedAt();
   };
 
   addDomain = (payload: Partial<Domain>) => {
     this.domainsDetails.push(Domain.create(payload));
+    this.bumpUpdatedAt();
   };
 
   deleteDomain = (domain: string) => {
     const index = this.domainsDetails.findIndex((d) => d.domain !== domain);
 
     this.domainsDetails.splice(index, 1);
+    this.bumpUpdatedAt();
   };
 
   addContract = (contractId: string) => {
     this.contracts.unshift(contractId);
+    this.bumpUpdatedAt();
   };
 
   deleteContract = (contractId: string) => {
@@ -203,6 +215,8 @@ export class Organization implements OrganizationDatum {
     if (index > -1) {
       this.contracts.splice(index, 1);
     }
+
+    this.bumpUpdatedAt();
   };
 
   deleteContact = (contactId: string) => {
@@ -211,10 +225,13 @@ export class Organization implements OrganizationDatum {
     if (index > -1) {
       this.contacts.splice(index, 1);
     }
+
+    this.bumpUpdatedAt();
   };
 
   setRenewalLikelihood = (likelihood: OpportunityRenewalLikelihood) => {
     this.renewalSummaryRenewalLikelihood = likelihood;
+    this.bumpUpdatedAt();
   };
 
   toSaveInput = (): OrganizationSaveInput => ({
@@ -259,4 +276,8 @@ export class Organization implements OrganizationDatum {
     slackChannelId: this.slackChannelId,
     lastFundingRound: this.lastFundingRound,
   });
+
+  bumpUpdatedAt = () => {
+    this.updatedAt = new Date().toISOString();
+  };
 }

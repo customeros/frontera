@@ -271,4 +271,29 @@ describe('RealtimePolicy sync', () => {
 
     expect(disposer).toHaveBeenCalled();
   });
+
+  it('store.set should send phoenix sync event right after store.suspendSync is called', () => {
+    const realtime = new RealtimePolicy<Entity>(channelMock, {
+      versionBy: 'updatedAt',
+    });
+
+    const liveStore = applyPolicies(store, [realtime]);
+
+    liveStore.suspendSync(() => {
+      liveStore.set('a', { id: 'a', name: 'a', updatedAt: Date.now() });
+    });
+
+    liveStore.set('b', { id: 'b', name: 'b', updatedAt: Date.now() });
+
+    expect(channelMock.push).toHaveBeenCalledOnce();
+    expect(channelMock.push).toHaveBeenCalledWith(
+      'store:set',
+      expect.objectContaining({
+        key: 'b',
+        value: { id: 'b', name: 'b', updatedAt: Date.now() },
+        source: expect.anything(),
+        type: 'store:set',
+      }),
+    );
+  });
 });

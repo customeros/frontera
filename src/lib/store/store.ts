@@ -81,8 +81,6 @@ export class Store<T> {
       return;
     }
 
-    this.mutate(() => {
-      this.cache.set(entity[this.indexBy!] as string | number, entity);
-    });
+    this.set(entity[this.indexBy!] as string | number, entity);
   }
 }

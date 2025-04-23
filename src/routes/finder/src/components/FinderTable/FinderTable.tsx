@@ -423,7 +423,6 @@ export const FinderTable = observer(() => {
         rowHeight={rowHeight}
         id={tableViewDef?.id}
         totalItems={totalItems}
-        getRowId={(row) => row.id}
         canFetchMore={canFetchMore}
         enableColumnResizing={true}
         onSortingChange={handleSortChange}
@@ -433,6 +432,9 @@ export const FinderTable = observer(() => {
         dataTest={`finder-table-${tableType}`}
         enableRowSelection={enableRowSelection}
         tableType={tableViewDef?.value?.tableId}
+        getRowId={(row) => {
+          return row.id;
+        }}
         // isLoading={store.organizations.isLoading}
         enableKeyboardShortcuts={
           !isEditing && !isFiltering && !isCommandMenuPrompted
