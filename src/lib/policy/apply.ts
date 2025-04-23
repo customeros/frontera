@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Policy } from './policy';
 import { Store } from '../store/store';
 import { PolicyManager } from './policy-manager';

@@ -49,7 +49,6 @@ export const RenewalARRCard = observer(
     const { modal } = useUpdateRenewalDetailsContext();
     const [isLocalOpen, setIsLocalOpen] = useState(false);
     const organizationStore = registry.get('organizations');
-    const organization = organizationStore.get(id);
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 

@@ -446,7 +446,6 @@ async function createServer() {
       'profile',
       'https://www.googleapis.com/auth/gmail.readonly',
       'https://www.googleapis.com/auth/gmail.send',
-      'https://www.googleapis.com/auth/calendar',
       'https://mail.google.com/',
     ];
 
@@ -466,6 +465,7 @@ async function createServer() {
 
     res.json({ url });
   });
+
   app.use('/enable/azure-ad-sync', (req, res) => {
     const scopes = [
       'email',
@@ -669,12 +669,17 @@ async function createServer() {
       const integrations_token = createIntegrationAppToken(
         loginResponse.currentTenant,
       );
+      const currentUserReq = await getCurrentUser(
+        loggedInEmail,
+        stateParsed?.tenant ?? '',
+      );
+      const currentUserRes = await currentUserReq.json();
 
       const campaign =
         new URLSearchParams(stateParsed?.origin).get('campaign') ?? '';
 
       const profile = {
-        id: profileRes?.userId,
+        id: currentUserRes.data.user_Current.id,
         name: profileRes?.displayName ?? '',
         email: loggedInEmail,
         locale: '',
@@ -871,7 +876,6 @@ async function createServer() {
       );
     }
   });
-
   app.use('/session', (req, res) => {
     res.json({ session: req?.session ?? null });
   });
