@@ -19,10 +19,13 @@ const repository = new OrganizationRepository();
 let channel: Channel | null = null;
 
 const getChannel = () => {
-  if (!channel && transport.socket) {
-    channel = transport.socket?.channel('OrganizationStore:PureThePhantom', {
-      ...transport.channelMeta,
-    });
+  if (!channel && transport.socket && sessionStore.tenant) {
+    channel = transport.socket?.channel(
+      `OrganizationStore:${sessionStore.tenant}`,
+      {
+        ...transport.channelMeta,
+      },
+    );
   }
 
   return channel;

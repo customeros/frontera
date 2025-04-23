@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 class SessionStore {
   isAuthenticated = false;
+  tenant = '';
 
   constructor() {
     makeAutoObservable(this);
@@ -9,6 +10,10 @@ class SessionStore {
 
   setIsAuthenthicated = () => {
     this.isAuthenticated = true;
+  };
+
+  setTenant = (tenant: string) => {
+    this.tenant = tenant;
   };
 }
 
