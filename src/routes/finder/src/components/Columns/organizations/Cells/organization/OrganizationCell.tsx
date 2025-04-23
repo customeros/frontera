@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
+import { registry } from '@/domain/stores/registry';
 
 import { Eye } from '@ui/media/icons/Eye';
 import { IconButton } from '@ui/form/IconButton';
@@ -13,9 +14,10 @@ interface OrganizationCellProps {
 
 export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
   const store = useStore();
-  const org = store.organizations.getById(id);
+  const organizationStore = registry.get('organizations');
+  const org = organizationStore.get(id);
 
-  const name = org?.value?.name;
+  const name = org?.name;
   const isEnriching = org?.isEnriching;
 
   const [tabs] = useLocalStorage<{

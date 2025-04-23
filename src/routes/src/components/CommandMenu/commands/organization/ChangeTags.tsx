@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { CommandGroup } from 'cmdk';
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 import { EditOrganizationTagUsecase } from '@domain/usecases/command-menu/organization/edit-organization-tag.usecase';
 
 import { Plus } from '@ui/media/icons/Plus.tsx';
@@ -12,7 +13,14 @@ import { Command, CommandItem, CommandInput } from '@ui/overlay/CommandMenu';
 
 export const ChangeTags = observer(() => {
   const store = useStore();
-  const editTags = useMemo(() => new EditOrganizationTagUsecase(), []);
+  const organization = registry
+    .get('organizations')
+    .get(store.ui.commandMenu.context.ids?.[0] as string);
+
+  const editTags = useMemo(
+    () => organization && new EditOrganizationTagUsecase(organization),
+    [organization],
+  );
 
   useModKey('Enter', () => {
     store.ui.commandMenu.setOpen(false);
@@ -21,10 +29,10 @@ export const ChangeTags = observer(() => {
   return (
     <Command shouldFilter={false} label='Change or add tags...'>
       <CommandInput
-        label={editTags.inputLabel}
-        value={editTags.searchTerm}
+        label={editTags?.inputLabel}
+        value={editTags?.searchTerm}
         placeholder='Change or add tags...'
-        onValueChange={editTags.setSearchTerm}
+        onValueChange={editTags?.setSearchTerm}
         onKeyDownCapture={(e) => {
           if (e.metaKey && e.key === 'Enter') {
             store.ui.commandMenu.setOpen(false);
@@ -33,7 +41,7 @@ export const ChangeTags = observer(() => {
       />
       <CommandGroup>
         <Command.List>
-          {editTags.tagList?.map((tag) => (
+          {editTags?.tagList?.map((tag) => (
             <CommandItem
               key={tag?.id}
               onSelect={() => editTags.select(tag.id)}
@@ -53,7 +61,7 @@ export const ChangeTags = observer(() => {
               {tag?.value?.name}
             </CommandItem>
           ))}
-          {editTags.searchTerm && (
+          {editTags?.searchTerm && (
             <CommandItem leftAccessory={<Plus />} onSelect={editTags.create}>
               <span className='text-grayModern-700 ml-1'>Create new tag:</span>
               <span className='text-grayModern-500 ml-1'>

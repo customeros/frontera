@@ -3,6 +3,7 @@ import type { Transport } from '@infra/transport';
 
 import { runInAction } from 'mobx';
 import { Store } from '@store/_store';
+import { OrganizationViews } from '@domain/views/organization/organization.views';
 
 import { TableIdType, TableViewType } from '@graphql/types';
 
@@ -291,6 +292,8 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
         this.value.set(serverId, newTableViewDef);
         this.value.delete(tempId);
         this.version++;
+
+        OrganizationViews.instance.setup(newTableViewDef);
 
         this.sync({
           action: 'APPEND',

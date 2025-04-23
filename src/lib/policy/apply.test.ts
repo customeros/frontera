@@ -63,9 +63,15 @@ describe('applyPolicies', () => {
     const store = new Store<any>();
     const enhanced = applyPolicies(store, [new TestPolicy()]);
 
-    const result = await enhanced.getOrFetch(1);
+    const result = enhanced.getOrFetch(1);
 
-    expect(result).toEqual({ id: 1 });
+    expect(result).toBeUndefined();
+
+    await Promise.resolve();
+
+    const fetched = enhanced.get(1);
+
+    expect(fetched).toEqual({ id: 1 });
     expect(store.get(1)).toEqual({ id: 1 });
   });
 

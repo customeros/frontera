@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useKey } from 'rooks';
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 import { InvoiceStore } from '@store/Invoices/Invoice.store.ts';
 
 import { Table } from '@ui/presentation/Table';
@@ -33,7 +34,7 @@ export const InvoicesPanel = observer(() => {
       <div className='flex justify-center'>
         <EmptyState
           id={id}
-          companyName={store.organizations.getById(id)?.name ?? ''}
+          companyName={registry.get('organizations').get(id)?.name ?? ''}
         />
       </div>
     );

@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
-import { SaveOrganizationRelationshipAndStageUsecase } from '@domain/usecases/organization-details/save-organization-relationship-and-stage.usecase';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services/organization/organizations.service';
 
-import { useStore } from '@shared/hooks/useStore';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { Tag, TagLabel } from '@ui/presentation/Tag/Tag';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
@@ -17,24 +17,17 @@ import {
 } from '../Tabs/panels/AboutPanel/util';
 
 export const StagePicker = observer(() => {
-  const store = useStore();
   const id = useParams()?.id as string;
-  const organization = store.organizations.value.get(id);
-  const applicableStageOptions = getStageOptions(
-    organization?.value?.relationship,
-  );
-
-  const saveRelationshipAndStageUsecase = useMemo(
-    () => new SaveOrganizationRelationshipAndStageUsecase(id),
-    [id],
-  );
+  const organization = registry.get('organizations').get(id);
+  const organizationService = useMemo(() => new OrganizationService(), []);
+  const applicableStageOptions = getStageOptions(organization?.relationship);
 
   const selectedRelationshipOption = relationshipOptions.find(
-    (option) => option.value === organization?.value?.relationship,
+    (option) => option.value === organization?.relationship,
   );
 
   const selectedStageOption = stageOptions.find(
-    (option) => option.value === organization?.value?.stage,
+    (option) => option.value === organization?.stage,
   );
 
   return (
@@ -57,9 +50,8 @@ export const StagePicker = observer(() => {
                 <MenuItem
                   key={option.value}
                   onClick={() => {
-                    saveRelationshipAndStageUsecase.execute({
-                      stage: option.value,
-                    });
+                    organization &&
+                      organizationService.setStage(organization, option.value);
                   }}
                 >
                   {option.label}

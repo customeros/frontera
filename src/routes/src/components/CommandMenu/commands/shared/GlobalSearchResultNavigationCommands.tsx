@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Fuse from 'fuse.js';
 import { useCommandState } from 'cmdk';
 import { observer } from 'mobx-react-lite';
+import { Organization } from '@/domain/entities';
+import { registry } from '@domain/stores/registry';
 import { Contact } from '@store/Contacts/Contact.dto';
-import { Organization } from '@store/Organizations/Organization.dto';
 
 import { Avatar } from '@ui/media/Avatar';
 import { useStore } from '@shared/hooks/useStore';
@@ -23,21 +24,23 @@ const isOrganization = (
 ): item is { item: Organization; type: 'organization' } => {
   return item.type === 'organization';
 };
+
 export const GlobalSearchResultNavigationCommands = observer(() => {
   const search = useCommandState((state) => state.search);
   const navigate = useNavigate();
 
-  const { contacts, organizations, ui } = useStore();
+  const { contacts, ui } = useStore();
+  const organizationStore = registry.get('organizations');
   const combinedList = useMemo(() => {
     return [
       ...contacts
         .toArray()
         .map((contact) => ({ type: 'contact', item: contact })),
-      ...organizations
+      ...organizationStore
         .toArray()
         .map((org) => ({ type: 'organization', item: org })),
     ];
-  }, [contacts.totalElements, organizations.totalElements]);
+  }, [contacts.totalElements, organizationStore.size]);
 
   const fuseCombined = useMemo(
     () =>
@@ -54,7 +57,7 @@ export const GlobalSearchResultNavigationCommands = observer(() => {
     const results = fuseCombined.search(search, { limit: 10 });
     const { filteredContacts, filteredOrgs } = results.reduce<{
       filteredContacts: Contact[];
-      filteredOrgs: Organization['value'][];
+      filteredOrgs: Organization[];
     }>(
       (acc, result) => {
         if (isContact(result.item)) {
@@ -62,9 +65,7 @@ export const GlobalSearchResultNavigationCommands = observer(() => {
         }
 
         if (isOrganization(result.item)) {
-          acc.filteredOrgs.push(
-            result.item.item.value as Organization['value'],
-          );
+          acc.filteredOrgs.push(result.item.item);
         }
 
         return acc;
@@ -120,8 +121,7 @@ export const GlobalSearchResultNavigationCommands = observer(() => {
               <span className='ml-1.5 text-grayModern-500 line-clamp-1 max-w-[250px]'>
                 ·{' '}
                 {contactStore.organizationId
-                  ? organizations.value.get(contactStore.organizationId)?.value
-                      .name
+                  ? organizationStore.get(contactStore.organizationId)?.name
                   : ''}
               </span>
             </div>

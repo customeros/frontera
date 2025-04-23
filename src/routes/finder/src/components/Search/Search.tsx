@@ -1,4 +1,4 @@
-import { useRef, startTransition } from 'react';
+import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { match } from 'ts-pattern';
@@ -34,40 +34,13 @@ export const Search = observer(() => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
   const floatingActionPropmterRef = useRef<HTMLDivElement | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const preset = searchParams.get('preset');
-  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const tableViewDef = store.tableViewDefs.getById(preset || '');
 
   const tableType = tableViewDef?.value?.tableType;
   const totalResults = store.ui.searchCount;
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    startTransition(() => {
-      const value = event.target.value;
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        preset && store.organizations.setSearchTerm(value, preset);
-      }, 200);
-
-      setSearchParams(
-        (prev) => {
-          if (!value) {
-            prev.delete('search');
-          } else {
-            prev.set('search', value);
-          }
-
-          return prev;
-        },
-        { replace: true },
-      );
-    });
-  };
 
   useKeyBindings(
     {
@@ -188,7 +161,6 @@ export const Search = observer(() => {
           autoCorrect='off'
           spellCheck={false}
           variant='unstyled'
-          onChange={handleChange}
           placeholder={placeholder}
           defaultValue={searchParams.get('search') ?? ''}
           onBlur={() => {
@@ -309,9 +281,7 @@ export const Search = observer(() => {
         <TableViewMenu />
       )}
       <span ref={measureRef} className={`z-[-1] absolute h-0 invisible flex`}>
-        <div className='ml-2'>
-          <SearchBarFilterData />
-        </div>
+        <div className='ml-2'>{/* <SearchBarFilterData /> */}</div>
         {inputRef?.current?.value ?? ''}
       </span>
     </div>

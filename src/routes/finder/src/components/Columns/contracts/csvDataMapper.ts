@@ -7,7 +7,7 @@ import { formatCurrency } from '@utils/getFormattedCurrencyNumber.ts';
 
 export const csvDataMapper = {
   [ColumnViewType.ContractsName]: (d: ContractStore) => {
-    return d?.value?.contractName || d.organization?.value?.name;
+    return d?.value?.contractName || d.organization?.name;
   },
 
   [ColumnViewType.ContractsEnded]: (d: ContractStore) =>

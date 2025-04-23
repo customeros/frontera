@@ -45,9 +45,6 @@ export const computeFinderData = (
     tableViewDef?.value.tableType || TableViewType.Organizations;
 
   return match(tableType)
-    .with(TableViewType.Organizations, () => {
-      return store.organizations.getViewById(preset ?? '');
-    })
     .with(TableViewType.Contacts, () => {
       return store.contacts.getViewById(preset ?? '');
     })

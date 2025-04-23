@@ -1,6 +1,7 @@
 import { Store } from '@store/_store';
 import { RootStore } from '@store/root';
 import { Transport } from '@infra/transport';
+import { registry } from '@domain/stores/registry';
 import { action, computed, observable, runInAction } from 'mobx';
 
 import {
@@ -15,9 +16,11 @@ import { ContactsView } from './__views__/Contacts.view';
 import { ContactService } from './__service__/Contacts.service';
 import { FlowContactsView } from './__views__/FlowContacts.view';
 import { TargetsContactsView } from './__views__/TargetsContacts.view';
+
 export class ContactsStore extends Store<ContactDatum, Contact> {
   private chunkSize = 500;
   private service = ContactService.getInstance();
+  private organizationStore = registry.get('organizations');
   @observable accessor cursors: Map<string, number> = new Map();
   @observable accessor availableCounts: Map<string, number> = new Map();
 
@@ -338,7 +341,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     } finally {
       serverId && options?.onSuccess?.(serverId);
       await this.root.contacts.invalidate(serverId!);
-      await this.root.organizations.invalidate(organizationId);
+      await this.organizationStore.revalidate(organizationId);
     }
   }
 
@@ -404,7 +407,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     } finally {
       serverId && options?.onSuccess?.(serverId);
       await this.root.contacts.invalidate(serverId!);
-      await this.root.organizations.invalidate(organizationId);
+      await this.organizationStore.revalidate(organizationId);
     }
   }
 
@@ -431,7 +434,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
 
     let serverId: string | undefined;
 
-    const organization = this.root.organizations.value.get(organizationId);
+    const organization = this.organizationStore.get(organizationId);
 
     try {
       const { contact_CreateForOrganization } =
@@ -457,7 +460,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
         this.isLoading = false;
       });
       this.root.ui.toastSuccess(
-        `Contact created for ${organization?.value?.name}`,
+        `Contact created for ${organization?.name}`,
         'create-contract-error',
       );
     } catch (e) {
@@ -472,7 +475,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     } finally {
       serverId && options?.onSuccess?.(serverId);
       await this.root.contacts.invalidate(serverId!);
-      await this.root.organizations.invalidate(organizationId);
+      await this.organizationStore.revalidate(organizationId);
       this.root.contacts.value.get(serverId!)?.commit({ syncOnly: true });
     }
   }
@@ -574,18 +577,9 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     try {
       runInAction(() => {
         if (organizationId) {
-          const organization =
-            this.root.organizations.value.get(organizationId);
+          const organization = this.organizationStore.get(organizationId);
 
-          const foundIdx = organization?.value?.contacts.findIndex(
-            (c) => c === id,
-          );
-
-          if (typeof foundIdx === 'number' && foundIdx > -1) {
-            organization?.draft();
-            organization?.value?.contacts.splice(foundIdx, 1);
-            organization?.commit({ syncOnly: true });
-          }
+          organization?.deleteContact(id);
         }
         this.value.delete(id);
         this.version++;
@@ -601,7 +595,7 @@ export class ContactsStore extends Store<ContactDatum, Contact> {
     } finally {
       runInAction(() => {
         this.sync({ action: 'DELETE', ids: [id] });
-        this.root.organizations.invalidate(organizationId || '');
+        this.organizationStore.revalidate(organizationId || '');
         this.refreshCurrentView();
       });
     }

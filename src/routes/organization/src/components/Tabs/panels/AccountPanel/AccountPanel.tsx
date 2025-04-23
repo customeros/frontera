@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 
 import { Icon } from '@ui/media/Icon';
 import { Currency } from '@graphql/types';
@@ -28,10 +29,10 @@ const AccountPanelComponent = observer(() => {
 
   const { isModalOpen } = useAccountPanelStateContext();
 
-  const organizationStore = store.organizations.value.get(id);
-  const organization = organizationStore?.value;
+  const organizationStore = registry.get('organizations');
+  const organization = organizationStore.get(id);
 
-  if (store.organizations.isLoading && !organization) {
+  if (!organization) {
     return <AccountPanelSkeleton />;
   }
 
@@ -54,7 +55,7 @@ const AccountPanelComponent = observer(() => {
     ? Boolean(store.contracts.isPending.get(organization?.id))
     : false;
 
-  if (!organizationStore?.contracts?.length) {
+  if (!organization?.contracts?.length) {
     return (
       <EmptyContracts
         isPending={isCreating}

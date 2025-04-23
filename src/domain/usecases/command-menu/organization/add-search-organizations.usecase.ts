@@ -1,17 +1,13 @@
 import { match } from 'ts-pattern';
-import { RootStore } from '@store/root';
+import { RootStore } from '@/store/root';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services';
 import { when, action, reaction, computed, observable } from 'mobx';
-import { Organization } from '@store/Organizations/Organization.dto';
-import { OrganizationRepository } from '@infra/repositories/core/organization';
-import { SearchGlobalOrganizationsQuery } from '@infra/repositories/core/organization/queries/searchGlobalOrganizations.generated';
+import { SearchGlobalOrganizationsQuery } from '@/infra/repositories/core/organization/queries/searchGlobalOrganizations.generated';
 
 import { validateUrl } from '@utils/url';
-import {
-  SortingDirection,
-  OrganizationStage,
-  ComparisonOperator,
-  OrganizationRelationship,
-} from '@graphql/types';
+import { OrganizationStage, OrganizationRelationship } from '@graphql/types';
 
 type GlobalOrganization =
   SearchGlobalOrganizationsQuery['globalOrganizations_Search'][number];
@@ -25,7 +21,8 @@ type Status =
 
 export class AddSearchOrganizationsUsecase {
   private root = RootStore.getInstance();
-  private service = OrganizationRepository.getInstance();
+  private organizationStore = registry.get('organizations');
+  private organizationService = new OrganizationService();
   @observable private accessor searchedIds: string[] = [];
 
   @observable accessor searchTerm = '';
@@ -64,7 +61,7 @@ export class AddSearchOrganizationsUsecase {
   @computed
   get mixedOptions() {
     const tenantOrgs = this.searchedIds.reduce((acc, id) => {
-      const entity = this.root.organizations.getById(id);
+      const entity = this.organizationStore.get(id);
 
       if (entity) {
         acc.push(new AddSearchOrganizationOption(entity));
@@ -146,132 +143,122 @@ export class AddSearchOrganizationsUsecase {
   }
 
   private async searchGlobal() {
-    try {
-      this.loading();
+    this.loading();
 
-      const { globalOrganizations_Search } =
-        await this.service.searchGlobalOrganizations({
-          searchTerm: this.searchTerm,
-          limit: 30,
-        });
+    const [res, err] = await this.organizationService.searchGlobal(
+      this.searchTerm,
+      30,
+    );
 
+    if (err) {
+      console.error(
+        'AddSearchOrganizationsUsecase.searchGlobal: Failed searching global organizations',
+      );
+
+      this.error('Could not search companies');
+
+      return;
+    }
+
+    if (res) {
       this.setOptions(
-        globalOrganizations_Search.map(
+        res.globalOrganizations_Search.map(
           (data) => new AddSearchOrganizationOption(data),
         ) ?? [],
       );
       this.idle();
-    } catch (_err) {
-      this.error('Could not search companies');
     }
   }
 
   private async searchTenant() {
-    try {
-      this.loading();
+    this.loading();
 
-      const { ui_organizations_search } =
-        await this.service.searchOrganizations({
-          limit: 30,
-          sort: {
-            by: 'ORGANIZATIONS_NAME',
-            caseSensitive: false,
-            direction: SortingDirection.Asc,
-          },
-          where: {
-            OR: [
-              {
-                filter: {
-                  property: 'ORGANIZATIONS_NAME',
-                  value: this.searchTerm,
-                  caseSensitive: false,
-                  includeEmpty: false,
-                  operation: ComparisonOperator.Contains,
-                },
-              },
-              {
-                filter: {
-                  property: 'ORGANIZATIONS_WEBSITE',
-                  value: this.searchTerm,
-                  caseSensitive: false,
-                  includeEmpty: false,
-                  operation: ComparisonOperator.Contains,
-                },
-              },
-            ],
-          },
-        });
+    const [res, err] = await this.organizationService.searchTenant(
+      this.searchTerm,
+    );
 
-      const results = ui_organizations_search?.ids ?? [];
-
-      if (results.length === 0) {
-        this.idle();
-        this.setSearchedIds([]);
-
-        return;
-      }
-
-      await this.root.organizations.retrieve(results);
-      this.setSearchedIds(results);
-      this.idle();
-    } catch (_err) {
-      this.error('Could not search companies');
+    if (err) {
+      console.error(
+        'AddSearchOrganizationsUsecase.searchTenant: Failed searching tenant organizations',
+      );
     }
+
+    const results = res?.ui_organizations_search?.ids ?? [];
+
+    if (results.length === 0) {
+      this.idle();
+      this.setSearchedIds([]);
+
+      return;
+    }
+
+    this.setSearchedIds(results);
+    this.idle();
   }
 
   private async validateDomain() {
-    try {
-      this.validatingDomain();
+    this.validatingDomain();
 
-      const { organization_CheckWebsite } = await this.service.checkWebsite({
-        website: this.searchTerm,
-      });
+    const [res, err] = await this.organizationService.validateDomain(
+      this.searchTerm,
+    );
 
-      const isAccepted = organization_CheckWebsite?.accepted ?? false;
-      const isPrimary = organization_CheckWebsite?.primary ?? false;
-      const foundPrimaryDomain = organization_CheckWebsite?.primaryDomain;
-      const foundGlobalOrganization =
-        organization_CheckWebsite?.globalOrganization;
-
-      if (!isAccepted) {
-        this.domainError(`We don't allow hosting or profile-based domains`);
-
-        return;
-      }
-
-      if (!isPrimary && foundPrimaryDomain) {
-        if (foundGlobalOrganization) {
-          if (foundGlobalOrganization?.organizationId) {
-            this.root.organizations.retrieve([
-              foundGlobalOrganization.organizationId,
-            ]);
-
-            this.searchedIds.push(foundGlobalOrganization.organizationId);
-          } else {
-            this.setOptions([
-              new AddSearchOrganizationOption(foundGlobalOrganization),
-            ]);
-          }
-        }
-        this.domainMessage(`This domain is linked to ${foundPrimaryDomain}`);
-
-        return;
-      }
-
-      this.domainError('');
-      this.domainMessage('');
-    } catch (_err) {
+    if (err) {
       this.error('Could not check website');
+
+      return;
     }
+
+    if (!res) {
+      return;
+    }
+
+    const result = res.organization_CheckWebsite;
+    const isAccepted = result.accepted ?? false;
+    const isPrimary = result.primary ?? false;
+    const foundPrimaryDomain = result.primaryDomain;
+    const foundGlobalOrganization = result.globalOrganization;
+
+    if (!isAccepted) {
+      this.domainError(`We don't allow hosting or profile-based domains`);
+
+      return;
+    }
+
+    if (!isPrimary && foundPrimaryDomain) {
+      if (foundGlobalOrganization) {
+        if (foundGlobalOrganization?.organizationId) {
+          this.organizationStore.getOrFetch(
+            foundGlobalOrganization.organizationId,
+          );
+
+          this.searchedIds.push(foundGlobalOrganization.organizationId);
+        } else {
+          this.setOptions([
+            new AddSearchOrganizationOption(foundGlobalOrganization),
+          ]);
+        }
+      }
+      this.domainMessage(`This domain is linked to ${foundPrimaryDomain}`);
+
+      return;
+    }
+
+    this.domainError('');
+    this.domainMessage('');
   }
 
-  private getViewDefDefaults() {
+  private getCurrentViewDef() {
     const searchParams = new URLSearchParams(window.location.search);
     const preset = searchParams.get('preset');
 
-    if (!preset) return {};
+    if (!preset) return;
 
-    const viewDef = this.root.tableViewDefs.getById(preset);
+    return this.root.tableViewDefs.getById(preset);
+  }
+
+  private getViewDefDefaults() {
+    const viewDef = this.getCurrentViewDef();
 
     if (!viewDef) return {};
 
@@ -323,11 +310,13 @@ export class AddSearchOrganizationsUsecase {
     if (!option) {
       const isUrl = validateUrl(this.searchTerm);
 
-      await this.root.organizations.create({
+      const organization = new Organization({
         ...this.getViewDefDefaults(),
         name: isUrl ? undefined : this.searchTerm || 'Unnamed',
         website: !isUrl ? undefined : this.searchTerm || '',
       });
+
+      await this.organizationService.create(organization);
     }
 
     if (option?.source !== 'global') {
@@ -343,10 +332,14 @@ export class AddSearchOrganizationsUsecase {
 
       this.addingOrganization(globalId);
 
-      await this.root.organizations.import(Number(globalId), {
-        ...this.getViewDefDefaults(),
-        ...rest,
-      });
+      await this.organizationService.import(
+        globalId,
+        new Organization({
+          ...this.getViewDefDefaults(),
+          ...rest,
+        }),
+      );
+
       this.searchGlobal();
     }
 
@@ -387,9 +380,9 @@ class AddSearchOrganizationOption {
       this.id = data.id;
       this.name = data.name;
       this.source = 'tenant';
-      this.website = data.value.website ?? null;
-      this.logoUrl = data.value.logoUrl ?? null;
-      this.iconUrl = data.value.iconUrl ?? null;
+      this.website = data.website ?? null;
+      this.logoUrl = data.logoUrl ?? null;
+      this.iconUrl = data.iconUrl ?? null;
       this.tenantOrganizationId = data.id;
     } else {
       this.id = data.id;

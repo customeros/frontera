@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
-import { OrganizationService } from '@domain/services';
-import { Organization } from '@store/Organizations/Organization.dto';
-import { OrganizationRepository } from '@infra/repositories/core/organization/organization.repository';
+import { Organization } from '@/domain/entities';
+import { OrganizationService } from '@/domain/services';
+import { OrganizationRepository } from '@/infra/repositories/core/organization/organization.repository';
 
 export class AddOrganizationDomainCase {
   @observable accessor inputValue: string = '';
@@ -16,18 +16,12 @@ export class AddOrganizationDomainCase {
     primary: boolean;
     primaryDomain: string;
   } = null;
-  @observable accessor entity: Organization | null = null;
   private service = new OrganizationService();
   private repository = OrganizationRepository.getInstance();
 
-  constructor() {
+  constructor(private organization: Organization) {
     this.setInputValue = this.setInputValue.bind(this);
     this.reset = this.reset.bind(this);
-  }
-
-  @action
-  setEntity(entity: Organization) {
-    this.entity = entity;
   }
 
   @action
@@ -80,9 +74,9 @@ export class AddOrganizationDomainCase {
 
       if (
         (checkDomain.primaryDomainOrganizationId &&
-          checkDomain.primaryDomainOrganizationId !== this.entity?.id) ||
+          checkDomain.primaryDomainOrganizationId !== this.organization?.id) ||
         (checkDomain.domainOrganizationId &&
-          checkDomain.domainOrganizationId !== this.entity?.id)
+          checkDomain.domainOrganizationId !== this.organization?.id)
       ) {
         this.error = 'Duplicate';
         this.associatedOrg = {
@@ -128,13 +122,13 @@ export class AddOrganizationDomainCase {
 
   @action
   submit() {
-    if (!this?.entity) {
+    if (!this?.organization) {
       console.error('AddOrganizationDomainCase: No entity provided');
 
       return;
     }
 
-    this.service.addDomain(this.entity, {
+    this.service.addDomain(this.organization, {
       domain: this.inputValue,
       primary: this.validationDetails?.primary || false,
       primaryDomain: this.validationDetails?.primaryDomain,

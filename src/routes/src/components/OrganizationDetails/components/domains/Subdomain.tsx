@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 
 import { cn } from '@ui/utils/cn.ts';
 import { IconButton } from '@ui/form/IconButton';
@@ -23,9 +24,9 @@ export const Subdomain = observer(({ domain }: { domain: string }) => {
 
   const [showMenu, setShowMenu] = useState(false);
 
-  const organization = store.organizations.getById(id);
+  const organization = registry.get('organizations').get(id);
 
-  if (!organization || !organization?.value) return null;
+  if (!organization || !organization) return null;
 
   return (
     <div className='text-sm cursor-pointer flex items-center no-underline hover:no-underline text-grayModern-700 group'>

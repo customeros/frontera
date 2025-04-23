@@ -36,8 +36,9 @@ export type FilterType = {
   groupOptions?: { label: string; options: { id: string; label: string }[] };
 };
 
-import { uniqBy } from 'lodash';
+import uniqBy from 'lodash/uniqBy';
 import { type RootStore } from '@store/root';
+import { registry } from '@domain/stores/registry';
 import { countryMap } from '@assets/countries/countriesMap';
 
 import { Globe04 } from '@ui/media/icons/Globe04';
@@ -217,8 +218,11 @@ export const getFilterTypes = (store?: RootStore) => {
       icon: (
         <ArrowCircleDownRight className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
-      options: uniqBy(store?.organizations.toArray(), 'value.leadSource')
-        .map((v) => v.value.leadSource)
+      options: uniqBy(
+        Array.from(registry.get('organizations').cache).map(([_, v]) => v),
+        'value.leadSource',
+      )
+        .map((v) => v.leadSource)
         .filter(Boolean)
         .map((leadSource) => ({
           id: leadSource,

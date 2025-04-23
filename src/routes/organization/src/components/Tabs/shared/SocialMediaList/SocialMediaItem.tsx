@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 
+import { Social } from '@/domain/objects';
 import { observer } from 'mobx-react-lite';
-import { Organization } from '@store/Organizations/Organization.dto';
-import { RemoveOrgSocialMediaItemUsecase } from '@domain/usecases/organization-details/remove-org-social-media-item.usecase';
+import { Organization } from '@/domain/entities';
+import { OrganizationService } from '@/domain/services';
 
 import { cn } from '@ui/utils/cn';
 import { Button } from '@ui/form/Button/Button';
@@ -20,6 +21,7 @@ import {
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
+  AlertDialogPortal,
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseIconButton,
@@ -28,21 +30,26 @@ import {
 import { SocialIcon } from './SocialIcons';
 
 interface SocialMediaItemProps {
-  id: string;
-  value: string;
+  social: Social;
   index?: number;
-  dataTest?: string;
   isReadOnly?: boolean;
   organization: Organization;
 }
 
 export const SocialMediaItem = observer(
-  ({ value, dataTest, id, organization }: SocialMediaItemProps) => {
+  ({ social, organization }: SocialMediaItemProps) => {
     const [openActionBar, setIsOpenActionBar] = useState(false);
     const [_, copyToClipboard] = useCopyToClipboard();
     const { onClose, onOpen, open } = useDisclosure();
+    const organizationService = useMemo(() => new OrganizationService(), []);
 
-    const href = value?.startsWith('http') ? value : `https://${value}`;
+    const onDeleteConfirm = () => {
+      organizationService.removeSocialMediaItem(organization, social);
+    };
+
+    const href = social.url.startsWith('http')
+      ? social.url
+      : `https://${social.url}`;
 
     return (
       <>
@@ -51,19 +58,18 @@ export const SocialMediaItem = observer(
             <div className='h-full flex items-center'>
               <div
                 tabIndex={0}
-                data-test={dataTest}
                 className='text-sm truncate cursor-default overflow-hidden overflow-ellipsis'
               >
                 <Popover open={openActionBar} onOpenChange={setIsOpenActionBar}>
                   <PopoverTrigger>
                     <Tooltip
                       asChild
-                      label={value}
+                      label={social.url}
                       className='max-w-[300px] truncate'
                     >
                       <div>
                         <SocialIcon
-                          url={value}
+                          url={social.url}
                           className={cn(
                             openActionBar &&
                               'border-[1px] border-grayModern-700 rounded-full ',
@@ -78,7 +84,7 @@ export const SocialMediaItem = observer(
                   >
                     <div className=' flex items-center text-white'>
                       <span className='mr-2 text-sm truncate w-[150px]'>
-                        {formatSocialUrl(value)}
+                        {formatSocialUrl(social.url)}
                       </span>
                       <Divider className='bg-grayModern-500 w-3 rotate-90 h-[1px] border-0' />
                       <div className='flex gap-2'>
@@ -98,7 +104,9 @@ export const SocialMediaItem = observer(
                           icon={<Copy01 />}
                           colorScheme={'white'}
                           aria-label={'copy-social-link'}
-                          onClick={() => copyToClipboard(value, 'Link copied')}
+                          onClick={() =>
+                            copyToClipboard(social.url, 'Link copied')
+                          }
                         />
                         <IconButton
                           size='xs'
@@ -119,9 +127,8 @@ export const SocialMediaItem = observer(
 
         <DeleteModal
           open={open}
-          socialId={id}
           onClose={onClose}
-          organization={organization}
+          onConfirm={onDeleteConfirm}
         />
       </>
     );
@@ -130,20 +137,14 @@ export const SocialMediaItem = observer(
 
 interface DeleteModalProps {
   open: boolean;
-  socialId: string;
   onClose: () => void;
-  organization: Organization;
+  onConfirm: () => void;
 }
 
-export const DeleteModal = observer(
-  ({ socialId, onClose, open, organization }: DeleteModalProps) => {
-    const removeOrgSocialMediaItemsUsecase = useMemo(
-      () => new RemoveOrgSocialMediaItemUsecase(organization.id),
-      [organization.id],
-    );
-
-    return (
-      <AlertDialog isOpen={open} onClose={onClose}>
+export const DeleteModal = ({ onConfirm, onClose, open }: DeleteModalProps) => {
+  return (
+    <AlertDialog isOpen={open} onClose={onClose}>
+      <AlertDialogPortal>
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogCloseIconButton />
@@ -152,18 +153,13 @@ export const DeleteModal = observer(
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button onClick={onClose}>Cancel</Button>
-              <Button
-                colorScheme='primary'
-                onClick={() => {
-                  removeOrgSocialMediaItemsUsecase.remove(socialId);
-                }}
-              >
+              <Button onClick={onConfirm} colorScheme='primary'>
                 Confirm
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
-      </AlertDialog>
-    );
-  },
-);
+      </AlertDialogPortal>
+    </AlertDialog>
+  );
+};

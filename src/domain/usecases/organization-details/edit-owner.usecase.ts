@@ -1,4 +1,5 @@
 import { RootStore } from '@store/root';
+import { Organization } from '@/domain/entities';
 import { OrganizationService } from '@domain/services';
 import { action, computed, reaction, observable } from 'mobx';
 
@@ -12,10 +13,8 @@ export class EditOwnerOrganizationUsecase {
 
   private root = RootStore.getInstance();
   private organizationService = new OrganizationService();
-  private orgId: string;
 
-  constructor(orgId: string) {
-    this.orgId = orgId;
+  constructor(private organization: Organization) {
     this.execute = this.execute.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.setSearchTerm = this.setSearchTerm.bind(this);
@@ -27,13 +26,6 @@ export class EditOwnerOrganizationUsecase {
       this.computeInitialOptions,
     );
     this.computeInitialOptions();
-  }
-
-  @computed
-  get organization() {
-    if (!this.orgId) return;
-
-    return this.root.organizations.getById(this.orgId);
   }
 
   @computed
@@ -95,6 +87,6 @@ export class EditOwnerOrganizationUsecase {
 
   @action
   execute(owner: SelectOption) {
-    this.organizationService.editOwner(this.orgId, owner.value);
+    this.organizationService.setOwner(this.organization, owner.value);
   }
 }

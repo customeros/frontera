@@ -312,14 +312,10 @@ export class SessionStore {
   }
 
   get isAuthenticated() {
-    if (this.root.demoMode) return true;
-
     return Boolean(this.sessionToken && this.value.profile.email !== '');
   }
 
   get isBootstrapped() {
-    if (this.root.demoMode) return true;
-
     return this.isHydrated && !this.isBootstrapping;
   }
 

@@ -2,13 +2,13 @@ import hashit from 'hash-it';
 
 import { ViewStore } from './view-store';
 
-export class View<T extends object, V> {
+export class View<Config extends object, Values> {
   public readonly hash: number;
-  public readonly compute: () => V;
-  private readonly store: ViewStore;
+  public readonly compute: () => Values;
+  private readonly store: ViewStore<Values>;
 
-  constructor(index: T, compute: () => V, store: ViewStore) {
-    this.hash = hashit(index);
+  constructor(config: Config, compute: () => Values, store: ViewStore<Values>) {
+    this.hash = hashit(config);
     this.compute = compute;
     this.store = store;
 

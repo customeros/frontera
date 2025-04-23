@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { CreateAgentUsecase } from '@domain/usecases/agents/create-agent.usecase';
 
 import { cn } from '@ui/utils/cn';
@@ -62,7 +63,7 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
   const icpAgentActive = icpAgent?.value?.isActive;
   const icpAgentHasError =
     icpAgent?.value?.error !== null || !icpAgent?.value?.isConfigured;
-  const organization = store.organizations.getById(id);
+  const organization = registry.get('organizations').get(id);
   const navigate = useNavigate();
 
   const navigateToAgent = (id: string) => {
@@ -72,8 +73,8 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
 
   if (!organization) return null;
 
-  const data = organization.value.icpFit
-    ? icpData[organization.value.icpFit]
+  const data = organization.icpFit
+    ? icpData[organization.icpFit]
     : icpData[IcpFit.IcpNotSet];
 
   const handleAgentNavigation = () => {
@@ -85,7 +86,7 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
   };
 
   const getPopoverState = (): PopoverState => {
-    const { icpFitReasons, icpFit, icpFitUpdatedAt } = organization.value;
+    const { icpFitReasons, icpFit, icpFitUpdatedAt } = organization;
 
     if (icpFitReasons.length > 0) {
       return {

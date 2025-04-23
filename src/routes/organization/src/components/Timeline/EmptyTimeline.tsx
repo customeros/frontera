@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 
-import { useStore } from '@shared/hooks/useStore';
 import { TimelineActions } from '@organization/components/Timeline/FutureZone/TimelineActions/TimelineActions';
 
 // import { FutureZone } from './FutureZone/FutureZone';
@@ -14,9 +14,8 @@ interface EmptyTimelineProps {
 
 export const EmptyTimeline = observer(
   ({ invalidateQuery }: EmptyTimelineProps) => {
-    const store = useStore();
     const id = useParams()?.id as string;
-    const organization = store.organizations.value.get(id);
+    const organization = registry.get('organizations').get(id);
 
     return (
       <div className='flex flex-col h-[calc(100vh-5rem)] overflow-auto w-full animate-fadeIn'>
@@ -24,7 +23,7 @@ export const EmptyTimeline = observer(
           <div className='flex flex-col items-center justify-center h-full max-w-[390px]'>
             <EmptyTimelineIllustration />
             <h1 className='text-grayModern-900 text-lg font-semibold mt-3 mb-2'>
-              {organization?.value?.name || 'Unknown'} has no events yet
+              {organization?.name || 'Unknown'} has no events yet
             </h1>
             <span className='text-grayModern-600 text-xs text-center'>
               This organization’s events will show up here once a data source

@@ -2,10 +2,11 @@ import { useMemo } from 'react';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
-import { Organization } from '@store/Organizations/Organization.dto';
+import { Organization } from '@/domain/entities';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store';
 import { getStageFromColumn } from '@opportunities/components/ProspectsBoard/columns';
-import { EditOrganizationStageUseCase } from '@domain/usecases/command-menu/organization/edit-organization-stage.usecase';
 
 import { Check } from '@ui/media/icons/Check';
 import { useStore } from '@shared/hooks/useStore';
@@ -25,6 +26,8 @@ type OpportunityStage = InternalStage | string;
 export const ChangeStage = observer(() => {
   const store = useStore();
   const context = store.ui.commandMenu.context;
+  const organizationStore = registry.get('organizations');
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const opportunityStages = store.tableViewDefs
     .getById(store.tableViewDefs.opportunitiesPreset ?? '')
@@ -32,11 +35,6 @@ export const ChangeStage = observer(() => {
       value: getStageFromColumn(column),
       label: column.name,
     }));
-
-  const editStageUseCase = useMemo(
-    () => new EditOrganizationStageUseCase(context?.ids?.[0] as string),
-    [context?.ids?.[0]],
-  );
 
   const entity = match(context.entity)
     .returnType<
@@ -50,13 +48,13 @@ export const ChangeStage = observer(() => {
       store.opportunities.value.get(context.ids?.[0] as string),
     )
     .with('Organization', () =>
-      store.organizations.value.get(context.ids?.[0] as string),
+      organizationStore.get(context.ids?.[0] as string),
     )
     .with(
       'Organizations',
       () =>
         context.ids?.map((e: string) =>
-          store.organizations.value.get(e),
+          organizationStore.get(e),
         ) as Organization[],
     )
     .with(
@@ -69,10 +67,7 @@ export const ChangeStage = observer(() => {
     .otherwise(() => undefined);
 
   const label = match(context.entity)
-    .with(
-      'Organization',
-      () => `Company - ${(entity as Organization)?.value?.name}`,
-    )
+    .with('Organization', () => `Company - ${(entity as Organization)?.name}`)
     .with('Organizations', () => `${context.ids?.length} companies`)
     .with(
       'Opportunity',
@@ -84,7 +79,7 @@ export const ChangeStage = observer(() => {
   const selectedStageOption = match(context.entity)
     .with('Organization', () =>
       stageOptions.find(
-        (option) => option.value === (entity as Organization)?.value.stage,
+        (option) => option.value === (entity as Organization)?.stage,
       ),
     )
     .with('Opportunity', () =>
@@ -105,7 +100,7 @@ export const ChangeStage = observer(() => {
 
   const applicableStageOptions = match(context.entity)
     .with('Organization', () =>
-      getStageOptions((entity as Organization).value?.relationship),
+      getStageOptions((entity as Organization).relationship),
     )
     .with('Organizations', () =>
       getStageOptions(OrganizationRelationship.Prospect),
@@ -121,10 +116,13 @@ export const ChangeStage = observer(() => {
 
     match(context.entity)
       .with('Organization', () => {
-        editStageUseCase.execute(value as OrganizationStage);
+        organizationService.setStage(
+          entity as Organization,
+          value as OrganizationStage,
+        );
       })
       .with('Organizations', () => {
-        store.organizations.updateStage(
+        organizationService.setStageBulk(
           context.ids as string[],
           value as OrganizationStage,
         );

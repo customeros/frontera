@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Store } from '../store/store';
 import { Policy, FetchContext } from './policy';
-import { AggregatePolicy } from './aggregate-policy';
 
-export class PolicyManager<T, TAggregate = unknown> {
+export class PolicyManager<T> {
   private policies: Policy<T>[] = [];
   private pending: Promise<any>[] = [];
-  private aggregatePolicy?: AggregatePolicy<T, any, any>;
 
   constructor(private store: Store<T>) {}
 
@@ -14,10 +12,6 @@ export class PolicyManager<T, TAggregate = unknown> {
     this.policies.push(policy);
 
     const result = policy.onAttach(this.store);
-
-    if (policy instanceof AggregatePolicy) {
-      this.aggregatePolicy = policy;
-    }
 
     if (result instanceof Promise) {
       this.pending.push(result);
@@ -29,7 +23,7 @@ export class PolicyManager<T, TAggregate = unknown> {
     await Promise.all(this.pending);
   }
 
-  async maybeFetch(key: string | number) {
+  maybeFetch(key: string | number) {
     const ctx: FetchContext = { key, store: this.store };
 
     const needsFetch = this.policies.some((p) => p.shouldFetch?.(ctx));
@@ -37,15 +31,16 @@ export class PolicyManager<T, TAggregate = unknown> {
     if (needsFetch) {
       for (const policy of this.policies) {
         if (policy.fetch) {
-          try {
-            const data = await policy.fetch(ctx);
+          policy
+            .fetch(ctx)
+            .then((data) => {
+              this.store.set(key, data);
+            })
+            .catch((err) => {
+              console.error('[PolicyManager] background fetch failed.', err);
+            });
 
-            this.store.set(key, data);
-
-            return data;
-          } catch (err) {
-            console.error('[PolicyManager] background fetch failed.');
-          }
+          break; // only trigger fetch once
         }
       }
     }
@@ -79,13 +74,11 @@ export class PolicyManager<T, TAggregate = unknown> {
     }
   }
 
-  getAggregate(key: string | number): TAggregate | undefined {
-    if (this.aggregatePolicy) {
-      const ctx: FetchContext = { key, store: this.store };
-
-      return this.aggregatePolicy.getAggregate(ctx) as TAggregate;
+  suspendSync(fn: () => void) {
+    for (const policy of this.policies) {
+      if (typeof (policy as any).suspendSync === 'function') {
+        (policy as any).suspendSync(fn);
+      }
     }
-
-    return undefined;
   }
 }

@@ -1,8 +1,10 @@
-import type { Organization } from '@store/Organizations/Organization.dto';
+import type { Organization } from '@/domain/entities';
 
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 import { OpportunityStore } from '@store/Opportunities/Opportunity.store.ts';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { Check } from '@ui/media/icons/Check.tsx';
 import { useStore } from '@shared/hooks/useStore';
@@ -28,7 +30,7 @@ export const OwnerSubItemGroup = observer(() => {
     )
     .with('Organizations', () =>
       context.ids?.reduce((acc, id) => {
-        const record = store.organizations.getById(id);
+        const record = registry.get('organizations').get(id);
 
         if (record) acc.push(record);
 
@@ -43,7 +45,7 @@ export const OwnerSubItemGroup = observer(() => {
         ) as OpportunityStore[],
     )
     .with('Organization', () =>
-      store.organizations.value.get((context.ids as string[])?.[0]),
+      registry.get('organizations').get((context.ids as string[])?.[0]),
     )
     .otherwise(() => undefined);
 
@@ -71,16 +73,14 @@ export const OwnerSubItemGroup = observer(() => {
         if (!entity) return;
         const record = entity as Organization;
 
-        record.setOwner(userId);
-        record.commit();
+        new OrganizationAggregate(record, store).setOwner(userId);
       })
       .with('Organizations', () => {
         if (!entity) return;
         const records = entity as Organization[];
 
         records.forEach((record) => {
-          record.setOwner(userId);
-          record.commit();
+          new OrganizationAggregate(record, store).setOwner(userId);
         });
       })
       .with('Opportunities', () => {

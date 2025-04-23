@@ -5,6 +5,7 @@ import { P, match } from 'ts-pattern';
 import { Operation } from '@store/types';
 import { Transport } from '@infra/transport';
 import { User } from '@store/Users/User.dto';
+import { registry } from '@domain/stores/registry';
 import { Store, makeAutoSyncable } from '@store/store';
 import { runInAction, makeAutoObservable } from 'mobx';
 import { makeAutoSyncableGroup } from '@store/group-store';
@@ -58,7 +59,7 @@ export class OpportunityStore implements Store<Opportunity> {
 
     if (!organizationId) return null;
 
-    return this.root.organizations.getById(organizationId);
+    return registry.get('organizations').get(organizationId);
   }
 
   get externalStage() {

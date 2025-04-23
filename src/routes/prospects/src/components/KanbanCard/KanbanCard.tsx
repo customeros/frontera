@@ -83,7 +83,7 @@ export const KanbanCard = observer(
     const mergedRef = useMergeRefs(provided?.innerRef, containerRef);
 
     const organization = card.organization;
-    const logo = organization?.value.iconUrl || organization?.value.logoUrl;
+    const logo = organization?.iconUrl || organization?.logoUrl;
     const daysInStage = card.value?.stageLastUpdated
       ? DateTimeUtils.differenceInDays(
           new Date().toISOString(),
@@ -165,8 +165,8 @@ export const KanbanCard = observer(
                     e.preventDefault();
                   }}
                 >
-                  {organization?.value.name
-                    ? organization.value.name
+                  {organization?.name
+                    ? organization.name
                     : 'Company loading...'}
                 </p>
               </div>

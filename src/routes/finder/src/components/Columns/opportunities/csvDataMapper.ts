@@ -6,7 +6,7 @@ import { ColumnViewType } from '@graphql/types';
 export const csvDataMapper = {
   [ColumnViewType.OpportunitiesName]: (d: OpportunityStore) => d?.value?.name,
   [ColumnViewType.OpportunitiesOrganization]: (d: OpportunityStore) =>
-    d.organization?.value.name,
+    d.organization?.name,
   [ColumnViewType.OpportunitiesStage]: (d: OpportunityStore) =>
     d.externalStage?.label,
   [ColumnViewType.OpportunitiesEstimatedArr]: (d: OpportunityStore) =>

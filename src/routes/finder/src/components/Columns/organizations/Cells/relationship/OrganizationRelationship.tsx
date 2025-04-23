@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 
 import { cn } from '@ui/utils/cn';
 import { useStore } from '@shared/hooks/useStore';
@@ -13,11 +14,11 @@ interface OrganizationRelationshipProps {
 export const OrganizationRelationshipCell = observer(
   ({ id }: OrganizationRelationshipProps) => {
     const store = useStore();
+    const organizationStore = registry.get('organizations');
 
-    const organization = store.organizations.getById(id);
-
+    const organization = organizationStore.get(id);
     const value = relationshipOptions.find(
-      (option) => option.value === organization?.value.relationship,
+      (option) => option.value === organization?.relationship,
     );
 
     return (

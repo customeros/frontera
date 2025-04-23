@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
+import { registry } from '@domain/stores/registry';
 
-import { useStore } from '@shared/hooks/useStore';
 import { TableCellTooltip } from '@ui/presentation/Table';
 
 interface OrganizationCellProps {
@@ -12,8 +12,7 @@ interface OrganizationCellProps {
 }
 
 export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
-  const store = useStore();
-  const orgName = store.organizations.getById(id)?.value?.name;
+  const orgName = registry.get('organizations').get(id)?.name;
   const [tabs] = useLocalStorage<{
     [key: string]: string;
   }>(`customeros-player-last-position`, { root: 'finder' });

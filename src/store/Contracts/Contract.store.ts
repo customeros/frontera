@@ -8,6 +8,7 @@ import { gql } from 'graphql-request';
 import { Operation } from '@store/types.ts';
 import { makePayload } from '@store/util.ts';
 import { Transport } from '@infra/transport.ts';
+import { registry } from '@/domain/stores/registry';
 import { Store, makeAutoSyncable } from '@store/store.ts';
 import { computed, runInAction, makeAutoObservable } from 'mobx';
 import { ContractService } from '@store/Contracts/Contract.service.ts';
@@ -55,7 +56,9 @@ export class ContractStore implements Store<Contract> {
   }
 
   get organization() {
-    return this.root.organizations.getById(this.value.organization.metadata.id);
+    return registry
+      .get('organizations')
+      .get(this.value.organization.metadata.id);
   }
 
   get organizationId() {

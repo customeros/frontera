@@ -1,4 +1,5 @@
 import { RootStore } from '@store/root';
+import { Organization } from '@/domain/entities';
 import { action, computed, reaction, observable } from 'mobx';
 import { TagService, OrganizationService } from '@domain/services';
 
@@ -14,15 +15,8 @@ export class EditOrganizationTagUsecase {
   private root = RootStore.getInstance();
   private tagService = new TagService();
   private organizationService = new OrganizationService();
-  private organizationId: string;
 
-  constructor(organizationId: string) {
-    this.organizationId = organizationId;
-    this.select = this.select.bind(this);
-    this.create = this.create.bind(this);
-    this.setSearchTerm = this.setSearchTerm.bind(this);
-    this.computeInitialTags = this.computeInitialTags.bind(this);
-
+  constructor(private organization: Organization) {
     reaction(
       () =>
         this.newTags.size ||
@@ -34,23 +28,14 @@ export class EditOrganizationTagUsecase {
   }
 
   @computed
-  get organization() {
-    if (!this.organizationId) return;
-
-    return this.root.organizations.getById(this.organizationId);
-  }
-
-  @computed
   get orgTags() {
-    return new Set(
-      (this.organization?.value?.tags ?? []).map((tag) => tag.name),
-    );
+    return new Set((this.organization?.tags ?? []).map((tag) => tag.name));
   }
 
   @computed
   get selectedTags() {
     return (
-      this.organization?.value?.tags.map((tag) => {
+      this.organization?.tags.map((tag) => {
         const matchedTag = this.root.tags.getById(tag.metadata.id);
 
         return {
@@ -62,7 +47,7 @@ export class EditOrganizationTagUsecase {
   }
 
   @action
-  private computeInitialTags() {
+  private computeInitialTags = () => {
     this.initialTags = this.root.tags
       .getByEntityType(EntityType.Organization)
       .filter((e) => !!e.value.name)
@@ -81,7 +66,7 @@ export class EditOrganizationTagUsecase {
           label: tag.tagName,
         };
       });
-  }
+  };
 
   @computed
   get tagList() {
@@ -101,24 +86,24 @@ export class EditOrganizationTagUsecase {
   }
 
   @action
-  public setSearchTerm(searchTerm: string) {
+  setSearchTerm = (searchTerm: string) => {
     this.searchTerm = searchTerm;
-  }
+  };
 
   @action
-  public reset() {
+  reset = () => {
     this.setSearchTerm('');
     this.newTags.clear();
-  }
+  };
 
   @action
-  public close() {
+  close = () => {
     this.reset();
     this.root.ui.commandMenu.setOpen(false);
-  }
+  };
 
   @action
-  public select(ids?: string[]) {
+  select = (ids?: string[]) => {
     if (!ids || !this.organization) {
       console.error(
         'EditOrganizationTagUsecase: select called without id or company',
@@ -129,7 +114,7 @@ export class EditOrganizationTagUsecase {
 
     const organization = this.organization;
     const tags = ids.map((e) => this.root.tags.getById(e)).filter(Boolean);
-    const currentTags = organization.value.tags;
+    const currentTags = organization.tags;
 
     const tagsToAdd = tags.filter(
       (tag) =>
@@ -151,10 +136,10 @@ export class EditOrganizationTagUsecase {
       this.newTags.delete(tag!.value.name);
       this.organizationService.removeTag(organization, tag!);
     });
-  }
+  };
 
   @action
-  public create() {
+  create = () => {
     const name = this.searchTerm;
 
     if (!this.organization) return;
@@ -166,7 +151,7 @@ export class EditOrganizationTagUsecase {
           this.newTags.add(name);
           this.setSearchTerm('');
 
-          const currentTagIds = this.organization?.value.tags.map(
+          const currentTagIds = this.organization?.tags.map(
             (tag) => tag.metadata.id,
           );
 
@@ -174,5 +159,5 @@ export class EditOrganizationTagUsecase {
         },
       },
     );
-  }
+  };
 }

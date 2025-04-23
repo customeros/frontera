@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 
 import { Edit03 } from '@ui/media/icons/Edit03';
 import { useStore } from '@shared/hooks/useStore';
@@ -11,9 +12,9 @@ export const EditCompanyLinkedin = observer(() => {
   const store = useStore();
   const context = store.ui.commandMenu.context;
   const selectedIds = context.ids;
-  const organization = store.organizations.getById(context.ids?.[0]);
+  const organization = registry.get('organizations').get(context.ids?.[0]);
 
-  const organizationLinkedIn = organization?.value?.socialMedia.find((social) =>
+  const organizationLinkedIn = organization?.socialMedia.find((social) =>
     social.url.includes('linkedin'),
   );
   const link = organizationLinkedIn?.url ?? '';
@@ -34,7 +35,7 @@ export const EditCompanyLinkedin = observer(() => {
 
   const label =
     selectedIds?.length === 1
-      ? `Organization - ${organization?.value?.name}`
+      ? `Organization - ${organization?.name}`
       : `${selectedIds?.length} contacts`;
 
   const handleAddSocial = () => {
@@ -49,9 +50,7 @@ export const EditCompanyLinkedin = observer(() => {
         ? getFormattedLink(url).replace(/^linkedin\.com\//, '')
         : `in/${url}`;
 
-    organization.draft();
     organization.addSocial(`linkedin.com/${formattedValue}`);
-    organization.commit();
   };
 
   const handleUpdateSocial = () => {
@@ -59,18 +58,14 @@ export const EditCompanyLinkedin = observer(() => {
 
     if (!url) return;
 
-    if (!organization?.value) return;
-    const linkedinId = organization?.value?.socialMedia.find((social) =>
+    if (!organization) return;
+    const linkedinId = organization?.socialMedia.find((social) =>
       social.url.includes('linkedin'),
     )?.id;
 
     if (!linkedinId) return;
 
-    const idx = organization.value?.socialMedia.findIndex(
-      (s) => s.id === linkedinId,
-    );
-
-    organization.draft();
+    const idx = organization.socialMedia.findIndex((s) => s.id === linkedinId);
 
     if (idx !== -1) {
       const formattedValue =
@@ -78,16 +73,12 @@ export const EditCompanyLinkedin = observer(() => {
           ? getFormattedLink(url).replace(/^linkedin\.com\//, '')
           : `in/${url}`;
 
-      organization.value.socialMedia[
-        idx
-      ].url = `linkedin.com/${formattedValue}`;
+      organization.socialMedia[idx].url = `linkedin.com/${formattedValue}`;
     }
 
     if (url === '') {
-      organization.value.socialMedia.splice(idx, 1);
+      organization.socialMedia.splice(idx, 1);
     }
-
-    organization.commit();
   };
 
   return (

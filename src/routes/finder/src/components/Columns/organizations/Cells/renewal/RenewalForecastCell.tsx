@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import set from 'lodash/set';
 import { twMerge } from 'tailwind-merge';
 import { observer } from 'mobx-react-lite';
+import { registry } from '@domain/stores/registry';
 import { PopoverTrigger } from '@radix-ui/react-popover';
 
 import { cn } from '@ui/utils/cn';
 import { Edit03 } from '@ui/media/icons/Edit03';
-import { useStore } from '@shared/hooks/useStore';
 import { IconButton } from '@ui/form/IconButton/IconButton';
 import { OpportunityRenewalLikelihood } from '@graphql/types';
 import { formatCurrency } from '@utils/getFormattedCurrencyNumber';
@@ -31,14 +31,13 @@ interface RenewalForecastCellProps {
 
 export const RenewalForecastCell = observer(
   ({ id }: RenewalForecastCellProps) => {
-    const store = useStore();
     const [isEditing, setIsEditing] = useState(false);
-    const organization = store.organizations.getById(id);
-    const contractCount = organization?.value?.contracts?.length;
+    const organizationStore = registry.get('organizations');
+    const organization = organizationStore.get(id);
+    const contractCount = organization?.contracts?.length;
 
-    const amount = organization?.value?.renewalSummaryArrForecast ?? null;
-    const potentialAmount =
-      organization?.value?.renewalSummaryMaxArrForecast ?? null;
+    const amount = organization?.renewalSummaryArrForecast ?? null;
+    const potentialAmount = organization?.renewalSummaryMaxArrForecast ?? null;
 
     const initialValue = (() => {
       if (potentialAmount === 0) return 0;
@@ -72,12 +71,12 @@ export const RenewalForecastCell = observer(
     });
 
     const handleChange = (value: number) => {
-      const organization = store.organizations.getById(id);
+      const organization = organizationStore.get(id);
 
       if (!organization) return;
 
       set(
-        organization?.value,
+        organization,
         'accountDetails.renewalSummary.renewalLikelihood',
         (() => {
           if (value <= 25) return OpportunityRenewalLikelihood.LowRenewal;
@@ -88,12 +87,10 @@ export const RenewalForecastCell = observer(
         })(),
       );
       set(
-        organization?.value,
+        organization,
         'accountDetails.renewalSummary.arrForecast',
         (potentialAmount ?? 0) * (value / 100),
       );
-
-      // organization.commit();
     };
 
     useEffect(() => {

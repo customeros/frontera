@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { RemoveOrganizationDomainCase } from '@domain/usecases/command-menu/organization/remove-organization-domain.usecase';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@/domain/services';
 
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
@@ -12,26 +13,22 @@ import {
   CommandCancelIconButton,
 } from '@ui/overlay/CommandMenu';
 
-const removeDomainCase = new RemoveOrganizationDomainCase();
-
 export const RemoveDomain = observer(() => {
-  const { ui, organizations } = useStore();
+  const { ui } = useStore();
   const context = ui.commandMenu.context;
   const isPrimary = context.meta?.isPrimary;
-  const organization = organizations.getById(context.ids?.[0] as string);
+  const organization = registry
+    .get('organizations')
+    .get(context.ids?.[0] as string);
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   useModKey('Enter', () => {
     ui.commandMenu.setOpen(false);
   });
-  useEffect(() => {
-    if (organization) {
-      removeDomainCase.setEntity(organization);
-      removeDomainCase.setDomain(context?.meta?.domain);
-    }
-  }, [organization?.id]);
 
   const handleConfirm = () => {
-    removeDomainCase.submit();
+    if (!organization) return;
+    organizationService.removeDomain(organization, context?.meta?.domain);
     ui.commandMenu.setOpen(false);
   };
 

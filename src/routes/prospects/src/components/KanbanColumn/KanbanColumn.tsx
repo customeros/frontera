@@ -76,7 +76,7 @@ export const KanbanColumn = observer(
         arr = arr.filter((opp) => {
           return (
             opp.value.name.toLowerCase().includes(search) ||
-            opp.organization?.value?.name.toLowerCase().includes(search) ||
+            opp.organization?.name.toLowerCase().includes(search) ||
             (
               opp.value.owner?.name ||
               [opp.value.owner?.firstName, opp.value.owner?.lastName].join(' ')

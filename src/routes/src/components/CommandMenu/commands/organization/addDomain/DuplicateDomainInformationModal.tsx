@@ -1,7 +1,8 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { MergeOrganizationsCase } from '@domain/usecases/command-menu/organization/merge-organizations.usecase';
+import { registry } from '@/domain/stores/registry';
+import { OrganizationService } from '@domain/services';
 
 import { cn } from '@ui/utils/cn';
 import { useStore } from '@shared/hooks/useStore';
@@ -11,7 +12,7 @@ import {
   CommandCancelButton,
   CommandCancelIconButton,
 } from '@ui/overlay/CommandMenu';
-const mergeOrganizationsCase = new MergeOrganizationsCase();
+
 export const DuplicateDomainInformation = observer(
   ({
     domain,
@@ -19,30 +20,33 @@ export const DuplicateDomainInformation = observer(
     onClose,
     isOpen,
   }: {
-    domain: string;
+    domain?: string;
     isOpen: boolean;
     onClose: () => void;
-    associatedOrg: {
+    associatedOrg?: {
       id: string;
       name: string;
     } | null;
   }) => {
-    const { ui, organizations } = useStore();
-
+    const { ui } = useStore();
+    const organizationStore = registry.get('organizations');
     const context = ui.commandMenu.context;
+    const organization = organizationStore.get(context.ids?.[0]);
+    const organizationService = useMemo(() => new OrganizationService(), []);
 
     const confirmButtonRef = useRef<HTMLButtonElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
-    const editedOrgName = organizations.getById(context.ids[0])?.name;
-
-    useEffect(() => {
-      if (context.ids?.length && associatedOrg?.id) {
-        mergeOrganizationsCase.setIds(context.ids[0], associatedOrg.id);
-      }
-    }, [associatedOrg?.id]);
+    const editedOrgName = organizationStore.get(context.ids[0])?.name;
 
     const handleConfirm = async () => {
-      mergeOrganizationsCase.merge();
+      if (!organization) return;
+      if (!associatedOrg) return;
+
+      const sourceOrganization = organizationStore.get(associatedOrg.id);
+
+      if (!sourceOrganization) return;
+
+      organizationService.merge(organization, [sourceOrganization]);
       onClose();
     };
 

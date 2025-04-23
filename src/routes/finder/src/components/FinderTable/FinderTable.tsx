@@ -7,14 +7,17 @@ import {
   type SetStateAction,
 } from 'react';
 
+import omit from 'lodash/omit';
 import { match } from 'ts-pattern';
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
 import { ColumnSort } from '@tanstack/table-core';
+import { InvoiceStore } from '@store/Invoices/Invoice.store';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { useColumnSizing } from '@finder/hooks/useColumnSizing';
 import { useTableActions } from '@invoices/hooks/useTableActions';
 import { useCurrentViewDef } from '@finder/hooks/useCurrentViewDef';
+import { viewRegistry } from '@domain/views/organization/organization.views';
 import {
   CommandMenuType,
   CommandMenuEntity,
@@ -91,12 +94,17 @@ export const FinderTable = observer(() => {
     tableViewDef?.setSorting(next[0]?.id, next[0]?.desc);
   };
 
-  const data = computeFinderData(store, {
-    sorting,
-    tableViewDef,
-    urlParams: params,
-    searchTerm: searchTerm ?? '',
-  });
+  const view = viewRegistry.get(tableViewDef!.value);
+  const data = match(tableType)
+    .with(TableViewType.Organizations, () => view?.data ?? [])
+    .otherwise(() =>
+      computeFinderData(store, {
+        sorting,
+        tableViewDef,
+        urlParams: params,
+        searchTerm: searchTerm ?? '',
+      }),
+    );
 
   const isCommandMenuPrompted = store.ui.commandMenu.isOpen;
   const handleColumnSizing = useColumnSizing(columns, tableViewDef);
@@ -239,14 +247,16 @@ export const FinderTable = observer(() => {
     .returnType<number>()
     .with(
       TableViewType.Organizations,
-      () => store.organizations?.availableCounts.get(preset ?? '') ?? 0,
+      () =>
+        viewRegistry.get(omit(tableViewDef!.value, ['columns']))
+          ?.totalElements ?? 0,
     )
-    .otherwise(() => data.length ?? 50);
+    .otherwise(() => data?.length ?? 50);
 
   useEffect(() => {
     store.ui.setSearchCount(totalItems);
-    store.ui.setFilteredTable(data);
-  }, [data.length, store.organizations?.totalElements]);
+    store.ui.setFilteredTable(data!);
+  }, [data?.length, view?.totalElements]);
 
   const isEditing = store.ui.isEditingTableCell;
   const isFiltering = store.ui.isFilteringTable;
@@ -255,11 +265,11 @@ export const FinderTable = observer(() => {
 
   const [targetInvoiceNumber, targetInvoiceEmail] = match(tableType)
     .with(TableViewType.Invoices, () => {
-      const invoice = data?.find((i) => {
+      const invoice = (data as InvoiceStore[])?.find((i: InvoiceStore) => {
         if ('metadata' in i.value) {
           return i.value!.metadata.id === targetId;
         } else {
-          return i.value.id === targetId;
+          return (i.value as { id: string }).id === targetId;
         }
       })?.value as Invoice;
 
@@ -315,13 +325,21 @@ export const FinderTable = observer(() => {
     store.ui.commandMenu.setType(hubType);
 
     if (index !== null) {
+      const id = match(tableType)
+        .with(
+          TableViewType.Organizations,
+          () => view?.data?.[index]?.id ?? null,
+        )
+        .otherwise(() => data?.[index]?.id ?? null);
+
       if (!store.ui.showPreviewCard) {
-        store.ui.setFocusRow(data?.[index]?.id);
+        store.ui.setFocusRow(id);
       }
 
+      if (!id) return;
       store.ui.commandMenu.setContext({
         entity,
-        ids: [data?.[index]?.id],
+        ids: [id],
         meta,
       });
     }
@@ -359,7 +377,7 @@ export const FinderTable = observer(() => {
   const checkIfEmpty = () => {
     return match(tableType)
       .with(TableViewType.Organizations, () =>
-        preset ? store.organizations?.totalElements === 0 : true,
+        preset ? data?.length === 0 : true,
       )
       .with(TableViewType.Contacts, () => {
         return preset ? store.contacts.totalElements === 0 : true;
@@ -384,10 +402,6 @@ export const FinderTable = observer(() => {
 
   const canFetchMore = match(tableType)
     .with(
-      TableViewType.Organizations,
-      () => !!preset && store.organizations.canLoadNext(preset),
-    )
-    .with(
       TableViewType.Contacts,
       () => !!preset && store.contacts.canLoadNext(preset),
     )
@@ -401,17 +415,17 @@ export const FinderTable = observer(() => {
     <div className='flex w-full'>
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <Table<any>
-        data={data}
         manualFiltering
         sorting={sorting}
         columns={columns}
+        data={data ?? []}
         tableRef={tableRef}
         rowHeight={rowHeight}
         id={tableViewDef?.id}
         totalItems={totalItems}
         getRowId={(row) => row.id}
-        enableColumnResizing={true}
         canFetchMore={canFetchMore}
+        enableColumnResizing={true}
         onSortingChange={handleSortChange}
         onResizeColumn={handleColumnSizing}
         onSelectionChange={onSelectionChange}
@@ -419,12 +433,12 @@ export const FinderTable = observer(() => {
         dataTest={`finder-table-${tableType}`}
         enableRowSelection={enableRowSelection}
         tableType={tableViewDef?.value?.tableId}
-        isLoading={store.organizations.isLoading}
+        // isLoading={store.organizations.isLoading}
         enableKeyboardShortcuts={
           !isEditing && !isFiltering && !isCommandMenuPrompted
         }
         onFetchMore={() => {
-          store.organizations.loadNext(preset!);
+          // store.organizations.loadNext(preset!);
           store.contacts.loadNext(preset!);
         }}
         enableTableActions={

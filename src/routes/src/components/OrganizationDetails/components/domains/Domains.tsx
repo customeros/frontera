@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry.ts';
 
 import { cn } from '@ui/utils/cn.ts';
 import { Domain } from '@graphql/types';
@@ -32,11 +33,11 @@ export const Domains = observer(({ id }: { id: string }) => {
   >({});
   const [showMenus, setShowMenus] = useState<Record<string, boolean>>({});
 
-  const organization = store.organizations.getById(id);
+  const organization = registry.get('organizations').get(id);
 
-  if (!organization || !organization?.value) return null;
+  if (!organization) return null;
 
-  const formattedData = formatDomains(organization.value.domainsDetails);
+  const formattedData = formatDomains(organization.domainsDetails);
 
   const toggleExpanded = (domainKey: string) => {
     setExpandedDomains((prev) => ({

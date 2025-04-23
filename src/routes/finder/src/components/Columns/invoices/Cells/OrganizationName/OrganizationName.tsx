@@ -1,8 +1,7 @@
-import { useStore } from '@shared/hooks/useStore';
+import { registry } from '@domain/stores/registry';
 
 export const OrganizationName = ({ orgId }: { orgId: string }) => {
-  const store = useStore();
-  const orgName = store.organizations.value.get(orgId)?.value?.name;
+  const orgName = registry.get('organizations').get(orgId)?.name;
 
   return orgName ? (
     <span>{orgName}</span>

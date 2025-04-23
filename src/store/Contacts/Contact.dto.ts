@@ -2,6 +2,7 @@ import set from 'lodash/set';
 import merge from 'lodash/merge';
 import { Entity } from '@store/record';
 import { Transport } from '@infra/transport';
+import { registry } from '@domain/stores/registry';
 import { FlowStore } from '@store/Flows/Flow.store';
 import { JobRoleDatum } from '@store/JobRoles/JobRole.dto';
 import { countryMap } from '@assets/countries/countriesMap';
@@ -17,6 +18,7 @@ export type ContactDatum = NonNullable<
 
 export class Contact extends Entity<ContactDatum> {
   private service: ContactService;
+  private organizationStore = registry.get('organizations');
   @observable accessor value: ContactDatum = Contact.default();
 
   constructor(
@@ -63,9 +65,7 @@ export class Contact extends Entity<ContactDatum> {
 
   @computed
   get organization() {
-    return this.store.root.organizations.value.get(
-      this.value.primaryOrganizationId || '',
-    )?.value;
+    return this.organizationStore.get(this.value.primaryOrganizationId || '');
   }
 
   @computed

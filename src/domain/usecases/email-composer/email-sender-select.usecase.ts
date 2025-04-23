@@ -1,5 +1,7 @@
 import { RootStore } from '@store/root';
+import { registry } from '@domain/stores/registry';
 import { action, computed, observable } from 'mobx';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { SelectOption } from '@ui/utils/types.ts';
 
@@ -50,15 +52,17 @@ export class EmailSenderSelectUsecase {
   get organization() {
     if (!this.organizationId) return;
 
-    return this.root.organizations.getById(this.organizationId);
+    return registry.get('organizations').get(this.organizationId);
   }
 
   @computed
   get orgContactEmails() {
+    if (!this.organization) return [];
+
     return new Set(
-      (this.organization?.contacts ?? []).flatMap((e) =>
-        e.emails.map((d) => d.email),
-      ),
+      (
+        new OrganizationAggregate(this.organization, this.root)?.contacts ?? []
+      ).flatMap((e) => e.emails.map((d) => d.email)),
     );
   }
 

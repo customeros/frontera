@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
+import { registry } from '@/domain/stores/registry';
 
 import { useStore } from '@shared/hooks/useStore';
-import { SelectOption } from '@shared/types/SelectOptions.ts';
 import { Social } from '@shared/types/__generated__/graphql.types.ts';
 
 import { isKnownUrl } from './util.ts';
@@ -15,30 +15,26 @@ interface SocialMediaListProps {
 }
 
 export const SocialMediaList = observer(
-  ({ isReadOnly, dataTest }: SocialMediaListProps) => {
+  ({ isReadOnly }: SocialMediaListProps) => {
     const store = useStore();
     const id = useParams()?.id as string;
-    const organization = store.organizations.getById(id ?? store.ui.focusRow);
+    const organization = registry
+      .get('organizations')
+      .get(id ?? store.ui.focusRow);
 
-    if (!organization || !organization?.value) return null;
+    if (!organization) return null;
 
     const filteredSocials = filterUniqueSocials(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      organization.value.socialMedia as any,
+      organization.socialMedia as any,
     );
-    const socialOptions = filteredSocials.map((social) => ({
-      value: social.id,
-      label: social.url,
-    }));
 
     return (
       <div className='flex flex-wrap gap-3'>
-        {socialOptions.map(({ value: v, label: l }: SelectOption) => (
-          <div key={v} className='w-fit '>
+        {filteredSocials.map((social) => (
+          <div key={social.id} className='w-fit'>
             <SocialMediaItem
-              id={v}
-              value={l}
-              dataTest={dataTest}
+              social={social}
               isReadOnly={isReadOnly}
               organization={organization}
             />

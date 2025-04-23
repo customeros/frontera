@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { registry } from '@/domain/stores/registry';
 import { EditOrganizationTagUsecase } from '@domain/usecases/organization-details/edit-organization-tag.usecase';
 
 import { Icon } from '@ui/media/Icon';
@@ -19,7 +19,6 @@ import { TruncatedText } from '@ui/presentation/TruncatedText/TruncatedText';
 import { IcpBadge } from '@shared/components/OrganizationDetails/components/icp';
 import { Domains } from '@shared/components/OrganizationDetails/components/domains';
 import { OwnerInput } from '@shared/components/OrganizationDetails/components/owner';
-import { Branches } from '@shared/components/OrganizationDetails/components/branches';
 import { AboutTabField } from '@shared/components/OrganizationDetails/components/AboutTabField';
 
 import { Tags } from '../Tags';
@@ -32,21 +31,18 @@ interface OrganizationDetailsProps {
 export const OrganizationDetails = observer(
   ({ id }: OrganizationDetailsProps) => {
     const store = useStore();
-    const organization = store.organizations.getById(id);
+    const organizationStore = registry.get('organizations');
+    const organization = organizationStore.get(id);
 
     const [_, copyToClipboard] = useCopyToClipboard();
 
-    const showParentRelationshipSelector = useFeatureIsOn(
-      'show-parent-relationship-selector',
+    const tagsUsecase = useMemo(
+      () => organization && new EditOrganizationTagUsecase(organization),
+      [organization],
     );
-    const parentRelationshipReadOnly = useFeatureIsOn(
-      'parent-relationship-selector-read-only',
-    );
-
-    const tagsUsecase = useMemo(() => new EditOrganizationTagUsecase(id), [id]);
 
     const handleCreateOption = () => {
-      tagsUsecase.create();
+      tagsUsecase?.create();
     };
 
     const isEnriching = organization?.isEnriching;
@@ -70,11 +66,11 @@ export const OrganizationDetails = observer(
 
           <div className='flex items-center justify-between'>
             <p className='text-sm overflow-hidden overflow-ellipsis font-medium'>
-              {organization?.value?.name ?? ''}
+              {organization?.name ?? ''}
             </p>
 
             <div className='flex justify-between items-start h-full gap-x-2'>
-              {organization.value?.referenceId && (
+              {organization.referenceId && (
                 <div className='ml-4'>
                   <Tooltip asChild={false} label={'Copy ID'}>
                     <Tag
@@ -83,13 +79,13 @@ export const OrganizationDetails = observer(
                       className='cursor-pointer w-full max-w-[100px]'
                       onClick={() => {
                         copyToClipboard(
-                          organization.value?.referenceId ?? '',
+                          organization.referenceId ?? '',
                           'Reference ID copied ',
                         );
                       }}
                     >
                       <TagLabel className='truncate overflow-hidden whitespace-nowrap'>
-                        {organization.value?.referenceId}
+                        {organization.referenceId}
                       </TagLabel>
                     </Tag>
                   </Tooltip>
@@ -112,12 +108,12 @@ export const OrganizationDetails = observer(
           <Domains id={id} />
 
           <div className='flex flex-col w-full items-start justify-start gap-3 mt-2 pb-4'>
-            {!!organization?.value?.description && (
+            {!!organization?.description && (
               <TruncatedText
                 maxLines={7}
                 className='text-sm'
+                text={organization.description}
                 data-test='org-about-description'
-                text={organization.value.description}
               />
             )}
             <SocialMediaList dataTest='org-about-social-link' />
@@ -126,24 +122,24 @@ export const OrganizationDetails = observer(
               placeholder='Company tags'
               inputPlaceholder='Search...'
               onCreate={handleCreateOption}
-              options={tagsUsecase.tagList}
-              value={tagsUsecase.selectedTags}
-              inputValue={tagsUsecase.searchTerm}
-              setInputValue={tagsUsecase.setSearchTerm}
+              options={tagsUsecase?.tagList ?? []}
+              value={tagsUsecase?.selectedTags ?? []}
+              inputValue={tagsUsecase?.searchTerm ?? ''}
+              setInputValue={tagsUsecase?.setSearchTerm ?? (() => {})}
               leftAccessory={
                 <Icon name='tag-01' className='mr-3 text-grayModern-500' />
               }
               onChange={(selection) => {
-                tagsUsecase.select(selection.map((o) => o.value));
+                tagsUsecase?.select(selection.map((o) => o.value));
               }}
             />
             <AboutTabField
               id={store.ui.focusRow ?? id}
               dataTest={'org-about-industry'}
+              value={organization?.industryName}
               placeholder='Industry not found yet'
-              value={organization?.value?.industryName}
               field={FlagWrongFields.OrganizationIndustry}
-              flaggedAsIncorrect={organization?.value?.wrongIndustry ?? false}
+              flaggedAsIncorrect={organization?.wrongIndustry ?? false}
               icon={
                 <Icon name='building-07' className='text-grayModern-500 mr-3' />
               }
@@ -153,8 +149,8 @@ export const OrganizationDetails = observer(
               <Tooltip align='start' label='Country'>
                 <p className='text-sm flex items-center cursor-default'>
                   <span className='flex items-center mr-3'>
-                    {organization.value.locations?.[0]?.countryCodeA2 &&
-                      flags[organization.value.locations?.[0]?.countryCodeA2]}
+                    {organization.locations?.[0]?.countryCodeA2 &&
+                      flags[organization.locations?.[0]?.countryCodeA2]}
                   </span>
 
                   {organization.country}
@@ -162,14 +158,12 @@ export const OrganizationDetails = observer(
               </Tooltip>
             )}
 
-            {typeof organization.value!.employees === 'number' && (
+            {typeof organization.employees === 'number' && (
               <Tooltip align='start' label='Number of employees'>
                 <p className='text-sm flex items-center cursor-default '>
                   <Icon name='users-02' className='text-grayModern-500 mr-3' />
-                  {organization.value!.employees.toLocaleString()}{' '}
-                  {organization.value!.employees === 1
-                    ? 'employee'
-                    : 'employees'}
+                  {organization.employees.toLocaleString()}{' '}
+                  {organization.employees === 1 ? 'employee' : 'employees'}
                 </p>
               </Tooltip>
             )}
@@ -177,11 +171,6 @@ export const OrganizationDetails = observer(
               id={id ?? store.ui.focusRow}
               dataTest='org-about-org-owner'
             />
-
-            {showParentRelationshipSelector &&
-              organization?.value?.subsidiaries?.length > 0 && (
-                <Branches id={id} isReadOnly={parentRelationshipReadOnly} />
-              )}
           </div>
 
           <Divider className='my-4' />
@@ -189,18 +178,18 @@ export const OrganizationDetails = observer(
 
           <div id='spacer' className='pb-20' />
 
-          {organization?.value.customerOsId && (
+          {organization?.customerOsId && (
             <Tooltip label='Copy ID'>
               <span
                 className='pt-3  text-grayModern-400 cursor-pointer text-sm absolute bottom-0 bg-white'
                 onClick={() =>
                   copyToClipboard(
-                    organization.value?.customerOsId ?? '',
+                    organization.customerOsId ?? '',
                     'CustomerOS ID copied',
                   )
                 }
               >
-                CustomerOS ID: {organization?.value.customerOsId}
+                CustomerOS ID: {organization?.customerOsId}
               </span>
             </Tooltip>
           )}

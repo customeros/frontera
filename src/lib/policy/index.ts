@@ -9,4 +9,4 @@ export * from './sw-queued-mutation-policy';
 export * from './persistence-policy';
 export * from './optimistic-mutation-policy';
 export * from './background-refresh-policy';
-export * from './aggregate-policy';
+export * from './realtime-policy';

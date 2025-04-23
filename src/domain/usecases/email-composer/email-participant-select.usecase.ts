@@ -1,5 +1,7 @@
 import { RootStore } from '@store/root';
+import { registry } from '@domain/stores/registry';
 import { action, computed, reaction, observable } from 'mobx';
+import { OrganizationAggregate } from '@domain/aggregates/organization.aggregate';
 
 import { validateEmail } from '@utils/email.ts';
 import { SelectOption } from '@ui/utils/types.ts';
@@ -38,26 +40,30 @@ export class EmailParticipantSelectUsecase {
   get organization() {
     if (!this.organizationId) return;
 
-    return this.root.organizations.getById(this.organizationId);
+    return registry.get('organizations').get(this.organizationId);
   }
 
   @computed
   get orgContactEmails() {
+    if (!this.organization) return new Set();
+
     return new Set(
-      (this.organization?.contacts ?? []).flatMap((e) =>
-        e.emails.map((d) => d.email),
-      ),
+      (
+        new OrganizationAggregate(this.organization, this.root)?.contacts ?? []
+      ).flatMap((e) => e.emails.map((d) => d.email)),
     );
   }
 
   @action
   private computeInitialEmailOptions() {
-    this.emailOptions = (this.organization?.contacts || [])
+    this.emailOptions = (
+      new OrganizationAggregate(this.organization!, this.root)?.contacts || []
+    )
       .flatMap((e) => e.emails.map((d) => ({ ...d, contactName: e.name })))
       .filter(Boolean)
       .sort((a, b) => {
-        const aInOrg = this.orgContactEmails.has(a.email);
-        const bInOrg = this.orgContactEmails.has(b.email);
+        const aInOrg = this.orgContactEmails?.has(a.email);
+        const bInOrg = this.orgContactEmails?.has(b.email);
 
         if (aInOrg && !bInOrg) return -1;
         if (!aInOrg && bInOrg) return 1;

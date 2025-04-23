@@ -4,6 +4,9 @@ import { cssTransition, ToastContainer } from 'react-toastify';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { useDisclosure } from '@ui/utils/hooks/useDisclosure';
+import { Devtools } from '@shared/components/Devtools/Devtools';
+
 import { StoreProvider } from './StoreProvider';
 import { AnalyticsProvider } from './AnalyticsProvider';
 import { PhoenixSocketProvider } from './SocketProvider';
@@ -16,6 +19,9 @@ interface ProvidersProps {
 }
 
 export const Providers = ({ children, isProduction }: ProvidersProps) => {
+  const { open, onClose, onToggle } = useDisclosure();
+  const isDebuggerEnabled = import.meta.env.DEV;
+
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -36,6 +42,13 @@ export const Providers = ({ children, isProduction }: ProvidersProps) => {
               <GrowthbookProvider>
                 <AnalyticsProvider isProduction={isProduction}>
                   {children}
+                  {isDebuggerEnabled && (
+                    <Devtools
+                      open={open}
+                      onClose={onClose}
+                      onToggle={onToggle}
+                    />
+                  )}
                   <ToastContainer
                     limit={3}
                     theme='colored'

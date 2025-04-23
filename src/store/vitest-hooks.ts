@@ -2,7 +2,6 @@ import { afterAll } from 'vitest';
 import { OrganizationRepository } from '@infra/repositories/core/organization';
 import { ContactService } from '@store/Contacts/__service__/Contacts.service.ts';
 import { contactsTestState } from '@store/Contacts/__tests__/contactsTestState.ts';
-import { organizationsTestState } from '@store/Organizations/__tests__/organizationsTestState.ts';
 
 import { TagService } from './Tags/__service__/Tag.service';
 
@@ -23,9 +22,7 @@ afterAll(async () => {
     await tagService.deleteTag({ id: tagId });
   }
 
-  const organizationIds = Array.from(
-    organizationsTestState.createdOrganizationIds,
-  );
+  const organizationIds: never[] = [];
 
   for (const id of organizationIds) {
     try {

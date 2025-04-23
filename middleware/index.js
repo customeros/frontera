@@ -555,6 +555,14 @@ async function createServer() {
 
       const loginResponse = await loginResponsePromise.json();
 
+      if (loginResponsePromise.status === 400) {
+        res.redirect(
+          `${process.env.VITE_CLIENT_APP_URL}/auth/failure?message=${loginResponse.code}`,
+        );
+
+        return;
+      }
+
       const integrations_token = createIntegrationAppToken(
         loginResponse.currentTenant,
       );

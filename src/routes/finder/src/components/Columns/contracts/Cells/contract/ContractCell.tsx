@@ -39,7 +39,7 @@ export const ContractCell = observer(({ contractId }: ContractCellProps) => {
         'overflow-ellipsis overflow-hidden font-medium no-underline hover:no-underline cursor-pointer pr-7',
       )}
     >
-      {contract?.value?.contractName || `${contract.organization?.value?.name}`}
+      {contract?.value?.contractName || `${contract.organization?.name}`}
     </div>
   );
 });

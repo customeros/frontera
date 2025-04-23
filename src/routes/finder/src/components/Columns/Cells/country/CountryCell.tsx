@@ -1,5 +1,8 @@
 import { match } from 'ts-pattern';
 import { observer } from 'mobx-react-lite';
+import { Organization } from '@domain/entities';
+import { registry } from '@/domain/stores/registry';
+import { Contact } from '@store/Contacts/Contact.dto';
 
 import { flags } from '@ui/media/flags';
 import { useStore } from '@shared/hooks/useStore';
@@ -13,7 +16,7 @@ export const CountryCell = observer(({ id, type }: ContactNameCellProps) => {
   const store = useStore();
 
   const entity = match(type)
-    .with('organization', () => store.organizations.getById(id))
+    .with('organization', () => registry.get('organizations').get(id))
     .with('contact', () => store.contacts.getById(id))
     .otherwise(() => null);
 
@@ -25,8 +28,14 @@ export const CountryCell = observer(({ id, type }: ContactNameCellProps) => {
     .otherwise(() => false);
 
   const alpha2 = match(type)
-    .with('organization', () => entity?.value?.locations?.[0]?.countryCodeA2)
-    .with('contact', () => entity?.value?.locations?.[0]?.countryCodeA2)
+    .with(
+      'organization',
+      () => (entity as Organization)?.locations?.[0]?.countryCodeA2,
+    )
+    .with(
+      'contact',
+      () => (entity as Contact)?.value.locations?.[0]?.countryCodeA2,
+    )
     .otherwise(() => null);
 
   if (!country) {

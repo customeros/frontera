@@ -1,5 +1,6 @@
 import { Transport } from '@infra/transport';
 import { SkusStore } from '@store/Sku/Skus.store.ts';
+import { sessionStore } from '@/domain/stores/session.store';
 import { when, runInAction, makeAutoObservable } from 'mobx';
 
 import { Persister } from './persister';
@@ -31,7 +32,6 @@ import { GlobalCacheStore } from './GlobalCache/GlobalCache.store';
 import { FlowSendersStore } from './FlowSenders/FlowSenders.store';
 import { TableViewDefStore } from './TableViewDefs/TableViewDef.store';
 import { OpportunitiesStore } from './Opportunities/Opportunities.store';
-import { OrganizationsStore } from './Organizations/Organizations.store';
 import { TimelineEventsStore } from './TimelineEvents/TimelineEvents.store';
 import { FlowParticipantsStore } from './FlowParticipants/FlowParticipants.store';
 import { ContractLineItemsStore } from './ContractLineItems/ContractLineItems.store';
@@ -70,7 +70,6 @@ export class RootStore {
   flowParticipants: FlowParticipantsStore;
   customFields: CustomFieldsStore;
   tableViewDefs: TableViewDefStore;
-  organizations: OrganizationsStore;
   industries: IndustriesStore;
   opportunities: OpportunitiesStore;
   timelineEvents: TimelineEventsStore;
@@ -113,7 +112,6 @@ export class RootStore {
     this.globalCache = new GlobalCacheStore(this, this.transport);
     this.flowSenders = new FlowSendersStore(this, this.transport);
     this.flowParticipants = new FlowParticipantsStore(this, this.transport);
-    this.organizations = new OrganizationsStore(this, this.transport);
     this.opportunities = new OpportunitiesStore(this, this.transport);
     this.timelineEvents = new TimelineEventsStore(this, this.transport);
     this.contractLineItems = new ContractLineItemsStore(this, this.transport);
@@ -131,6 +129,7 @@ export class RootStore {
     when(
       () => this.isAuthenticated,
       async () => {
+        sessionStore.setIsAuthenthicated();
         await this.bootstrap();
       },
     );
@@ -220,11 +219,7 @@ export class RootStore {
   }
 
   get isHydrated() {
-    return (
-      this.organizations.isHydrated &&
-      this.tableViewDefs.isHydrated &&
-      this.contacts.isHydrated
-    );
+    return this.tableViewDefs.isHydrated && this.contacts.isHydrated;
   }
 
   get isBootstrapped() {
@@ -257,6 +252,6 @@ export class RootStore {
   }
 
   get isSyncing() {
-    return this.organizations.isLoading;
+    return false;
   }
 }

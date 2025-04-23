@@ -1,6 +1,9 @@
-import React from 'react';
+import { useMemo } from 'react';
 
 import { observer } from 'mobx-react-lite';
+import { Organization } from '@domain/entities';
+import { registry } from '@domain/stores/registry';
+import { OrganizationService } from '@domain/services';
 
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
@@ -13,6 +16,8 @@ import {
 export const MergeConfirmationModal = observer(() => {
   const store = useStore();
   const context = store.ui.commandMenu.context;
+  const organizationStore = registry.get('organizations');
+  const organizationService = useMemo(() => new OrganizationService(), []);
 
   const handleClose = () => {
     store.ui.commandMenu.toggle('MergeConfirmationModal');
@@ -22,11 +27,17 @@ export const MergeConfirmationModal = observer(() => {
   const handleConfirm = () => {
     const [primary, ...rest] = context.ids as string[];
 
-    store.organizations.merge(
-      primary,
-      rest,
-      store.ui.commandMenu?.context?.callback,
+    const targetOrg = organizationStore.get(primary);
+
+    if (!targetOrg) return;
+
+    organizationService.merge(
+      targetOrg,
+      rest
+        .map((id) => organizationStore.get(id))
+        .filter(Boolean) as Organization[],
     );
+
     handleClose();
   };
 
