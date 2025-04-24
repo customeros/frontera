@@ -29,8 +29,9 @@
 
   function sendData(eventType, eventData) {
     const userAgent = navigator.userAgent;
+    const cdnEndpoint = '{{CDN_ENDPOINT}}'
 
-    fetch('https://api.customeros.ai/reveal', {
+    fetch(cdnEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

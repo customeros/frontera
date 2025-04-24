@@ -28,7 +28,7 @@ import {
   AlertDialogCloseIconButton,
 } from '@ui/overlay/AlertDialog/AlertDialog.tsx';
 
-const SCRIPT = `<script id="customeros-tracker" type="text/javascript">
+const SCRIPT = `<script id="customeros-metrics" type="text/javascript">
   (function (c, u, s, t, o, m, e, r, O, S) { 
   var customerOS = document.createElement(s); 
   customerOS.src = u; 
@@ -129,7 +129,7 @@ export const NewWebSessionListener = observer(() => {
           <p className='pb-2 text-sm'>{`Place the following code in the <HEAD> section of your website:`}</p>
           <div className='px-3 py-2 rounded-md bg-grayModern-100 flex items-baseline'>
             <pre className='text-sm font-sticky whitespace-pre-wrap'>
-              {`<script id="customeros-tracker" type="text/javascript">`}
+              {`<script id="customeros-metrics" type="text/javascript">`}
               <br />
               &nbsp;&nbsp;{`(function (c, u, s, t, o, m, e, r, O, S) {`} <br />
               &nbsp;&nbsp;{`var customerOS = document.createElement(s);`} <br />
@@ -138,7 +138,7 @@ export const NewWebSessionListener = observer(() => {
               &nbsp;&nbsp;
               {`(document.body || document.head).appendChild(customerOS);`}{' '}
               <br />
-              {`})(window, "https://app.customeros.ai/analytics-0.1.js", "script");`}
+              {`})(window, "https://eu.custoscdn.com/analytics-0.1.js", "script");`}
               {`</script>`}
             </pre>
             <IconButton
