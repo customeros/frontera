@@ -34,7 +34,7 @@ const SCRIPT = `<script id="customeros-tracker" type="text/javascript">
   customerOS.src = u; 
   customerOS.async = true; 
   (document.body || document.head).appendChild(customerOS); 
-})(window, "https://app.customeros.ai/analytics-0.1.js", "script");</script>`;
+})(window, "https://eu.custoscdn.com/analytics-0.1.js", "script");</script>`;
 
 export const NewWebSessionListener = observer(() => {
   const store = useStore();
