@@ -1,0 +1,7 @@
+query calendarConnection($email: String!) {
+  nylasIsConnected(email: $email) {
+    connected
+    refreshNeeded
+    email
+  }
+}

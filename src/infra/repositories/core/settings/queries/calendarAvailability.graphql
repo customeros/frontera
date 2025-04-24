@@ -1,0 +1,39 @@
+query calendarAvailability($email: String!) {
+  calendar_available_hours(email: $email) {
+    id
+    email
+    timezone
+    createdAt
+    updatedAt
+    monday {
+      enabled
+      startHour
+      endHour
+    }
+    tuesday {
+      enabled
+      startHour
+      endHour
+    }
+    wednesday {
+      enabled
+      startHour
+      endHour
+    }
+    thursday {
+      enabled
+      startHour
+      endHour
+    }
+    friday {
+      enabled
+      startHour
+      endHour
+    }
+    saturday {
+      enabled
+      startHour
+      endHour
+    }
+  }
+}

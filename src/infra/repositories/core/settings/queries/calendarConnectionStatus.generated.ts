@@ -6,5 +6,10 @@ export type CalendarConnectionQueryVariables = Types.Exact<{
 
 export type CalendarConnectionQuery = {
   __typename?: 'Query';
-  nylasIsConnected: boolean;
+  nylasIsConnected: {
+    __typename?: 'NylasDetails';
+    connected: boolean;
+    refreshNeeded: boolean;
+    email?: string | null;
+  };
 };

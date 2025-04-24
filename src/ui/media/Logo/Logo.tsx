@@ -15,7 +15,8 @@ export type LogoName =
   | 'fathom'
   | 'stripe'
   | 'quickbooks'
-  | 'microsoft';
+  | 'microsoft'
+  | 'calendar-google';
 interface LogoProps extends SVGAttributes<SVGElement> {
   name: LogoName;
   className?: string;

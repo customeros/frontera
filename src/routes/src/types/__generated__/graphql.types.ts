@@ -2698,6 +2698,35 @@ export type Meeting = Node & {
   updatedAt: Scalars['Time']['output'];
 };
 
+export enum MeetingBookingAssignmentMethod {
+  Custom = 'CUSTOM',
+  RoundRobinMaxAvailability = 'ROUND_ROBIN_MAX_AVAILABILITY',
+  RoundRobinMaxFairness = 'ROUND_ROBIN_MAX_FAIRNESS',
+}
+
+export type MeetingBookingEvent = {
+  __typename?: 'MeetingBookingEvent';
+  allowedParticipants: Array<Scalars['String']['output']>;
+  assignmentMethod: MeetingBookingAssignmentMethod;
+  bookOptionBufferBetweenMeetingsMins: Scalars['Int64']['output'];
+  bookOptionDaysInAdvance: Scalars['Int64']['output'];
+  bookOptionEnabled: Scalars['Boolean']['output'];
+  bookOptionMinNoticeMins: Scalars['Int64']['output'];
+  bookingConfirmationRedirectLink: Scalars['String']['output'];
+  bookingFormEmail: Scalars['String']['output'];
+  bookingFormName: Scalars['String']['output'];
+  bookingFormPhone: Scalars['String']['output'];
+  createdAt: Scalars['Time']['output'];
+  description: Scalars['String']['output'];
+  durationMins: Scalars['Int64']['output'];
+  emailNotificationEnabled: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  location: Scalars['String']['output'];
+  showLogo: Scalars['Boolean']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Time']['output'];
+};
+
 export type MeetingInput = {
   agenda?: InputMaybe<Scalars['String']['input']>;
   agendaContentType?: InputMaybe<Scalars['String']['input']>;
@@ -2909,6 +2938,7 @@ export type Mutation = {
   logEntry_Update: Scalars['ID']['output'];
   mailstack_GetPaymentIntent: GetPaymentIntent;
   mailstack_RegisterBuyDomainsWithMailboxes: Result;
+  meetingBookingEvent_Save: MeetingBookingEvent;
   meeting_AddNewLocation: Meeting;
   meeting_AddNote: Meeting;
   meeting_Create: Meeting;
@@ -2924,7 +2954,7 @@ export type Mutation = {
   note_UnlinkAttachment: Note;
   note_Update: Note;
   /** Connect a user's email to Nylas service */
-  nylasConnect: Scalars['Boolean']['output'];
+  nylasConnect: NylasDetails;
   /** Disconnect a user's email from Nylas service */
   nylasDisconnect: Scalars['Boolean']['output'];
   opportunityRenewalUpdate: Opportunity;
@@ -3470,6 +3500,10 @@ export type MutationMailstack_RegisterBuyDomainsWithMailboxesArgs = {
   usernames: Array<Scalars['String']['input']>;
 };
 
+export type MutationMeetingBookingEvent_SaveArgs = {
+  input: SaveMeetingBookingEventInput;
+};
+
 export type MutationMeeting_AddNewLocationArgs = {
   meetingId: Scalars['ID']['input'];
 };
@@ -3853,6 +3887,13 @@ export type NylasConnectInput = {
   email: Scalars['String']['input'];
   provider: NylasProvider;
   refreshToken: Scalars['String']['input'];
+};
+
+export type NylasDetails = {
+  __typename?: 'NylasDetails';
+  connected: Scalars['Boolean']['output'];
+  email?: Maybe<Scalars['String']['output']>;
+  refreshNeeded: Scalars['Boolean']['output'];
 };
 
 export enum NylasProvider {
@@ -4613,8 +4654,9 @@ export type Query = {
   mailstack_Mailboxes: Array<MailstackMailbox>;
   mailstack_UniqueUsernames: Array<Scalars['String']['output']>;
   meeting: Meeting;
+  meetingBookingEvents: Array<MeetingBookingEvent>;
   /** Get the Nylas account ID for a given email */
-  nylasIsConnected: Scalars['Boolean']['output'];
+  nylasIsConnected: NylasDetails;
   opportunities_LinkedToOrganizations: OpportunityPage;
   opportunity?: Maybe<Opportunity>;
   organization?: Maybe<Organization>;
@@ -4840,7 +4882,7 @@ export type QueryMeetingArgs = {
 };
 
 export type QueryNylasIsConnectedArgs = {
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryOpportunities_LinkedToOrganizationsArgs = {
@@ -5039,6 +5081,26 @@ export enum Role {
   PlatformOwner = 'PLATFORM_OWNER',
   User = 'USER',
 }
+
+export type SaveMeetingBookingEventInput = {
+  allowedParticipants?: InputMaybe<Array<Scalars['String']['input']>>;
+  assignmentMethod?: InputMaybe<MeetingBookingAssignmentMethod>;
+  bookOptionBufferBetweenMeetingsMins?: InputMaybe<Scalars['Int64']['input']>;
+  bookOptionDaysInAdvance?: InputMaybe<Scalars['Int64']['input']>;
+  bookOptionEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  bookOptionMinNoticeMins?: InputMaybe<Scalars['Int64']['input']>;
+  bookingConfirmationRedirectLink?: InputMaybe<Scalars['String']['input']>;
+  bookingFormEmail?: InputMaybe<Scalars['String']['input']>;
+  bookingFormName?: InputMaybe<Scalars['String']['input']>;
+  bookingFormPhone?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  durationMins?: InputMaybe<Scalars['Int64']['input']>;
+  emailNotificationEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  showLogo?: InputMaybe<Scalars['Boolean']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type SendEmailInput = {
   attachmentIds?: InputMaybe<Array<Scalars['String']['input']>>;

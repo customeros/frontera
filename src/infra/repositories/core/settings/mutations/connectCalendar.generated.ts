@@ -6,5 +6,10 @@ export type ConnectCalendarMutationVariables = Types.Exact<{
 
 export type ConnectCalendarMutation = {
   __typename?: 'Mutation';
-  nylasConnect: boolean;
+  nylasConnect: {
+    __typename?: 'NylasDetails';
+    connected: boolean;
+    refreshNeeded: boolean;
+    email?: string | null;
+  };
 };
