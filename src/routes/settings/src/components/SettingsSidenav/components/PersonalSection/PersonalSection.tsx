@@ -30,11 +30,11 @@ export const PersonalSection = ({
           isActive={checkIsActive('mailboxes')}
           onClick={handleItemClick('mailboxes')}
         />
-        <SidenavItem
+        {/* <SidenavItem
           label='Calendar'
           isActive={checkIsActive('calendar')}
           onClick={handleItemClick('calendar')}
-        />
+        /> */}
       </div>
     </div>
   );

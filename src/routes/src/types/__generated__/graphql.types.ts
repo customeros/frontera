@@ -387,9 +387,8 @@ export type Calendar = {
 
 /** Input for calendar availability query */
 export type CalendarAvailabilityInput = {
-  duration: Scalars['Int']['input'];
-  email?: InputMaybe<Scalars['String']['input']>;
   endTime: Scalars['Time']['input'];
+  meetingBookingEventId: Scalars['ID']['input'];
   startTime: Scalars['Time']['input'];
   timezone: Scalars['String']['input'];
 };
@@ -397,9 +396,13 @@ export type CalendarAvailabilityInput = {
 /** Response for calendar availability query */
 export type CalendarAvailabilityResponse = {
   __typename?: 'CalendarAvailabilityResponse';
-  availableUsers: Scalars['Int']['output'];
-  timeSlots: Array<TimeSlot>;
-  totalUsers: Scalars['Int']['output'];
+  bookingDescription: Scalars['String']['output'];
+  bookingTitle: Scalars['String']['output'];
+  days: Array<DaySlot>;
+  durationMins: Scalars['Int64']['output'];
+  location: Scalars['String']['output'];
+  tenantLogoUrl: Scalars['String']['output'];
+  tenantName: Scalars['String']['output'];
 };
 
 export enum CalendarType {
@@ -1552,6 +1555,13 @@ export type DayAvailabilityInput = {
   enabled: Scalars['Boolean']['input'];
   endHour: Scalars['String']['input'];
   startHour: Scalars['String']['input'];
+};
+
+export type DaySlot = {
+  __typename?: 'DaySlot';
+  available: Scalars['Boolean']['output'];
+  date: Scalars['Time']['output'];
+  timeSlots: Array<TimeSlot>;
 };
 
 export type DeleteResponse = {
@@ -4594,6 +4604,7 @@ export type Query = {
   calendar_availability: CalendarAvailabilityResponse;
   /** Get user's calendar available hours configuration */
   calendar_available_hours?: Maybe<UserCalendarAvailability>;
+  calendar_timezones: Array<Scalars['String']['output']>;
   checkDomain: DomainCheckDetails;
   contact?: Maybe<Contact>;
   contact_ByEmail?: Maybe<Contact>;

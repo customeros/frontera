@@ -1,13 +1,20 @@
 import { Transport } from '@infra/transport';
 
+import GetTimezoneDocument from './queries/getTimezone.graphql';
 import TenantSettingsDocument from './queries/tenantSettings.graphql';
+import { GetTimezoneQuery } from './queries/getTimezone.generated.ts';
+import { GetTimezoneQueryVariables } from './queries/getTimezone.generated.ts';
+import DisconnectCalendarDocument from './mutations/disconnectCalendar.graphql';
 import ConnectCalendarMutationDocument from './mutations/connectCalendar.graphql';
 import CalendarAvailabilityDocument from './queries/calendarAvailability.graphql';
 import UpdateTenantSettingsDocument from './mutations/updateTenantSettings.graphql';
 import CalendarConnectionDocument from './queries/calendarConnectionStatus.graphql';
 import { CalendarAvailabilityQuery } from './queries/calendarAvailability.generated.ts';
+import { DisconnectCalendarMutation } from './mutations/disconnectCalendar.generated.ts';
 import { CalendarConnectionQuery } from './queries/calendarConnectionStatus.generated.ts';
 import { CalendarAvailabilityQueryVariables } from './queries/calendarAvailability.generated.ts';
+import SaveUserCalendarAvailabilityDocument from './mutations/updateCalendarAvailability.graphql';
+import { DisconnectCalendarMutationVariables } from './mutations/disconnectCalendar.generated.ts';
 import { CalendarConnectionQueryVariables } from './queries/calendarConnectionStatus.generated.ts';
 import {
   TenantSettingsQuery,
@@ -21,7 +28,10 @@ import {
   UpdateTenantSettingsMutation,
   UpdateTenantSettingsMutationVariables,
 } from './mutations/updateTenantSettings.generated.ts';
-
+import {
+  SaveUserCalendarAvailabilityMutation,
+  SaveUserCalendarAvailabilityMutationVariables,
+} from './mutations/updateCalendarAvailability.generated.ts';
 export class SettingsRepository {
   private transport = Transport.getInstance();
 
@@ -62,5 +72,30 @@ export class SettingsRepository {
       CalendarAvailabilityQuery,
       CalendarAvailabilityQueryVariables
     >(CalendarAvailabilityDocument, payload);
+  }
+
+  public async updateCalendarAvailability(
+    payload: SaveUserCalendarAvailabilityMutationVariables,
+  ) {
+    return this.transport.graphql.request<
+      SaveUserCalendarAvailabilityMutation,
+      SaveUserCalendarAvailabilityMutationVariables
+    >(SaveUserCalendarAvailabilityDocument, payload);
+  }
+
+  public async getTimezones() {
+    return this.transport.graphql.request<
+      GetTimezoneQuery,
+      GetTimezoneQueryVariables
+    >(GetTimezoneDocument);
+  }
+
+  public async deleteCalendarAvailability(
+    payload: DisconnectCalendarMutationVariables,
+  ) {
+    return this.transport.graphql.request<
+      DisconnectCalendarMutation,
+      DisconnectCalendarMutationVariables
+    >(DisconnectCalendarDocument, payload);
   }
 }

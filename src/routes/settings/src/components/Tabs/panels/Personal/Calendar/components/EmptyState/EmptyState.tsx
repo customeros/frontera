@@ -40,7 +40,7 @@ export const EmptyState = observer(() => {
           <Button
             colorScheme='primary'
             onClick={() => {
-              store.settings.oauthToken.enableCalendarSync;
+              store.settings.oauthToken.enableCalendarSync();
             }}
           >
             Connect Calendar

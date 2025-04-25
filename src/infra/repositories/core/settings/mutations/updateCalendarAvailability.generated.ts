@@ -1,15 +1,15 @@
 import * as Types from '../../../../../routes/src/types/__generated__/graphql.types';
 
-export type CalendarAvailabilityQueryVariables = Types.Exact<{
-  email: Types.Scalars['String']['input'];
+export type SaveUserCalendarAvailabilityMutationVariables = Types.Exact<{
+  input: Types.UserCalendarAvailabilityInput;
 }>;
 
-export type CalendarAvailabilityQuery = {
-  __typename?: 'Query';
-  calendar_available_hours?: {
+export type SaveUserCalendarAvailabilityMutation = {
+  __typename?: 'Mutation';
+  save_calendar_available_hours: {
     __typename?: 'UserCalendarAvailability';
-    id: string;
     email: string;
+    id: string;
     timezone: string;
     createdAt: any;
     updatedAt: any;
@@ -55,5 +55,5 @@ export type CalendarAvailabilityQuery = {
       startHour: string;
       endHour: string;
     };
-  } | null;
+  };
 };

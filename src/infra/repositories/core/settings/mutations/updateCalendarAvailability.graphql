@@ -1,7 +1,7 @@
-query calendarAvailability($email: String!) {
-  calendar_available_hours(email: $email) {
-    id
+mutation SaveUserCalendarAvailability($input: UserCalendarAvailabilityInput!) {
+  save_calendar_available_hours(input: $input) {
     email
+    id
     timezone
     createdAt
     updatedAt
