@@ -86,7 +86,7 @@ const googleOauthEmailClient = new google.auth.OAuth2(
 const googleOauthCalendarClient = new google.auth.OAuth2(
   process.env.GMAIL_CLIENT_ID,
   process.env.GMAIL_CLIENT_SECRET,
-  'http://localhost:5174/callback/google-auth-calendar-grant',
+  `${process.env.VITE_MIDDLEWARE_API_URL}/callback/google-auth-calendar-grant`,
 );
 
 async function customerOsSignIn(
