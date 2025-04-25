@@ -38,6 +38,7 @@ export const EmptyState = observer(() => {
             </>
           </div>
           <Button
+            className='mt-6'
             colorScheme='primary'
             onClick={() => {
               store.settings.oauthToken.enableCalendarSync();

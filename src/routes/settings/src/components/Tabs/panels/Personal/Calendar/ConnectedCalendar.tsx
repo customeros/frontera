@@ -27,9 +27,10 @@ const days = [
 ];
 
 export const ConnectedCalendar = observer(() => {
-  const calendarConnectionStatus = registry.get('settings').getOrFetch('');
+  const calendar = registry.get('settings');
+  const calendarConnectionStatus = calendar.getOrFetch('');
 
-  const usecase = useMemo(() => new CalendarUserUsecase(), []);
+  const usecase = useMemo(() => new CalendarUserUsecase(calendar), []);
 
   useEffect(() => {
     if (calendarConnectionStatus?.email) {
