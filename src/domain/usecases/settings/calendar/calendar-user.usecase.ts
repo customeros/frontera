@@ -18,7 +18,7 @@ export class CalendarUserUsecase {
   @observable public accessor modalOpen: boolean = false;
   constructor() {
     this.setEmail = this.setEmail.bind(this);
-    this.toogleModal = this.toogleModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.deleteCalendarAvailability =
       this.deleteCalendarAvailability.bind(this);
   }
@@ -33,7 +33,7 @@ export class CalendarUserUsecase {
   }
 
   @action
-  public toogleModal() {
+  public toggleModal() {
     this.modalOpen = !this.modalOpen;
   }
 
