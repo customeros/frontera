@@ -387,9 +387,8 @@ export type Calendar = {
 
 /** Input for calendar availability query */
 export type CalendarAvailabilityInput = {
-  duration: Scalars['Int']['input'];
-  email?: InputMaybe<Scalars['String']['input']>;
   endTime: Scalars['Time']['input'];
+  meetingBookingEventId: Scalars['ID']['input'];
   startTime: Scalars['Time']['input'];
   timezone: Scalars['String']['input'];
 };
@@ -397,9 +396,13 @@ export type CalendarAvailabilityInput = {
 /** Response for calendar availability query */
 export type CalendarAvailabilityResponse = {
   __typename?: 'CalendarAvailabilityResponse';
-  availableUsers: Scalars['Int']['output'];
-  timeSlots: Array<TimeSlot>;
-  totalUsers: Scalars['Int']['output'];
+  bookingDescription: Scalars['String']['output'];
+  bookingTitle: Scalars['String']['output'];
+  days: Array<DaySlot>;
+  durationMins: Scalars['Int64']['output'];
+  location: Scalars['String']['output'];
+  tenantLogoUrl: Scalars['String']['output'];
+  tenantName: Scalars['String']['output'];
 };
 
 export enum CalendarType {
@@ -1538,6 +1541,28 @@ export enum DataSource {
   ZendeskSell = 'ZENDESK_SELL',
   ZendeskSupport = 'ZENDESK_SUPPORT',
 }
+
+/** Represents availability settings for a single day */
+export type DayAvailability = {
+  __typename?: 'DayAvailability';
+  enabled: Scalars['Boolean']['output'];
+  endHour: Scalars['String']['output'];
+  startHour: Scalars['String']['output'];
+};
+
+/** Input for day availability settings */
+export type DayAvailabilityInput = {
+  enabled: Scalars['Boolean']['input'];
+  endHour: Scalars['String']['input'];
+  startHour: Scalars['String']['input'];
+};
+
+export type DaySlot = {
+  __typename?: 'DaySlot';
+  available: Scalars['Boolean']['output'];
+  date: Scalars['Time']['output'];
+  timeSlots: Array<TimeSlot>;
+};
 
 export type DeleteResponse = {
   __typename?: 'DeleteResponse';
@@ -2683,6 +2708,35 @@ export type Meeting = Node & {
   updatedAt: Scalars['Time']['output'];
 };
 
+export enum MeetingBookingAssignmentMethod {
+  Custom = 'CUSTOM',
+  RoundRobinMaxAvailability = 'ROUND_ROBIN_MAX_AVAILABILITY',
+  RoundRobinMaxFairness = 'ROUND_ROBIN_MAX_FAIRNESS',
+}
+
+export type MeetingBookingEvent = {
+  __typename?: 'MeetingBookingEvent';
+  allowedParticipants: Array<Scalars['String']['output']>;
+  assignmentMethod: MeetingBookingAssignmentMethod;
+  bookOptionBufferBetweenMeetingsMins: Scalars['Int64']['output'];
+  bookOptionDaysInAdvance: Scalars['Int64']['output'];
+  bookOptionEnabled: Scalars['Boolean']['output'];
+  bookOptionMinNoticeMins: Scalars['Int64']['output'];
+  bookingConfirmationRedirectLink: Scalars['String']['output'];
+  bookingFormEmail: Scalars['String']['output'];
+  bookingFormName: Scalars['String']['output'];
+  bookingFormPhone: Scalars['String']['output'];
+  createdAt: Scalars['Time']['output'];
+  description: Scalars['String']['output'];
+  durationMins: Scalars['Int64']['output'];
+  emailNotificationEnabled: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  location: Scalars['String']['output'];
+  showLogo: Scalars['Boolean']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Time']['output'];
+};
+
 export type MeetingInput = {
   agenda?: InputMaybe<Scalars['String']['input']>;
   agendaContentType?: InputMaybe<Scalars['String']['input']>;
@@ -2894,6 +2948,7 @@ export type Mutation = {
   logEntry_Update: Scalars['ID']['output'];
   mailstack_GetPaymentIntent: GetPaymentIntent;
   mailstack_RegisterBuyDomainsWithMailboxes: Result;
+  meetingBookingEvent_Save: MeetingBookingEvent;
   meeting_AddNewLocation: Meeting;
   meeting_AddNote: Meeting;
   meeting_Create: Meeting;
@@ -2909,7 +2964,7 @@ export type Mutation = {
   note_UnlinkAttachment: Note;
   note_Update: Note;
   /** Connect a user's email to Nylas service */
-  nylasConnect: Scalars['Boolean']['output'];
+  nylasConnect: NylasDetails;
   /** Disconnect a user's email from Nylas service */
   nylasDisconnect: Scalars['Boolean']['output'];
   opportunityRenewalUpdate: Opportunity;
@@ -2955,6 +3010,8 @@ export type Mutation = {
   reminder_Update?: Maybe<Scalars['ID']['output']>;
   removeTag?: Maybe<Result>;
   removeTags?: Maybe<Result>;
+  /** Save user's calendar available hours configuration */
+  save_calendar_available_hours: UserCalendarAvailability;
   sendEmail: EmailResult;
   serviceLineItem_Delete: DeleteResponse;
   sku_Archive: Result;
@@ -3453,6 +3510,10 @@ export type MutationMailstack_RegisterBuyDomainsWithMailboxesArgs = {
   usernames: Array<Scalars['String']['input']>;
 };
 
+export type MutationMeetingBookingEvent_SaveArgs = {
+  input: SaveMeetingBookingEventInput;
+};
+
 export type MutationMeeting_AddNewLocationArgs = {
   meetingId: Scalars['ID']['input'];
 };
@@ -3520,7 +3581,7 @@ export type MutationNote_UpdateArgs = {
 };
 
 export type MutationNylasConnectArgs = {
-  email: Scalars['String']['input'];
+  input: NylasConnectInput;
 };
 
 export type MutationNylasDisconnectArgs = {
@@ -3697,6 +3758,10 @@ export type MutationRemoveTagsArgs = {
   input: RemoveTagsInput;
 };
 
+export type MutationSave_Calendar_Available_HoursArgs = {
+  input: UserCalendarAvailabilityInput;
+};
+
 export type MutationSendEmailArgs = {
   input: SendEmailInput;
 };
@@ -3827,6 +3892,23 @@ export type NoteUpdateInput = {
   contentType?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
 };
+
+export type NylasConnectInput = {
+  email: Scalars['String']['input'];
+  provider: NylasProvider;
+  refreshToken: Scalars['String']['input'];
+};
+
+export type NylasDetails = {
+  __typename?: 'NylasDetails';
+  connected: Scalars['Boolean']['output'];
+  email?: Maybe<Scalars['String']['output']>;
+  refreshNeeded: Scalars['Boolean']['output'];
+};
+
+export enum NylasProvider {
+  NylasProviderGoogle = 'NYLAS_PROVIDER_GOOGLE',
+}
 
 export type OnboardingDetails = {
   __typename?: 'OnboardingDetails';
@@ -4520,6 +4602,9 @@ export type Query = {
   billableInfo: TenantBillableInfo;
   /** Get availability across all users in the tenant for a given time range */
   calendar_availability: CalendarAvailabilityResponse;
+  /** Get user's calendar available hours configuration */
+  calendar_available_hours?: Maybe<UserCalendarAvailability>;
+  calendar_timezones: Array<Scalars['String']['output']>;
   checkDomain: DomainCheckDetails;
   contact?: Maybe<Contact>;
   contact_ByEmail?: Maybe<Contact>;
@@ -4580,8 +4665,9 @@ export type Query = {
   mailstack_Mailboxes: Array<MailstackMailbox>;
   mailstack_UniqueUsernames: Array<Scalars['String']['output']>;
   meeting: Meeting;
+  meetingBookingEvents: Array<MeetingBookingEvent>;
   /** Get the Nylas account ID for a given email */
-  nylasIsConnected: Scalars['Boolean']['output'];
+  nylasIsConnected: NylasDetails;
   opportunities_LinkedToOrganizations: OpportunityPage;
   opportunity?: Maybe<Opportunity>;
   organization?: Maybe<Organization>;
@@ -4633,6 +4719,10 @@ export type QueryAttachmentArgs = {
 
 export type QueryCalendar_AvailabilityArgs = {
   input: CalendarAvailabilityInput;
+};
+
+export type QueryCalendar_Available_HoursArgs = {
+  email: Scalars['String']['input'];
 };
 
 export type QueryCheckDomainArgs = {
@@ -4803,7 +4893,7 @@ export type QueryMeetingArgs = {
 };
 
 export type QueryNylasIsConnectedArgs = {
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryOpportunities_LinkedToOrganizationsArgs = {
@@ -5002,6 +5092,26 @@ export enum Role {
   PlatformOwner = 'PLATFORM_OWNER',
   User = 'USER',
 }
+
+export type SaveMeetingBookingEventInput = {
+  allowedParticipants?: InputMaybe<Array<Scalars['String']['input']>>;
+  assignmentMethod?: InputMaybe<MeetingBookingAssignmentMethod>;
+  bookOptionBufferBetweenMeetingsMins?: InputMaybe<Scalars['Int64']['input']>;
+  bookOptionDaysInAdvance?: InputMaybe<Scalars['Int64']['input']>;
+  bookOptionEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  bookOptionMinNoticeMins?: InputMaybe<Scalars['Int64']['input']>;
+  bookingConfirmationRedirectLink?: InputMaybe<Scalars['String']['input']>;
+  bookingFormEmail?: InputMaybe<Scalars['String']['input']>;
+  bookingFormName?: InputMaybe<Scalars['String']['input']>;
+  bookingFormPhone?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  durationMins?: InputMaybe<Scalars['Int64']['input']>;
+  emailNotificationEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  showLogo?: InputMaybe<Scalars['Boolean']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type SendEmailInput = {
   attachmentIds?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -5675,6 +5785,36 @@ export type User = {
   test: Scalars['Boolean']['output'];
   timezone?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Time']['output'];
+};
+
+/** Represents a user's calendar available hours configuration */
+export type UserCalendarAvailability = {
+  __typename?: 'UserCalendarAvailability';
+  createdAt: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  friday: DayAvailability;
+  id: Scalars['ID']['output'];
+  monday: DayAvailability;
+  saturday: DayAvailability;
+  sunday: DayAvailability;
+  thursday: DayAvailability;
+  timezone: Scalars['String']['output'];
+  tuesday: DayAvailability;
+  updatedAt: Scalars['Time']['output'];
+  wednesday: DayAvailability;
+};
+
+/** Input for saving user's calendar available hours */
+export type UserCalendarAvailabilityInput = {
+  email: Scalars['String']['input'];
+  friday: DayAvailabilityInput;
+  monday: DayAvailabilityInput;
+  saturday: DayAvailabilityInput;
+  sunday: DayAvailabilityInput;
+  thursday: DayAvailabilityInput;
+  timezone: Scalars['String']['input'];
+  tuesday: DayAvailabilityInput;
+  wednesday: DayAvailabilityInput;
 };
 
 /**

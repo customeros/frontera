@@ -4,12 +4,15 @@ import { BootstrapManager } from '@/lib/boot/boot';
 import { registry } from '@/domain/stores/registry';
 import { OrganizationRepository } from '@/infra/repositories/core/organization';
 import { OrganizationViews } from '@/domain/views/organization/organization.views';
+import { SettingsRepository } from '@/infra/repositories/core/settings/settings.repository';
 
 const organizationRepo = new OrganizationRepository();
+const settingsRepo = new SettingsRepository();
 
 const context = {
   registry,
   organizationRepo,
+  settingsRepo,
   rootStore: RootStore.getInstance(),
 };
 

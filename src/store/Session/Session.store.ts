@@ -29,6 +29,12 @@ type Session = {
   defaultTenant: string;
   refresh_token: string;
   integrations_token: string;
+  calendar_tokens?: {
+    scope: string;
+    expires_at: string;
+    access_token: string;
+    refresh_token: string;
+  };
   profile: {
     id: string;
     name: string;
@@ -50,6 +56,12 @@ const defaultSession: Session = {
   access_token: '',
   refresh_token: '',
   integrations_token: '',
+  calendar_tokens: {
+    scope: '',
+    expires_at: '',
+    access_token: '',
+    refresh_token: '',
+  },
   profile: {
     id: '',
     name: '',

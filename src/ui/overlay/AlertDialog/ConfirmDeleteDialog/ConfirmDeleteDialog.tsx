@@ -1,4 +1,4 @@
-import { useRef, MouseEventHandler } from 'react';
+import { useRef, ReactNode, MouseEventHandler } from 'react';
 
 import { Spinner } from '@ui/feedback/Spinner/Spinner';
 import { Button, ButtonProps } from '@ui/form/Button/Button';
@@ -22,12 +22,12 @@ interface ConfirmDeleteDialogProps {
   dataTest?: string;
   isLoading?: boolean;
   onClose: () => void;
-  description?: string;
   body?: React.ReactNode;
   hideCloseButton?: boolean;
   confirmButtonLabel: string;
   cancelButtonLabel?: string;
   loadingButtonLabel?: string;
+  description?: string | ReactNode;
   colorScheme?: ButtonProps['colorScheme'];
   onConfirm: MouseEventHandler<HTMLButtonElement>;
 }

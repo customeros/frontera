@@ -1,0 +1,7 @@
+mutation connectCalendar($input: NylasConnectInput!) {
+  nylasConnect(input: $input) {
+    connected
+    refreshNeeded
+    email
+  }
+}

@@ -1,0 +1,44 @@
+mutation SaveUserCalendarAvailability($input: UserCalendarAvailabilityInput!) {
+  save_calendar_available_hours(input: $input) {
+    email
+    id
+    timezone
+    createdAt
+    updatedAt
+    monday {
+      enabled
+      startHour
+      endHour
+    }
+    tuesday {
+      enabled
+      startHour
+      endHour
+    }
+    wednesday {
+      enabled
+      startHour
+      endHour
+    }
+    thursday {
+      enabled
+      startHour
+      endHour
+    }
+    friday {
+      enabled
+      startHour
+      endHour
+    }
+    saturday {
+      enabled
+      startHour
+      endHour
+    }
+    sunday {
+      enabled
+      startHour
+      endHour
+    }
+  }
+}
