@@ -85,7 +85,7 @@ export const ConnectedCalendar = observer(() => {
               variant='ghost'
               leftIcon={<Icon stroke='none' name='dot-live-success' />}
               onClick={() => {
-                usecase.toogleModal();
+                usecase.toggleModal();
               }}
             >
               Connected
@@ -150,7 +150,7 @@ export const ConnectedCalendar = observer(() => {
         confirmButtonLabel='Disconnect'
         label='Disconnect your calendar?'
         onClose={() => {
-          usecase.toogleModal();
+          usecase.toggleModal();
         }}
         onConfirm={() => {
           usecase.deleteCalendarAvailability();
