@@ -1,0 +1,9 @@
+query usersParticipantsInScheduler {
+  participantsForMeetingBookingEvent {
+    id
+    name
+    email
+    profilePhotoUrl
+    connected
+  }
+}

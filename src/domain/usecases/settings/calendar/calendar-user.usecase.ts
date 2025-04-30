@@ -1,4 +1,3 @@
-import { Store } from '@/lib/store';
 import { Tracer } from '@infra/tracer';
 import { action, computed, observable } from 'mobx';
 import { SettingsService } from '@domain/services/settings/settings.service';
@@ -17,7 +16,8 @@ export class CalendarUserUsecase {
   private accessor _timezones: string[] | null = null;
   @observable public accessor _email: string | null = null;
   @observable public accessor modalOpen: boolean = false;
-  constructor(private calendar: Store<CalendarConnection>) {
+
+  constructor(private calendar: CalendarConnection) {
     this.setEmail = this.setEmail.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.deleteCalendarAvailability =
@@ -108,13 +108,10 @@ export class CalendarUserUsecase {
     this._email = null;
     this._calendarAvailability = null;
     this._timezones = null;
-    this.calendar.set(
-      '',
-      new CalendarConnection({
-        connected: false,
-        email: '',
-      }),
-    );
+    this.calendar.set({
+      connected: false,
+      email: '',
+    });
   }
 
   public async execute() {

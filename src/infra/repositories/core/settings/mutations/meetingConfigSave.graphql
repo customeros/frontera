@@ -1,0 +1,5 @@
+mutation MeetingConfigSave($input: SaveMeetingBookingEventInput!) {
+  meetingBookingEvent_Save(input: $input) {
+    id
+  }
+}

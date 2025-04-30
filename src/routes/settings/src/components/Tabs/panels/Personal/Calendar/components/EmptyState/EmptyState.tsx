@@ -44,7 +44,7 @@ export const EmptyState = observer(() => {
               store.settings.oauthToken.enableCalendarSync();
             }}
           >
-            Connect Calendar
+            Connect my calendar
           </Button>
         </div>
       </div>

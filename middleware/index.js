@@ -491,6 +491,7 @@ async function createServer() {
             origin: req.query.origin,
             type: 'calendar',
             email: req.session.profile.email,
+            timeZone: req.query.timeZone,
           }),
         ),
       });
@@ -916,6 +917,7 @@ async function createServer() {
 
   app.use('/callback/google-auth-calendar-grant', async (req, res) => {
     const { code, state } = req.query;
+
     const stateParsed = JSON.parse(atob(state));
 
     try {
@@ -932,7 +934,7 @@ async function createServer() {
         })
         .userinfo.get();
 
-      const loggedInEmail = stateParsed?.email ?? profileRes.data.email;
+      const loggedInEmail = profileRes.data.email;
 
       const resp = await fetch(
         `${process.env.CUSTOMER_OS_API_PATH + '/query'}`,
@@ -948,9 +950,10 @@ async function createServer() {
             query: `
         mutation nylasConnect {
           nylasConnect(input: {
+            timezone: "${stateParsed.timeZone}",
             email: "${loggedInEmail}",
             refreshToken: "${refresh_token}",
-            provider: NYLAS_PROVIDER_GOOGLE
+            provider: NYLAS_PROVIDER_GOOGLE,
           }){
             email
             }
@@ -970,12 +973,9 @@ async function createServer() {
         throw new Error(result.errors.map((error) => error.message).join(', '));
       }
 
-      const sessionToken = req.session;
       const redirectURL = `${
         process.env.VITE_CLIENT_APP_URL
-      }/auth/success?sessionToken=${sessionToken}&origin=${encodeURIComponent(
-        stateParsed.origin,
-      )}`;
+      }/auth/success?&origin=${encodeURIComponent('/settings?tab=calendar')}`;
 
       res.redirect(redirectURL);
     } catch (err) {

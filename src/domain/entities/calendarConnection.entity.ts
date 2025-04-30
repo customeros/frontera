@@ -13,4 +13,8 @@ export class CalendarConnection implements CalendarConnectionStatusDatum {
 
     makeAutoObservable(this);
   }
+
+  set = (data: Partial<CalendarConnectionStatusDatum>) => {
+    Object.assign(this, data);
+  };
 }
