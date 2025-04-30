@@ -10,14 +10,12 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import {
   LexicalNode,
   $getSelection,
-  $setSelection,
   $isRangeSelection,
   KEY_ESCAPE_COMMAND,
   FORMAT_TEXT_COMMAND,
   KEY_MODIFIER_COMMAND,
   $createParagraphNode,
   COMMAND_PRIORITY_HIGH,
-  $createRangeSelection,
   COMMAND_PRIORITY_NORMAL,
   COMMAND_PRIORITY_NORMAL as NORMAL_PRIORITY,
   SELECTION_CHANGE_COMMAND as ON_SELECTION_CHANGE,
@@ -339,25 +337,6 @@ export function FloatingMenuPlugin({
       if (ref.current && !ref.current?.contains(event.target as Node)) {
         editor.update(() => {
           setCoords(undefined);
-
-          const currentSelection = $getSelection();
-
-          if ($isRangeSelection(currentSelection)) {
-            const newSelection = $createRangeSelection();
-
-            newSelection.anchor.set(
-              currentSelection.focus.key,
-              currentSelection.focus.offset,
-              currentSelection.focus.type,
-            );
-            newSelection.focus.set(
-              currentSelection.focus.key,
-              currentSelection.focus.offset,
-              currentSelection.focus.type,
-            );
-            newSelection.dirty = true;
-            $setSelection(newSelection);
-          }
         });
       }
     },
