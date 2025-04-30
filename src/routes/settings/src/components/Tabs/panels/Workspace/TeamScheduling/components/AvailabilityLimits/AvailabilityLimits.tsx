@@ -61,7 +61,7 @@ export const AvailabilityLimits = observer(
               : 'minutes'}
           </span>
         </div>
-        <label className='font-medium' htmlFor='buffer-between-meetings'>
+        <label className='font-medium' htmlFor='bookings-up-to'>
           Allow bookings up to...
         </label>
         <div className='flex items-center gap-2'>
@@ -70,8 +70,8 @@ export const AvailabilityLimits = observer(
             mask='num'
             maxLength={2}
             variant='outline'
+            id='bookings-up-to'
             className='max-w-[34px]'
-            id='buffer-between-meetings'
             value={String(usecase.meetingConfig.bookOptionDaysInAdvance)}
             blocks={{
               num: {
@@ -92,7 +92,7 @@ export const AvailabilityLimits = observer(
               : 'days in advance'}
           </span>
         </div>
-        <label className='font-medium' htmlFor='buffer-between-meetings'>
+        <label className='font-medium' htmlFor='minimum-booking-notice'>
           Minimum booking notice
         </label>
         <div className='flex items-center gap-2'>
@@ -102,7 +102,7 @@ export const AvailabilityLimits = observer(
             maxLength={2}
             variant='outline'
             className='max-w-[34px]'
-            id='buffer-between-meetings'
+            id='minimum-booking-notice'
             value={String(usecase.meetingConfig.bookOptionMinNoticeMins)}
             blocks={{
               num: {
