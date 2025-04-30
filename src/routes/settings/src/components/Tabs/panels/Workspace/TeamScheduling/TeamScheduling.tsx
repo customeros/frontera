@@ -58,6 +58,12 @@ export const usePageLeaveBlocker = (
   };
 };
 
+const icons = {
+  'No location': <Icon name='marker-pin-01' className='text-grayModern-500' />,
+  'Phone call': <Icon name='phone' className='text-grayModern-500' />,
+  'Google Meet': <Logo name='google' className='ml-auto' />,
+};
+
 export const TeamScheduling = observer(() => {
   const navigate = useNavigate();
 
@@ -83,10 +89,12 @@ export const TeamScheduling = observer(() => {
 
   return (
     <>
-      <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto'>
+      <div className='px-6 pb-4 pt-1 max-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto text-sm'>
         <div className='flex flex-col'>
           <div className='flex items-center justify-between'>
-            <p className='text-grayModern-700 font-semibold'>Booking event</p>
+            <p className='text-grayModern-700 font-semibold text-base'>
+              Booking event
+            </p>
             <Button
               size='xs'
               colorScheme='primary'
@@ -99,10 +107,11 @@ export const TeamScheduling = observer(() => {
             </Button>
           </div>
           <p className='mb-4'>
-            Share this event to let others book time with your team
+            Manage and share your team’s availability, so others can book time
+            with the right person.
           </p>
-          <div className='flex items-center gap-2 mb-3'>
-            <Icon name='layout-alt-03' />
+          <div className='flex items-center gap-2'>
+            <Icon name='layout-alt-03' className='text-grayModern-500' />
             <span className='font-medium'>Event details</span>
           </div>
           <div className='flex flex-col gap-1 mt-3'>
@@ -139,9 +148,9 @@ export const TeamScheduling = observer(() => {
                   </Button>
                 </MenuButton>
                 <MenuList side='bottom' align='center'>
-                  {usecase.duration.map((option) => (
+                  {usecase.duration.map((option, index) => (
                     <MenuItem
-                      key={option.value}
+                      key={index}
                       onClick={() => {
                         usecase.updateMeetingConfig({
                           durationMins: parseInt(option.value),
@@ -185,11 +194,7 @@ export const TeamScheduling = observer(() => {
                   rightIcon={<Icon name='chevron-down' />}
                   className='min-w-[130px] justify-between'
                   leftIcon={
-                    usecase.meetingConfig.location === 'Google Meet' ? (
-                      <Logo name='google' className='ml-auto' />
-                    ) : (
-                      <></>
-                    )
+                    icons[usecase.meetingConfig.location as keyof typeof icons]
                   }
                 >
                   {usecase.meetingConfig.location}
@@ -199,12 +204,12 @@ export const TeamScheduling = observer(() => {
                 <MenuItem
                   onClick={() => {
                     usecase.updateMeetingConfig({
-                      location: 'None',
+                      location: 'No location',
                     });
                   }}
                 >
-                  None
-                  {usecase.meetingConfig.location === 'None' && (
+                  No location
+                  {usecase.meetingConfig.location === 'No location' && (
                     <Icon name='check' className='ml-auto' />
                   )}
                 </MenuItem>
@@ -268,7 +273,7 @@ export const TeamScheduling = observer(() => {
               id='redirect-link'
               placeholder='Your home page or other link'
               value={usecase.meetingConfig.bookingConfirmationRedirectLink}
-              onBlur={(e) => {
+              onChange={(e) => {
                 usecase.updateMeetingConfig({
                   bookingConfirmationRedirectLink: e.target.value,
                 });
@@ -276,7 +281,7 @@ export const TeamScheduling = observer(() => {
             />
           </div>
           <Divider className='my-4' />
-          <div className='flex items-start gap-2 flex-col justify-start w-full'>
+          <div className='flex items-start flex-col justify-start w-full'>
             <AssignBookings usecase={usecase} />
           </div>
           <Divider className='my-4' />

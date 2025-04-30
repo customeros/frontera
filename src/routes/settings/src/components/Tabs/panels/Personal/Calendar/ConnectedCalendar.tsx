@@ -70,15 +70,21 @@ export const ConnectedCalendar = observer(() => {
 
   return (
     <>
-      <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full'>
+      <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full text-sm'>
         <div className='flex flex-col'>
-          <p className='text-grayModern-700 font-semibold'>Calendar</p>
+          <p
+            className='text-grayModern-700 font-semibold text-base
+          '
+          >
+            Calendar
+          </p>
           <p>
             Set your connected calendar and available time slots for your team’s
             <span
               className='cursor-pointer underline'
               onClick={() => navigate('/settings?tab=team-scheduling')}
             >
+              {' '}
               meeting schedule
             </span>
           </p>
@@ -102,12 +108,18 @@ export const ConnectedCalendar = observer(() => {
           <div className='mb-3'>
             <div className='flex items-center justify-between'>
               <p className='font-semibold'>Availability</p>
-              <Popover>
+              <Popover
+                open={usecase.timezoneIsOpen}
+                onOpenChange={usecase.toggleTimezoneModal}
+              >
                 <PopoverTrigger asChild>
                   <Button
                     size='xs'
                     rightIcon={<Icon name='chevron-down' />}
                     className='min-w-[215px] justify-between'
+                    onClick={() => {
+                      usecase.toggleTimezoneModal();
+                    }}
                   >
                     {usecase.calendarAvailability?.timezone ||
                       'Your current timezone'}
@@ -127,6 +139,7 @@ export const ConnectedCalendar = observer(() => {
                         },
                       });
                       usecase.execute();
+                      usecase.toggleTimezoneModal();
                     }}
                   />
                 </PopoverContent>

@@ -29,9 +29,15 @@ export class MeetingSchedulerUsecase {
   @observable public accessor duration: SelectOption[] = durationOptions;
   @observable public accessor participants: UserParticipantsInSchedulerDatum[] =
     [];
+  @observable public accessor noUserModalConnected: boolean = false;
   constructor(public meetingConfig: MeetingConfig) {
     this.originalMeetingConfig = { ...meetingConfig };
     this.createMeetingConfig = this.createMeetingConfig.bind(this);
+    this.toggleNoUserModalConnected =
+      this.toggleNoUserModalConnected.bind(this);
+    this.toggleConfirmDialogRemoveLastUser =
+      this.toggleConfirmDialogRemoveLastUser.bind(this);
+    this.updateMeetingConfig = this.updateMeetingConfig.bind(this);
   }
 
   private originalMeetingConfig: MeetingConfig;
@@ -42,6 +48,10 @@ export class MeetingSchedulerUsecase {
 
   public toggleConfirmDialog() {
     this.confirmDialogOpen = !this.confirmDialogOpen;
+  }
+
+  public toggleNoUserModalConnected() {
+    this.noUserModalConnected = !this.noUserModalConnected;
   }
 
   public toggleConfirmDialogRemoveLastUser() {

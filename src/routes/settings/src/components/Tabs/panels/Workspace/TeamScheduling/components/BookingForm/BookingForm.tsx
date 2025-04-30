@@ -46,7 +46,7 @@ export const BookingForm = observer(({ usecase }: BookingFormProps) => {
         >
           {usecase.meetingConfig.bookingFormPhoneRequired
             ? 'Required'
-            : 'Optional'}
+            : 'Not required'}
         </p>
       </div>
     </>

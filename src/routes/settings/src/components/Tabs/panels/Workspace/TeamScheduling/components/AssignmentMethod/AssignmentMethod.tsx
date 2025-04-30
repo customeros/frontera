@@ -38,7 +38,7 @@ export const AssignmentMethod = observer(
             <span>Round-robin • Maximize for availability</span>
           </Radio>
           <Radio value={MeetingBookingAssignmentMethod.Custom}>
-            <span>Custom logic</span>
+            <span>Custom • Chat to us</span>
           </Radio>
         </RadioGroup>
       </>
