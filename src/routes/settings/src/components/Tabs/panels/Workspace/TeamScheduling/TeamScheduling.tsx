@@ -209,7 +209,7 @@ export const TeamScheduling = observer(() => {
                   }}
                 >
                   No location
-                  {usecase.meetingConfig.location === 'None' && (
+                  {usecase.meetingConfig.location === 'No location' && (
                     <Icon name='check' className='ml-auto' />
                   )}
                 </MenuItem>
