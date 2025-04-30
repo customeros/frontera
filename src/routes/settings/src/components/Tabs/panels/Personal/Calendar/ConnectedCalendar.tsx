@@ -109,7 +109,7 @@ export const ConnectedCalendar = observer(() => {
             <div className='flex items-center justify-between'>
               <p className='font-semibold'>Availability</p>
               <Popover
-                open={usecase.timezineIsOpen}
+                open={usecase.timezoneIsOpen}
                 onOpenChange={usecase.toggleTimezoneModal}
               >
                 <PopoverTrigger asChild>
