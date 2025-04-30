@@ -28,101 +28,106 @@ export const AvailabilityLimits = observer(
             }}
           />
         </div>
-        <label className='font-medium' htmlFor='buffer-between-meetings'>
-          Buffer between meetings
-        </label>
-        <div className='flex items-center gap-2'>
-          <MaskedInput
-            size='sm'
-            mask='num'
-            maxLength={2}
-            variant='outline'
-            className='max-w-[34px]'
-            id='buffer-between-meetings'
-            value={String(
-              usecase.meetingConfig.bookOptionBufferBetweenMeetingsMins,
-            )}
-            blocks={{
-              num: {
-                mask: IMask.MaskedRange,
-                from: 0,
-                to: 99,
-              },
-            }}
-            onBlur={({ target }) => {
-              usecase.updateMeetingConfig({
-                bookOptionBufferBetweenMeetingsMins: target.value,
-              });
-            }}
-          />
-          <span className='ml-2 text-grayModern-500'>
-            {usecase.meetingConfig.bookOptionBufferBetweenMeetingsMins === '1'
-              ? 'minute'
-              : 'minutes'}
-          </span>
-        </div>
-        <label className='font-medium' htmlFor='bookings-up-to'>
-          Allow bookings up to...
-        </label>
-        <div className='flex items-center gap-2'>
-          <MaskedInput
-            size='sm'
-            mask='num'
-            maxLength={2}
-            variant='outline'
-            id='bookings-up-to'
-            className='max-w-[34px]'
-            value={String(usecase.meetingConfig.bookOptionDaysInAdvance)}
-            blocks={{
-              num: {
-                mask: IMask.MaskedRange,
-                from: 0,
-                to: 99,
-              },
-            }}
-            onBlur={({ target }) => {
-              usecase.updateMeetingConfig({
-                bookOptionDaysInAdvance: target.value,
-              });
-            }}
-          />
-          <span className='ml-2 text-grayModern-500'>
-            {usecase.meetingConfig.bookOptionDaysInAdvance === '1'
-              ? 'day in advance'
-              : 'days in advance'}
-          </span>
-        </div>
-        <label className='font-medium' htmlFor='minimum-booking-notice'>
-          Minimum booking notice
-        </label>
-        <div className='flex items-center gap-2'>
-          <MaskedInput
-            size='sm'
-            mask='num'
-            maxLength={2}
-            variant='outline'
-            className='max-w-[34px]'
-            id='minimum-booking-notice'
-            value={String(usecase.meetingConfig.bookOptionMinNoticeMins)}
-            blocks={{
-              num: {
-                mask: IMask.MaskedRange,
-                from: 0,
-                to: 99,
-              },
-            }}
-            onBlur={({ target }) => {
-              usecase.updateMeetingConfig({
-                bookOptionMinNoticeMins: target.value,
-              });
-            }}
-          />
-          <span className='ml-2 text-grayModern-500'>
-            {usecase.meetingConfig.bookOptionMinNoticeMins === '1'
-              ? 'hour'
-              : 'hours'}
-          </span>
-        </div>
+        {usecase.meetingConfig.bookOptionEnabled && (
+          <>
+            <label className='font-medium' htmlFor='buffer-between-meetings'>
+              Buffer between meetings
+            </label>
+            <div className='flex items-center gap-2'>
+              <MaskedInput
+                size='sm'
+                mask='num'
+                maxLength={2}
+                variant='outline'
+                className='max-w-[34px]'
+                id='buffer-between-meetings'
+                value={String(
+                  usecase.meetingConfig.bookOptionBufferBetweenMeetingsMins,
+                )}
+                blocks={{
+                  num: {
+                    mask: IMask.MaskedRange,
+                    from: 0,
+                    to: 99,
+                  },
+                }}
+                onBlur={({ target }) => {
+                  usecase.updateMeetingConfig({
+                    bookOptionBufferBetweenMeetingsMins: target.value,
+                  });
+                }}
+              />
+              <span className='ml-2 text-grayModern-500'>
+                {usecase.meetingConfig.bookOptionBufferBetweenMeetingsMins ===
+                '1'
+                  ? 'minute'
+                  : 'minutes'}
+              </span>
+            </div>
+            <label className='font-medium' htmlFor='bookings-up-to'>
+              Allow bookings up to...
+            </label>
+            <div className='flex items-center gap-2'>
+              <MaskedInput
+                size='sm'
+                mask='num'
+                maxLength={2}
+                variant='outline'
+                id='bookings-up-to'
+                className='max-w-[34px]'
+                value={String(usecase.meetingConfig.bookOptionDaysInAdvance)}
+                onBlur={({ target }) => {
+                  usecase.updateMeetingConfig({
+                    bookOptionDaysInAdvance: target.value,
+                  });
+                }}
+                blocks={{
+                  num: {
+                    mask: IMask.MaskedRange,
+                    from: 0,
+                    to: 99,
+                  },
+                }}
+              />
+              <span className='ml-2 text-grayModern-500'>
+                {usecase.meetingConfig.bookOptionDaysInAdvance === '1'
+                  ? 'day in advance'
+                  : 'days in advance'}
+              </span>
+            </div>
+            <label className='font-medium' htmlFor='minimum-booking-notice'>
+              Minimum booking notice
+            </label>
+            <div className='flex items-center gap-2'>
+              <MaskedInput
+                size='sm'
+                mask='num'
+                maxLength={2}
+                variant='outline'
+                className='max-w-[34px]'
+                id='minimum-booking-notice'
+                value={String(usecase.meetingConfig.bookOptionMinNoticeMins)}
+                onBlur={({ target }) => {
+                  usecase.updateMeetingConfig({
+                    bookOptionMinNoticeMins: target.value,
+                  });
+                }}
+                blocks={{
+                  num: {
+                    mask: IMask.MaskedRange,
+                    from: 0,
+                    to: 99,
+                  },
+                }}
+              />
+              <span className='ml-2 text-grayModern-500'>
+                {usecase.meetingConfig.bookOptionMinNoticeMins === '1'
+                  ? 'hour'
+                  : 'hours'}
+              </span>
+            </div>
+          </>
+        )}
       </>
     );
   },

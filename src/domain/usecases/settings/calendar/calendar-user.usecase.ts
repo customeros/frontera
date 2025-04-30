@@ -12,10 +12,10 @@ export class CalendarUserUsecase {
   @observable
   private accessor _calendarAvailability: CalendarAvailability | null = null;
   @observable
-  @observable
   private accessor _timezones: string[] | null = null;
   @observable public accessor _email: string | null = null;
   @observable public accessor modalOpen: boolean = false;
+  @observable public accessor timezineIsOpen: boolean = false;
 
   constructor(private calendar: CalendarConnection) {
     this.setEmail = this.setEmail.bind(this);
@@ -36,6 +36,11 @@ export class CalendarUserUsecase {
   @action
   public toggleModal() {
     this.modalOpen = !this.modalOpen;
+  }
+
+  @action
+  public toggleTimezoneModal() {
+    this.timezineIsOpen = !this.timezineIsOpen;
   }
 
   @action

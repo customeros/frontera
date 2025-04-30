@@ -269,6 +269,8 @@ export type IconName =
   | 'layout-alt-03'
   | 'settings-04'
   | 'text-input'
+  | 'phone'
+  | 'marker-pin-01'
   | 'user-left-01';
 
 interface IconProps extends SVGAttributes<SVGElement> {

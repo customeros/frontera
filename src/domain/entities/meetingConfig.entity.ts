@@ -21,9 +21,9 @@ export class MeetingConfig implements SchedulerConfigDatum {
   bookingFormEmailEnabled: SchedulerConfigDatum['bookingFormEmailEnabled'] =
     true;
   bookingFormPhoneEnabled: SchedulerConfigDatum['bookingFormPhoneEnabled'] =
-    false;
+    true;
   bookingFormPhoneRequired: SchedulerConfigDatum['bookingFormPhoneRequired'] =
-    false;
+    true;
   bookOptionEnabled: SchedulerConfigDatum['bookOptionEnabled'] = false;
   bookOptionBufferBetweenMeetingsMins: SchedulerConfigDatum['bookOptionBufferBetweenMeetingsMins'] =
     '15';
