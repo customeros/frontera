@@ -2,14 +2,12 @@ import { makeAutoObservable } from 'mobx';
 import { DayAvailability } from '@domain/objects/dayAvailability';
 import { CalendarAvailabilityDatum } from '@infra/repositories/core/settings/settings.datum';
 
-import { UserCalendarAvailability } from '@shared/types/__generated__/graphql.types';
-
 export class CalendarAvailability implements CalendarAvailabilityDatum {
-  id: UserCalendarAvailability['id'] = crypto.randomUUID();
-  email: UserCalendarAvailability['email'] = '';
-  timezone: UserCalendarAvailability['timezone'] = '';
-  createdAt: UserCalendarAvailability['createdAt'] = new Date().toISOString();
-  updatedAt: UserCalendarAvailability['updatedAt'] = new Date().toISOString();
+  id: CalendarAvailabilityDatum['id'] = crypto.randomUUID();
+  email: CalendarAvailabilityDatum['email'] = '';
+  timezone: CalendarAvailabilityDatum['timezone'] = '';
+  createdAt: CalendarAvailabilityDatum['createdAt'] = new Date().toISOString();
+  updatedAt: CalendarAvailabilityDatum['updatedAt'] = new Date().toISOString();
   friday: DayAvailability = DayAvailability.create();
   saturday: DayAvailability = DayAvailability.create();
   sunday: DayAvailability = DayAvailability.create();
@@ -18,7 +16,7 @@ export class CalendarAvailability implements CalendarAvailabilityDatum {
   tuesday: DayAvailability = DayAvailability.create();
   wednesday: DayAvailability = DayAvailability.create();
 
-  constructor(data?: Partial<UserCalendarAvailability>) {
+  constructor(data?: Partial<CalendarAvailabilityDatum>) {
     if (data) {
       Object.assign(this, data);
     }

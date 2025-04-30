@@ -9,6 +9,7 @@ import { TagsManager } from './panels/Workspace/TagsManager';
 import { ConnectedCalendar } from './panels/Personal/Calendar';
 // import { IntegrationsPanel } from './panels/IntegrationsPanel';
 import { OrganizationFields } from './panels/Fields/Organizations';
+import { TeamScheduling } from './panels/Workspace/TeamScheduling';
 interface PanelsProps {
   tab: string;
 }
@@ -36,11 +37,12 @@ export const Panels = ({ tab }: PanelsProps) => {
       return <Products />;
     case 'profile':
       return <Profile />;
-
-    case 'team':
+    case 'members':
       return <Team />;
     case 'calendar':
       return <ConnectedCalendar />;
+    case 'team-scheduling':
+      return <TeamScheduling />;
 
     default:
       return <Mailboxes />;

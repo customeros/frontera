@@ -3,6 +3,7 @@ import { RootStore } from '@store/root';
 import { injectable } from '@infra/container';
 import { SettingsRepository } from '@infra/repositories/core/settings';
 import { CalendarAvailability } from '@domain/entities/calendarAvailability.entity';
+import { MeetingConfigSaveMutationVariables } from '@infra/repositories/core/settings/mutations/meetingConfigSave.generated';
 import { SaveUserCalendarAvailabilityMutationVariables } from '@infra/repositories/core/settings/mutations/updateCalendarAvailability.generated';
 
 import { unwrap } from '@utils/unwrap';
@@ -118,6 +119,54 @@ export class SettingsService {
 
     const [res, err] = await unwrap(
       this.settingsRepo.deleteCalendarAvailability({ email }),
+    );
+
+    span.end();
+
+    if (err) {
+      console.error(err);
+    }
+
+    return res;
+  }
+
+  public async updateSchedulerConfig(
+    input: MeetingConfigSaveMutationVariables,
+  ) {
+    const span = Tracer.span('CalendarService.updateSchedulerConfig');
+
+    const [res, err] = await unwrap(
+      this.settingsRepo.updateSchedulerConfig(input),
+    );
+
+    span.end();
+
+    if (err) {
+      console.error(err);
+    }
+
+    return res;
+  }
+
+  public async getSchedulerConfig() {
+    const span = Tracer.span('CalendarService.getSchedulerConfig');
+
+    const [res, err] = await unwrap(this.settingsRepo.getSchedulerConfig());
+
+    span.end();
+
+    if (err) {
+      console.error(err);
+    }
+
+    return res;
+  }
+
+  public async getUserParticipantsInScheduler() {
+    const span = Tracer.span('CalendarService.getUserParticipantsInScheduler');
+
+    const [res, err] = await unwrap(
+      this.settingsRepo.getUserParticipantsInScheduler(),
     );
 
     span.end();

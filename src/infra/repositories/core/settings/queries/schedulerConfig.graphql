@@ -1,0 +1,34 @@
+query schedulerConfig {
+  meetingBookingEvents {
+    id
+    createdAt
+    updatedAt
+    title
+    durationMins
+    description
+    location
+    participants {
+      id
+      name
+      email
+      profilePhotoUrl
+      connected
+    }
+    participantEmails
+    bookingFormName
+    bookingFormEmail
+    bookingFormPhone
+    bookingFormNameEnabled
+    bookingFormEmailEnabled
+    bookingFormPhoneEnabled
+    bookOptionEnabled
+    bookOptionBufferBetweenMeetingsMins
+    bookOptionDaysInAdvance
+    bookingFormPhoneRequired
+    bookOptionMinNoticeMins
+    assignmentMethod
+    emailNotificationEnabled
+    bookingConfirmationRedirectLink
+    showLogo
+  }
+}

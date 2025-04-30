@@ -1,8 +1,9 @@
 import { useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { differenceInMinutes } from 'date-fns';
-import { registry } from '@domain/stores/registry';
+import { calendarConnectionStore } from '@domain/stores/settings.store';
 import { CalendarAvailability } from '@domain/entities/calendarAvailability.entity';
 import { CalendarUserUsecase } from '@domain/usecases/settings/calendar/calendar-user.usecase';
 
@@ -15,7 +16,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@ui/overlay/Popover';
 import { ConfirmDeleteDialog } from '@ui/overlay/AlertDialog/ConfirmDeleteDialog';
 
 import { DaySlot, EmptyState } from './components';
-
 const days = [
   'monday',
   'tuesday',
@@ -27,16 +27,17 @@ const days = [
 ];
 
 export const ConnectedCalendar = observer(() => {
-  const calendar = registry.get('settings');
-  const calendarConnectionStatus = calendar.getOrFetch('');
-
-  const usecase = useMemo(() => new CalendarUserUsecase(calendar), []);
+  const navigate = useNavigate();
+  const usecase = useMemo(
+    () => new CalendarUserUsecase(calendarConnectionStore),
+    [],
+  );
 
   useEffect(() => {
-    if (calendarConnectionStatus?.email) {
-      usecase.init(calendarConnectionStatus?.email);
+    if (calendarConnectionStore?.email) {
+      usecase.init(calendarConnectionStore?.email);
     }
-  }, [calendarConnectionStatus?.email]);
+  }, [calendarConnectionStore?.email]);
 
   const timezones = usecase.timezones;
 
@@ -59,7 +60,7 @@ export const ConnectedCalendar = observer(() => {
     }
   }, [usecase.calendarAvailability?.createdAt]);
 
-  if (!calendarConnectionStatus?.connected) {
+  if (!calendarConnectionStore?.connected) {
     return (
       <div className='flex flex-col h-full w-full max-w-[448px] border-r border-grayModern-200'>
         <EmptyState />
@@ -74,12 +75,17 @@ export const ConnectedCalendar = observer(() => {
           <p className='text-grayModern-700 font-semibold'>Calendar</p>
           <p>
             Set your connected calendar and available time slots for your team’s
-            <span className='cursor-pointer underline'> meeting schedule</span>
+            <span
+              className='cursor-pointer underline'
+              onClick={() => navigate('/settings?tab=team-scheduling')}
+            >
+              meeting schedule
+            </span>
           </p>
           <div className='flex items-center justify-between mt-4'>
             <div className='flex gap-2 items-center'>
               <Logo name='calendar-google' className='place-self-end mb-0.5' />
-              <p>{calendarConnectionStatus?.email}</p>
+              <p>{calendarConnectionStore?.email}</p>
             </div>
             <Button
               size='xs'
@@ -100,15 +106,16 @@ export const ConnectedCalendar = observer(() => {
                 <PopoverTrigger asChild>
                   <Button
                     size='xs'
-                    leftIcon={<Icon name='globe-02' />}
                     rightIcon={<Icon name='chevron-down' />}
+                    className='min-w-[215px] justify-between'
                   >
                     {usecase.calendarAvailability?.timezone ||
                       'Your current timezone'}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent className='w-[215px]'>
                   <Combobox
+                    placeholder='Search a location...'
                     options={timezones?.map((timezone) => ({
                       label: timezone,
                       value: timezone,
@@ -160,7 +167,7 @@ export const ConnectedCalendar = observer(() => {
           <p>
             Disconnecting{' '}
             <span className='font-semibold'>
-              {calendarConnectionStatus?.email}
+              {calendarConnectionStore?.email}
             </span>{' '}
             will revoke CustomerOS’s access to this calendar. Existing meetings
             won’t be affected, but any rescheduled ones will go to the next

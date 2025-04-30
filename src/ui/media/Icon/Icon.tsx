@@ -265,7 +265,11 @@ export type IconName =
   | 'chevron-expand'
   | 'chevron-collapse'
   | 'edit-05'
-  | 'globe-02';
+  | 'globe-02'
+  | 'layout-alt-03'
+  | 'settings-04'
+  | 'text-input'
+  | 'user-left-01';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

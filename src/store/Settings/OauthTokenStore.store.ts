@@ -88,9 +88,11 @@ export class OauthTokenStore {
       return;
     }
 
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     try {
       const { data } = await this.transport.http.get<{ url: string }>(
-        `/enable/google-calendar-sync?origin=${window.location.pathname}${window.location.search}`,
+        `/enable/google-calendar-sync?timeZone=${timeZone}&origin=${window.location.pathname}${window.location.search}`,
       );
 
       window.location.href = data.url;

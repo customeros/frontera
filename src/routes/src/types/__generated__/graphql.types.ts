@@ -385,6 +385,20 @@ export type Calendar = {
   updatedAt: Scalars['Time']['output'];
 };
 
+export type CalendarAvailabilityDetailsResponse = {
+  __typename?: 'CalendarAvailabilityDetailsResponse';
+  bookingDescription: Scalars['String']['output'];
+  bookingFormEmailEnabled: Scalars['Boolean']['output'];
+  bookingFormNameEnabled: Scalars['Boolean']['output'];
+  bookingFormPhoneEnabled: Scalars['Boolean']['output'];
+  bookingFormPhoneRequired: Scalars['Boolean']['output'];
+  bookingTitle: Scalars['String']['output'];
+  durationMins: Scalars['Int64']['output'];
+  location: Scalars['String']['output'];
+  tenantLogoUrl: Scalars['String']['output'];
+  tenantName: Scalars['String']['output'];
+};
+
 /** Input for calendar availability query */
 export type CalendarAvailabilityInput = {
   endTime: Scalars['Time']['input'];
@@ -396,13 +410,7 @@ export type CalendarAvailabilityInput = {
 /** Response for calendar availability query */
 export type CalendarAvailabilityResponse = {
   __typename?: 'CalendarAvailabilityResponse';
-  bookingDescription: Scalars['String']['output'];
-  bookingTitle: Scalars['String']['output'];
   days: Array<DaySlot>;
-  durationMins: Scalars['Int64']['output'];
-  location: Scalars['String']['output'];
-  tenantLogoUrl: Scalars['String']['output'];
-  tenantName: Scalars['String']['output'];
 };
 
 export enum CalendarType {
@@ -1559,7 +1567,6 @@ export type DayAvailabilityInput = {
 
 export type DaySlot = {
   __typename?: 'DaySlot';
-  available: Scalars['Boolean']['output'];
   date: Scalars['Time']['output'];
   timeSlots: Array<TimeSlot>;
 };
@@ -2711,12 +2718,10 @@ export type Meeting = Node & {
 export enum MeetingBookingAssignmentMethod {
   Custom = 'CUSTOM',
   RoundRobinMaxAvailability = 'ROUND_ROBIN_MAX_AVAILABILITY',
-  RoundRobinMaxFairness = 'ROUND_ROBIN_MAX_FAIRNESS',
 }
 
 export type MeetingBookingEvent = {
   __typename?: 'MeetingBookingEvent';
-  allowedParticipants: Array<Scalars['String']['output']>;
   assignmentMethod: MeetingBookingAssignmentMethod;
   bookOptionBufferBetweenMeetingsMins: Scalars['Int64']['output'];
   bookOptionDaysInAdvance: Scalars['Int64']['output'];
@@ -2724,17 +2729,32 @@ export type MeetingBookingEvent = {
   bookOptionMinNoticeMins: Scalars['Int64']['output'];
   bookingConfirmationRedirectLink: Scalars['String']['output'];
   bookingFormEmail: Scalars['String']['output'];
+  bookingFormEmailEnabled: Scalars['Boolean']['output'];
   bookingFormName: Scalars['String']['output'];
+  bookingFormNameEnabled: Scalars['Boolean']['output'];
   bookingFormPhone: Scalars['String']['output'];
+  bookingFormPhoneEnabled: Scalars['Boolean']['output'];
+  bookingFormPhoneRequired: Scalars['Boolean']['output'];
   createdAt: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   durationMins: Scalars['Int64']['output'];
   emailNotificationEnabled: Scalars['Boolean']['output'];
   id: Scalars['String']['output'];
   location: Scalars['String']['output'];
+  participantEmails: Array<Scalars['String']['output']>;
+  participants: Array<MeetingBookingEventUserParticipant>;
   showLogo: Scalars['Boolean']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['Time']['output'];
+};
+
+export type MeetingBookingEventUserParticipant = {
+  __typename?: 'MeetingBookingEventUserParticipant';
+  connected: Scalars['Boolean']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  profilePhotoUrl: Scalars['String']['output'];
 };
 
 export type MeetingInput = {
@@ -3897,6 +3917,7 @@ export type NylasConnectInput = {
   email: Scalars['String']['input'];
   provider: NylasProvider;
   refreshToken: Scalars['String']['input'];
+  timezone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type NylasDetails = {
@@ -4602,6 +4623,7 @@ export type Query = {
   billableInfo: TenantBillableInfo;
   /** Get availability across all users in the tenant for a given time range */
   calendar_availability: CalendarAvailabilityResponse;
+  calendar_availability_details: CalendarAvailabilityDetailsResponse;
   /** Get user's calendar available hours configuration */
   calendar_available_hours?: Maybe<UserCalendarAvailability>;
   calendar_timezones: Array<Scalars['String']['output']>;
@@ -4679,6 +4701,7 @@ export type Query = {
   organization_ExistsByLinkedIn: Scalars['Boolean']['output'];
   organizations: OrganizationPage;
   organizations_HiddenAfter: Array<Scalars['String']['output']>;
+  participantsForMeetingBookingEvent: Array<MeetingBookingEventUserParticipant>;
   phoneNumber: PhoneNumber;
   reminder: Reminder;
   remindersForOrganization: Array<Reminder>;
@@ -4719,6 +4742,10 @@ export type QueryAttachmentArgs = {
 
 export type QueryCalendar_AvailabilityArgs = {
   input: CalendarAvailabilityInput;
+};
+
+export type QueryCalendar_Availability_DetailsArgs = {
+  meetingBookingEventId: Scalars['ID']['input'];
 };
 
 export type QueryCalendar_Available_HoursArgs = {
@@ -5094,21 +5121,22 @@ export enum Role {
 }
 
 export type SaveMeetingBookingEventInput = {
-  allowedParticipants?: InputMaybe<Array<Scalars['String']['input']>>;
   assignmentMethod?: InputMaybe<MeetingBookingAssignmentMethod>;
   bookOptionBufferBetweenMeetingsMins?: InputMaybe<Scalars['Int64']['input']>;
   bookOptionDaysInAdvance?: InputMaybe<Scalars['Int64']['input']>;
   bookOptionEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   bookOptionMinNoticeMins?: InputMaybe<Scalars['Int64']['input']>;
   bookingConfirmationRedirectLink?: InputMaybe<Scalars['String']['input']>;
-  bookingFormEmail?: InputMaybe<Scalars['String']['input']>;
-  bookingFormName?: InputMaybe<Scalars['String']['input']>;
-  bookingFormPhone?: InputMaybe<Scalars['String']['input']>;
+  bookingFormEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  bookingFormNameEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  bookingFormPhoneEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  bookingFormPhoneRequired?: InputMaybe<Scalars['Boolean']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   durationMins?: InputMaybe<Scalars['Int64']['input']>;
   emailNotificationEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  participantEmails?: InputMaybe<Array<Scalars['String']['input']>>;
   showLogo?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -5706,7 +5734,6 @@ export type TimeRange = {
 export type TimeSlot = {
   __typename?: 'TimeSlot';
   endTime: Scalars['Time']['output'];
-  isAvailable: Scalars['Boolean']['output'];
   startTime: Scalars['Time']['output'];
 };
 
