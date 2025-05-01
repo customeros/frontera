@@ -4626,7 +4626,7 @@ export type Query = {
   calendar_availability_details: CalendarAvailabilityDetailsResponse;
   /** Get user's calendar available hours configuration */
   calendar_available_hours?: Maybe<UserCalendarAvailability>;
-  calendar_timezones: Array<Scalars['String']['output']>;
+  calendar_timezones: Array<Timezone>;
   checkDomain: DomainCheckDetails;
   contact?: Maybe<Contact>;
   contact_ByEmail?: Maybe<Contact>;
@@ -5761,6 +5761,12 @@ export enum TimelineEventType {
   Order = 'ORDER',
   PageView = 'PAGE_VIEW',
 }
+
+export type Timezone = {
+  __typename?: 'Timezone';
+  label: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
 
 /**
  * Describes the User of customerOS.  A user is the person who logs into the Openline platform.

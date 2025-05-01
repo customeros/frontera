@@ -4,7 +4,10 @@ import { SettingsService } from '@domain/services/settings/settings.service';
 import { CalendarConnection } from '@domain/entities/calendarConnection.entity';
 import { CalendarAvailability } from '@domain/entities/calendarAvailability.entity';
 
-import { UserCalendarAvailabilityInput } from '@shared/types/__generated__/graphql.types';
+import {
+  Timezone,
+  UserCalendarAvailabilityInput,
+} from '@shared/types/__generated__/graphql.types';
 
 export class CalendarUserUsecase {
   private service = new SettingsService();
@@ -12,7 +15,7 @@ export class CalendarUserUsecase {
   @observable
   private accessor _calendarAvailability: CalendarAvailability | null = null;
   @observable
-  private accessor _timezones: string[] | null = null;
+  private accessor _timezones: Timezone[] | null = null;
   @observable public accessor _email: string | null = null;
   @observable public accessor modalOpen: boolean = false;
   @observable public accessor timezoneIsOpen: boolean = false;

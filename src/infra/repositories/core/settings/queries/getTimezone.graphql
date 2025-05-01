@@ -1,3 +1,6 @@
 query getTimezone {
-  calendar_timezones
+  calendar_timezones {
+    value
+    label
+  }
 }

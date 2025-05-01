@@ -2,7 +2,6 @@ import { useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
-import { differenceInMinutes } from 'date-fns';
 import { calendarConnectionStore } from '@domain/stores/settings.store';
 import { CalendarAvailability } from '@domain/entities/calendarAvailability.entity';
 import { CalendarUserUsecase } from '@domain/usecases/settings/calendar/calendar-user.usecase';
@@ -40,25 +39,6 @@ export const ConnectedCalendar = observer(() => {
   }, [calendarConnectionStore?.email]);
 
   const timezones = usecase.timezones;
-
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-  useEffect(() => {
-    if (
-      differenceInMinutes(
-        new Date().getUTCDate(),
-        new Date(usecase.calendarAvailability?.createdAt).getUTCDate(),
-      ) < 1 &&
-      usecase.calendarAvailability?.timezone === 'Etc/UTC'
-    ) {
-      usecase.updateCalendarAvailability({
-        input: {
-          timezone: timeZone,
-        },
-      });
-      usecase.execute();
-    }
-  }, [usecase.calendarAvailability?.createdAt]);
 
   if (!calendarConnectionStore?.connected) {
     return (
@@ -129,8 +109,8 @@ export const ConnectedCalendar = observer(() => {
                   <Combobox
                     placeholder='Search a location...'
                     options={timezones?.map((timezone) => ({
-                      label: timezone,
-                      value: timezone,
+                      label: timezone.label,
+                      value: timezone.value,
                     }))}
                     onChange={(value) => {
                       usecase.updateCalendarAvailability({
