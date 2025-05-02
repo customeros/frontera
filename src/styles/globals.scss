@@ -269,6 +269,10 @@
   border-radius: 8px;
 }
 
+.scrollbar {
+  scrollbar-color: var(--grayModern-400, #98a2b3) transparent;
+}
+
 .lp_pass {
   display: none !important;
 }

@@ -43,7 +43,7 @@ export const Combobox = ({
           getOptionClassNames('!cursor-pointer', { isFocused }),
         menuList: () =>
           getMenuListClassNames(
-            cn('p-0 border-none bg-transparent shadow-none'),
+            cn('p-0 border-none bg-transparent shadow-none scrollbar'),
           ),
         menu: ({ menuPlacement }) =>
           getMenuClassNames(menuPlacement)(

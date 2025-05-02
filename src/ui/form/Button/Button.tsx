@@ -39,6 +39,7 @@ export interface ButtonProps
   rightIcon?: React.ReactElement;
   leftSpinner?: React.ReactElement;
   rightSpinner?: React.ReactElement;
+  type?: 'button' | 'reset' | 'submit';
   variant?: 'link' | 'ghost' | 'solid' | 'outline';
 }
 
@@ -82,8 +83,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         data-test={dataTest}
-        style={{ outline: 'none' }}
         disabled={isLoading || isDisabled}
+        style={{ outline: 'none', ...props?.style }}
         className={twMerge(
           buttonVariant({ colorScheme, className }),
           buttonSize({ className, size }),

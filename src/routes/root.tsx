@@ -6,7 +6,6 @@ import { AuthRoute } from './auth/route';
 import { AgentRoute } from './agent/route';
 import { AgentsRoute } from './agents/route';
 import { FinderRoute } from './finder/route';
-import { BookingRoute } from './booking/route';
 import { Error } from './src/components/Error';
 import { SettingsRoute } from './settings/route';
 import { ProspectsRoute } from './prospects/route';
@@ -25,7 +24,6 @@ export const RootRoute: RouteObject = {
   path: '/',
   element: <Layout />,
   children: [
-    BookingRoute,
     AuthRoute,
     AgentRoute,
     AgentsRoute,

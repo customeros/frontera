@@ -14,8 +14,20 @@ const colors = Object.keys(file.colors);
 const variants = ['solid', 'outline', 'link', 'ghost'];
 
 const solidButton = (color: string) => `
-    ${color}: [
-    
+    ${color}: ${
+  color === 'black'
+    ? `[
+    'text-white',
+    'border',
+    'border-solid',
+    'bg-${color}',
+    'hover:bg-${color}',
+    'focus:bg-${color}',
+    'border-${color}',
+    'focus:shadow-ringPrimary',
+    'focus-visible:shadow-ringPrimary',
+    ]`
+    : `[
     'text-white',
     'border',
     'border-solid',
@@ -26,7 +38,8 @@ const solidButton = (color: string) => `
     'hover:border-${color}-700',
     'focus:shadow-ringPrimary',
     'focus-visible:shadow-ringPrimary',
-],`;
+]`
+},`;
 
 const outlineButton = (color: string) => `
     ${color}: ${
