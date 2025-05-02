@@ -45,12 +45,6 @@ export const featureIconVariant = cva(
         ],
       },
       {
-        colorScheme: 'black',
-        className: [
-          'bg-black-100 ring-black-50 ring-offset-black-100 text-black-600',
-        ],
-      },
-      {
         colorScheme: 'primary',
         className: [
           'bg-primary-100 ring-primary-50 ring-offset-primary-100 text-primary-600',
