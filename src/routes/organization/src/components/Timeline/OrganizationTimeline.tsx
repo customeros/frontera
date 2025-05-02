@@ -12,6 +12,7 @@ import { useStore } from '@shared/hooks/useStore';
 import { Meeting, ExternalSystemType } from '@graphql/types';
 import { getGraphQLClient } from '@shared/util/getGraphQLClient';
 import { EmptyTimeline } from '@organization/components/Timeline/EmptyTimeline';
+import { ShortcutsPanel } from '@shared/components/PreviewCard/components/ShortcutsPanel';
 import { SlackStub } from '@organization/components/Timeline/PastZone/events/slack/SlackStub';
 import { IssueStub } from '@organization/components/Timeline/PastZone/events/issue/IssueStub';
 import { useTimelineRefContext } from '@organization/components/Timeline/context/TimelineRefContext';
@@ -231,6 +232,11 @@ export const OrganizationTimeline = observer(() => {
         {invoicesTab && invoicePreview && (
           <InvoicePreview previewCard={Boolean(invoicePreview)} />
         )}
+        {store.ui.showShortcutsPanel && (
+          <div className='absolute top-0 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t-0 border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '>
+            <ShortcutsPanel />
+          </div>
+        )}
       </>
     );
   }
@@ -244,6 +250,11 @@ export const OrganizationTimeline = observer(() => {
         </div>
         {invoicesTab && invoicePreview && (
           <InvoicePreview previewCard={Boolean(invoicePreview)} />
+        )}
+        {store.ui.showShortcutsPanel && (
+          <div className='absolute top-0 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t-0 border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '>
+            <ShortcutsPanel />
+          </div>
         )}
       </>
     );
@@ -391,6 +402,12 @@ export const OrganizationTimeline = observer(() => {
           }}
         />
       )}
+
+      {store.ui.showShortcutsPanel && (
+        <div className='absolute top-0 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t-0 border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '>
+          <ShortcutsPanel />
+        </div>
+      )}
     </>
   );
 });
@@ -400,19 +417,21 @@ interface InvoicePreviewProps {
   onClose?: () => void;
 }
 
-export const InvoicePreview = ({
-  previewCard,
-  onClose,
-}: InvoicePreviewProps) => {
-  const [searchParams] = useSearchParams();
-  const invoiceNumber = searchParams?.get('preview');
+export const InvoicePreview = observer(
+  ({ previewCard, onClose }: InvoicePreviewProps) => {
+    const [searchParams] = useSearchParams();
+    const invoiceNumber = searchParams?.get('preview');
 
-  return (
-    <div
-      data-state={previewCard ? 'open' : 'closed'}
-      className='absolute top-0 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t-0 border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
-    >
-      <InvoicePreviewModal onClose={onClose} invoiceId={invoiceNumber ?? ''} />
-    </div>
-  );
-};
+    return (
+      <div
+        data-state={previewCard ? 'open' : 'closed'}
+        className='absolute top-0 right-0 data-[state=open]:animate-slideLeftAndFade data-[state=closed]:animate-slideRightAndFade flex flex-col border border-r-0 border-t-0 border-b border-grayModern-200 w-[30vw] min-w-[600px] h-[calc(100vh-42px)] overflow-y-auto z-10 bg-white '
+      >
+        <InvoicePreviewModal
+          onClose={onClose}
+          invoiceId={invoiceNumber ?? ''}
+        />
+      </div>
+    );
+  },
+);
