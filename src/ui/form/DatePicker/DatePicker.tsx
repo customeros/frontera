@@ -3,8 +3,7 @@ import Calendar, { CalendarProps } from 'react-calendar';
 
 import { twMerge } from 'tailwind-merge';
 
-import { ChevronLeft } from '@ui/media/icons/ChevronLeft';
-import { ChevronRight } from '@ui/media/icons/ChevronRight';
+import { Icon } from '@ui/media/Icon';
 
 export const DatePicker = forwardRef(
   ({ value, onChange, className, ...props }: CalendarProps, ref) => {
@@ -24,10 +23,10 @@ export const DatePicker = forwardRef(
         ref={ref}
         value={value}
         defaultValue={value}
-        prevLabel={<ChevronLeft />}
-        nextLabel={<ChevronRight />}
         className={twMerge(className)}
         onChange={handleDateInputChange}
+        prevLabel={<Icon name='chevron-left' />}
+        nextLabel={<Icon name='chevron-right' />}
         formatMonth={(locale, date) =>
           date.toLocaleDateString(locale, { month: 'short' })
         }

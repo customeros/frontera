@@ -14,7 +14,6 @@ export class CalendarUserUsecase {
 
   @observable
   private accessor _calendarAvailability: CalendarAvailability | null = null;
-  @observable
   private accessor _timezones: Timezone[] | null = null;
   @observable public accessor _email: string | null = null;
   @observable public accessor modalOpen: boolean = false;

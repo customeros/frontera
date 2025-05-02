@@ -5,6 +5,7 @@ export const tagSubtleVariant = cva(
   {
     variants: {
       colorScheme: {
+        black: ['text-black-700', 'bg-black-100'],
         primary: ['text-primary-700', 'bg-primary-100'],
         grayBlue: ['text-grayBlue-700', 'bg-grayBlue-100'],
         grayModern: ['text-grayModern-700', 'bg-grayModern-100'],
@@ -40,6 +41,7 @@ export const tagSolidVariant = cva(
   {
     variants: {
       colorScheme: {
+        black: ['bg-black-500', 'text-white'],
         primary: ['bg-primary-500', 'text-white'],
         grayBlue: ['bg-grayBlue-500', 'text-white'],
         grayModern: ['bg-grayModern-500', 'text-white'],
@@ -75,6 +77,13 @@ export const tagOutlineVariant = cva(
   {
     variants: {
       colorScheme: {
+        black: [
+          'bg-black-50',
+          'text-black-700',
+          'border',
+          'border-solid',
+          'border-black-200',
+        ],
         primary: [
           'bg-primary-50',
           'text-primary-700',
@@ -240,6 +249,15 @@ export const tagOutlineVariant = cva(
 export const tagCloseButtonVariant = cva([], {
   variants: {
     colorScheme: {
+      black: [
+        'text-black-400',
+        'mr-0',
+        'bg-black-100',
+        'rounded-e-md',
+        'px-0.5',
+        'hover:bg-black-200',
+        'hover:text-black-500',
+      ],
       primary: [
         'text-primary-400',
         'mr-0',

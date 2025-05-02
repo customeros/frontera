@@ -1,5 +1,6 @@
 import path from 'path';
 import fg from 'fast-glob';
+import { resolve } from 'path';
 import { cpus } from 'node:os';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vite';
@@ -10,6 +11,10 @@ export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: mode === 'production',
     rollupOptions: {
+      input: {
+        index: resolve(__dirname, 'index.html'),
+        book: resolve(__dirname, 'book.html'),
+      },
       maxParallelFileOps: Math.max(1, cpus().length - 1),
       output: {
         manualChunks: (id) => {
