@@ -97,7 +97,7 @@ export const AddLinkedInToContactModal = observer(
             </div>
             {linkedInUseCase.emptyLinkedInUrl && (
               <p className='text-error-500 text-[12px] mt-0'>
-                Huston we have a blank...
+                Houston we have a blank...
               </p>
             )}
             {linkedInUseCase.invalidLinkedInUrl &&

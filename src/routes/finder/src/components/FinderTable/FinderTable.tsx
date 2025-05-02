@@ -396,7 +396,7 @@ export const FinderTable = observer(() => {
     .with(TableViewType.Contacts, () => true)
     .with(TableViewType.Invoices, () => false)
     .with(TableViewType.Opportunities, () => true)
-    .with(TableViewType.Flow, () => true)
+    .with(TableViewType.Flow, () => false)
     .with(TableViewType.Tasks, () => true)
     .otherwise(() => false);
 

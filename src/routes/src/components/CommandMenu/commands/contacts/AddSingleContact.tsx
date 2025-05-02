@@ -168,7 +168,7 @@ export const AddSingleContact = observer(() => {
             'Every hero needs a name'}
 
           {usecase.type !== 'name' && usecase.currentError.isEmpty
-            ? 'Huston we have a blank...'
+            ? 'Houston we have a blank...'
             : usecase.currentError.message
             ? usecase.currentError.message
             : usecase.currentError.isInvalid
