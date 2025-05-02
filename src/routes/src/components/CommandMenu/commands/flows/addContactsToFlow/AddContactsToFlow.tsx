@@ -199,7 +199,7 @@ export const AddContactsToFlow = observer(() => {
                 </p>
               )}
               {showEmptyError && !data.trim().length && (
-                <p>Huston, we have a blank...</p>
+                <p>Houston, we have a blank...</p>
               )}
               {loadingError && (
                 <p>

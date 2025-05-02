@@ -185,7 +185,7 @@ export const AddContactsBulk = observer(() => {
             </p>
           )}
           {showEmptyError && !data.trim().length && (
-            <p>Huston, we have a blank...</p>
+            <p>Houston, we have a blank...</p>
           )}
           {loadingError && (
             <p>We're having trouble adding contacts. Try again in a moment.</p>

@@ -139,7 +139,7 @@ export class DetectSupportWebVistUsecase {
     if (this.pageToTrack.length === 0) {
       console.error('DetectSupportWebVistUsecase.validate: No pages to track');
 
-      this.validationError = 'Huston we have a blank';
+      this.validationError = 'Houston we have a blank';
 
       return false;
     }
