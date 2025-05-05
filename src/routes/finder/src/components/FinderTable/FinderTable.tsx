@@ -38,6 +38,7 @@ import { EmptyState } from '../EmptyState/EmptyState';
 import { computeFinderData } from './computeFinderData';
 import { TaskTableActions } from '../Actions/TaskActions';
 import { computeFinderColumns } from './computeFinderColumns';
+import { FlowSequencesTableActions } from '../Actions/FlowsActions';
 import { ContactTableActions, OrganizationTableActions } from '../Actions';
 
 export const FinderTable = observer(() => {
@@ -514,6 +515,16 @@ export const FinderTable = observer(() => {
                   !isEditing &&
                   !isCommandMenuPrompted
                 }
+              />
+            );
+          }
+
+          if (tableType === TableViewType.Flow) {
+            return (
+              <FlowSequencesTableActions
+                table={table}
+                selection={selectedIds}
+                focusedId={focusRow !== null ? data?.[focusRow]?.id : null}
               />
             );
           }
