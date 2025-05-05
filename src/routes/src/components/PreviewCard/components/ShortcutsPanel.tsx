@@ -59,7 +59,7 @@ export const ShortcutsPanel = observer(() => {
   });
 
   return (
-    <div className='mb-20'>
+    <div className='mb-20' id='shortcuts-panel'>
       <div className='sticky top-0 bg-white mb-2'>
         <div className='flex items-center justify-between pt-4 px-4'>
           <p className='text-base font-medium'>Keyboard shortcuts</p>

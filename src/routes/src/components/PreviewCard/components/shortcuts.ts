@@ -57,6 +57,19 @@ export const data: ShortcutData = {
       ],
     },
     {
+      title: 'Company profile',
+      shortcuts: [
+        {
+          label: 'Previous company',
+          keyIcon: 'arrow-block-up',
+        },
+        {
+          label: 'Next company',
+          keyIcon: 'arrow-block-down',
+        },
+      ],
+    },
+    {
       title: 'Navigation',
       shortcuts: [
         {
