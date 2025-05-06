@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { SelectOption } from '@/ui/utils/types';
 
+import { cn } from '@ui/utils/cn';
 import { unwrap } from '@utils/unwrap';
 import {
   BookingForm,
@@ -45,9 +46,9 @@ export const BookingPage = () => {
   const [isBookingConfirmationLoading, setIsBookingConfirmationLoading] =
     useState(false);
 
-  const calendarId = new URLSearchParams(window.location.search).get(
-    'calendarId',
-  );
+  const searchParams = new URLSearchParams(window.location.search);
+  const calendarId = searchParams.get('calendarId');
+  const isEmbedded = (searchParams.get('mode') ?? 'page') === 'embedded';
 
   const getTimezones = async (): Promise<{
     timezones: SelectOption[];
@@ -213,7 +214,7 @@ export const BookingPage = () => {
   }, [bookingInput]);
 
   return (
-    <div className='bg-grayModern-50 h-screen'>
+    <div className={cn(!isEmbedded && 'bg-grayModern-50 h-screen')}>
       <BookingForm
         timezone={timezone}
         timezones={timezones}
