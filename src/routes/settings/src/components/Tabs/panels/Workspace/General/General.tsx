@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { cn } from '@ui/utils/cn';
 import { X } from '@ui/media/icons/X';
 import { Input } from '@ui/form/Input';
-import { Image } from '@ui/media/Image/Image';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
 import { toastError } from '@ui/presentation/Toast';
@@ -13,13 +12,9 @@ import { outlineButton } from '@ui/form/Button/Button.variants';
 import { FileDropUploader, FileUploadTrigger } from '@ui/form/FileUploader';
 
 type UploadResponse = {
-  id: string;
-  size: number;
-  cdnUrl: string;
-  fileName: string;
-  mimeType: string;
-  previewUrl: string;
-  downloadUrl: string;
+  status: string;
+  requestId: string;
+  publicUrl: string;
 };
 
 export const General = () => {
@@ -48,10 +43,10 @@ export const General = () => {
   };
 
   const handleTenantLogoUpdate = (_refId: number, res: unknown) => {
-    const { id } = res as UploadResponse;
+    const { publicUrl } = res as UploadResponse;
 
     store.settings.tenant.update((value) => {
-      value.workspaceLogo = id;
+      value.workspaceLogoUrl = publicUrl;
 
       return value;
     });
@@ -60,7 +55,7 @@ export const General = () => {
 
   const handleTenantLogoRemove = () => {
     store.settings.tenant.update((value) => {
-      value.workspaceLogo = '';
+      value.workspaceLogoUrl = '';
 
       return value;
     });
@@ -80,7 +75,7 @@ export const General = () => {
   return (
     <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full'>
       <div className='flex flex-col gap-4'>
-        <p className='text-grayModern-700  font-semibold'>General</p>
+        <p className='text-grayModern-700 font-semibold'>General</p>
         <div className='flex flex-col'>
           <div className='flex justify-between items-center'>
             <p className='text-sm text-grayModern-900 w-fit whitespace-nowrap font-medium'>
@@ -90,10 +85,10 @@ export const General = () => {
 
           <FileDropUploader
             onChange={setFile}
-            apiBaseUrl='/files'
             onError={handleError}
             onLoadStart={handelLoad}
             onLoadEnd={handleLoadEnd}
+            apiBaseUrl='/workspace-logo'
             onDragOverChange={setIsDragging}
             onSuccess={handleTenantLogoUpdate}
             endpointOptions={{
@@ -109,7 +104,7 @@ export const General = () => {
               </div>
             ) : (
               <div className='flex flex-col items-start gap-4 justify-between min-h-5 pt-2'>
-                {!store.settings.tenant.value?.workspaceLogo && !file && (
+                {!store.settings.tenant.value?.workspaceLogoUrl && !file && (
                   <Tooltip
                     hasArrow
                     align='start'
@@ -118,11 +113,11 @@ export const General = () => {
                   >
                     <FileUploadTrigger
                       onChange={setFile}
-                      apiBaseUrl='/files'
                       name='logoUploader'
                       onError={handleError}
                       onLoadStart={handelLoad}
                       onLoadEnd={handleLoadEnd}
+                      apiBaseUrl='/workspace-logo'
                       onSuccess={handleTenantLogoUpdate}
                       endpointOptions={{
                         fileKeyName: 'file',
@@ -139,11 +134,11 @@ export const General = () => {
                   </Tooltip>
                 )}
 
-                {store.settings.tenant.value?.workspaceLogo && !file && (
+                {store.settings.tenant.value?.workspaceLogoUrl && !file && (
                   <div className='relative max-h-16 w-fit group'>
-                    <Image
+                    <img
                       className='h-10 rounded-md'
-                      src={store.settings.tenant.value?.workspaceLogo}
+                      src={store.settings.tenant.value?.workspaceLogoUrl}
                     />
                     <IconButton
                       size='xxs'
@@ -156,8 +151,8 @@ export const General = () => {
                   </div>
                 )}
 
-                {!store.settings.tenant.value?.workspaceLogo && file && (
-                  <Image
+                {!store.settings.tenant.value?.workspaceLogoUrl && file && (
+                  <img
                     src={`${URL.createObjectURL(file)}`}
                     className='max-h-16 animate-pulseOpacity rounded-md'
                   />

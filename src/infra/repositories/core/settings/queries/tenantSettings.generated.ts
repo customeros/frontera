@@ -13,6 +13,7 @@ export type TenantSettingsQuery = {
     baseCurrency?: Types.Currency | null;
     workspaceName?: string | null;
     workspaceLogo?: string | null;
+    workspaceLogoUrl?: string | null;
     billingEnabled: boolean;
     opportunityStages: Array<{
       __typename?: 'TenantSettingsOpportunityStageConfiguration';

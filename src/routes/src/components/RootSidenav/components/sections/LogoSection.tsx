@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 
 import { Icon } from '@ui/media/Icon';
-import { Image } from '@ui/media/Image/Image';
 import { Spinner } from '@ui/feedback/Spinner';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
@@ -15,15 +14,14 @@ export const LogoSection = observer(() => {
   return (
     <div className='flex justify-between'>
       <div className='py-2 pr-3 pl-[18px] flex items-center gap-1.5'>
-        <Image
+        <img
           width={20}
           height={20}
           alt='CustomerOS'
-          fallbackSrc={logoCustomerOs}
           className='logo-image rounded'
-          src={store.settings.tenant.value?.workspaceLogo}
+          src={store.settings.tenant.value?.workspaceLogoUrl || logoCustomerOs}
         />
-        <span className='font-semibold  text-start w-[fit-content] overflow-hidden text-ellipsis whitespace-nowrap'>
+        <span className='font-semibold text-start w-[fit-content] overflow-hidden text-ellipsis whitespace-nowrap'>
           {store.settings.tenant.value?.workspaceName || 'CustomerOS'}
         </span>
 
