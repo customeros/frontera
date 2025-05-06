@@ -144,7 +144,7 @@ export const BookingForm = ({
     window.addEventListener('message', handleMessage);
 
     return () => window.removeEventListener('message', handleMessage);
-  });
+  }, []);
 
   return (
     <div className='animate-fadeIn overflow-x-hidden'>
@@ -287,7 +287,7 @@ export const BookingForm = ({
         >
           <div
             className={cn(
-              'transition-all duration-300 border-grayModern-200 overflow-hidden sal',
+              'transition-all duration-300 border-grayModern-200 overflow-hidden',
               breakpoint !== 'sm' ? 'border-l' : 'border-t',
               step < 2
                 ? 'max-w-[352px] min-w-[352px] w-full opacity-100 scale-100'
