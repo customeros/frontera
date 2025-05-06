@@ -5,6 +5,7 @@ query TenantSettings {
     baseCurrency
     workspaceName
     workspaceLogo
+    workspaceLogoUrl
     billingEnabled
     opportunityStages {
       id
