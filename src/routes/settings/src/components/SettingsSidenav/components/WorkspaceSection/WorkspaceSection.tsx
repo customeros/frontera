@@ -30,11 +30,11 @@ export const WorkspaceSection = ({
           isActive={checkIsActive('members')}
           onClick={handleItemClick('members')}
         />
-        {/* <SidenavItem
+        <SidenavItem
           label='Team scheduling'
           isActive={checkIsActive('team-scheduling')}
           onClick={handleItemClick('team-scheduling')}
-        /> */}
+        />
         <SidenavItem
           label='Tags'
           isActive={checkIsActive('tags')}
