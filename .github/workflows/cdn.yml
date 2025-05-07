@@ -1,0 +1,20 @@
+name: Upload script to CDN
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - ./public/scripts/**
+
+jobs:
+  upload-to-cdn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Script to Bunny Edge Scripting
+        uses: BunnyWay/actions/deploy-script@main
+        with:
+          script_id: ${{ secrets.BOOKING_SCRIPT_CDN_ID }}
+          deploy_key: ${{ secrets.CDN_DEPLOY_KEY }}
+          file: './public/scripts/booking-0.js'
