@@ -5,9 +5,6 @@ window.bookingForm = (target, calendarId) => {
 
   if (!container) throw Error('missing container for booking form');
 
-  container.style.width = '577px';
-  container.style.height = '400px';
-
   const iframe = document.createElement('iframe');
 
   iframe.id = 'booking-iframe';
