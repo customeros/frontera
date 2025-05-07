@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 import { Logo } from '@/ui/media/Logo';
 import { format } from 'date-fns/format';
@@ -12,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/overlay/Popover';
 
 import { cn } from '@ui/utils/cn';
 import { Input } from '@ui/form/Input';
+import { getMenuListClassNames } from '@ui/form/Select';
 import {
   CalendarAvailabilityResponse,
   CalendarAvailabilityDetailsResponse,
@@ -21,6 +22,7 @@ export type BookingInput = {
   name: string;
   email: string;
   phone?: string;
+  eventId?: string;
   startTime: string;
   isCanceling?: boolean;
   isRescheduling?: boolean;
@@ -28,6 +30,7 @@ export type BookingInput = {
 
 export type BookingResponse = {
   endTime: string;
+  eventId: string;
   hostName: string;
   startTime: string;
   hostEmail: string;
@@ -75,6 +78,10 @@ export const BookingForm = ({
   bookingFormPhoneRequired,
   isBookingConfirmationLoading,
 }: BookingFormProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [breakpoint, setBreakpoint] = useState<TailwindBreakpoint>(() => {
+    return 'md';
+  });
   const [step, setStep] = useState(0);
   const [isCanceling, setIsCanceling] = useState(false);
   const [isRescheduling, setIsRescheduling] = useState(false);
@@ -121,28 +128,39 @@ export const BookingForm = ({
     }
   }, [bookingConfirmation]);
 
+  useResizePostMessage(containerRef, [breakpoint, step]);
+
+  useEffect(() => {
+    window.parent.postMessage({ type: 'MOUNTED' }, '*');
+
+    function handleMessage(event: MessageEvent) {
+      if (event.data?.type === 'PARENT_BREAKPOINT') {
+        const bp = event.data.breakpoint as TailwindBreakpoint;
+
+        setBreakpoint(bp);
+      }
+    }
+
+    window.addEventListener('message', handleMessage);
+
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   return (
-    <div className='flex flex-col items-center w-full justify-center pt-8 sm:pt-[15%] animate-fadeIn overflow-y-auto'>
+    <div className='animate-fadeIn overflow-x-hidden'>
       <div
+        ref={containerRef}
         className={cn(
-          'grid border border-r-grayModern-200 rounded-xl shadow-xs bg-white transition-all duration-500 overflow-hidden',
-          step === 0 &&
-            'grid-cols-1 grid-rows-[260px_1fr] md:grid-cols-2 md:grid-rows-1',
-          step === 1 &&
-            'grid-cols-1 grid-rows-[260px_1fr_1fr] sm:grid-cols-1 sm:grid-rows-[260px_1fr] md:grid-cols-3 md:grid-rows-1',
-          step === 2 &&
-            'grid-cols-1 grid-rows-[260px_1fr] sm:grid-rows-[260px_1fr] sm:grid-cols-2 md:grid-rows-1 md:grid-cols-2',
-          step === 3 && '',
+          'flex w-fit min-h-[354px] flex-col border border-grayModern-200 rounded-xl shadow-xs bg-white transition-all duration-500 overflow-hidden',
+          breakpoint !== 'sm' && 'flex-row',
         )}
       >
         <div
           className={cn(
-            'h-full col-span-3 row-span-1 row-start-1 flex flex-col gap-3 transition-all duration-300 overflow-hidden',
-            step === 1 && 'col-start-1',
-            step === 2 && 'col-start-3 sm:col-start-5 md:col-start-1',
+            'flex-shrink-0 flex flex-col gap-3 transition-all duration-300 overflow-hidden',
             step < 3
-              ? 'min-w-[225px] w-[225px] py-7 px-4 opacity-100 scale-100'
-              : 'min-w-0 w-0 opacity-0 scale-95',
+              ? 'max-w-[352px] min-w-[225px] py-7 px-4 opacity-100 scale-100'
+              : 'max-w-0 min-w-0 h-0 opacity-0 scale-95 py-0 px-0',
           )}
         >
           <div className='flex gap-3 items-center animate-fadeIn'>
@@ -218,6 +236,7 @@ export const BookingForm = ({
               <div
                 className={cn(
                   'flex items-center gap-2 cursor-pointer text-grayModern-700 transition-colors animate-fadeIn',
+                  step > 0 && 'pointer-events-none opacity-75',
                   !areTimezonesOpen
                     ? 'hover:text-grayModern-900'
                     : 'text-grayModern-900',
@@ -247,29 +266,39 @@ export const BookingForm = ({
                   onTimezoneChange(value);
                   setOpenTimezones(false);
                 }}
+                classNames={{
+                  menuList: () =>
+                    getMenuListClassNames(
+                      cn(
+                        'p-0 border-none bg-transparent shadow-none scrollbar max-h-[150px]',
+                      ),
+                    ),
+                }}
               />
             </PopoverContent>
           </Popover>
         </div>
 
-        <>
+        <div
+          className={cn(
+            'flex flex-col flex-1 transition-all duration-300',
+            breakpoint !== 'sm' && 'flex-row',
+          )}
+        >
           <div
             className={cn(
-              'h-[352px] transition-all duration-300 overflow-hidden col-span-2 row-start-2 md:row-start-1 border-t sm:border-t sm:border-r-0 md:border-t-0 md:border-l md:border-r-0 border-grayModern-200',
-              step === 1 && 'md:border-r',
-              step === 0 && 'sm:row-start-0 md:rounded-tr-xl rounded-br-xl',
-              step > 2 && 'row-start-1',
-              step === 2 && 'row-start-1 sm:row-start-2 sm:h-0',
+              'transition-all duration-300 border-grayModern-200 overflow-hidden',
+              breakpoint !== 'sm' ? 'border-l' : 'border-t',
               step < 2
-                ? 'w-[350px] opacity-100 scale-100'
-                : 'w-0 opacity-0 scale-95 border-none pointer-events-none',
+                ? 'max-w-[352px] min-w-[352px] w-full opacity-100 scale-100'
+                : 'max-w-0 min-w-0 h-0 opacity-0 scale-95 pointer-events-none',
             )}
           >
             <DatePicker
               view='month'
               minDetail='month'
               minDate={new Date()}
-              className='min-w-[352px]'
+              className='min-w-[352px] !w-full'
               onClickDay={(v) => {
                 setStep(1);
                 setSelectedDay((v as unknown as Date).getDate());
@@ -288,25 +317,22 @@ export const BookingForm = ({
               }}
               tileClassName={({ date }) => {
                 if (isAvailabilityLoading) return 'loading';
-
                 const foundIndex = days.findIndex(
                   (d) => new Date(d.date).getDate() === date.getDate(),
                 );
 
-                if (foundIndex > -1) {
-                  return 'available';
-                }
+                if (foundIndex > -1) return 'available';
               }}
             />
           </div>
 
           <div
             className={cn(
-              'pb-7 flex flex-col col-span-3 row-start-3 sm:row-start-2 md:row-start-1 border-t md:border-none border-grayModern-200 transition-all duration-300 overflow-hidden',
-              step >= 2 && 'row-start-2 sm:h-0',
+              'w-full bg-white flex flex-col border-grayModern-200 transition-all duration-300 overflow-hidden',
+              breakpoint !== 'sm' ? 'border-l' : 'border-t',
               step === 1
-                ? 'w-[352px] h-[352px] pb-7 md:w-[225px] opacity-100 scale-100'
-                : 'w-0 h-0 p-0 opacity-0 scale-95 border-none pointer-events-none',
+                ? 'h-[352px] min-w-[225px] max-w-[352px] pb-7 opacity-100 scale-100'
+                : 'h-0 min-w-0 max-w-0 opacity-0 pb-0 scale-95 pointer-events-none',
             )}
           >
             {selectedDayStr && (
@@ -315,334 +341,332 @@ export const BookingForm = ({
               </p>
             )}
             <div className='px-4 flex flex-col overflow-y-auto gap-2 scrollbar'>
-              {selectedDaySlot?.timeSlots.map((time) => {
-                return (
-                  <Button
-                    size='xs'
-                    key={time.startTime}
-                    className='animate-fadeIn'
-                    onClick={() => {
-                      setSelectedTimeSlot(time.startTime);
-                      setStep(2);
-                    }}
-                  >
-                    {(time.startTime as string).substring(11, 16)}
-                  </Button>
-                );
-              })}
+              {selectedDaySlot?.timeSlots.map((time) => (
+                <Button
+                  size='xs'
+                  key={time.startTime}
+                  className='animate-fadeIn'
+                  onClick={() => {
+                    setSelectedTimeSlot(time.startTime);
+                    setStep(2);
+                  }}
+                >
+                  {(time.startTime as string).substring(11, 16)}
+                </Button>
+              ))}
             </div>
           </div>
-        </>
 
-        <form
-          className={cn(
-            'flex flex-col gap-3 h-[352px] pt-6 pb-4 row-start-2 col-span-2 md:row-start-1 border-grayModern-200 border-t md:border-t-0 md:border-l transition-all duration-300 overflow-hidden',
-            step > 2 && 'row-start-1',
-            step === 2
-              ? 'w-[326px] px-4 pt-6 opacity-100 scale-100'
-              : 'w-0 opacity-0 px-0 scale-95 border-none pointer-events-none',
-          )}
-          onSubmit={(e) => {
-            e.preventDefault();
+          <form
+            className={cn(
+              'flex flex-col gap-3 pt-6 pb-4 border-grayModern-200 transition-all duration-300 overflow-hidden',
+              breakpoint !== 'sm' ? 'border-l' : 'border-t',
+              step === 2
+                ? 'w-full min-w-[352px] max-w-[352px] pt-6 pb-4 px-4 opacity-100 scale-100'
+                : 'w-0 min-w-0 max-w-0 h-0 opacity-0 pt-0 pb-0 px-0 scale-95 pointer-events-none',
+            )}
+            onSubmit={(e) => {
+              e.preventDefault();
 
-            const form = new FormData(e.currentTarget as HTMLFormElement);
+              const form = new FormData(e.currentTarget as HTMLFormElement);
+              let hasErrors = false;
 
-            let hasErrors = false;
+              for (const [k, v] of form.entries()) {
+                if (!(v as string).length) {
+                  if (!bookingFormPhoneRequired && k === 'phone') continue;
+                  hasErrors = true;
+                  setErrors((prev) => ({
+                    ...prev,
+                    [k]: 'This field is required',
+                  }));
+                } else {
+                  setErrors((prev) => {
+                    const next = { ...prev };
 
-            for (const [k, v] of form.entries()) {
-              if (!(v as string).length) {
-                if (!bookingFormPhoneRequired && k === 'phone') {
-                  continue;
+                    delete next[k];
+
+                    return next;
+                  });
                 }
-                hasErrors = true;
-                setErrors((prev) => ({
-                  ...prev,
-                  [k]: 'This field is required',
-                }));
-              } else {
-                setErrors((prev) => {
-                  const next = { ...prev };
-
-                  delete next[k];
-
-                  return next;
-                });
               }
-            }
 
-            if (hasErrors) return;
+              if (hasErrors) return;
+              const bookingInput: BookingInput = {
+                name: form.get('name') as string,
+                email: form.get('email') as string,
+                phone: (form.get('phone') as string) || undefined,
+                startTime: selectedTimeSlot!,
+              };
 
-            const bookingInput: BookingInput = {
-              name: form.get('name') as string,
-              email: form.get('email') as string,
-              phone: (form.get('phone') as string) || undefined,
-              startTime: selectedTimeSlot!,
-            };
+              setParticipantsDetails({
+                name: bookingInput.name,
+                email: bookingInput.email,
+              });
 
-            setParticipantsDetails({
-              name: bookingInput.name,
-              email: bookingInput.email,
-            });
-
-            if (isRescheduling) {
-              onReschedule({ ...bookingInput, isRescheduling: true });
-            } else {
-              onMakeBooking(bookingInput);
-            }
-          }}
-        >
-          {bookingFormNameEnabled && (
-            <div className='flex flex-col gap-1'>
-              <label className='text-sm font-medium after:content-["*"] after:ml-1 text-nowrap'>
-                Your name
-              </label>
-              <Input
-                size='sm'
-                name='name'
-                variant='outline'
-                invalid={!!errors['name']}
-                placeholder='First and last name'
-              />
-              {errors['name'] && (
-                <span className='text-xs text-error-500 text-nowrap'>
-                  {errors['name']}
-                </span>
-              )}
-            </div>
-          )}
-          {bookingFormEmailEnabled && (
-            <div className='flex flex-col gap-1'>
-              <label className='text-sm font-medium after:content-["*"] after:ml-1 text-nowrap'>
-                Email
-              </label>
-              <Input
-                size='sm'
-                name='email'
-                variant='outline'
-                invalid={!!errors['email']}
-                placeholder='Email address'
-              />
-              {errors['email'] && (
-                <span className='text-xs text-error-500 text-nowrap'>
-                  {errors['email']}
-                </span>
-              )}
-            </div>
-          )}
-          {bookingFormPhoneEnabled && (
-            <div className='flex flex-col gap-1'>
-              <label
-                className={cn(
-                  'text-sm font-medium text-nowrap',
-                  bookingFormPhoneRequired && 'after:content-["*"] after:ml-1',
+              if (isRescheduling) {
+                onReschedule({
+                  ...bookingInput,
+                  isRescheduling: true,
+                  eventId: bookingConfirmation?.eventId,
+                });
+              } else {
+                onMakeBooking(bookingInput);
+              }
+            }}
+          >
+            {bookingFormNameEnabled && (
+              <div className='flex flex-col gap-1'>
+                <label className='text-sm font-medium after:content-["*"] after:ml-1 text-nowrap'>
+                  Your name
+                </label>
+                <Input
+                  size='sm'
+                  name='name'
+                  variant='outline'
+                  invalid={!!errors['name']}
+                  placeholder='First and last name'
+                />
+                {errors['name'] && (
+                  <span className='text-xs text-error-500 text-nowrap'>
+                    {errors['name']}
+                  </span>
                 )}
-              >
-                Phone number
-              </label>
-              <Input
-                size='sm'
-                name='phone'
-                type='number'
-                variant='outline'
-                placeholder='Phone number'
-                invalid={!!errors['phone']}
-              />
-              {errors['phone'] && (
-                <span className='text-xs text-error-500 text-nowrap'>
-                  {errors['phone']}
-                </span>
-              )}
-            </div>
-          )}
-
-          <div className='w-full flex gap-3 justify-end mt-7 flex-1 items-end'>
-            <Button
-              size='xs'
-              type='button'
-              variant='ghost'
-              isLoading={isBookingConfirmationLoading}
-              onClick={() => {
-                setErrors({});
-                setStep(1);
-                setSelectedTimeSlot(null);
-                setParticipantsDetails(null);
-              }}
-            >
-              Back
-            </Button>
-            <Button
-              size='xs'
-              type='submit'
-              variant='solid'
-              colorScheme='black'
-              className='text-white'
-              isLoading={isBookingConfirmationLoading}
-            >
-              {isBookingConfirmationLoading
-                ? isRescheduling
-                  ? 'Rescheduling...'
-                  : 'Booking...'
-                : isRescheduling
-                ? 'Reschedule'
-                : 'Book meeting'}
-            </Button>
-          </div>
-        </form>
-
-        <div
-          className={cn(
-            'flex flex-col animate-fadeIn gap-3 row-start-1 row-span-1 transition-all duration-300 overflow-hidden',
-            bookingConfirmation && step === 3
-              ? 'w-[450px] h-full max-h-[400px] p-5 opacity-100 scale-100'
-              : 'w-0 opacity-0 max-h-[0px] p-0 scale-95 pointer-events-none',
-          )}
-        >
-          <div className='w-full flex justify-center py-4'>
-            <FeaturedIcon size='lg' colorScheme='grayModern'>
-              <Icon
-                name={
-                  isCanceling
-                    ? 'x-circle'
-                    : bookingConfirmation?.status === 'rescheduled'
-                    ? 'clock-fast-forward'
-                    : bookingConfirmation?.status === 'already_exists'
-                    ? 'info-circle'
-                    : 'check-circle'
-                }
-              />
-            </FeaturedIcon>
-          </div>
-
-          <p className='text-lg font-medium text-center'>
-            {isCanceling
-              ? bookingConfirmation?.status === 'cancelled'
-                ? 'Booking cancelled'
-                : 'Cancel this booking'
-              : bookingConfirmation?.status === 'rescheduled'
-              ? 'Booking rescheduled'
-              : bookingConfirmation?.status === 'already_exists'
-              ? 'Booking found'
-              : 'Booking confirmed'}
-          </p>
-          {!isCanceling && (
-            <p className='text-sm text-center'>
-              {'We sent a confirmation email to everyone'}
-            </p>
-          )}
-
-          {isCanceling && bookingConfirmation?.status === 'cancelled' && (
-            <p className='text-sm text-center'>
-              {'We sent a cancellation email to everyone'}
-            </p>
-          )}
-
-          <div className='flex flex-col gap-2 w-full'>
-            <div className='flex w-full justify-between'>
-              <p className='text-sm font-medium flex-1'>When</p>
-              <div className='flex flex-col flex-2 text-sm'>
-                <p>{selectedDayStr}</p>
-                <p>{selectedTimeRange.join(' - ')}</p>
               </div>
-            </div>
-          </div>
-
-          <div className='flex flex-col gap-2 w-full'>
-            <div className='flex w-full justify-between'>
-              <p className='text-sm font-medium flex-1'>Who</p>
-              <div className='flex flex-col gap-2 flex-2'>
-                <div className='flex flex-col text-sm'>
-                  <p className='font-medium'>
-                    {bookingConfirmation?.hostName}{' '}
-                    <span className='bg-grayModern-100 ml-1 p-0.5 rounded-md font-normal'>
-                      Host
-                    </span>
-                  </p>
-                  <p>{bookingConfirmation?.hostEmail}</p>
-                </div>
-
-                <div className='flex flex-col text-sm'>
-                  <p className='font-medium'>{participantDetails?.name}</p>
-                  <p>{participantDetails?.email}</p>
-                </div>
+            )}
+            {bookingFormEmailEnabled && (
+              <div className='flex flex-col gap-1'>
+                <label className='text-sm font-medium after:content-["*"] after:ml-1 text-nowrap'>
+                  Email
+                </label>
+                <Input
+                  size='sm'
+                  name='email'
+                  variant='outline'
+                  invalid={!!errors['email']}
+                  placeholder='Email address'
+                />
+                {errors['email'] && (
+                  <span className='text-xs text-error-500 text-nowrap'>
+                    {errors['email']}
+                  </span>
+                )}
               </div>
-            </div>
-          </div>
-
-          <div className='flex flex-col gap-2 w-full'>
-            <div className='flex w-full justify-between'>
-              <p className='text-sm font-medium flex-1'>Where</p>
-              <div className='flex flex-col flex-2 text-sm'>
-                <p>{location}</p>
-              </div>
-            </div>
-          </div>
-
-          {!isCanceling ? (
-            <div className='w-full flex flex-col items-center pt-3 justify-end'>
-              <div className='border-t border-grayModern-200 w-full mb-3' />
-              <p className='text-sm'>
-                Need to change something?{' '}
-                <span
-                  className='underline cursor-pointer'
-                  onClick={() => {
-                    setStep(0);
-                    setIsRescheduling(true);
-                    setSelectedTimeSlot(null);
-                    setSelectedDay(null);
-                    setParticipantsDetails(null);
-                  }}
+            )}
+            {bookingFormPhoneEnabled && (
+              <div className='flex flex-col gap-1'>
+                <label
+                  className={cn(
+                    'text-sm font-medium text-nowrap',
+                    bookingFormPhoneRequired &&
+                      'after:content-["*"] after:ml-1',
+                  )}
                 >
-                  Reschedule
-                </span>{' '}
-                or{' '}
-                <span
-                  className='underline cursor-pointer'
-                  onClick={() => {
-                    setIsCanceling(true);
-                  }}
-                >
-                  Cancel
-                </span>
-              </p>
-            </div>
-          ) : bookingConfirmation?.status !== 'cancelled' ? (
-            <div className='flex justify-end w-full gap-3 h-full items-end'>
+                  Phone number
+                </label>
+                <Input
+                  size='sm'
+                  name='phone'
+                  type='number'
+                  variant='outline'
+                  placeholder='Phone number'
+                  invalid={!!errors['phone']}
+                />
+                {errors['phone'] && (
+                  <span className='text-xs text-error-500 text-nowrap'>
+                    {errors['phone']}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <div className='w-full flex gap-3 justify-end mt-7 flex-1 items-end'>
               <Button
                 size='xs'
+                type='button'
                 variant='ghost'
-                onClick={() => setIsCanceling(false)}
-                isDisabled={isBookingConfirmationLoading}
+                isLoading={isBookingConfirmationLoading}
+                onClick={() => {
+                  setErrors({});
+                  setStep(1);
+                  setSelectedTimeSlot(null);
+                  setParticipantsDetails(null);
+                }}
               >
-                Nevermind
+                Back
               </Button>
               <Button
                 size='xs'
+                type='submit'
                 variant='solid'
                 colorScheme='black'
-                isDisabled={isBookingConfirmationLoading}
-                onClick={() =>
-                  onCancel({
-                    ...participantDetails!,
-                    startTime: selectedTimeSlot!,
-                    isCanceling: true,
-                  })
-                }
+                className='text-white'
+                isLoading={isBookingConfirmationLoading}
               >
                 {isBookingConfirmationLoading
-                  ? 'Canceling...'
-                  : 'Cancel booking'}
+                  ? isRescheduling
+                    ? 'Rescheduling...'
+                    : 'Booking...'
+                  : isRescheduling
+                  ? 'Reschedule'
+                  : 'Book meeting'}
               </Button>
             </div>
-          ) : null}
+          </form>
+
+          <div
+            className={cn(
+              'flex flex-col animate-fadeIn gap-3 transition-all duration-300 overflow-hidden',
+              bookingConfirmation && step === 3
+                ? 'w-[450px] max-h-[400px] p-5 opacity-100 scale-100'
+                : 'w-0 max-h-0 p-0 opacity-0 scale-95 pointer-events-none',
+            )}
+          >
+            <div className='w-full flex justify-center py-4'>
+              <FeaturedIcon size='lg' colorScheme='grayModern'>
+                <Icon
+                  name={
+                    isCanceling
+                      ? 'x-circle'
+                      : bookingConfirmation?.status === 'rescheduled'
+                      ? 'clock-fast-forward'
+                      : bookingConfirmation?.status === 'already_exists'
+                      ? 'info-circle'
+                      : 'check-circle'
+                  }
+                />
+              </FeaturedIcon>
+            </div>
+
+            <p className='text-lg font-medium text-center'>
+              {isCanceling
+                ? bookingConfirmation?.status === 'cancelled'
+                  ? 'Booking cancelled'
+                  : 'Cancel this booking'
+                : bookingConfirmation?.status === 'rescheduled'
+                ? 'Booking rescheduled'
+                : bookingConfirmation?.status === 'already_exists'
+                ? 'Booking found'
+                : 'Booking confirmed'}
+            </p>
+            {!isCanceling && (
+              <p className='text-sm text-center'>
+                We sent a confirmation email to everyone
+              </p>
+            )}
+            {isCanceling && bookingConfirmation?.status === 'cancelled' && (
+              <p className='text-sm text-center'>
+                We sent a cancellation email to everyone
+              </p>
+            )}
+
+            <div className='flex flex-col gap-2 w-full'>
+              <div className='flex w-full justify-between'>
+                <p className='text-sm font-medium flex-1'>When</p>
+                <div className='flex flex-col flex-2 text-sm'>
+                  <p>{selectedDayStr}</p>
+                  <p>{selectedTimeRange.join(' - ')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-2 w-full'>
+              <div className='flex w-full justify-between'>
+                <p className='text-sm font-medium flex-1'>Who</p>
+                <div className='flex flex-col gap-2 flex-2'>
+                  <div className='flex flex-col text-sm'>
+                    <p className='font-medium'>
+                      {bookingConfirmation?.hostName}
+                      <span className='bg-grayModern-100 ml-1 p-0.5 rounded-md font-normal'>
+                        Host
+                      </span>
+                    </p>
+                    <p>{bookingConfirmation?.hostEmail}</p>
+                  </div>
+                  <div className='flex flex-col text-sm'>
+                    <p className='font-medium'>{participantDetails?.name}</p>
+                    <p>{participantDetails?.email}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-2 w-full'>
+              <div className='flex w-full justify-between'>
+                <p className='text-sm font-medium flex-1'>Where</p>
+                <div className='flex flex-col flex-2 text-sm'>
+                  <p>{location}</p>
+                </div>
+              </div>
+            </div>
+
+            {!isCanceling ? (
+              <div className='w-full flex flex-col items-center pt-3 justify-end'>
+                <div className='border-t border-grayModern-200 w-full mb-3' />
+                <p className='text-sm'>
+                  Need to change something?
+                  <span
+                    className='underline cursor-pointer ml-1'
+                    onClick={() => {
+                      setStep(0);
+                      setIsRescheduling(true);
+                      setSelectedTimeSlot(null);
+                      setSelectedDay(null);
+                      setParticipantsDetails(null);
+                    }}
+                  >
+                    Reschedule
+                  </span>{' '}
+                  or{' '}
+                  <span
+                    className='underline cursor-pointer'
+                    onClick={() => {
+                      setIsCanceling(true);
+                    }}
+                  >
+                    Cancel
+                  </span>
+                </p>
+              </div>
+            ) : bookingConfirmation?.status !== 'cancelled' ? (
+              <div className='flex justify-end w-full gap-3 h-full items-end'>
+                <Button
+                  size='xs'
+                  variant='ghost'
+                  onClick={() => setIsCanceling(false)}
+                  isDisabled={isBookingConfirmationLoading}
+                >
+                  Nevermind
+                </Button>
+                <Button
+                  size='xs'
+                  variant='solid'
+                  colorScheme='black'
+                  isDisabled={isBookingConfirmationLoading}
+                  onClick={() =>
+                    onCancel({
+                      ...participantDetails!,
+                      startTime: selectedTimeSlot!,
+                      isCanceling: true,
+                      eventId: bookingConfirmation?.eventId,
+                    })
+                  }
+                >
+                  {isBookingConfirmationLoading
+                    ? 'Canceling...'
+                    : 'Cancel booking'}
+                </Button>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 
       <a target='_blank' href='https://www.customeros.ai'>
         <img
           width='130'
-          className='mt-2'
           alt='customeros logo'
-          src={'/customeros.png'}
+          src='/customeros.png'
+          className='mt-2 mx-auto'
         />
       </a>
     </div>
@@ -654,3 +678,37 @@ const locationIconMap: Record<string, React.ReactElement> = {
   'Phone call': <Icon name='phone-call-01' className='text-grayModern-500' />,
   'Google Meet': <Logo name='google-meet' viewBox='0 0 24 20' />,
 };
+
+function useResizePostMessage(
+  ref: React.RefObject<HTMLElement>,
+  when: unknown[],
+) {
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const { width, height } = entry.contentRect;
+
+      window.parent.postMessage(
+        { type: 'RESIZE', width: width + 2, height: height + 56 },
+        '*',
+      );
+    });
+
+    observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [ref, ...when]);
+}
+
+export type TailwindBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+export function getTailwindBreakpoint(width: number): TailwindBreakpoint {
+  if (width >= 1536) return '2xl';
+  if (width >= 1280) return 'xl';
+  if (width >= 1024) return 'lg';
+  if (width >= 768) return 'md';
+
+  return 'sm';
+}

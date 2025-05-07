@@ -15,6 +15,7 @@ interface ComboboxProps extends Omit<SelectProps, 'size'> {
 export const Combobox = ({
   isReadOnly,
   maxHeight,
+  classNames,
   isSearchable = true,
   ...props
 }: ComboboxProps) => {
@@ -51,6 +52,7 @@ export const Combobox = ({
             'sm',
           ),
         noOptionsMessage: () => 'text-grayModern-500',
+        ...classNames,
       }}
       {...props}
       isSearchable={isSearchable}
