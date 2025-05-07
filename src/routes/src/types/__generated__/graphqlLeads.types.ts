@@ -20,12 +20,12 @@ export type Incremental<T> =
     };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
+  Time: { input: any; output: any };
   ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  Time: { input: any; output: any };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
 };
 
 export type Connection = {
@@ -35,9 +35,9 @@ export type Connection = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  archiveWebtracker: Scalars['Boolean']['output'];
   createWebtracker: Webtracker;
   updateWebtracker: Webtracker;
+  archiveWebtracker: Scalars['Boolean']['output'];
   verifyWebtrackerCname: Scalars['Boolean']['output'];
 };
 
@@ -59,9 +59,9 @@ export type MutationVerifyWebtrackerCnameArgs = {
 
 export type PageInfo = {
   __typename?: 'PageInfo';
-  endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
   hasPreviousPage: Scalars['Boolean']['output'];
+  endCursor?: Maybe<Scalars['String']['output']>;
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
@@ -82,20 +82,20 @@ export type QueryWebtrackerArgs = {
 
 export type Webtracker = {
   __typename?: 'Webtracker';
+  id: Scalars['String']['output'];
+  domain: Scalars['String']['output'];
+  createdAt: Scalars['Time']['output'];
   cnameHost: Scalars['String']['output'];
   cnameTarget: Scalars['String']['output'];
-  createdAt: Scalars['Time']['output'];
-  domain: Scalars['String']['output'];
-  id: Scalars['String']['output'];
   isArchived: Scalars['Boolean']['output'];
-  isCnameConfigured: Scalars['Boolean']['output'];
   isProxyActive: Scalars['Boolean']['output'];
-  lastEventAt?: Maybe<Scalars['Time']['output']>;
   updatedAt?: Maybe<Scalars['Time']['output']>;
+  lastEventAt?: Maybe<Scalars['Time']['output']>;
+  isCnameConfigured: Scalars['Boolean']['output'];
 };
 
 export type WebtrackerSaveInput = {
-  cnameHost?: InputMaybe<Scalars['String']['input']>;
   domain: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
+  cnameHost?: InputMaybe<Scalars['String']['input']>;
 };
