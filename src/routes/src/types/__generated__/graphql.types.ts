@@ -5663,14 +5663,14 @@ export type TenantSettings = {
   baseCurrency?: Maybe<Currency>;
   /** @deprecated No longer supported */
   billingEnabled: Scalars['Boolean']['output'];
+  /** @deprecated Use workspaceLogoUrl */
   logoRepositoryFileId?: Maybe<Scalars['String']['output']>;
-  /**
-   * Deprecated
-   * @deprecated Use logoRepositoryFileId
-   */
+  /** @deprecated Use logoRepositoryFileId */
   logoUrl: Scalars['String']['output'];
   opportunityStages: Array<TenantSettingsOpportunityStageConfiguration>;
+  /** @deprecated Use workspaceLogoUrl */
   workspaceLogo?: Maybe<Scalars['String']['output']>;
+  workspaceLogoUrl?: Maybe<Scalars['String']['output']>;
   workspaceName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -5679,7 +5679,6 @@ export type TenantSettingsInput = {
   billingEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   logoRepositoryFileId?: InputMaybe<Scalars['String']['input']>;
   logoUrl?: InputMaybe<Scalars['String']['input']>;
-  /** Deprecated */
   patch?: InputMaybe<Scalars['Boolean']['input']>;
   workspaceLogo?: InputMaybe<Scalars['String']['input']>;
   workspaceName?: InputMaybe<Scalars['String']['input']>;

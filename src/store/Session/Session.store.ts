@@ -25,6 +25,7 @@ type Session = {
   iat: number;
   tenant: string;
   campaign: string;
+  tenantApiKey: string;
   access_token: string;
   defaultTenant: string;
   refresh_token: string;
@@ -51,6 +52,7 @@ const defaultSession: Session = {
   exp: 0,
   iat: 0,
   tenant: '',
+  tenantApiKey: '',
   defaultTenant: '',
   campaign: '',
   access_token: '',
@@ -103,6 +105,13 @@ export class SessionStore {
           Authorization: `Bearer ${this.sessionToken}`,
           'X-Openline-TENANT': this.value.tenant ?? '',
           'X-Openline-USERNAME': this.value.profile.email ?? '',
+          'X-OPENLINE-API-KEY': this.tenantApiKey ?? '',
+        };
+
+        const leadsHeaders = {
+          Authorization: `Bearer ${this.sessionToken}`,
+          'X-OPENLINE-API-KEY': this.tenantApiKey ?? '',
+          'X-Openline-USERNAME': this.value.profile.email ?? '',
         };
 
         sessionStore.setTenant(this.value.tenant);
@@ -110,6 +119,7 @@ export class SessionStore {
         this.transport.setHeaders(headers);
         Transport.getInstance('mailstack').setHeaders(headers);
         Transport.getInstance('realtime').setHeaders(headers);
+        Transport.getInstance('leads').setHeaders(leadsHeaders);
 
         Persister.setTenant(this.value.tenant);
         this.persist();

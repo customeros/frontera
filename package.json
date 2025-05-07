@@ -19,6 +19,7 @@
     "codegen:mailstack": "graphql-codegen --require dotenv/config --config scripts/codegen-graphql-mailstack.ts",
     "codegen:realtime": "graphql-codegen --require dotenv/config --config scripts/codegen-graphql-realtime.ts",
     "codegen:gql": "npm run codegen:graphql && npm run codegen:gqlnew",
+    "codegen:leads": "graphql-codegen --require dotenv/config --config scripts/codegen-graphql-leads.ts",
     "test:e2e": "playwright test",
     "test:integration": "npx vitest --config vitest.config.integration.ts",
     "test:unit": "npx vitest --config vitest.config.unit.ts"

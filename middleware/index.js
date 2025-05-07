@@ -330,8 +330,21 @@ async function createServer() {
     followRedirects: true,
   });
 
-  app.use(customerOsApiGqlProxy);
+  const leadsApiProxy = createProxyMiddleware({
+    pathFilter: '/leads',
+    pathRewrite: { '^/leads': '' },
+    target: process.env.LEADS_API_PATH + '/query',
+    changeOrigin: true,
+    headers: {
+      'X-Openline-API-KEY': process.env.LEADS_API_KEY,
+    },
+    logger: console,
+    preserveHeaderKeyCase: true,
+    followRedirects: true,
+  });
+
   app.use(mailstackApiGqlProxy);
+  app.use(customerOsApiGqlProxy);
   app.use(customerOsApiRestProxy);
   app.use(customerOsApiRestProxyForTenant);
   app.use(internalApiProxy);
@@ -339,7 +352,7 @@ async function createServer() {
   app.use(basConfigProxy);
   app.use(realtimeApiProxy);
   app.use(invoiceProxy);
-
+  app.use(leadsApiProxy);
   //login button
   app.use('/google-auth', (req, res) => {
     const scopes = ['openid', 'email', 'profile'];
@@ -611,6 +624,7 @@ async function createServer() {
       const sessionToken = jwt.sign(
         {
           tenant: loginResponse.currentTenant,
+          tenantApiKey: loginResponse.apiKey,
           defaultTenant: loginResponse.defaultTenant,
           campaign,
           access_token,
