@@ -40,7 +40,7 @@ export const WebsiteTracker = observer(() => {
             size='xs'
             colorScheme='primary'
             leftIcon={<Icon name='plus' />}
-            onClick={() => usecase.toogleModal()}
+            onClick={() => usecase.toggleModal()}
           >
             Website
           </Button>

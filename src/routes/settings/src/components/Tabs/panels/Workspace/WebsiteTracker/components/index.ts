@@ -1,2 +1,2 @@
 export * from './DomainCard';
-export * from './EmtpyState';
+export * from './EmptyState';

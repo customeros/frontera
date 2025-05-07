@@ -9,13 +9,13 @@ export class AddWebsiteTrackerUseCase {
 
   constructor(webtrackStore: typeof webtrackConfigStore) {
     this.webtrackStore = webtrackStore;
-    this.toogleModal = this.toogleModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.setWebsite = this.setWebsite.bind(this);
     this.execute = this.execute.bind(this);
   }
 
   @action
-  public toogleModal = () => {
+  public toggleModal = () => {
     this.isModalOpen = !this.isModalOpen;
   };
 

@@ -45,7 +45,7 @@ export const EmptyState = observer(({ usecase }: EmptyStateProps) => {
           <Button
             className='mt-6'
             colorScheme='primary'
-            onClick={usecase.toogleModal}
+            onClick={usecase.toggleModal}
           >
             Get started
           </Button>
