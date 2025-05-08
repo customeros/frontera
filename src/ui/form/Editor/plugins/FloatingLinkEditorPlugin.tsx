@@ -10,7 +10,7 @@ import {
   SetStateAction,
 } from 'react';
 
-import { offset, computePosition } from '@floating-ui/dom';
+import { shift, offset, computePosition } from '@floating-ui/dom';
 import { mergeRegister, $findMatchingParent } from '@lexical/utils';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
@@ -173,17 +173,17 @@ export function FloatingLinkEditor({
         placeholder='Enter a URL'
         onMouseDown={(event) => event.stopPropagation()}
         onChange={(event) => setLinkUrl(event.target.value)}
+        className='leading-none min-h-0 pointer-events-auto text-grayModern-25 overflow-ellipsis'
         onKeyDown={(event) => {
           monitorInputInteraction(event);
+          event.stopPropagation();
         }}
-        className='leading-none min-h-0 pointer-events-auto text-grayModern-25 overflow-ellipsis'
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           inputRef?.current?.focus();
         }}
       />
-
       <Divider className='w-[1px] h-3 border-b-0 border-l-[1px] border-grayModern-500 mx-2' />
 
       {!!linkUrl.trim().length && linkUrl.trim() !== 'https://' && (
@@ -234,7 +234,7 @@ export function FloatingLinkEditorPlugin({
     if (anchorRef.current && ref.current && !isPointerDown) {
       computePosition(anchorRef.current, ref.current, {
         placement: 'bottom-start',
-        middleware: [offset(8)],
+        middleware: [offset(8), shift()],
       }).then(({ x, y }) => {
         setMenuPosition({ top: y, left: x });
       });
@@ -398,6 +398,7 @@ export function FloatingLinkEditorPlugin({
         visibility: isLink && menuPosition ? 'visible' : 'hidden',
         opacity: isLink && menuPosition ? 1 : 0,
         pointerEvents: 'all',
+        zIndex: 9999,
       }}
     >
       {isLink && (

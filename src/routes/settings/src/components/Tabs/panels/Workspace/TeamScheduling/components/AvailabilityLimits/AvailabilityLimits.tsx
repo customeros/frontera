@@ -57,7 +57,7 @@ export const AvailabilityLimits = observer(
                   });
                 }}
               />
-              <span className='ml-2 text-grayModern-500'>
+              <span className='text-grayModern-500'>
                 {usecase.meetingConfig.bookOptionBufferBetweenMeetingsMins ===
                 '1'
                   ? 'minute'
@@ -89,7 +89,7 @@ export const AvailabilityLimits = observer(
                   },
                 }}
               />
-              <span className='ml-2 text-grayModern-500'>
+              <span className='text-grayModern-500'>
                 {usecase.meetingConfig.bookOptionDaysInAdvance === '1'
                   ? 'day in advance'
                   : 'days in advance'}
@@ -120,10 +120,10 @@ export const AvailabilityLimits = observer(
                   },
                 }}
               />
-              <span className='ml-2 text-grayModern-500'>
+              <span className='text-grayModern-500'>
                 {usecase.meetingConfig.bookOptionMinNoticeMins === '1'
-                  ? 'hour'
-                  : 'hours'}
+                  ? 'minute'
+                  : 'minutes'}
               </span>
             </div>
           </>
