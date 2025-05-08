@@ -4,7 +4,7 @@ on:
   push:
     branches: ['main']
     paths:
-      - ./public/scripts/**
+      - public/scripts/**
 
 jobs:
   upload-to-cdn:
@@ -17,4 +17,4 @@ jobs:
         with:
           script_id: ${{ secrets.BOOKING_SCRIPT_CDN_ID }}
           deploy_key: ${{ secrets.CDN_DEPLOY_KEY }}
-          file: './public/scripts/booking-0.js'
+          file: 'public/scripts/booking-0.js'
