@@ -1,0 +1,14 @@
+query GetWebtrackers {
+  webtrackers {
+    id
+    domain
+    cnameHost
+    cnameTarget
+    isCnameConfigured
+    isProxyActive
+    isArchived
+    lastEventAt
+    createdAt
+    updatedAt
+  }
+}

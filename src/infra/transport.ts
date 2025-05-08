@@ -11,7 +11,7 @@ import {
 
 import { LatestDiff } from './types';
 
-type ApiRealm = 'core' | 'realtime' | 'mailstack';
+type ApiRealm = 'core' | 'realtime' | 'mailstack' | 'leads';
 
 const isTestMode = import.meta.env.MODE === 'test';
 const defaultGraphqlHeaders: Record<string, string> = isTestMode
@@ -204,11 +204,19 @@ function createGraphqlClient(
       ? 'customer-os-api'
       : realm === 'mailstack'
       ? 'mailstack'
+      : realm === 'leads'
+      ? 'leads'
       : 'realtime';
 
   const url = isTestMode
     ? import.meta.env.VITE_TEST_API_URL
     : `${import.meta.env.VITE_MIDDLEWARE_API_URL}/${path}`;
+
+  // const url = isTestMode
+  // ? import.meta.env.VITE_TEST_API_URL
+  // : realm === 'leads'
+  // ? 'https://leads.customeros.ai/query'
+  // : `${import.meta.env.VITE_MIDDLEWARE_API_URL}/${path}`;
 
   return new TracedGraphQLClient(url, {
     headers,

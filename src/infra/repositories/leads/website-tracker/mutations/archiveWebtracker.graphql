@@ -1,0 +1,3 @@
+mutation archiveWebtracker($id: String!) {
+  archiveWebtracker(id: $id)
+}

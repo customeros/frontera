@@ -11,24 +11,18 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: [
     {
-      [`${process.env.CUSTOMER_OS_API_PATH}/query`]: {
+      [`${process.env.LEADS_API_PATH}/query`]: {
         headers: {
-          'X-Openline-API-KEY': process.env.CUSTOMER_OS_API_KEY as string,
-          'X-Openline-TENANT': 'customerosai',
-          'X-Openline-USERNAME': 'edi@customeros.ai',
+          'X-OPENLINE-API-KEY': process.env.LEADS_API_KEY as string,
+          'Content-Type': 'application/json',
+          'X-OPENLINE-USERNAME': 'customerostestuser@gmail.com',
         },
       },
     },
   ],
-  documents: [
-    './src/store/**/*.graphql',
-    './src/infra/**/*.graphql',
-    '!./src/infra/repositories/mailstack',
-    '!./src/infra/repositories/realtime',
-    '!./src/infra/repositories/leads',
-  ],
+  documents: ['./src/infra/repositories/leads/**/*.graphql'],
   generates: {
-    'src/routes/src/types/__generated__/graphql.types.ts': {
+    'src/routes/src/types/__generated__/graphqlLeads.types.ts': {
       plugins: ['typescript'],
     },
     './': {
@@ -40,7 +34,8 @@ const config: CodegenConfig = {
         exposeDocument: true,
       },
       presetConfig: {
-        baseTypesPath: 'src/routes/src/types/__generated__/graphql.types.ts',
+        baseTypesPath:
+          'src/routes/src/types/__generated__/graphqlLeads.types.ts',
       },
       plugins: ['typescript-operations'],
     },

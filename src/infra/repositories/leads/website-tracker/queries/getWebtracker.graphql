@@ -1,0 +1,14 @@
+query GetWebtracker($id: String!) {
+  webtracker(id: $id) {
+    id
+    domain
+    cnameHost
+    cnameTarget
+    isCnameConfigured
+    isProxyActive
+    isArchived
+    lastEventAt
+    createdAt
+    updatedAt
+  }
+}

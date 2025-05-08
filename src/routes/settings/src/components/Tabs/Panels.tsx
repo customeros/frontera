@@ -10,6 +10,7 @@ import { ConnectedCalendar } from './panels/Personal/Calendar';
 // import { IntegrationsPanel } from './panels/IntegrationsPanel';
 import { OrganizationFields } from './panels/Fields/Organizations';
 import { TeamScheduling } from './panels/Workspace/TeamScheduling';
+import { WebsiteTracker } from './panels/Workspace/WebsiteTracker';
 interface PanelsProps {
   tab: string;
 }
@@ -43,6 +44,8 @@ export const Panels = ({ tab }: PanelsProps) => {
       return <ConnectedCalendar />;
     case 'team-scheduling':
       return <TeamScheduling />;
+    case 'website-tracker':
+      return <WebsiteTracker />;
 
     default:
       return <Mailboxes />;

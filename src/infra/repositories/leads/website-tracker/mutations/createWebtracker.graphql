@@ -1,0 +1,8 @@
+mutation createWebTracker($tracker: WebtrackerSaveInput!) {
+  createWebtracker(tracker: $tracker) {
+    id
+    domain
+    cnameHost
+    cnameTarget
+  }
+}
