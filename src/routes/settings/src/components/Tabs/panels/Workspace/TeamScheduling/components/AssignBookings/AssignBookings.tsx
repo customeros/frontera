@@ -173,7 +173,7 @@ export const AssignBookings = observer(({ usecase }: AssignBookingsProps) => {
         onConfirm={() => {
           usecase.toggleNoUserModalConnected();
         }}
-        description='To add more people to this schedule ask one of your teammates to connect their calendar and set their availability. '
+        description='To add more people to this schedule, ask one of your teammates to connect their calendar and set their availability. '
       />
     </>
   );

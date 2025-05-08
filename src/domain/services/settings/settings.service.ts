@@ -1,6 +1,6 @@
 import { Tracer } from '@infra/tracer';
 import { RootStore } from '@store/root';
-import { injectable } from '@infra/container';
+import { inject, injectable } from '@infra/container';
 import { SettingsRepository } from '@infra/repositories/core/settings';
 import { CalendarAvailability } from '@domain/entities/calendarAvailability.entity';
 import { MeetingConfigSaveMutationVariables } from '@infra/repositories/core/settings/mutations/meetingConfigSave.generated';
@@ -9,10 +9,13 @@ import { SaveUserCalendarAvailabilityMutationVariables } from '@infra/repositori
 import { unwrap } from '@utils/unwrap';
 import { UserCalendarAvailability } from '@shared/types/__generated__/graphql.types';
 
+import { UtilService } from '../util/util.service';
+
 @injectable
 export class SettingsService {
   private settingsRepo = new SettingsRepository();
   private store = RootStore.getInstance();
+  @inject(UtilService) private util!: UtilService;
 
   public async toggleBilling(newStatus: boolean) {
     this.store.settings.tenant.updateBillingStatus(newStatus);
@@ -143,7 +146,11 @@ export class SettingsService {
 
     if (err) {
       console.error(err);
+
+      this.util.toastError('Failed to update scheduler config');
     }
+
+    this.util.toastSuccess('Changes published');
 
     return res;
   }

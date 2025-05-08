@@ -702,7 +702,7 @@ export const BookingForm = ({
 };
 
 const locationIconMap: Record<string, React.ReactElement> = {
-  'No location': <Icon name='marker-pin-04' className='text-grayModern-500' />,
+  Other: <Icon name='marker-pin-04' className='text-grayModern-500' />,
   'Phone call': <Icon name='phone-call-01' className='text-grayModern-500' />,
   'Google Meet': <Logo name='google-meet' viewBox='0 0 24 20' />,
 };

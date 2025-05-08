@@ -1,5 +1,4 @@
 import { useBlocker } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
 
 import { observer } from 'mobx-react-lite';
@@ -7,7 +6,6 @@ import { meetingConfigStore } from '@domain/stores/settings.store';
 import { MeetingSchedulerUsecase } from '@domain/usecases/settings/meeting-scheduler/meeting-scheduler.usecase';
 
 import { Logo } from '@ui/media/Logo';
-import { Switch } from '@ui/form/Switch';
 import { Icon } from '@ui/media/Icon/Icon';
 import { Input } from '@ui/form/Input/Input';
 import { Button } from '@ui/form/Button/Button';
@@ -59,14 +57,12 @@ export const usePageLeaveBlocker = (
 };
 
 const icons = {
-  'No location': <Icon name='marker-pin-01' className='text-grayModern-500' />,
+  Other: <Icon name='marker-pin-01' className='text-grayModern-500' />,
   'Phone call': <Icon name='phone' className='text-grayModern-500' />,
   'Google Meet': <Logo name='google' className='ml-auto' />,
 };
 
 export const TeamScheduling = observer(() => {
-  const navigate = useNavigate();
-
   const usecase = useMemo(
     () => new MeetingSchedulerUsecase(meetingConfigStore),
     [],
@@ -89,9 +85,9 @@ export const TeamScheduling = observer(() => {
 
   return (
     <>
-      <div className='px-6 pb-4 pt-1 max-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto text-sm'>
+      <div className='px-6 pb-4  max-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto text-sm'>
         <div className='flex flex-col'>
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center justify-between sticky top-0 pt-1 bg-white z-10'>
             <p className='text-grayModern-700 font-semibold text-base'>
               Booking event
             </p>
@@ -204,12 +200,12 @@ export const TeamScheduling = observer(() => {
                 <MenuItem
                   onClick={() => {
                     usecase.updateMeetingConfig({
-                      location: 'No location',
+                      location: 'Other',
                     });
                   }}
                 >
-                  No location
-                  {usecase.meetingConfig.location === 'No location' && (
+                  Other
+                  {usecase.meetingConfig.location === 'Other' && (
                     <Icon name='check' className='ml-auto' />
                   )}
                 </MenuItem>
@@ -240,7 +236,7 @@ export const TeamScheduling = observer(() => {
               </MenuList>
             </Menu>
           </div>
-          <div className='flex items-start gap-1 flex-col mt-4'>
+          {/* <div className='flex items-start gap-1 flex-col mt-4'>
             <div className='flex items-center gap-2 justify-between w-full'>
               <label htmlFor='Logo' className='font-medium'>
                 Logo
@@ -262,8 +258,8 @@ export const TeamScheduling = observer(() => {
               </span>{' '}
               on the bookings page and notification emails
             </p>
-          </div>
-          <div className='flex items-start gap-1 flex-col mt-4'>
+          </div> */}
+          {/* <div className='flex items-start gap-1 flex-col mt-4'>
             <label htmlFor='redirect-link' className='font-medium'>
               Redirect link
             </label>
@@ -279,7 +275,7 @@ export const TeamScheduling = observer(() => {
                 });
               }}
             />
-          </div>
+          </div> */}
           <Divider className='my-4' />
           <div className='flex items-start flex-col justify-start w-full'>
             <AssignBookings usecase={usecase} />
@@ -297,7 +293,7 @@ export const TeamScheduling = observer(() => {
             <AvailabilityLimits usecase={usecase} />
           </div>
         </div>
-        <Divider className='my-4' />
+        {/* <Divider className='my-4' />
         <div className='flex flex-col gap-2'>
           <div className='flex items-center gap-2 justify-between'>
             <div className='flex items-center gap-2'>
@@ -317,7 +313,7 @@ export const TeamScheduling = observer(() => {
             Send booking confirmations instantly and reminder emails to everyone
             15 minutes before the meeting
           </p>
-        </div>
+        </div> */}
       </div>
 
       <InfoDialog
