@@ -115,33 +115,10 @@
 .react-calendar__tile--active:enabled:focus {
   @apply ring-offset-2 ring-offset-white ring-[1.5px] ring-grayModern-700 bg-grayModern-700;
   border: 1px transparent solid;
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background-color: currentColor;
-    border-radius: 50%;
-  }
 }
 .react-calendar__tile--active:enabled:hover {
   @apply bg-grayModern-700 text-white;
   border: 1px transparent solid;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background-color: currentColor;
-    border-radius: 50%;
-  }
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {

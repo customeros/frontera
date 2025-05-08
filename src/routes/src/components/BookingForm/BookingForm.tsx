@@ -7,6 +7,7 @@ import { Combobox } from '@/ui/form/Combobox';
 import { SelectOption } from '@/ui/utils/types';
 import { Button } from '@/ui/form/Button/Button';
 import { Icon, FeaturedIcon } from '@/ui/media/Icon';
+import { Tag, TagLabel } from '@/ui/presentation/Tag';
 import { DatePicker } from '@/ui/form/DatePicker/DatePicker';
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/overlay/Popover';
 
@@ -40,6 +41,7 @@ export type BookingResponse = {
 interface BookingFormProps
   extends Omit<CalendarAvailabilityResponse, '__typename'>,
     Omit<CalendarAvailabilityDetailsResponse, '__typename'> {
+  isEmbedded?: boolean;
   timezone: SelectOption;
   timezones: SelectOption[];
   isDetailsLoading?: boolean;
@@ -66,6 +68,7 @@ export const BookingForm = ({
   onCancel,
   onReschedule,
   onMakeBooking,
+  isEmbedded,
   onTimezoneChange,
   onActiveStartDate,
   isDetailsLoading,
@@ -82,6 +85,7 @@ export const BookingForm = ({
   const [breakpoint, setBreakpoint] = useState<TailwindBreakpoint>(() => {
     return 'md';
   });
+  const [_value, setValue] = useState<Date | null>();
   const [step, setStep] = useState(0);
   const [isCanceling, setIsCanceling] = useState(false);
   const [isRescheduling, setIsRescheduling] = useState(false);
@@ -98,7 +102,7 @@ export const BookingForm = ({
     (d) => new Date(d.date).getDate() === selectedDay,
   );
   const selectedDayStr = selectedDaySlot
-    ? format(new Date(selectedDaySlot?.date), 'iiii, do MMMM')
+    ? format(new Date(selectedDaySlot?.date), 'iiii, d MMMM')
     : '';
   const selectedTimeRange = (() => {
     if (!selectedTimeSlot) return ['', ''];
@@ -146,8 +150,21 @@ export const BookingForm = ({
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
+  useEffect(() => {
+    if (!isEmbedded) {
+      const observer = new ResizeObserver((entries) => {
+        const entry = entries[0];
+        const { width } = entry.contentRect;
+
+        setBreakpoint(getTailwindBreakpoint(width));
+      });
+
+      observer.observe(document.body);
+    }
+  }, [isEmbedded]);
+
   return (
-    <div className='animate-fadeIn overflow-x-hidden'>
+    <div className='animate-fadeIn w-fit overflow-x-hidden'>
       <div
         ref={containerRef}
         className={cn(
@@ -296,9 +313,11 @@ export const BookingForm = ({
           >
             <DatePicker
               view='month'
+              value={_value}
               minDetail='month'
               minDate={new Date()}
               className='min-w-[352px] !w-full'
+              onChange={(v) => setValue(v as Date)}
               onClickDay={(v) => {
                 setStep(1);
                 setSelectedDay((v as unknown as Date).getDate());
@@ -377,7 +396,10 @@ export const BookingForm = ({
                   hasErrors = true;
                   setErrors((prev) => ({
                     ...prev,
-                    [k]: 'This field is required',
+                    [k]:
+                      k === 'name'
+                        ? 'Every hero needs a name'
+                        : 'Houston, we have a blank',
                   }));
                 } else {
                   setErrors((prev) => {
@@ -517,8 +539,8 @@ export const BookingForm = ({
             className={cn(
               'flex flex-col animate-fadeIn gap-3 transition-all duration-300 overflow-hidden',
               bookingConfirmation && step === 3
-                ? 'w-[450px] max-h-[400px] p-5 opacity-100 scale-100'
-                : 'w-0 max-h-0 p-0 opacity-0 scale-95 pointer-events-none',
+                ? 'w-[450px] h-fit p-5 opacity-100 scale-100'
+                : 'w-0 h-0 p-0 opacity-0 scale-95 pointer-events-none',
             )}
           >
             <div className='w-full flex justify-center py-4'>
@@ -529,40 +551,43 @@ export const BookingForm = ({
                       ? 'x-circle'
                       : bookingConfirmation?.status === 'rescheduled'
                       ? 'clock-fast-forward'
-                      : bookingConfirmation?.status === 'already_exists'
-                      ? 'info-circle'
                       : 'check-circle'
                   }
                 />
               </FeaturedIcon>
             </div>
 
-            <p className='text-lg font-medium text-center'>
-              {isCanceling
-                ? bookingConfirmation?.status === 'cancelled'
-                  ? 'Booking cancelled'
-                  : 'Cancel this booking'
-                : bookingConfirmation?.status === 'rescheduled'
-                ? 'Booking rescheduled'
-                : bookingConfirmation?.status === 'already_exists'
-                ? 'Booking found'
-                : 'Booking confirmed'}
-            </p>
-            {!isCanceling && (
-              <p className='text-sm text-center'>
-                We sent a confirmation email to everyone
+            <div>
+              <p className='text-lg font-medium text-center mb-1'>
+                {isCanceling
+                  ? bookingConfirmation?.status === 'cancelled'
+                    ? 'Booking cancelled'
+                    : 'Cancel this booking'
+                  : bookingConfirmation?.status === 'rescheduled'
+                  ? 'Booking rescheduled'
+                  : 'Booking confirmed'}
               </p>
-            )}
-            {isCanceling && bookingConfirmation?.status === 'cancelled' && (
-              <p className='text-sm text-center'>
-                We sent a cancellation email to everyone
-              </p>
-            )}
+              {!isCanceling && (
+                <p className='text-sm text-center'>
+                  We sent a confirmation email to everyone
+                </p>
+              )}
+              {isCanceling && bookingConfirmation?.status === 'cancelled' && (
+                <p className='text-sm text-center'>
+                  We sent a cancellation email to everyone
+                </p>
+              )}
+            </div>
 
             <div className='flex flex-col gap-2 w-full'>
               <div className='flex w-full justify-between'>
                 <p className='text-sm font-medium flex-1'>When</p>
-                <div className='flex flex-col flex-2 text-sm'>
+                <div
+                  className={cn(
+                    'flex flex-col flex-2 text-sm',
+                    isCanceling && 'line-through',
+                  )}
+                >
                   <p>{selectedDayStr}</p>
                   <p>{selectedTimeRange.join(' - ')}</p>
                 </div>
@@ -574,12 +599,14 @@ export const BookingForm = ({
                 <p className='text-sm font-medium flex-1'>Who</p>
                 <div className='flex flex-col gap-2 flex-2'>
                   <div className='flex flex-col text-sm'>
-                    <p className='font-medium'>
-                      {bookingConfirmation?.hostName}
-                      <span className='bg-grayModern-100 ml-1 p-0.5 rounded-md font-normal'>
-                        Host
+                    <div className='flex gap-1 items-center'>
+                      <span className='font-medium'>
+                        {bookingConfirmation?.hostName}
                       </span>
-                    </p>
+                      <Tag>
+                        <TagLabel>Host</TagLabel>
+                      </Tag>
+                    </div>
                     <p>{bookingConfirmation?.hostEmail}</p>
                   </div>
                   <div className='flex flex-col text-sm'>
@@ -612,6 +639,7 @@ export const BookingForm = ({
                       setSelectedTimeSlot(null);
                       setSelectedDay(null);
                       setParticipantsDetails(null);
+                      setValue(null);
                     }}
                   >
                     Reschedule

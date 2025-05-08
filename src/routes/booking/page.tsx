@@ -214,28 +214,39 @@ export const BookingPage = () => {
   }, [bookingInput]);
 
   return (
-    <div className={cn(!isEmbedded && 'bg-grayModern-50 h-screen')}>
-      <BookingForm
-        timezone={timezone}
-        timezones={timezones}
-        onCancel={setBookingInput}
-        onTimezoneChange={setTimezone}
-        onReschedule={setBookingInput}
-        onMakeBooking={setBookingInput}
-        isDetailsLoading={isDetailsLoading}
-        isTimezonesLoading={isTimezonesLoading}
-        bookingConfirmation={bookingConfirmation}
-        isAvailabilityLoading={isAvailabilityLoading}
-        isBookingConfirmationLoading={isBookingConfirmationLoading}
-        onActiveStartDate={(date) => {
-          if (date) {
-            setActiveMonth(date.getMonth() + 1);
-            setActiveYear(date.getFullYear());
-          }
-        }}
-        {...details}
-        {...availability}
-      />
+    <div
+      className={cn(
+        !isEmbedded && 'h-screen w-screen bg-grayModern-50 overflow-auto py-4',
+      )}
+    >
+      <div
+        className={cn(
+          !isEmbedded && 'flex items-center justify-center md:h-[80%]',
+        )}
+      >
+        <BookingForm
+          timezone={timezone}
+          timezones={timezones}
+          isEmbedded={isEmbedded}
+          onCancel={setBookingInput}
+          onTimezoneChange={setTimezone}
+          onReschedule={setBookingInput}
+          onMakeBooking={setBookingInput}
+          isDetailsLoading={isDetailsLoading}
+          isTimezonesLoading={isTimezonesLoading}
+          bookingConfirmation={bookingConfirmation}
+          isAvailabilityLoading={isAvailabilityLoading}
+          isBookingConfirmationLoading={isBookingConfirmationLoading}
+          onActiveStartDate={(date) => {
+            if (date) {
+              setActiveMonth(date.getMonth() + 1);
+              setActiveYear(date.getFullYear());
+            }
+          }}
+          {...details}
+          {...availability}
+        />
+      </div>
     </div>
   );
 };
