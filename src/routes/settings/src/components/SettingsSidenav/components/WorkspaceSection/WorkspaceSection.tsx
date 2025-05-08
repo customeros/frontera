@@ -51,11 +51,11 @@ export const WorkspaceSection = ({
           isActive={checkIsActive('products')}
           onClick={handleItemClick('products')}
         />
-        <SidenavItem
+        {/* <SidenavItem
           label='Website tracker'
           isActive={checkIsActive('website-tracker')}
           onClick={handleItemClick('website-tracker')}
-        />
+        /> */}
       </div>
     </div>
   );

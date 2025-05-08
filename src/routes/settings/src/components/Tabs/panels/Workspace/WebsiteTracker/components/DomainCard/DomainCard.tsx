@@ -38,10 +38,10 @@ export const DomainCard = observer(({ webtrackerId }: DomainCardProps) => {
 
   return (
     <>
-      <div className='px-3 py-2 rounded-2xl border text-sm group'>
+      <div className='px-3 pt-2 pb-3 rounded-lg border text-sm group'>
         <div className='flex justify-between items-center'>
           <div className='flex items-center gap-2'>
-            <h2 className='font-semibold'>{webtracker.domain}</h2>
+            <h2 className='font-medium'>{webtracker.domain}</h2>
             <IconButton
               size='xxs'
               variant='ghost'
@@ -115,7 +115,7 @@ export const DomainCard = observer(({ webtrackerId }: DomainCardProps) => {
                     />
                   </div>
 
-                  <div className='border border-gray-200 rounded-md p-3 bg-gray-50 space-y-1 text-sm'>
+                  <div className='border border-gray-200 rounded-md px-3 py-2 bg-gray-50 space-y-1 text-sm'>
                     <p>
                       <strong>Type:</strong> CNAME
                     </p>
@@ -133,20 +133,15 @@ export const DomainCard = observer(({ webtrackerId }: DomainCardProps) => {
                     Place this code in the &lt;HEAD&gt; section of your website
                     or in Google Tag Manager:
                   </p>
-                  <div className='bg-grayModern-100 text-xs px-3 rounded-md max-h-[34px] line-clamp-2 font-mono flex gap-2'>
-                    {`<script id="customeros-metrics" type="text/javascript">`}
-                    {`(function (c, u, s, t, o, m, e, r, O, S) {`}
-                    {`var customerOS = document.createElement(s);`}
-                    {`customerOS.src = u;`}
-                    {`customerOS.async = true;`}
-                    {`(document.body || document.head).appendChild(customerOS);`}
-                    {`})(window, "https://eu.custoscdn.com/analytics-0.1.js", "script");`}
-                    {`</script>`}
+                  <div className='bg-grayModern-100 text-xs px-3 rounded-md  font-mono flex py-2 gap-2 items-start'>
+                    {code}
                     <IconButton
                       size='xs'
                       variant='ghost'
                       aria-label='Copy'
-                      onClick={() => copyToClipboard(code, 'Script copied')}
+                      onClick={() =>
+                        copyToClipboard(code, 'Code snippet copied')
+                      }
                       icon={
                         <Icon name='copy-03' className='text-grayModern-500' />
                       }

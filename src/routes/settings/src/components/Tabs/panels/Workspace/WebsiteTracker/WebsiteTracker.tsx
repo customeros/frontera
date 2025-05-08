@@ -33,9 +33,9 @@ export const WebsiteTracker = observer(() => {
 
   return (
     <>
-      <div className='pt-1 px-4 pb-4 flex flex-col h-full  max-w-[448px] text-sm border-r'>
-        <div className='flex justify-between items-center'>
-          <h1 className='font-medium'> Website tracker</h1>
+      <div className='px-4 pb-4 flex flex-col  max-w-[448px] text-sm border-r overflow-y-auto max-h-[calc(100vh-1px)]'>
+        <div className=' pt-1 flex justify-between items-center sticky top-0 bg-white z-10'>
+          <h1 className='font-medium text-base'> Website tracker</h1>
           <Button
             size='xs'
             colorScheme='primary'

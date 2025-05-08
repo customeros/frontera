@@ -47,7 +47,7 @@ export const EmptyState = observer(({ usecase }: EmptyStateProps) => {
             colorScheme='primary'
             onClick={usecase.toggleModal}
           >
-            Get started
+            Add a website
           </Button>
         </div>
       </div>
