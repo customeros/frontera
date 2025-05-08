@@ -39,7 +39,7 @@ export const AvailabilityLimits = observer(
                 mask='num'
                 maxLength={2}
                 variant='outline'
-                className='max-w-[34px]'
+                className='max-w-[44px]'
                 id='buffer-between-meetings'
                 value={String(
                   usecase.meetingConfig.bookOptionBufferBetweenMeetingsMins,
@@ -48,7 +48,7 @@ export const AvailabilityLimits = observer(
                   num: {
                     mask: IMask.MaskedRange,
                     from: 0,
-                    to: 99,
+                    to: 909,
                   },
                 }}
                 onBlur={({ target }) => {
@@ -74,7 +74,7 @@ export const AvailabilityLimits = observer(
                 maxLength={2}
                 variant='outline'
                 id='bookings-up-to'
-                className='max-w-[34px]'
+                className='max-w-[44px]'
                 value={String(usecase.meetingConfig.bookOptionDaysInAdvance)}
                 onBlur={({ target }) => {
                   usecase.updateMeetingConfig({
@@ -85,7 +85,7 @@ export const AvailabilityLimits = observer(
                   num: {
                     mask: IMask.MaskedRange,
                     from: 0,
-                    to: 99,
+                    to: 999,
                   },
                 }}
               />
@@ -102,9 +102,9 @@ export const AvailabilityLimits = observer(
               <MaskedInput
                 size='sm'
                 mask='num'
-                maxLength={2}
+                maxLength={3}
                 variant='outline'
-                className='max-w-[34px]'
+                className='max-w-[44px]'
                 id='minimum-booking-notice'
                 value={String(usecase.meetingConfig.bookOptionMinNoticeMins)}
                 onBlur={({ target }) => {
@@ -116,7 +116,7 @@ export const AvailabilityLimits = observer(
                   num: {
                     mask: IMask.MaskedRange,
                     from: 0,
-                    to: 99,
+                    to: 999,
                   },
                 }}
               />
