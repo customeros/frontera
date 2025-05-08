@@ -15,8 +15,9 @@ jobs:
 
       - name: Upload scripts to Bunny CDN
         run: |
-          for file in $(find public/scripts -type f); do
+          set -e
+          find public/scripts -type f -print0 | while IFS= read -r -d '' file; do
             curl -T "$file" \
               -H "AccessKey: ${{ secrets.BUNNY_STORAGE_API_KEY }}" \
-              "https://storage.bunnycdn.com/${{ secrets.BUNNY_STORAGE_ZONE_NAME }}/scripts/$(basename \"$file\")"
+              "https://storage.bunnycdn.com/${{ secrets.BUNNY_STORAGE_ZONE_NAME }}/scripts/$(basename "$file")"
           done
