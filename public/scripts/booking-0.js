@@ -3,7 +3,11 @@ window.bookingForm = (target, calendarId) => {
   let currentBreakpoint = 'md';
   const container = document.getElementById(TARGET);
 
-  if (!container) throw Error('missing container for booking form');
+  if (!container) {
+    console.error('missing container for booking form');
+
+    return;
+  }
 
   const iframe = document.createElement('iframe');
 
