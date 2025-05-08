@@ -1,4 +1,4 @@
-name: Upload script to CDN
+name: Upload scripts to Bunny CDN
 
 on:
   push:
@@ -9,12 +9,14 @@ on:
 jobs:
   upload-to-cdn:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy Script to Bunny Edge Scripting
-        uses: BunnyWay/actions/deploy-script@main
-        with:
-          script_id: ${{ secrets.BOOKING_SCRIPT_CDN_ID }}
-          deploy_key: ${{ secrets.CDN_DEPLOY_KEY }}
-          file: 'public/scripts/booking-0.js'
+      - name: Upload scripts to Bunny CDN
+        run: |
+          for file in $(find public/scripts -type f); do
+            curl -T "$file" \
+              -H "AccessKey: ${{ secrets.BUNNY_STORAGE_API_KEY }}" \
+              "https://storage.bunnycdn.com/${{ secrets.BUNNY_STORAGE_ZONE_NAME }}/scripts/$(basename $file)"
+          done
