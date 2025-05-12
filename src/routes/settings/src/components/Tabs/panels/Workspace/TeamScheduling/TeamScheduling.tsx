@@ -92,7 +92,7 @@ export const TeamScheduling = observer(() => {
 
   return (
     <div className='flex min-h-screen'>
-      <div className='px-6 pb-4  max-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto text-sm'>
+      <div className='px-6 pb-4  max-w-[500px] min-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto text-sm'>
         <div className='flex flex-col'>
           <div className='flex items-center justify-between sticky top-0 pt-1 bg-white z-10'>
             <p className='text-grayModern-700 font-semibold text-base'>
@@ -431,8 +431,7 @@ export const TeamScheduling = observer(() => {
         body={
           <div className='flex flex-col gap-2'>
             <p className='mb-4 text-sm'>
-              Just follow these 3 simple steps to embed the calendar on your
-              website.
+              Follow these 3 simple steps to embed the calendar on your website.
             </p>
 
             <div className='flex flex-col gap-2'>
@@ -449,7 +448,7 @@ export const TeamScheduling = observer(() => {
                   Add this script tag inside the head section of your HTML page:
                 </p>
 
-                <div className='flex text-sm gap-2 items-start justify-between font-sticky p-2 bg-grayModern-50 rounded-md mt-2'>
+                <div className='flex text-sm gap-2 mb-2 items-start justify-between font-sticky p-2 bg-grayModern-100 rounded-md mt-2'>
                   {`<script src="https://app.customeros.ai/scripts/booking-0.js"></script>`}
                   <IconButton
                     size='xs'
@@ -459,7 +458,7 @@ export const TeamScheduling = observer(() => {
                     onClick={() => {
                       copyToClipboard(
                         `<script src="https://app.customeros.ai/scripts/booking-0.js"></script>`,
-                        'code copied',
+                        'Code snippet copied',
                       );
                     }}
                   />
@@ -467,7 +466,7 @@ export const TeamScheduling = observer(() => {
               </div>
             </div>
 
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col'>
               <div className='flex items-center gap-2'>
                 <div className='bg-grayModern-100 flex items-center justify-center rounded-full size-6 text-sm font-medium'>
                   2
@@ -484,7 +483,7 @@ export const TeamScheduling = observer(() => {
                   it a unique ID. For example:
                 </p>
 
-                <div className='flex text-sm gap-2 items-center justify-between font-sticky p-2 bg-grayModern-50 rounded-md mt-2'>
+                <div className='flex text-sm gap-2 mb-2 items-center justify-between font-sticky p-2 bg-grayModern-100 rounded-md mt-2'>
                   {`<div id="booking-form"></div>`}
 
                   <IconButton
@@ -495,7 +494,7 @@ export const TeamScheduling = observer(() => {
                     onClick={() => {
                       copyToClipboard(
                         `<div id="booking-form"></div>`,
-                        'code copied',
+                        'Code snippet copied',
                       );
                     }}
                   />
@@ -503,7 +502,7 @@ export const TeamScheduling = observer(() => {
               </div>
             </div>
 
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col'>
               <div className='flex items-center gap-2'>
                 <div className='bg-grayModern-100 flex items-center justify-center rounded-full size-6 text-sm font-medium'>
                   3
@@ -517,7 +516,7 @@ export const TeamScheduling = observer(() => {
                   Add this snippet at the end of your HTML body:
                 </p>
 
-                <div className='flex text-sm gap-2 justify-between items-start font-sticky p-2 bg-grayModern-50 rounded-md mt-2'>
+                <div className='flex text-sm gap-2 mb-2 justify-between items-start font-sticky p-2 bg-grayModern-100 rounded-md mt-2'>
                   {`<script>bookingForm("booking-form", "${meetingConfigStore.id}")</script>`}
 
                   <IconButton
@@ -528,7 +527,7 @@ export const TeamScheduling = observer(() => {
                     onClick={() => {
                       copyToClipboard(
                         `<script>bookingForm("booking-form", "${meetingConfigStore.id}")</script>`,
-                        'code copied',
+                        'Code snippet copied',
                       );
                     }}
                   />

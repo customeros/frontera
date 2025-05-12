@@ -22,7 +22,6 @@ import { TimelineContextsProvider } from '@organization/components/TimelineConte
 import { MainSection } from './src/components/MainSection';
 import { LeftSection } from './src/components/LeftSection';
 import { Panels, TabsContainer } from './src/components/Tabs';
-import { RelationshipPicker } from './src/components/RelationshipPicker';
 import { OrganizationTimelineWithActionsContext } from './src/components/Timeline/OrganizationTimelineWithActionsContext';
 
 export const OrganizationPage = observer(() => {
@@ -38,7 +37,6 @@ export const OrganizationPage = observer(() => {
     { root: 'finder' },
   );
 
-  // const [lastKnownIndex, setLastKnownIndex] = useState<number>(0);
   const [imgStatus, setImgStatus] = useState<'loading' | 'loaded' | 'error'>(
     'loading',
   );
@@ -149,7 +147,6 @@ export const OrganizationPage = observer(() => {
             <h1 className='font-medium text-md'>{organization?.name}</h1>
           </div>
 
-          <RelationshipPicker />
           <StagePicker />
 
           <div className='flex-1 min-h-[28px]' />
