@@ -3,7 +3,12 @@
     return import('https://openfpcdn.io/botd/v1')
       .then((Botd) => Botd.load())
       .then((botd) => botd.detect())
-      .then((res) => res.bot);
+      .then((res) => res.bot)
+      .catch((error) => {
+        console.error('Error loading Botd:', error);
+
+        return true;
+      });
   }
 
   function generateUUID() {
@@ -29,7 +34,7 @@
 
   function sendData(eventType, eventData) {
     const userAgent = navigator.userAgent;
-    const cdnEndpoint = '{{CDN_ENDPOINT}}'
+    const cdnEndpoint = '{{CDN_ENDPOINT}}';
 
     fetch(cdnEndpoint, {
       method: 'POST',

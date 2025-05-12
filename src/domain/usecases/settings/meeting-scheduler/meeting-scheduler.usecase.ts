@@ -30,6 +30,7 @@ export class MeetingSchedulerUsecase {
   @observable public accessor participants: UserParticipantsInSchedulerDatum[] =
     [];
   @observable public accessor noUserModalConnected: boolean = false;
+
   constructor(public meetingConfig: MeetingConfig) {
     this.originalMeetingConfig = { ...meetingConfig };
     this.createMeetingConfig = this.createMeetingConfig.bind(this);
@@ -112,7 +113,7 @@ export class MeetingSchedulerUsecase {
   }
 
   public async invalidateSchedulerConfig() {
-    this.service.getSchedulerConfig();
+    return await this.service.getSchedulerConfig();
   }
 
   public async execute() {
@@ -137,7 +138,9 @@ export class MeetingSchedulerUsecase {
 
     const res = await this.invalidateSchedulerConfig();
 
-    Object.assign(this.meetingConfig, res);
+    if (res) {
+      Object.assign(this.meetingConfig, res.meetingBookingEvents[0]);
+    }
 
     span.end();
   }

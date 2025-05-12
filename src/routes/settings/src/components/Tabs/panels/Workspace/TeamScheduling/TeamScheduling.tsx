@@ -1,7 +1,7 @@
 import { useBlocker } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
 
-import { observer } from 'mobx-react-lite';
+import { Observer, observer } from 'mobx-react-lite';
 import { meetingConfigStore } from '@domain/stores/settings.store';
 import { MeetingSchedulerUsecase } from '@domain/usecases/settings/meeting-scheduler/meeting-scheduler.usecase';
 
@@ -10,9 +10,12 @@ import { Icon } from '@ui/media/Icon/Icon';
 import { Input } from '@ui/form/Input/Input';
 import { Button } from '@ui/form/Button/Button';
 import { Editor } from '@ui/form/Editor/Editor';
+import { IconButton } from '@ui/form/IconButton';
 import { Divider } from '@ui/presentation/Divider';
+import { BookingWidget } from '@shared/components/BookingForm';
 import { InfoDialog } from '@ui/overlay/AlertDialog/InfoDialog';
 import { ConfirmDialog } from '@ui/overlay/AlertDialog/ConfirmDialog';
+import { useCopyToClipboard } from '@shared/hooks/useCopyToClipboard';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
 
 import {
@@ -59,14 +62,18 @@ export const usePageLeaveBlocker = (
 const icons = {
   Other: <Icon name='marker-pin-01' className='text-grayModern-500' />,
   'Phone call': <Icon name='phone' className='text-grayModern-500' />,
-  'Google Meet': <Logo name='google' className='ml-auto' />,
+  'Google Meet': <Logo name='google-meet' className='ml-auto' />,
 };
 
 export const TeamScheduling = observer(() => {
+  const [_, copyToClipboard] = useCopyToClipboard();
+
   const usecase = useMemo(
     () => new MeetingSchedulerUsecase(meetingConfigStore),
     [],
   );
+
+  const [showEmbed, setShowEmbed] = useState(false);
 
   useEffect(() => {
     usecase.init();
@@ -84,7 +91,7 @@ export const TeamScheduling = observer(() => {
   }
 
   return (
-    <>
+    <div className='flex min-h-screen'>
       <div className='px-6 pb-4  max-w-[500px] border-r border-grayModern-200 h-full overflow-y-auto text-sm'>
         <div className='flex flex-col'>
           <div className='flex items-center justify-between sticky top-0 pt-1 bg-white z-10'>
@@ -316,6 +323,61 @@ export const TeamScheduling = observer(() => {
         </div> */}
       </div>
 
+      <div className='w-full h-full bg-grayModern-50 px-4 pt-[6px]'>
+        <div className='flex justify-between items-center'>
+          <p className='font-semibold'>Booking Preview</p>
+          <div className='flex items-center gap-2'>
+            <IconButton
+              size='xs'
+              variant='ghost'
+              aria-label='preview'
+              icon={<Icon name='link-external-01' />}
+              onClick={() => {
+                window.open(
+                  `${import.meta.env.VITE_CLIENT_APP_URL}/book?calendarId=${
+                    meetingConfigStore.id
+                  }`,
+                  '_blank',
+                  'popup',
+                );
+              }}
+            />
+            <Button
+              size='xs'
+              leftIcon={<Icon name='link-01' />}
+              onClick={() => {
+                copyToClipboard(
+                  `${import.meta.env.VITE_CLIENT_APP_URL}/book?calendarId=${
+                    meetingConfigStore.id
+                  }`,
+                );
+              }}
+            >
+              Copy link
+            </Button>
+            <Button
+              size='xs'
+              onClick={() => setShowEmbed(true)}
+              leftIcon={<Icon name='code-02' />}
+            >
+              Embed
+            </Button>
+          </div>
+        </div>
+
+        <div className='w-full flex mt-[64px] justify-center'>
+          <Observer>
+            {() => (
+              <BookingWidget
+                isEmbedded={true}
+                key={meetingConfigStore.updatedAt}
+                calendarId={meetingConfigStore.id}
+              />
+            )}
+          </Observer>
+        </div>
+      </div>
+
       <InfoDialog
         label='Assignment methods'
         confirmButtonLabel='Got it'
@@ -359,6 +421,123 @@ export const TeamScheduling = observer(() => {
           description='Your booking event has unsaved changes. Would you like to save them first before heading out?'
         />
       )}
-    </>
+
+      <InfoDialog
+        isOpen={showEmbed}
+        confirmButtonLabel='Got it'
+        onClose={() => setShowEmbed(false)}
+        onConfirm={() => setShowEmbed(false)}
+        label='Add the booking widget to your site'
+        body={
+          <div className='flex flex-col gap-2'>
+            <p className='mb-4 text-sm'>
+              Just follow these 3 simple steps to embed the calendar on your
+              website.
+            </p>
+
+            <div className='flex flex-col gap-2'>
+              <div className='flex items-center gap-2'>
+                <div className='bg-grayModern-100 flex items-center justify-center rounded-full size-6 text-sm font-medium'>
+                  1
+                </div>
+
+                <p className='text-sm font-medium'>Load the booking script</p>
+              </div>
+
+              <div className='pl-5 ml-3 border-l border-l-grayModern-200'>
+                <p className='text-sm mb-4'>
+                  Add this script tag inside the head section of your HTML page:
+                </p>
+
+                <div className='flex text-sm gap-2 items-start justify-between font-sticky p-2 bg-grayModern-50 rounded-md mt-2'>
+                  {`<script src="https://app.customeros.ai/scripts/booking-0.js"></script>`}
+                  <IconButton
+                    size='xs'
+                    variant='ghost'
+                    aria-label='copy'
+                    icon={<Icon name='copy-03' />}
+                    onClick={() => {
+                      copyToClipboard(
+                        `<script src="https://app.customeros.ai/scripts/booking-0.js"></script>`,
+                        'code copied',
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <div className='flex items-center gap-2'>
+                <div className='bg-grayModern-100 flex items-center justify-center rounded-full size-6 text-sm font-medium'>
+                  2
+                </div>
+
+                <p className='text-sm font-medium'>
+                  Add a placeholder for the calendar
+                </p>
+              </div>
+
+              <div className='pl-5 ml-3 border-l border-l-grayModern-200'>
+                <p className='text-sm mb-4'>
+                  Create a container where the booking form will appear and give
+                  it a unique ID. For example:
+                </p>
+
+                <div className='flex text-sm gap-2 items-center justify-between font-sticky p-2 bg-grayModern-50 rounded-md mt-2'>
+                  {`<div id="booking-form"></div>`}
+
+                  <IconButton
+                    size='xs'
+                    variant='ghost'
+                    aria-label='copy'
+                    icon={<Icon name='copy-03' />}
+                    onClick={() => {
+                      copyToClipboard(
+                        `<div id="booking-form"></div>`,
+                        'code copied',
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <div className='flex items-center gap-2'>
+                <div className='bg-grayModern-100 flex items-center justify-center rounded-full size-6 text-sm font-medium'>
+                  3
+                </div>
+
+                <p className='text-sm font-medium'>Add the calendar script</p>
+              </div>
+
+              <div className='pl-5 ml-3 border-l border-l-transparent'>
+                <p className='text-sm mb-4'>
+                  Add this snippet at the end of your HTML body:
+                </p>
+
+                <div className='flex text-sm gap-2 justify-between items-start font-sticky p-2 bg-grayModern-50 rounded-md mt-2'>
+                  {`<script>bookingForm("booking-form", "${meetingConfigStore.id}")</script>`}
+
+                  <IconButton
+                    size='xs'
+                    variant='ghost'
+                    aria-label='copy'
+                    icon={<Icon name='copy-03' />}
+                    onClick={() => {
+                      copyToClipboard(
+                        `<script>bookingForm("booking-form", "${meetingConfigStore.id}")</script>`,
+                        'code copied',
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      />
+    </div>
   );
 });

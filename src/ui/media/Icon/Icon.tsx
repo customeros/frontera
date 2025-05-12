@@ -271,7 +271,9 @@ export type IconName =
   | 'text-input'
   | 'phone'
   | 'marker-pin-01'
-  | 'user-left-01';
+  | 'user-left-01'
+  | 'link-01'
+  | 'link-external-01';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;
