@@ -39,6 +39,10 @@ export const useTablePlaceholder = (tableIdType?: TableIdType) => {
         multi: 'invoices',
         single: 'invoice',
       }))
+      .with(TableIdType.Tasks, () => ({
+        multi: 'tasks',
+        single: 'task',
+      }))
       .otherwise(() => ({
         multi: 'results',
         single: 'result',

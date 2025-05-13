@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import { observer } from 'mobx-react-lite';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
@@ -33,6 +35,7 @@ export const NavigationSections = observer(
   }: NavigationSectionsProps) => {
     const showCustomerMap = useFeatureIsOn('show-customer-map');
     const billingFlag = useFeatureIsOn('billing');
+    const [searchParams] = useSearchParams();
 
     const store = useStore();
     const tableViewDefsList = store.tableViewDefs.toArray();
@@ -47,6 +50,12 @@ export const NavigationSections = observer(
     const customersView = store.tableViewDefs.getById(
       store.tableViewDefs.customersPreset ?? '',
     );
+
+    const opportunitiesView = store.tableViewDefs.getById(
+      store.tableViewDefs.opportunitiesTablePreset ?? '',
+    );
+
+    const preset = searchParams?.get('preset');
 
     return (
       <div className='px-2  gap-4 overflow-y-auto overflow-hidden flex flex-col flex-1'>
@@ -118,18 +127,25 @@ export const NavigationSections = observer(
 
           <RootSidenavItem
             label='Opportunities'
-            isActive={checkIsActive(['prospects'])}
             dataTest={`side-nav-item-opportunities`}
             onClick={() => handleItemClick(`prospects`)}
-            icon={(isActive) => (
-              <Icon
-                name='coins-stacked-02'
-                className={cn(
-                  'text-grayModern-500',
-                  isActive && 'text-grayModern-700',
-                )}
-              />
-            )}
+            isActive={checkIsActive(['prospects'], {
+              preset:
+                preset === opportunitiesView?.value?.id
+                  ? opportunitiesView?.value?.id
+                  : '',
+            })}
+            icon={(isActive) => {
+              return (
+                <Icon
+                  name='coins-stacked-02'
+                  className={cn(
+                    'text-grayModern-500',
+                    isActive && 'text-grayModern-700',
+                  )}
+                />
+              );
+            }}
           />
 
           <RootSidenavItem
