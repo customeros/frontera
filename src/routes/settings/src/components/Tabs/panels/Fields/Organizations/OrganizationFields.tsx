@@ -8,7 +8,7 @@ import { ColumnViewType } from '@shared/types/__generated__/graphql.types';
 
 import { Layout } from '../components';
 import { Header } from '../components/Header';
-import { getDefaultFieldTypes } from './filedTypes';
+import { getDefaultFieldTypes } from './fieldTypes';
 import { CustomFieldItem } from '../components/CustomFieldItem';
 
 export const OrganizationFields = observer(() => {

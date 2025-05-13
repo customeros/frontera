@@ -10,15 +10,12 @@ import { useStore } from '@shared/hooks/useStore';
 import { OrganizationRelationship } from '@graphql/types';
 import { ArrowBlockUp } from '@ui/media/icons/ArrowBlockUp';
 import { Kbd, CommandKbd, CommandItem } from '@ui/overlay/CommandMenu';
+import { UpdateHealthStatusSubItemGroup } from '@shared/components/CommandMenu/commands/organization';
 import { organizationKeywords } from '@shared/components/CommandMenu/commands/organization/keywords.ts';
 import {
   CommandsContainer,
   StageSubItemGroup,
 } from '@shared/components/CommandMenu/commands/shared';
-import {
-  RelationshipSubItemGroup,
-  UpdateHealthStatusSubItemGroup,
-} from '@shared/components/CommandMenu/commands/organization';
 
 import { OwnerSubItemGroup } from './shared/OwnerSubItemGroup';
 import { AddTagSubItemGroup } from './organization/AddTagSubItemGroup';
@@ -86,31 +83,6 @@ export const OrganizationCommands = observer(() => {
             Remove tags
           </CommandItem>
         )}
-
-        <CommandItem
-          leftAccessory={<Icon name='align-horizontal-centre-02' />}
-          onSelect={() => {
-            store.ui.commandMenu.setType('ChangeRelationship');
-          }}
-          keywords={[
-            'change',
-            'relationship',
-            'status',
-            'update',
-            'edit',
-            'customer',
-            'prospect',
-            'former customer',
-            'unqualified',
-          ]}
-        >
-          Change relationship...
-        </CommandItem>
-        <RelationshipSubItemGroup
-          selectedIds={selectedIds}
-          closeMenu={() => store.ui.commandMenu.setOpen(false)}
-          updateRelationship={organizationService.setReltionshipBulk}
-        />
 
         {organization?.relationship === OrganizationRelationship.Prospect && (
           <CommandItem
@@ -195,7 +167,7 @@ export const OrganizationCommands = observer(() => {
           Assign owner...
         </CommandItem>
         <OwnerSubItemGroup />
-        {/* 
+        {/*
         <CommandItem
           rightAccessory={<Kbd>O</Kbd>}
           leftAccessory={<Icon name='coins-stacked-01' />}

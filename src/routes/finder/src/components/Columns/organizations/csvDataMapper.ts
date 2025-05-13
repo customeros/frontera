@@ -6,24 +6,12 @@ import { ColumnViewType } from '@graphql/types';
 export const csvDataMapper = {
   [ColumnViewType.OrganizationsAvatar]: (d: Organization) => d?.logoUrl,
   [ColumnViewType.OrganizationsName]: (d: Organization) => d.name,
-  [ColumnViewType.OrganizationsRelationship]: (d: Organization) =>
-    d.relationship,
   [ColumnViewType.OrganizationsUpdatedDate]: (d: Organization) =>
     d?.updatedAt
       ? DateTimeUtils.format(d.updatedAt, DateTimeUtils.iso8601)
       : 'Unknown',
   [ColumnViewType.OrganizationsLeadSource]: (d: Organization) =>
     d?.leadSource || 'Unknown',
-
-  [ColumnViewType.OrganizationsOnboardingStatus]: (d: Organization) =>
-    d?.onboardingStatus,
-  [ColumnViewType.OrganizationsRenewalLikelihood]: (d: Organization) =>
-    d?.renewalSummaryRenewalLikelihood,
-  [ColumnViewType.OrganizationsRenewalDate]: (d: Organization) =>
-    DateTimeUtils.format(d?.renewalSummaryNextRenewalAt, DateTimeUtils.iso8601),
-  [ColumnViewType.OrganizationsForecastArr]: (d: Organization) =>
-    d?.renewalSummaryArrForecast,
-
   [ColumnViewType.OrganizationsOwner]: (d: Organization) => {
     return d.owner?.name ?? 'No owner';
   },
@@ -40,20 +28,6 @@ export const csvDataMapper = {
       ?.map((e) => e.domain)
       .join('; '),
 
-  [ColumnViewType.OrganizationsLastTouchpoint]: (d: Organization) =>
-    `${d?.lastTouchPointType} - ${DateTimeUtils.format(
-      d?.lastTouchPointAt,
-      DateTimeUtils.iso8601,
-    )}`,
-  [ColumnViewType.OrganizationsLastTouchpointDate]: (d: Organization) =>
-    d?.lastTouchPointAt
-      ? DateTimeUtils.format(d.lastTouchPointAt, DateTimeUtils.iso8601)
-      : 'Unknown',
-  [ColumnViewType.OrganizationsChurnDate]: (d: Organization) =>
-    d?.churnedAt
-      ? DateTimeUtils.format(d.churnedAt, DateTimeUtils.iso8601)
-      : 'Unknown',
-  [ColumnViewType.OrganizationsLtv]: (d: Organization) => d?.ltv,
   [ColumnViewType.OrganizationsIndustry]: (d: Organization) =>
     d.industryName ?? 'Unknown',
   [ColumnViewType.OrganizationsContactCount]: (d: Organization) =>

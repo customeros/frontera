@@ -139,27 +139,6 @@ export class Organization implements OrganizationDatum {
     })();
   };
 
-  setRelationship = (relationship: OrganizationRelationship) => {
-    this.relationship = relationship;
-    this.stage = match(relationship)
-      .with(OrganizationRelationship.Prospect, () => OrganizationStage.Lead)
-      .with(
-        OrganizationRelationship.Customer,
-        () => OrganizationStage.InitialValue,
-      )
-      .with(
-        OrganizationRelationship.NotAFit,
-        () => OrganizationStage.Unqualified,
-      )
-      .with(
-        OrganizationRelationship.FormerCustomer,
-        () => OrganizationStage.Target,
-      )
-      .otherwise(() => undefined);
-
-    this.bumpUpdatedAt();
-  };
-
   setStage = (stage: OrganizationStage) => {
     this.stage = stage;
     this.bumpUpdatedAt();

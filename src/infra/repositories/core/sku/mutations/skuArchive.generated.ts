@@ -4,7 +4,5 @@ export type SkuArchiveMutationVariables = Types.Exact<{
   id: Types.Scalars['ID']['input'];
 }>;
 
-export type SkuArchiveMutation = {
-  __typename?: 'Mutation';
-  sku_Archive: { __typename?: 'Result'; result: boolean };
-};
+
+export type SkuArchiveMutation = { __typename?: 'Mutation', sku_Archive: { __typename?: 'Result', result: boolean } };

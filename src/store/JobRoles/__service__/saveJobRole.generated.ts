@@ -4,7 +4,5 @@ export type SaveJobRolesMutationVariables = Types.Exact<{
   input: Types.JobRoleSaveInput;
 }>;
 
-export type SaveJobRolesMutation = {
-  __typename?: 'Mutation';
-  jobRole_Save: string;
-};
+
+export type SaveJobRolesMutation = { __typename?: 'Mutation', jobRole_Save: string };

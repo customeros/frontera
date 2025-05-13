@@ -4,7 +4,5 @@ export type FlagWrongFieldMutationVariables = Types.Exact<{
   input: Types.FlagWrongFieldInput;
 }>;
 
-export type FlagWrongFieldMutation = {
-  __typename?: 'Mutation';
-  flagWrongField?: { __typename?: 'Result'; result: boolean } | null;
-};
+
+export type FlagWrongFieldMutation = { __typename?: 'Mutation', flagWrongField?: { __typename?: 'Result', result: boolean } | null };

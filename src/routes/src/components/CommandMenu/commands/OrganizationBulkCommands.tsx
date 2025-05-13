@@ -15,14 +15,12 @@ import { Columns03 } from '@ui/media/icons/Columns03';
 import { ArrowBlockUp } from '@ui/media/icons/ArrowBlockUp.tsx';
 import { CoinsStacked01 } from '@ui/media/icons/CoinsStacked01';
 import { Kbd, CommandKbd, CommandItem } from '@ui/overlay/CommandMenu';
-import { AlignHorizontalCentre02 } from '@ui/media/icons/AlignHorizontalCentre02';
 import {
   CommandsContainer,
   StageSubItemGroup,
 } from '@shared/components/CommandMenu/commands/shared';
 import {
   organizationKeywords,
-  RelationshipSubItemGroup,
   UpdateHealthStatusSubItemGroup,
 } from '@shared/components/CommandMenu/commands/organization';
 
@@ -64,22 +62,6 @@ export const OrganizationBulkCommands = observer(() => {
         >
           Remove tags
         </CommandItem>
-
-        <CommandItem
-          leftAccessory={<AlignHorizontalCentre02 />}
-          keywords={organizationKeywords.change_relationship}
-          onSelect={() => {
-            store.ui.commandMenu.setType('ChangeRelationship');
-          }}
-        >
-          Change relationship...
-        </CommandItem>
-
-        <RelationshipSubItemGroup
-          selectedIds={selectedIds}
-          closeMenu={() => store.ui.commandMenu.setOpen(false)}
-          updateRelationship={organizationService.setReltionshipBulk}
-        />
 
         <CommandItem
           leftAccessory={<Columns03 />}

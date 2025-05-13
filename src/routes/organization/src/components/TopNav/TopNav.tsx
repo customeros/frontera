@@ -37,7 +37,6 @@ export const TopNav = observer(() => {
   const isPlatformOwner = store?.globalCache?.value?.isPlatformOwner ?? false;
 
   const presets = {
-    targetsPreset: store.tableViewDefs.targetsPreset,
     customersPreset: store.tableViewDefs.customersPreset,
     organizationsPreset: store.tableViewDefs.organizationsPreset,
     upcomingInvoicesPreset: store.tableViewDefs.upcomingInvoicesPreset,

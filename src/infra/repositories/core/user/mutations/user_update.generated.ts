@@ -4,7 +4,5 @@ export type UserUpdateMutationVariables = Types.Exact<{
   input: Types.UserUpdateInput;
 }>;
 
-export type UserUpdateMutation = {
-  __typename?: 'Mutation';
-  user_Update: { __typename?: 'User'; id: string };
-};
+
+export type UserUpdateMutation = { __typename?: 'Mutation', user_Update: { __typename?: 'User', id: string } };

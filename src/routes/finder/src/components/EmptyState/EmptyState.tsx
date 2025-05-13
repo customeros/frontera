@@ -57,18 +57,6 @@ export const EmptyState = observer(() => {
             navigate(`/finder?preset=${allOrgsView}`);
           },
         };
-
-      case TableIdType.Targets:
-        return {
-          title: 'Bullseye pending',
-          description:
-            'We’re sorting through your Leads in the Companies view using your Ideal Company Profile. Once qualified, they will automatically show up here as Targets.',
-          buttonLabel: 'Go to Companies',
-          dataTest: 'targets-go-to-leads',
-          onClick: () => {
-            navigate(`/finder?preset=${allOrgsView}`);
-          },
-        };
       case TableIdType.Contracts:
         return {
           title: 'No signatures yet',

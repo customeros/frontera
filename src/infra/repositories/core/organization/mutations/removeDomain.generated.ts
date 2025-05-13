@@ -5,10 +5,5 @@ export type RemoveDomainMutationVariables = Types.Exact<{
   domain: Types.Scalars['String']['input'];
 }>;
 
-export type RemoveDomainMutation = {
-  __typename?: 'Mutation';
-  organization_RemoveDomain: {
-    __typename?: 'ActionResponse';
-    accepted: boolean;
-  };
-};
+
+export type RemoveDomainMutation = { __typename?: 'Mutation', organization_RemoveDomain: { __typename?: 'ActionResponse', accepted: boolean } };

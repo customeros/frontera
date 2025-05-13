@@ -4,7 +4,5 @@ export type DisconnectCalendarMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
 }>;
 
-export type DisconnectCalendarMutation = {
-  __typename?: 'Mutation';
-  nylasDisconnect: boolean;
-};
+
+export type DisconnectCalendarMutation = { __typename?: 'Mutation', nylasDisconnect: boolean };

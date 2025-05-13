@@ -4,7 +4,5 @@ export type AdminSwitchCurrentWorkspaceMutationVariables = Types.Exact<{
   tenant: Types.Scalars['String']['input'];
 }>;
 
-export type AdminSwitchCurrentWorkspaceMutation = {
-  __typename?: 'Mutation';
-  admin_switchCurrentWorkspace: boolean;
-};
+
+export type AdminSwitchCurrentWorkspaceMutation = { __typename?: 'Mutation', admin_switchCurrentWorkspace: boolean };

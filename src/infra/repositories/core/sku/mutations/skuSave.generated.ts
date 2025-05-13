@@ -4,14 +4,5 @@ export type SkuSaveMutationVariables = Types.Exact<{
   input: Types.SkuInput;
 }>;
 
-export type SkuSaveMutation = {
-  __typename?: 'Mutation';
-  sku_Save: {
-    __typename?: 'Sku';
-    id: string;
-    name: string;
-    price: number;
-    type: Types.SkuType;
-    archived: boolean;
-  };
-};
+
+export type SkuSaveMutation = { __typename?: 'Mutation', sku_Save: { __typename?: 'Sku', id: string, name: string, price: number, type: Types.SkuType, archived: boolean } };

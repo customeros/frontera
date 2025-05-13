@@ -53,12 +53,6 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
     )?.value.id;
   }
 
-  get targetsPreset() {
-    return this?.toArray().find(
-      (t) => t.value.tableId === TableIdType.Targets && t.value.isPreset,
-    )?.value.id;
-  }
-
   get organizationsPreset() {
     return this?.toArray().find(
       (t) => t.value.tableId === TableIdType.Organizations && t.value.isPreset,

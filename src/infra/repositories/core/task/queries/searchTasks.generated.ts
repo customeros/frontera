@@ -6,12 +6,5 @@ export type SearchTasksQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Types.SortBy>;
 }>;
 
-export type SearchTasksQuery = {
-  __typename?: 'Query';
-  tasks_Search: {
-    __typename?: 'TaskSearchResult';
-    tasks: Array<string>;
-    totalElements: any;
-    totalAvailable: any;
-  };
-};
+
+export type SearchTasksQuery = { __typename?: 'Query', tasks_Search: { __typename?: 'TaskSearchResult', tasks: Array<string>, totalElements: any, totalAvailable: any } };
