@@ -68,38 +68,22 @@ export const invoicesHelperTextMap: Record<
 
 type OrganizationsColumnType =
   | ColumnViewType.OrganizationsAvatar
-  | ColumnViewType.OrganizationsForecastArr
-  | ColumnViewType.OrganizationsLastTouchpoint
   | ColumnViewType.OrganizationsName
-  | ColumnViewType.OrganizationsOwner
-  | ColumnViewType.OrganizationsOnboardingStatus
-  | ColumnViewType.OrganizationsRelationship
-  | ColumnViewType.OrganizationsRenewalLikelihood
-  | ColumnViewType.OrganizationsRenewalDate
-  | ColumnViewType.OrganizationsChurnDate
-  | ColumnViewType.OrganizationsParentOrganization;
+  | ColumnViewType.OrganizationsOwner;
 
 export const organizationsOptionsMap: Record<
   OrganizationsColumnType | string,
   string
 > = {
   [ColumnViewType.OrganizationsAvatar]: 'Logo',
-  [ColumnViewType.OrganizationsForecastArr]: 'ARR Forecast',
-  [ColumnViewType.OrganizationsLastTouchpoint]: 'Last Touchpoint',
   [ColumnViewType.OrganizationsName]: 'Company',
+  [ColumnViewType.OrganizationsIcpFit]: 'ICP',
   [ColumnViewType.OrganizationsOwner]: 'Owner',
-  [ColumnViewType.OrganizationsOnboardingStatus]: 'Onboarding',
-  [ColumnViewType.OrganizationsRelationship]: 'Relationship',
-  [ColumnViewType.OrganizationsRenewalLikelihood]: 'Health',
-  [ColumnViewType.OrganizationsRenewalDate]: 'Renewal Date',
   [ColumnViewType.OrganizationsLeadSource]: 'Source',
   [ColumnViewType.OrganizationsSocials]: 'LinkedIn',
   [ColumnViewType.OrganizationsCreatedDate]: 'Created Date',
   [ColumnViewType.OrganizationsEmployeeCount]: 'Employees',
   [ColumnViewType.OrganizationsYearFounded]: 'Founded',
-  [ColumnViewType.OrganizationsLastTouchpointDate]: 'Last Interacted',
-  [ColumnViewType.OrganizationsChurnDate]: 'Churn Date',
-  [ColumnViewType.OrganizationsLtv]: 'LTV',
   [ColumnViewType.OrganizationsIndustry]: 'Industry',
   [ColumnViewType.OrganizationsTags]: 'Tags',
   [ColumnViewType.OrganizationsLinkedinFollowerCount]: 'Linkedin Followers',
@@ -107,7 +91,6 @@ export const organizationsOptionsMap: Record<
   [ColumnViewType.OrganizationsIsPublic]: 'Ownership Type',
   [ColumnViewType.OrganizationsContactCount]: 'Contacts',
   [ColumnViewType.OrganizationsCountry]: 'Country',
-  [ColumnViewType.OrganizationsParentOrganization]: 'Parent company',
   [ColumnViewType.OrganizationsUpdatedDate]: 'Last Updated',
   [ColumnViewType.OrganizationsPrimaryDomains]: 'Primary Domains',
 };
@@ -117,30 +100,21 @@ export const organizationsHelperTextMap: Record<
   string
 > = {
   [ColumnViewType.OrganizationsAvatar]: 'E.g. Logo',
-  [ColumnViewType.OrganizationsForecastArr]: 'E.g. $6,450',
-  [ColumnViewType.OrganizationsLastTouchpoint]: 'E.g. Issue updated',
   [ColumnViewType.OrganizationsName]: 'E.g. Pile Contract',
+  [ColumnViewType.OrganizationsIcpFit]: 'E.g. ICP',
   [ColumnViewType.OrganizationsOwner]: 'E.g. Howard Hu',
-  [ColumnViewType.OrganizationsOnboardingStatus]: 'E.g. Onboarding',
-  [ColumnViewType.OrganizationsRelationship]: 'E.g. Customer',
-  [ColumnViewType.OrganizationsRenewalLikelihood]: 'E.g. High',
-  [ColumnViewType.OrganizationsRenewalDate]: 'E.g. 3 Aug 2027',
   [ColumnViewType.OrganizationsLeadSource]: 'E.g. Newsletter',
   [ColumnViewType.OrganizationsSocials]: 'E.g. /acmecorp',
   [ColumnViewType.OrganizationsCreatedDate]: 'E.g. 28 Mar 2019',
   [ColumnViewType.OrganizationsEmployeeCount]: 'E.g. 192',
   [ColumnViewType.OrganizationsYearFounded]: 'E.g. 2017',
-  [ColumnViewType.OrganizationsLastTouchpointDate]: 'E.g. 16 Sep 2025',
   [ColumnViewType.OrganizationsIsPublic]: 'E.g. Private',
   [ColumnViewType.OrganizationsLinkedinFollowerCount]: 'E.g. 15,930',
   [ColumnViewType.OrganizationsTags]: 'E.g. Solo RevOps',
   [ColumnViewType.OrganizationsContactCount]: 'E.g. 5',
   [ColumnViewType.OrganizationsIndustry]: 'E.g. Software',
   [ColumnViewType.OrganizationsStage]: 'E.g. Lead',
-  [ColumnViewType.OrganizationsChurnDate]: 'E.g. 15 Aug 2024',
-  [ColumnViewType.OrganizationsLtv]: 'E.g. $109,280',
   [ColumnViewType.OrganizationsCountry]: 'E.g. Germany',
-  [ColumnViewType.OrganizationsParentOrganization]: 'E.g. Alphabet',
   [ColumnViewType.OrganizationsUpdatedDate]: 'E.g. 16 Sep 2024',
   [ColumnViewType.OrganizationsPrimaryDomains]: 'eg. pile.com',
 };
@@ -152,7 +126,6 @@ export const contactsHelperTextMap: Record<string, string> = {
   [ColumnViewType.ContactsCity]: 'E.g. Cape Town',
   [ColumnViewType.ContactsPersona]: 'E.g. Champion',
   [ColumnViewType.ContactsLastInteraction]: 'E.g. 16 Sep 2025',
-  [ColumnViewType.ContactsEmails]: 'E.g. john.doe@acme.com',
   [ColumnViewType.ContactsPhoneNumbers]: 'E.g. (907) 834-2765',
   [ColumnViewType.ContactsLanguages]: 'E.g. English',
   [ColumnViewType.ContactsTimeInCurrentRole]: 'E.g. 2 years',
@@ -165,7 +138,6 @@ export const contactsHelperTextMap: Record<string, string> = {
   [ColumnViewType.ContactsExperience]: 'E.g. 4 yrs',
   [ColumnViewType.ContactsRegion]: 'E.g. California',
   [ColumnViewType.ContactsFlows]: 'E.g. Education',
-  [ColumnViewType.ContactsPersonalEmails]: 'E.g. steph@convoy.com',
   [ColumnViewType.ContactsPrimaryEmail]: 'E.g. steph@acme.com',
   [ColumnViewType.ContactsFlowStatus]: 'E.g. Completed',
   [ColumnViewType.ContactsFlowNextAction]: ' E.g. Step 2/3',

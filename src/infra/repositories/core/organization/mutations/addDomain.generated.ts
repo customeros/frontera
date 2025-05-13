@@ -5,7 +5,5 @@ export type AddDomainMutationVariables = Types.Exact<{
   domain: Types.Scalars['String']['input'];
 }>;
 
-export type AddDomainMutation = {
-  __typename?: 'Mutation';
-  organization_AddDomain: { __typename?: 'ActionResponse'; accepted: boolean };
-};
+
+export type AddDomainMutation = { __typename?: 'Mutation', organization_AddDomain: { __typename?: 'ActionResponse', accepted: boolean } };

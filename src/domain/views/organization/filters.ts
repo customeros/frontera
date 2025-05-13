@@ -76,16 +76,6 @@ const getFilterV2Fn = (
       },
     )
     .with(
-      { property: ColumnViewType.OrganizationsParentOrganization },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-
-        const values = row?.parentName?.toLowerCase();
-
-        return filterTypeText(filter, values);
-      },
-    )
-    .with(
       { property: ColumnViewType.OrganizationsPrimaryDomains },
       (filter) => (row: Organization) => {
         if (!filter.active) return true;
@@ -94,25 +84,6 @@ const getFilterV2Fn = (
         const value = organizationAggregate.primaryDomains?.join(' ') || '';
 
         return filterTypeText(filter, value);
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsRelationship },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-
-        const values = row?.relationship;
-
-        if (!values)
-          return (
-            filter.operation === ComparisonOperator.IsEmpty ||
-            filter.operation === ComparisonOperator.NotIn
-          );
-
-        return filterTypeList(
-          filter,
-          Array.isArray(values) ? values : [values],
-        );
       },
     )
     .with(
@@ -126,58 +97,6 @@ const getFilterV2Fn = (
             filter.operation === ComparisonOperator.IsEmpty ||
             filter.operation === ComparisonOperator.NotIn
           );
-
-        return filterTypeList(
-          filter,
-          Array.isArray(values) ? values : [values],
-        );
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsForecastArr },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const forecastValue = row?.renewalSummaryArrForecast;
-
-        if (typeof forecastValue !== 'number') return false;
-
-        return filterTypeNumber(filter, forecastValue);
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsRenewalDate },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const nextRenewalDate = row?.renewalSummaryNextRenewalAt?.split('T')[0];
-
-        return filterTypeDate(filter, nextRenewalDate);
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsOnboardingStatus },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const values = row?.onboardingStatus;
-
-        if (!values)
-          return (
-            filter.operation === ComparisonOperator.IsEmpty ||
-            filter.operation === ComparisonOperator.NotContains
-          );
-
-        return filterTypeList(
-          filter,
-          Array.isArray(values) ? values : [values],
-        );
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsRenewalLikelihood },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const values = row?.renewalSummaryRenewalLikelihood;
-
-        if (!values) return filter.operation === ComparisonOperator.IsEmpty;
 
         return filterTypeList(
           filter,
@@ -205,35 +124,6 @@ const getFilterV2Fn = (
       },
     )
     .with(
-      { property: ColumnViewType.OrganizationsLastTouchpoint },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const lastTouchpoint = row?.lastTouchPointType;
-
-        if (!lastTouchpoint)
-          return (
-            filter.operation === ComparisonOperator.IsEmpty ||
-            filter.operation === ComparisonOperator.NotIn
-          );
-
-        return filterTypeList(
-          filter,
-          Array.isArray(lastTouchpoint) ? lastTouchpoint : [lastTouchpoint],
-        );
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsChurnDate },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const churned = row?.churnedAt;
-
-        if (!churned) return false;
-
-        return filterTypeDate(filter, churned);
-      },
-    )
-    .with(
       { property: ColumnViewType.OrganizationsSocials },
       (filter) => (row: Organization) => {
         if (!filter.active) return true;
@@ -244,15 +134,6 @@ const getFilterV2Fn = (
         const linkedInStr = linkedinSocial?.alias || linkedinSocial?.url;
 
         return filterTypeText(filter, linkedInStr);
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsLastTouchpointDate },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const lastTouchpointAt = row?.lastTouchPointAt;
-
-        return filterTypeDate(filter, lastTouchpointAt);
       },
     )
     .with(
@@ -315,17 +196,6 @@ const getFilterV2Fn = (
           );
 
         return filterTypeList(filter, Array.isArray(value) ? value : [value]);
-      },
-    )
-    .with(
-      { property: ColumnViewType.OrganizationsLtv },
-      (filter) => (row: Organization) => {
-        if (!filter.active) return true;
-        const ltv = row?.ltv;
-
-        if (!ltv) return false;
-
-        return filterTypeNumber(filter, ltv);
       },
     )
     .with({ property: ColumnViewType.OrganizationsCountry }, (filter) => {

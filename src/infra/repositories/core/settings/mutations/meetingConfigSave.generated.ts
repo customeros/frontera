@@ -4,7 +4,5 @@ export type MeetingConfigSaveMutationVariables = Types.Exact<{
   input: Types.SaveMeetingBookingEventInput;
 }>;
 
-export type MeetingConfigSaveMutation = {
-  __typename?: 'Mutation';
-  meetingBookingEvent_Save: { __typename?: 'MeetingBookingEvent'; id: string };
-};
+
+export type MeetingConfigSaveMutation = { __typename?: 'Mutation', meetingBookingEvent_Save: { __typename?: 'MeetingBookingEvent', id: string } };

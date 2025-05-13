@@ -4,7 +4,5 @@ export type AgentArchiveMutationVariables = Types.Exact<{
   id: Types.Scalars['ID']['input'];
 }>;
 
-export type AgentArchiveMutation = {
-  __typename?: 'Mutation';
-  agent_Delete: boolean;
-};
+
+export type AgentArchiveMutation = { __typename?: 'Mutation', agent_Delete: boolean };

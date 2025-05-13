@@ -4,25 +4,16 @@ import { Tag01 } from '@ui/media/icons/Tag01';
 import { Hash02 } from '@ui/media/icons/Hash02';
 import { Globe01 } from '@ui/media/icons/Globe01';
 import { Users03 } from '@ui/media/icons/Users03';
-import { Trophy01 } from '@ui/media/icons/Trophy01';
 import { Calendar } from '@ui/media/icons/Calendar';
-import { Activity } from '@ui/media/icons/Activity';
 import { Columns03 } from '@ui/media/icons/Columns03';
 import { Building07 } from '@ui/media/icons/Building07';
-import { Calculator } from '@ui/media/icons/Calculator';
 import { Building05 } from '@ui/media/icons/Building05';
 import { ArrowCircleDownRight } from '@ui/media/icons/ArrowCircleDownRight';
-import { CurrencyDollarCircle } from '@ui/media/icons/CurrencyDollarCircle';
-import { AlignHorizontalCentre02 } from '@ui/media/icons/AlignHorizontalCentre02';
 import {
   EntityType,
   ColumnViewType,
-  OnboardingStatus,
   OrganizationStage,
   ComparisonOperator,
-  LastTouchpointType,
-  OrganizationRelationship,
-  OpportunityRenewalLikelihood,
 } from '@shared/types/__generated__/graphql.types';
 
 export type FilterType = {
@@ -72,120 +63,6 @@ export const getFilterTypes = (store?: RootStore) => {
       ],
       icon: (
         <Globe01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-    },
-    [ColumnViewType.OrganizationsRelationship]: {
-      filterType: 'list',
-      filterName: 'Relationship',
-      filterAccesor: ColumnViewType.OrganizationsRelationship,
-      filterOperators: [ComparisonOperator.In, ComparisonOperator.NotIn],
-      icon: (
-        <AlignHorizontalCentre02 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-      options: [
-        {
-          label: 'Customer',
-          id: OrganizationRelationship.Customer,
-        },
-        {
-          label: 'Prospect',
-          id: OrganizationRelationship.Prospect,
-        },
-        {
-          label: 'Not a Fit',
-          id: OrganizationRelationship.NotAFit,
-        },
-        {
-          label: 'Former Customer',
-          id: OrganizationRelationship.FormerCustomer,
-        },
-      ],
-    },
-    [ColumnViewType.OrganizationsRenewalLikelihood]: {
-      filterType: 'list',
-      filterName: 'Health',
-      filterAccesor: ColumnViewType.OrganizationsRenewalLikelihood,
-      filterOperators: [
-        ComparisonOperator.In,
-        ComparisonOperator.NotIn,
-        ComparisonOperator.IsEmpty,
-        ComparisonOperator.IsNotEmpty,
-      ],
-      icon: (
-        <Activity className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-      options: [
-        { id: OpportunityRenewalLikelihood.HighRenewal, label: 'High' },
-        { id: OpportunityRenewalLikelihood.MediumRenewal, label: 'Medium' },
-        { id: OpportunityRenewalLikelihood.LowRenewal, label: 'Low' },
-        { id: OpportunityRenewalLikelihood.ZeroRenewal, label: 'Zero' },
-      ],
-    },
-    [ColumnViewType.OrganizationsOnboardingStatus]: {
-      filterType: 'list',
-      filterName: 'Onboarding status',
-      filterAccesor: ColumnViewType.OrganizationsOnboardingStatus,
-      filterOperators: [
-        ComparisonOperator.In,
-        ComparisonOperator.NotIn,
-        ComparisonOperator.IsEmpty,
-        ComparisonOperator.IsNotEmpty,
-      ],
-      icon: (
-        <Trophy01 className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-      options: [
-        {
-          id: OnboardingStatus.Done,
-          label: 'Done',
-        },
-        {
-          id: OnboardingStatus.Stuck,
-          label: 'Stuck',
-        },
-        {
-          id: OnboardingStatus.Late,
-          label: 'Late',
-        },
-        {
-          id: OnboardingStatus.OnTrack,
-          label: 'On track',
-        },
-        {
-          id: OnboardingStatus.Successful,
-          label: 'Successful',
-        },
-        {
-          id: OnboardingStatus.NotStarted,
-          label: 'Not started',
-        },
-        {
-          id: OnboardingStatus.NotApplicable,
-          label: 'Not applicable',
-        },
-      ],
-    },
-    [ColumnViewType.OrganizationsRenewalDate]: {
-      filterType: 'date',
-      filterName: 'Renewal date',
-      filterAccesor: ColumnViewType.OrganizationsRenewalDate,
-      filterOperators: [ComparisonOperator.Gt, ComparisonOperator.Lt],
-      icon: (
-        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-    },
-    [ColumnViewType.OrganizationsForecastArr]: {
-      filterType: 'number',
-      filterName: 'ARR forecast',
-      filterAccesor: ColumnViewType.OrganizationsForecastArr,
-      filterOperators: [
-        ComparisonOperator.Gt,
-        ComparisonOperator.Lt,
-        ComparisonOperator.Equals,
-        ComparisonOperator.NotEquals,
-      ],
-      icon: (
-        <Calculator className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsOwner]: {
@@ -278,65 +155,6 @@ export const getFilterTypes = (store?: RootStore) => {
       ],
       icon: (
         <LinkedinOutline className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-    },
-    [ColumnViewType.OrganizationsLastTouchpoint]: {
-      filterType: 'list',
-      filterName: 'Last touchpoint',
-      filterAccesor: ColumnViewType.OrganizationsLastTouchpoint,
-      filterOperators: [ComparisonOperator.In, ComparisonOperator.NotIn],
-      icon: (
-        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-      options: [
-        {
-          id: LastTouchpointType.InteractionEventEmailSent,
-          label: 'Email sent',
-        },
-        { id: LastTouchpointType.IssueCreated, label: 'Issue created' },
-        { id: LastTouchpointType.IssueUpdated, label: 'Issue updated' },
-        { id: LastTouchpointType.LogEntry, label: 'Log entry' },
-        { id: LastTouchpointType.Meeting, label: 'Meeting' },
-        {
-          id: LastTouchpointType.InteractionEventChat,
-          label: 'Message received',
-        },
-        {
-          id: LastTouchpointType.ActionCreated,
-          label: 'Organization created',
-        },
-      ],
-    },
-    [ColumnViewType.OrganizationsChurnDate]: {
-      filterType: 'date',
-      filterName: 'Churn date',
-      filterAccesor: ColumnViewType.OrganizationsChurnDate,
-      filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
-      icon: (
-        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-    },
-    [ColumnViewType.OrganizationsLastTouchpointDate]: {
-      filterType: 'date',
-      filterName: 'Last interacted',
-      filterAccesor: ColumnViewType.OrganizationsLastTouchpointDate,
-      filterOperators: [ComparisonOperator.Lt, ComparisonOperator.Gt],
-      icon: (
-        <Calendar className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
-      ),
-    },
-    [ColumnViewType.OrganizationsLtv]: {
-      filterType: 'number',
-      filterName: 'LTV',
-      filterAccesor: ColumnViewType.OrganizationsLtv,
-      filterOperators: [
-        ComparisonOperator.Gt,
-        ComparisonOperator.Lt,
-        ComparisonOperator.Equals,
-        ComparisonOperator.NotEquals,
-      ],
-      icon: (
-        <CurrencyDollarCircle className='group-hover:text-grayModern-700 text-grayModern-500 mb-0.5' />
       ),
     },
     [ColumnViewType.OrganizationsIndustry]: {

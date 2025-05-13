@@ -566,34 +566,24 @@ export enum ColumnViewType {
   OpportunitiesTasks = 'OPPORTUNITIES_TASKS',
   OpportunitiesTimeInStage = 'OPPORTUNITIES_TIME_IN_STAGE',
   OrganizationsAvatar = 'ORGANIZATIONS_AVATAR',
-  OrganizationsChurnDate = 'ORGANIZATIONS_CHURN_DATE',
   OrganizationsCity = 'ORGANIZATIONS_CITY',
   OrganizationsContactCount = 'ORGANIZATIONS_CONTACT_COUNT',
   OrganizationsCountry = 'ORGANIZATIONS_COUNTRY',
   OrganizationsCreatedDate = 'ORGANIZATIONS_CREATED_DATE',
   OrganizationsEmployeeCount = 'ORGANIZATIONS_EMPLOYEE_COUNT',
-  OrganizationsForecastArr = 'ORGANIZATIONS_FORECAST_ARR',
   OrganizationsHeadquarters = 'ORGANIZATIONS_HEADQUARTERS',
+  OrganizationsIcpFit = 'ORGANIZATIONS_ICP_FIT',
   OrganizationsIndustry = 'ORGANIZATIONS_INDUSTRY',
   OrganizationsIsPublic = 'ORGANIZATIONS_IS_PUBLIC',
-  OrganizationsLastTouchpoint = 'ORGANIZATIONS_LAST_TOUCHPOINT',
-  OrganizationsLastTouchpointDate = 'ORGANIZATIONS_LAST_TOUCHPOINT_DATE',
   OrganizationsLeadSource = 'ORGANIZATIONS_LEAD_SOURCE',
   OrganizationsLinkedinFollowerCount = 'ORGANIZATIONS_LINKEDIN_FOLLOWER_COUNT',
-  OrganizationsLtv = 'ORGANIZATIONS_LTV',
   OrganizationsName = 'ORGANIZATIONS_NAME',
-  OrganizationsOnboardingStatus = 'ORGANIZATIONS_ONBOARDING_STATUS',
   OrganizationsOwner = 'ORGANIZATIONS_OWNER',
-  OrganizationsParentOrganization = 'ORGANIZATIONS_PARENT_ORGANIZATION',
   OrganizationsPrimaryDomains = 'ORGANIZATIONS_PRIMARY_DOMAINS',
-  OrganizationsRelationship = 'ORGANIZATIONS_RELATIONSHIP',
-  OrganizationsRenewalDate = 'ORGANIZATIONS_RENEWAL_DATE',
-  OrganizationsRenewalLikelihood = 'ORGANIZATIONS_RENEWAL_LIKELIHOOD',
   OrganizationsSocials = 'ORGANIZATIONS_SOCIALS',
   OrganizationsStage = 'ORGANIZATIONS_STAGE',
   OrganizationsTags = 'ORGANIZATIONS_TAGS',
   OrganizationsUpdatedDate = 'ORGANIZATIONS_UPDATED_DATE',
-  OrganizationsWebsite = 'ORGANIZATIONS_WEBSITE',
   OrganizationsYearFounded = 'ORGANIZATIONS_YEAR_FOUNDED',
   TasksAssignees = 'TASKS_ASSIGNEES',
   TasksAuthor = 'TASKS_AUTHOR',
@@ -1379,152 +1369,6 @@ export type CustomerUser = {
   __typename?: 'CustomerUser';
   id: Scalars['ID']['output'];
   jobRole: CustomerJobRole;
-};
-
-export type DashboardArrBreakdown = {
-  __typename?: 'DashboardARRBreakdown';
-  arrBreakdown: Scalars['Float']['output'];
-  increasePercentage: Scalars['String']['output'];
-  perMonth: Array<Maybe<DashboardArrBreakdownPerMonth>>;
-};
-
-export type DashboardArrBreakdownPerMonth = {
-  __typename?: 'DashboardARRBreakdownPerMonth';
-  cancellations: Scalars['Float']['output'];
-  churned: Scalars['Float']['output'];
-  downgrades: Scalars['Float']['output'];
-  month: Scalars['Int']['output'];
-  newlyContracted: Scalars['Float']['output'];
-  renewals: Scalars['Float']['output'];
-  upsells: Scalars['Float']['output'];
-  year: Scalars['Int']['output'];
-};
-
-export type DashboardCustomerMap = {
-  __typename?: 'DashboardCustomerMap';
-  arr: Scalars['Float']['output'];
-  contractSignedDate: Scalars['Time']['output'];
-  organization: Organization;
-  organizationId: Scalars['ID']['output'];
-  state: DashboardCustomerMapState;
-};
-
-export enum DashboardCustomerMapState {
-  /**
-   * Deprecated
-   * @deprecated Use HIGH_RISK instead
-   */
-  AtRisk = 'AT_RISK',
-  Churned = 'CHURNED',
-  HighRisk = 'HIGH_RISK',
-  MediumRisk = 'MEDIUM_RISK',
-  Ok = 'OK',
-}
-
-export type DashboardGrossRevenueRetention = {
-  __typename?: 'DashboardGrossRevenueRetention';
-  grossRevenueRetention: Scalars['Float']['output'];
-  /**
-   * Deprecated
-   * @deprecated Use increasePercentageValue instead
-   */
-  increasePercentage: Scalars['String']['output'];
-  increasePercentageValue: Scalars['Float']['output'];
-  perMonth: Array<Maybe<DashboardGrossRevenueRetentionPerMonth>>;
-};
-
-export type DashboardGrossRevenueRetentionPerMonth = {
-  __typename?: 'DashboardGrossRevenueRetentionPerMonth';
-  month: Scalars['Int']['output'];
-  percentage: Scalars['Float']['output'];
-  year: Scalars['Int']['output'];
-};
-
-export type DashboardMrrPerCustomer = {
-  __typename?: 'DashboardMRRPerCustomer';
-  increasePercentage: Scalars['String']['output'];
-  mrrPerCustomer: Scalars['Float']['output'];
-  perMonth: Array<Maybe<DashboardMrrPerCustomerPerMonth>>;
-};
-
-export type DashboardMrrPerCustomerPerMonth = {
-  __typename?: 'DashboardMRRPerCustomerPerMonth';
-  month: Scalars['Int']['output'];
-  value: Scalars['Float']['output'];
-  year: Scalars['Int']['output'];
-};
-
-export type DashboardNewCustomers = {
-  __typename?: 'DashboardNewCustomers';
-  perMonth: Array<Maybe<DashboardNewCustomersPerMonth>>;
-  thisMonthCount: Scalars['Int']['output'];
-  thisMonthIncreasePercentage: Scalars['String']['output'];
-};
-
-export type DashboardNewCustomersPerMonth = {
-  __typename?: 'DashboardNewCustomersPerMonth';
-  count: Scalars['Int']['output'];
-  month: Scalars['Int']['output'];
-  year: Scalars['Int']['output'];
-};
-
-export type DashboardOnboardingCompletion = {
-  __typename?: 'DashboardOnboardingCompletion';
-  completionPercentage: Scalars['Float']['output'];
-  increasePercentage: Scalars['Float']['output'];
-  perMonth: Array<DashboardOnboardingCompletionPerMonth>;
-};
-
-export type DashboardOnboardingCompletionPerMonth = {
-  __typename?: 'DashboardOnboardingCompletionPerMonth';
-  month: Scalars['Int']['output'];
-  value: Scalars['Float']['output'];
-  year: Scalars['Int']['output'];
-};
-
-export type DashboardPeriodInput = {
-  end: Scalars['Time']['input'];
-  start: Scalars['Time']['input'];
-};
-
-export type DashboardRetentionRate = {
-  __typename?: 'DashboardRetentionRate';
-  /**
-   * Deprecated
-   * @deprecated Use increasePercentageValue instead
-   */
-  increasePercentage: Scalars['String']['output'];
-  increasePercentageValue: Scalars['Float']['output'];
-  perMonth: Array<Maybe<DashboardRetentionRatePerMonth>>;
-  retentionRate: Scalars['Float']['output'];
-};
-
-export type DashboardRetentionRatePerMonth = {
-  __typename?: 'DashboardRetentionRatePerMonth';
-  churnCount: Scalars['Int']['output'];
-  month: Scalars['Int']['output'];
-  renewCount: Scalars['Int']['output'];
-  year: Scalars['Int']['output'];
-};
-
-export type DashboardRevenueAtRisk = {
-  __typename?: 'DashboardRevenueAtRisk';
-  atRisk: Scalars['Float']['output'];
-  highConfidence: Scalars['Float']['output'];
-};
-
-export type DashboardTimeToOnboard = {
-  __typename?: 'DashboardTimeToOnboard';
-  increasePercentage?: Maybe<Scalars['Float']['output']>;
-  perMonth: Array<DashboardTimeToOnboardPerMonth>;
-  timeToOnboard?: Maybe<Scalars['Float']['output']>;
-};
-
-export type DashboardTimeToOnboardPerMonth = {
-  __typename?: 'DashboardTimeToOnboardPerMonth';
-  month: Scalars['Int']['output'];
-  value: Scalars['Float']['output'];
-  year: Scalars['Int']['output'];
 };
 
 export enum DataSource {
@@ -4187,6 +4031,7 @@ export type Organization = MetadataInterface & {
   phoneNumbers: Array<PhoneNumber>;
   public?: Maybe<Scalars['Boolean']['output']>;
   referenceId?: Maybe<Scalars['String']['output']>;
+  /** @deprecated No longer supported */
   relationship?: Maybe<OrganizationRelationship>;
   slackChannelId?: Maybe<Scalars['String']['output']>;
   socialMedia: Array<Social>;
@@ -4356,14 +4201,20 @@ export type OrganizationSearchResult = {
 };
 
 export enum OrganizationStage {
+  Customer = 'CUSTOMER',
+  Education = 'EDUCATION',
   Engaged = 'ENGAGED',
+  Evaluation = 'EVALUATION',
   InitialValue = 'INITIAL_VALUE',
   Lead = 'LEAD',
   MaxValue = 'MAX_VALUE',
+  NotAFit = 'NOT_A_FIT',
   Onboarding = 'ONBOARDING',
+  Opportunity = 'OPPORTUNITY',
   PendingChurn = 'PENDING_CHURN',
   ReadyToBuy = 'READY_TO_BUY',
   RecurringValue = 'RECURRING_VALUE',
+  Solution = 'SOLUTION',
   Target = 'TARGET',
   Trial = 'TRIAL',
   Unqualified = 'UNQUALIFIED',
@@ -4650,15 +4501,6 @@ export type Query = {
   /** sort.By available options: ORGANIZATION, IS_CUSTOMER, DOMAIN, LOCATION, OWNER, LAST_TOUCHPOINT, RENEWAL_LIKELIHOOD, FORECAST_ARR, RENEWAL_DATE, ONBOARDING_STATUS */
   dashboardView_Organizations?: Maybe<OrganizationPage>;
   dashboardView_Renewals?: Maybe<RenewalsPage>;
-  dashboard_ARRBreakdown?: Maybe<DashboardArrBreakdown>;
-  dashboard_CustomerMap?: Maybe<Array<DashboardCustomerMap>>;
-  dashboard_GrossRevenueRetention?: Maybe<DashboardGrossRevenueRetention>;
-  dashboard_MRRPerCustomer?: Maybe<DashboardMrrPerCustomer>;
-  dashboard_NewCustomers?: Maybe<DashboardNewCustomers>;
-  dashboard_OnboardingCompletion?: Maybe<DashboardOnboardingCompletion>;
-  dashboard_RetentionRate?: Maybe<DashboardRetentionRate>;
-  dashboard_RevenueAtRisk?: Maybe<DashboardRevenueAtRisk>;
-  dashboard_TimeToOnboard?: Maybe<DashboardTimeToOnboard>;
   email: Email;
   email_ProfilePhoto: Array<EmailProfile>;
   externalMeetings: MeetingsPage;
@@ -4800,38 +4642,6 @@ export type QueryDashboardView_RenewalsArgs = {
   pagination: Pagination;
   sort?: InputMaybe<SortBy>;
   where?: InputMaybe<Filter>;
-};
-
-export type QueryDashboard_ArrBreakdownArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_GrossRevenueRetentionArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_MrrPerCustomerArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_NewCustomersArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_OnboardingCompletionArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_RetentionRateArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_RevenueAtRiskArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
-};
-
-export type QueryDashboard_TimeToOnboardArgs = {
-  period?: InputMaybe<DashboardPeriodInput>;
 };
 
 export type QueryEmailArgs = {
@@ -5364,7 +5174,6 @@ export enum TableIdType {
   OpportunitiesRecords = 'OPPORTUNITIES_RECORDS',
   Organizations = 'ORGANIZATIONS',
   PastInvoices = 'PAST_INVOICES',
-  Targets = 'TARGETS',
   Tasks = 'TASKS',
   UpcomingInvoices = 'UPCOMING_INVOICES',
 }
@@ -5681,6 +5490,7 @@ export type TenantSettingsInput = {
   logoUrl?: InputMaybe<Scalars['String']['input']>;
   patch?: InputMaybe<Scalars['Boolean']['input']>;
   workspaceLogo?: InputMaybe<Scalars['String']['input']>;
+  workspaceLogoUrl?: InputMaybe<Scalars['String']['input']>;
   workspaceName?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -5809,7 +5619,9 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>;
   onboarding: UserOnboardingDetails;
   phoneNumbers: Array<PhoneNumber>;
+  /** @deprecated Use profilePhotoUrlV2 */
   profilePhotoUrl?: Maybe<Scalars['String']['output']>;
+  profilePhotoUrlV2?: Maybe<Scalars['String']['output']>;
   roles: Array<Role>;
   source: DataSource;
   /** @deprecated No longer supported */
