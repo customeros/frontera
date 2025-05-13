@@ -18,7 +18,7 @@ import { CustomFieldModal } from '../CustomFieldModal';
 import {
   getCustomFieldTypes,
   getDefaultFieldTypes,
-} from '../../Organizations/filedTypes';
+} from '../../Organizations/fieldTypes';
 
 interface CustomFieldItemProps {
   store: RootStore;

@@ -15,10 +15,6 @@ export const useTablePlaceholder = (tableIdType?: TableIdType) => {
         multi: 'companies',
         single: 'company',
       }))
-      .with(TableIdType.Targets, () => ({
-        multi: 'companies',
-        single: 'company',
-      }))
       .with(TableIdType.Customers, () => ({
         multi: 'customers',
         single: 'customer',

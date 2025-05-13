@@ -61,7 +61,7 @@ export const FinderTable = observer(() => {
       ? [{ id: ColumnViewType.OpportunitiesCreatedDate, desc: true }]
       : preset === tasksPreset
       ? [{ id: ColumnViewType.TasksUpdatedAt, desc: true }]
-      : [{ id: ColumnViewType.OrganizationsLastTouchpoint, desc: true }];
+      : [{ id: ColumnViewType.OrganizationsUpdatedDate, desc: true }];
 
   const sorting: ColumnSort[] = !sortingData?.id
     ? defaultSorting

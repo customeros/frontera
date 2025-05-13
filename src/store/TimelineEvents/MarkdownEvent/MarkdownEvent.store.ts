@@ -6,7 +6,6 @@ import { Transport } from '@infra/transport';
 import { Store, makeAutoSyncable } from '@store/store';
 
 import { DataSource } from '@graphql/types';
-import { uuidv4 } from '@utils/generateUuid';
 
 import { MarkdownEventType } from './types';
 
@@ -57,7 +56,7 @@ const defaultValue: MarkdownEventType = {
     appSource: DataSource.Openline,
   },
   markdownEventMetadata: {
-    id: uuidv4(),
+    id: crypto.randomUUID(),
     created: new Date().toISOString(),
     lastUpdated: new Date().toISOString(),
     source: DataSource.Openline,

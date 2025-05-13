@@ -39,7 +39,7 @@ import {
 } from '@ui/overlay/Modal';
 
 import { DraggableItem } from './DraggbleItem';
-import { getCustomFieldTypes } from '../../Organizations/filedTypes';
+import { getCustomFieldTypes } from '../../Organizations/fieldTypes';
 
 interface NewCustomFieldModalProps {
   isOpen: boolean;

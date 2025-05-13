@@ -13,7 +13,6 @@ import { runInAction, makeAutoObservable } from 'mobx';
 import { makeAutoSyncableGroup } from '@store/group-store';
 import { FlowParticipantStore } from '@store/FlowParticipants/FlowParticipant.store';
 
-import { uuidv4 } from '@utils/generateUuid';
 import {
   Flow,
   DataSource,
@@ -334,7 +333,7 @@ export class FlowStore implements Store<Flow> {
             entityType: 'CONTACT',
             entityId: cs?.id,
             metadata: {
-              id: uuidv4(),
+              id: crypto.randomUUID(),
               source: DataSource.Openline,
               appSource: DataSource.Openline,
               created: new Date().toISOString(),

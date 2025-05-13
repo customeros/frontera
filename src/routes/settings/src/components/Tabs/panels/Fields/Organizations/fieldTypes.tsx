@@ -2,12 +2,8 @@ import { Hash02 } from '@ui/media/icons/Hash02';
 import { Calendar } from '@ui/media/icons/Calendar';
 import {
   ColumnViewType,
-  OnboardingStatus,
   OrganizationStage,
-  LastTouchpointType,
   CustomFieldTemplateType,
-  OrganizationRelationship,
-  OpportunityRenewalLikelihood,
 } from '@shared/types/__generated__/graphql.types';
 
 export type fieldType = {
@@ -45,96 +41,6 @@ export const getDefaultFieldTypes = (store?: RootStore) => {
       fieldName: 'Primary Domains',
       columnAccesor: ColumnViewType.OrganizationsPrimaryDomains,
       icon: <Globe01 className='mb-0.5' />,
-    },
-    [ColumnViewType.OrganizationsRelationship]: {
-      fieldType: CustomFieldTemplateType.SingleSelect,
-      fieldTypeName: 'Single select',
-      fieldName: 'Relationship',
-      columnAccesor: ColumnViewType.OrganizationsRelationship,
-      icon: <RadioButton />,
-      options: [
-        {
-          label: 'Customer',
-          id: OrganizationRelationship.Customer,
-        },
-        {
-          label: 'Prospect',
-          id: OrganizationRelationship.Prospect,
-        },
-        {
-          label: 'Not a Fit',
-          id: OrganizationRelationship.NotAFit,
-        },
-        {
-          label: 'Former Customer',
-          id: OrganizationRelationship.FormerCustomer,
-        },
-      ],
-    },
-    [ColumnViewType.OrganizationsRenewalLikelihood]: {
-      fieldType: CustomFieldTemplateType.SingleSelect,
-      fieldTypeName: 'Single select',
-      fieldName: 'Health',
-      columnAccesor: ColumnViewType.OrganizationsRenewalLikelihood,
-      icon: <RadioButton />,
-      options: [
-        { id: OpportunityRenewalLikelihood.HighRenewal, label: 'High' },
-        { id: OpportunityRenewalLikelihood.MediumRenewal, label: 'Medium' },
-        { id: OpportunityRenewalLikelihood.LowRenewal, label: 'Low' },
-        { id: OpportunityRenewalLikelihood.ZeroRenewal, label: 'Zero' },
-      ],
-    },
-    [ColumnViewType.OrganizationsOnboardingStatus]: {
-      fieldType: CustomFieldTemplateType.SingleSelect,
-      fieldTypeName: 'Single select',
-      fieldName: 'Onboarding status',
-      columnAccesor: ColumnViewType.OrganizationsOnboardingStatus,
-      icon: <RadioButton />,
-      options: [
-        {
-          id: OnboardingStatus.Done,
-          label: 'Done',
-        },
-        {
-          id: OnboardingStatus.Stuck,
-          label: 'Stuck',
-        },
-        {
-          id: OnboardingStatus.Late,
-          label: 'Late',
-        },
-        {
-          id: OnboardingStatus.OnTrack,
-          label: 'On track',
-        },
-        {
-          id: OnboardingStatus.Successful,
-          label: 'Successful',
-        },
-        {
-          id: OnboardingStatus.NotStarted,
-          label: 'Not started',
-        },
-        {
-          id: OnboardingStatus.NotApplicable,
-          label: 'Not applicable',
-        },
-      ],
-    },
-    [ColumnViewType.OrganizationsRenewalDate]: {
-      fieldType: 'date',
-      fieldTypeName: 'Date',
-      fieldName: 'Renewal date',
-      columnAccesor: ColumnViewType.OrganizationsRenewalDate,
-      icon: <Calendar />,
-    },
-    [ColumnViewType.OrganizationsForecastArr]: {
-      fieldType: CustomFieldTemplateType.Number,
-      fieldTypeName: 'Number',
-      fieldName: 'ARR forecast',
-      columnAccesor: ColumnViewType.OrganizationsForecastArr,
-
-      icon: <Hash02 />,
     },
     [ColumnViewType.OrganizationsOwner]: {
       fieldType: CustomFieldTemplateType.SingleSelect,
@@ -183,52 +89,6 @@ export const getDefaultFieldTypes = (store?: RootStore) => {
       fieldName: 'LinkedIn URL',
       columnAccesor: ColumnViewType.OrganizationsSocials,
       icon: <Type01 />,
-    },
-    [ColumnViewType.OrganizationsLastTouchpoint]: {
-      fieldType: CustomFieldTemplateType.SingleSelect,
-      fieldTypeName: 'Single select',
-      fieldName: 'Last touchpoint',
-      columnAccesor: ColumnViewType.OrganizationsLastTouchpoint,
-      icon: <RadioButton />,
-      options: [
-        {
-          id: LastTouchpointType.InteractionEventEmailSent,
-          label: 'Email sent',
-        },
-        { id: LastTouchpointType.IssueCreated, label: 'Issue created' },
-        { id: LastTouchpointType.IssueUpdated, label: 'Issue updated' },
-        { id: LastTouchpointType.LogEntry, label: 'Log entry' },
-        { id: LastTouchpointType.Meeting, label: 'Meeting' },
-        {
-          id: LastTouchpointType.InteractionEventChat,
-          label: 'Message received',
-        },
-        {
-          id: LastTouchpointType.ActionCreated,
-          label: 'Company created',
-        },
-      ],
-    },
-    [ColumnViewType.OrganizationsChurnDate]: {
-      fieldType: 'date',
-      fieldTypeName: 'Date',
-      fieldName: 'Churn date',
-      columnAccesor: ColumnViewType.OrganizationsChurnDate,
-      icon: <Calendar className='mb-0.5' />,
-    },
-    [ColumnViewType.OrganizationsLastTouchpointDate]: {
-      fieldType: 'date',
-      fieldTypeName: 'Date',
-      fieldName: 'Last interacted',
-      columnAccesor: ColumnViewType.OrganizationsLastTouchpointDate,
-      icon: <Calendar className='mb-0.5' />,
-    },
-    [ColumnViewType.OrganizationsLtv]: {
-      fieldType: CustomFieldTemplateType.Number,
-      fieldTypeName: 'Number',
-      fieldName: 'LTV',
-      columnAccesor: ColumnViewType.OrganizationsLtv,
-      icon: <Hash02 />,
     },
     [ColumnViewType.OrganizationsIndustry]: {
       fieldType: CustomFieldTemplateType.SingleSelect,
@@ -319,13 +179,6 @@ export const getDefaultFieldTypes = (store?: RootStore) => {
           id: OrganizationStage.Unqualified,
         },
       ],
-    },
-    [ColumnViewType.OrganizationsParentOrganization]: {
-      fieldType: CustomFieldTemplateType.FreeText,
-      fieldTypeName: 'Text',
-      fieldName: 'Parent company',
-      columnAccesor: ColumnViewType.OrganizationsParentOrganization,
-      icon: <Type01 className='mb-0.5' />,
     },
   };
 

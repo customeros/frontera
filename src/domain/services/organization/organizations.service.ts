@@ -16,18 +16,12 @@ import { SearchGlobalOrganizationsQuery } from '@infra/repositories/core/organiz
 
 import { unwrap, UnwrapResult } from '@utils/unwrap';
 import {
-  relationshipStageMap,
-  stageRelationshipMap,
-  validRelationshipsForStage,
-} from '@utils/orgStageAndRelationshipStatusMap';
-import {
   Domain,
   EntityType,
   FlagWrongFields,
   SortingDirection,
   OrganizationStage,
   ComparisonOperator,
-  OrganizationRelationship,
   OpportunityRenewalLikelihood,
 } from '@shared/types/__generated__/graphql.types';
 
@@ -454,34 +448,6 @@ export class OrganizationService {
     return [res, err];
   }
 
-  public async setRelationship(
-    organization: Organization,
-    relationship: OrganizationRelationship,
-  ) {
-    const prev = { ...organization };
-
-    organization?.setRelationship(relationship);
-
-    const [res, err] = await unwrap(
-      this.orgRepo.saveOrganization({
-        input: {
-          id: organization.id,
-          relationship,
-          stage: organization.stage,
-        },
-      }),
-    );
-
-    if (err) {
-      console.error(err);
-      Object.assign(organization, prev);
-    }
-
-    this.organizationStore.sync(organization);
-
-    return [res, err];
-  }
-
   public async setStage(organization: Organization, stage: OrganizationStage) {
     const prev = { ...organization };
 
@@ -595,106 +561,19 @@ export class OrganizationService {
     organizationIds: string[],
     stage: OrganizationStage,
   ) {
-    let invalidCustomerStageCount = 0;
-
     organizationIds.forEach((id) => {
       const organization = this.organizationStore.get(id);
 
       if (!organization) return;
 
-      const currentRelationship = organization.relationship;
-      const newDefaultRelationship = stageRelationshipMap[stage];
-      const validRelationships = validRelationshipsForStage[stage];
-
-      if (
-        currentRelationship &&
-        validRelationships?.includes(currentRelationship)
-      ) {
-        organization.stage = stage;
-      } else if (currentRelationship === OrganizationRelationship.Customer) {
-        invalidCustomerStageCount++;
-
-        // Do not update if current relationship is Customer and new stage is not valid
-      } else {
-        organization.setStage(stage);
-        organization.setRelationship(
-          newDefaultRelationship || organization.relationship,
-        );
-      }
+      organization.setStage(stage);
     });
-
-    if (invalidCustomerStageCount) {
-      this.utilService.toastError(
-        `${invalidCustomerStageCount} customer${
-          invalidCustomerStageCount > 1 ? 's' : ''
-        } remain unchanged`,
-      );
-
-      return;
-    }
 
     const promises = organizationIds.map((id) => {
       return unwrap(
         this.orgRepo.saveOrganization({
           input: {
             id,
-            stage,
-          },
-        }),
-      );
-    });
-
-    await Promise.all(promises);
-  }
-
-  public async setReltionshipBulk(
-    organizationIds: string[],
-    relationship: OrganizationRelationship,
-  ) {
-    let invalidCustomerStageCount = 0;
-
-    organizationIds.forEach((id) => {
-      const organization = this.organizationStore.get(id);
-
-      if (!organization) return;
-
-      if (
-        organization.relationship === OrganizationRelationship.Customer &&
-        ![
-          OrganizationRelationship.FormerCustomer,
-          OrganizationRelationship.NotAFit,
-        ].includes(relationship)
-      ) {
-        invalidCustomerStageCount++;
-
-        return; // Do not update if current is customer and new is not formet customer or not a fit
-      }
-
-      organization?.setRelationship(relationship);
-      organization?.relationship &&
-        organization?.setStage(
-          relationshipStageMap[organization.relationship!],
-        );
-    });
-
-    if (invalidCustomerStageCount) {
-      this.utilService.toastError(
-        `${invalidCustomerStageCount} customer${
-          invalidCustomerStageCount > 1 ? 's' : ''
-        } remain unchanged`,
-      );
-
-      return;
-    }
-
-    const promises = organizationIds.map((id) => {
-      const stage = this.organizationStore.get(id)?.stage;
-
-      return unwrap(
-        this.orgRepo.saveOrganization({
-          input: {
-            id,
-            relationship,
             stage,
           },
         }),

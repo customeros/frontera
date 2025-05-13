@@ -59,14 +59,11 @@ export const OrganizationPage = observer(() => {
   const preset = (() => {
     const lastPreset = getLastPreset();
 
-    const { targetsPreset, organizationsPreset, customersPreset } =
-      store.tableViewDefs;
+    const { organizationsPreset, customersPreset } = store.tableViewDefs;
 
     if (!lastPreset) return organizationsPreset;
 
-    if (
-      [targetsPreset, organizationsPreset, customersPreset].includes(lastPreset)
-    ) {
+    if ([organizationsPreset, customersPreset].includes(lastPreset)) {
       return lastPreset;
     }
 

@@ -8,7 +8,6 @@ export type CommandMenuType =
   | 'OrganizationHub'
   | 'OrganizationCommands'
   | 'EditCompanyLinkedin'
-  | 'ChangeRelationship'
   | 'ChangeStage'
   | 'UpdateHealthStatus'
   | 'ChangeTags'
