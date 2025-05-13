@@ -1,4 +1,3 @@
-import { match } from 'ts-pattern';
 import { makeAutoObservable } from 'mobx';
 import { Domain } from '@/domain/objects/domain';
 import { Social } from '@/domain/objects/social';

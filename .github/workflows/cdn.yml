@@ -16,8 +16,25 @@ jobs:
       - name: Upload scripts to Bunny CDN
         run: |
           set -e
+          echo "Starting upload process..."
+          echo "Checking if files exist in public/scripts/"
+          ls -la public/scripts/
+          
           find public/scripts -type f -print0 | while IFS= read -r -d '' file; do
-            curl -T "$file" \
+            echo "Uploading file: $file"
+            response=$(curl -s -w "\n%{http_code}" -T "$file" \
               -H "AccessKey: ${{ secrets.BUNNY_STORAGE_API_KEY }}" \
-              "https://storage.bunnycdn.com/${{ secrets.BUNNY_STORAGE_ZONE_NAME }}/scripts/$(basename "$file")"
+              "https://storage.bunnycdn.com/${{ secrets.BUNNY_STORAGE_ZONE_NAME }}/scripts/$(basename "$file")")
+            
+            http_code=$(echo "$response" | tail -n1)
+            body=$(echo "$response" | sed '$d')
+            
+            if [ "$http_code" -eq 200 ]; then
+              echo "Successfully uploaded $(basename "$file")"
+            else
+              echo "Failed to upload $(basename "$file")"
+              echo "HTTP Code: $http_code"
+              echo "Response: $body"
+              exit 1
+            fi
           done
