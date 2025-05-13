@@ -351,6 +351,7 @@ export const FinderTable = observer(() => {
   useEffect(() => {
     return () => {
       store.ui.setShowPreviewCard(false);
+      store.ui.setShowLeadSources(false);
       store.ui.setShortcutsPanel(false);
     };
   }, [preset]);
@@ -359,10 +360,11 @@ export const FinderTable = observer(() => {
     {
       Escape: () => {
         store.ui.setShowPreviewCard(false);
+        store.ui.setShowLeadSources(false);
       },
     },
     {
-      when: store.ui.showPreviewCard,
+      when: store.ui.showPreviewCard || store.ui.showLeadSources,
     },
   );
 

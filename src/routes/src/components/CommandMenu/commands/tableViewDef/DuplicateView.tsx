@@ -23,6 +23,8 @@ export const DuplicateView = observer(() => {
 
   const title = match(tableViewDef?.value?.tableType)
     .with(TableViewType.Invoices, () => `${tableViewDef?.value.name} Invoices`)
+    .with(TableViewType.Organizations, () => 'Leads')
+    .with(TableViewType.Contacts, () => 'Leads')
     .otherwise(() => tableViewDef?.value.name);
 
   const confirmButtonRef = useRef<HTMLButtonElement>(null);

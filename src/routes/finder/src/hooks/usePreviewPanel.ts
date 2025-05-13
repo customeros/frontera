@@ -19,14 +19,18 @@ export const usePreviewPanel = () => {
       Space: (e) => {
         e.stopPropagation();
         e.preventDefault();
+        store.ui.setShowLeadSources(false);
 
         if (store.ui.showPreviewCard) {
+          store.ui.setShowLeadSources(false);
+
           const hasSingleSelection =
             store.ui.commandMenu.context.ids.length === 1;
           const id = store.ui.commandMenu.context.ids[0];
 
           if (id && id !== store.ui.focusRow && hasSingleSelection) {
             store.ui.setFocusRow(id);
+            store.ui.setShowLeadSources(false);
 
             return;
           }

@@ -17,6 +17,7 @@ export type LogoName =
   | 'quickbooks'
   | 'microsoft'
   | 'calendar-google'
+  | 'linkedin-outline'
   | 'google-meet';
 
 interface LogoProps extends SVGAttributes<SVGElement> {

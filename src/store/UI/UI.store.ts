@@ -17,18 +17,15 @@ export class UIStore {
   filteredTable: Array<unknown> = [];
   isSearching: string | null = null;
   isFilteringTable: boolean = false;
-  isFilteringICP: boolean = false;
   isEditingTableCell: boolean = false;
   dirtyEditor: string | null = null;
   activeConfirmation: string | null = null;
-  movedIcpOrganization: number = 0;
   focusRow: string | null = null;
   isEditingDefaultFilters: boolean = false;
   showShortcutsPanel: boolean = false;
   showPreviewCard: boolean = false;
-  emailAdress: string = '';
+  showLeadSources: boolean = false;
   commandMenu = new CommandMenuStore();
-  selectionId: number | null = null;
   flowCommandMenu = new FlowStepCommandMenuStore();
   flowActionSidePanel = new FlowActionSidePanelStore();
   isSystemNotificationOpen = false;
@@ -109,10 +106,6 @@ export class UIStore {
     this.activeConfirmationCallback?.();
   }
 
-  setIsFilteringICP(value: boolean) {
-    this.isFilteringICP = value;
-  }
-
   setSearchCount(value: number) {
     this.searchCount = value;
   }
@@ -121,24 +114,16 @@ export class UIStore {
     this.filteredTable = data;
   }
 
-  setMovedIcpOrganization(value: number) {
-    this.movedIcpOrganization = value;
-  }
-
   setFocusRow(value: string | null) {
     this.focusRow = value;
   }
 
-  setSelectionId(value: number | null) {
-    this.selectionId = value;
-  }
-
-  setEmailAdress(value: string) {
-    this.emailAdress = value;
-  }
-
   setIsEditingDefaultFilters(value: boolean) {
     this.isEditingDefaultFilters = value;
+  }
+
+  setShowLeadSources(value: boolean) {
+    this.showLeadSources = value;
   }
 
   purgeLocalData() {

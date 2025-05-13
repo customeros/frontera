@@ -35,7 +35,7 @@ export const HomeSection = observer(
     const tableViewDefsList = store.tableViewDefs.toArray();
 
     const homeViews = tableViewDefsList.filter(
-      (c) => c.value.tableId === TableIdType.Tasks,
+      (c) => c.value.tableId === TableIdType.Tasks && c.value.isPreset,
     );
 
     return (

@@ -31,9 +31,12 @@ export const ContactNameCell = observer(
             onClick={() => {
               if (store.ui.showPreviewCard && store.ui.focusRow === contactId) {
                 store.ui.setShowPreviewCard(false);
+                store.ui.setShowLeadSources(false);
               } else {
                 store.ui.setFocusRow(contactId);
                 store.ui.setShowPreviewCard(true);
+
+                store.ui.setShowLeadSources(false);
               }
             }}
           >
@@ -50,9 +53,11 @@ export const ContactNameCell = observer(
             onClick={() => {
               if (store.ui.showPreviewCard && store.ui.focusRow === contactId) {
                 store.ui.setShowPreviewCard(false);
+                store.ui.setShowLeadSources(false);
               } else {
                 store.ui.setFocusRow(contactId);
                 store.ui.setShowPreviewCard(true);
+                store.ui.setShowLeadSources(false);
               }
             }}
           >
@@ -69,6 +74,7 @@ export const ContactNameCell = observer(
               } else {
                 store.ui.setFocusRow(contactId);
                 store.ui.setShowPreviewCard(true);
+                store.ui.setShowLeadSources(false);
               }
             }}
           />

@@ -275,7 +275,8 @@ export type IconName =
   | 'link-01'
   | 'link-external-01'
   | 'magnet'
-  | 'coins-stacked-02';
+  | 'coins-stacked-02'
+  | 'upload-04';
 
 interface IconProps extends SVGAttributes<SVGElement> {
   name: IconName;

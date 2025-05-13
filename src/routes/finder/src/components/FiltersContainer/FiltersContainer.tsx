@@ -110,7 +110,9 @@ export const FiltersContainer = observer(() => {
 
         {!store.ui.isEditingDefaultFilters && (
           <>
-            {filters && <Divider className='rotate-90 w-5 mx-[-6px]' />}
+            {filters && tableViewDef?.hasDefaultFilters() && (
+              <Divider className='rotate-90 w-5 mx-[-6px]' />
+            )}
             {tableViewType && (
               <ViewSettings tableId={tableId} type={tableViewType} />
             )}

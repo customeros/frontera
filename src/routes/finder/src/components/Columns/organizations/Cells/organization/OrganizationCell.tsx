@@ -63,6 +63,7 @@ export const OrganizationCell = observer(({ id }: OrganizationCellProps) => {
           } else {
             store.ui.setFocusRow(id);
             store.ui.setShowPreviewCard(true);
+            store.ui.setShowLeadSources(false);
           }
         }}
       />
