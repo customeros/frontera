@@ -188,6 +188,7 @@ export const Search = observer(() => {
               </Tooltip>
             )}
           </div>
+          <div className='w-[1px] h-[20px]  bg-grayModern-200' />
         </div>
       </div>
       {(tableViewDef?.value.tableType === TableViewType.Contacts ||
