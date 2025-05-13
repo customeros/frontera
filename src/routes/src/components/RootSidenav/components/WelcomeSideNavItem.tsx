@@ -66,7 +66,8 @@ export const WelcomeSidenavItem = observer(
         className={cn(
           buttonSize({ size: 'sm' }),
           (ghostButton({ colorScheme: 'grayModern' }),
-          `flex w-full justify-start gap-2 px-3 text-grayModern-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-grayModern-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md border border-transparent ${dynamicClasses}`),
+          `flex  justify-start gap-2 px-3 text-grayModern-700 cursor-pointer hover:bg-grayModern-100 *:hover:text-grayModern-700  group focus:shadow-EditableSideNavItemFocus mb-[2px] rounded-md border border-transparent ${dynamicClasses}`),
+          'ml-3',
         )}
       >
         <div className='mt-[-1px]'>

@@ -21,7 +21,7 @@ export const PersonalSection = ({
       </div>
       <div className='ml-[31px] pr-2'>
         <SidenavItem
-          label='Profile'
+          label='My profile'
           isActive={checkIsActive('profile')}
           onClick={handleItemClick('profile')}
         />

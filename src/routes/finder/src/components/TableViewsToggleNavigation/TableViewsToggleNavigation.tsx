@@ -32,6 +32,18 @@ export const TableViewsToggleNavigation = observer(() => {
 
   const getTablePair = (): [string | null, string | null] => {
     switch (tableViewId) {
+      case TableIdType.Organizations:
+        return [
+          findPresetTable([TableIdType.Organizations]),
+          findPresetTable([TableIdType.Contacts]),
+        ];
+
+      case TableIdType.Contacts:
+        return [
+          findPresetTable([TableIdType.Organizations]),
+          findPresetTable([TableIdType.Contacts]),
+        ];
+
       case TableIdType.Targets:
 
       case TableIdType.ContactsForTargetOrganizations: {

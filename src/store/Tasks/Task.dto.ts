@@ -49,4 +49,8 @@ export class Task extends Entity<TaskDatum> {
       payload,
     );
   }
+
+  getUserName(userId: string) {
+    return this.store.root.users.getById(userId)?.value.name;
+  }
 }

@@ -73,17 +73,17 @@ export const DuplicateView = observer(() => {
 
         <div>
           <label className='text-sm'>
-            <div className='mb-2  font-medium'>Save to...</div>
+            <div className='mb-2  font-medium'>Visible to...</div>
             <RadioGroup
               value={value}
               name='last-touchpoint-date-before'
               onValueChange={(val: 'my-view' | 'team-view') => setValue(val)}
             >
               <Radio value={'team-view'}>
-                <span className='text-sm'>Team views</span>
+                <span className='text-sm'>Team</span>
               </Radio>
               <Radio value={'my-view'}>
-                <span className='text-sm'>My views</span>
+                <span className='text-sm'>Only me</span>
               </Radio>
             </RadioGroup>
           </label>

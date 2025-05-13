@@ -1,6 +1,7 @@
 import { useLocalStorage } from 'usehooks-ts';
 
 interface Preferences {
+  isHomeOpen: boolean;
   isViewsOpen: boolean;
   isMyViewsOpen: boolean;
   isFavoritesOpen: boolean;
@@ -17,6 +18,7 @@ export const usePreferencesManager = () => {
       isViewsOpen: true,
       isFavoritesOpen: true,
       isTeamViewsOpen: true,
+      isHomeOpen: true,
     } as Preferences,
   );
 

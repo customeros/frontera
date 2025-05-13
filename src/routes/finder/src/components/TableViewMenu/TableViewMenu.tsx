@@ -33,7 +33,6 @@ export const TableViewMenu = observer(() => {
       <IconButton
         size='xs'
         variant='ghost'
-        className={'mr-3.5'}
         onClick={downloadCSV}
         aria-label={'Download csv'}
         icon={<Download02 className='' />}

@@ -50,56 +50,20 @@ export const ProspectsBoardPage = observer(() => {
               store.ui.commandMenu.setOpen(true);
             }}
           >
-            Create opportunity
+            Opportunity
           </Button>
-          <ButtonGroup className='flex items-center w-[252px]'>
-            <Button
-              size='xs'
-              colorScheme='grayModern'
-              dataTest='prospects-board-button'
-              onClick={() => navigate('/prospects')}
-              className={cn('px-4 w-full flex-1', {
-                selected: !showFinder,
-              })}
-              leftIcon={
-                <Icon
-                  name='columns-03'
-                  className={cn(!showFinder && 'text-primary-700', {
-                    selected: !showFinder,
-                  })}
-                />
-              }
-            >
-              Board
-            </Button>
-            <Button
-              size='xs'
-              dataTest={'prospects-list-button'}
-              className={cn('px-4 w-full flex-1', {
-                selected: showFinder,
-              })}
-              onClick={() =>
-                navigate(`?show=finder&preset=${opportunitiesView?.id}`)
-              }
-              leftIcon={
-                <Icon
-                  name='menu-01'
-                  className={cn(showFinder && 'text-primary-700', {
-                    selected: showFinder,
-                  })}
-                />
-              }
-            >
-              List
-            </Button>
-          </ButtonGroup>
         </div>
       </div>
 
       <div className='flex'>
         <div className=' w-full overflow-auto'>
-          <div className='flex justify-between mx-4 my-2 items-start'>
-            <div className='flex items-center gap-2'>
+          <div
+            className={cn(
+              'flex justify-between px-4 py-2  items-start',
+              !showFinder && 'border-b-[1px] mb-2 border-grayModern-200',
+            )}
+          >
+            <div className='flex justify-end items-center gap-2'>
               {showFinder && (
                 <FinderFilters
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,14 +72,57 @@ export const ProspectsBoardPage = observer(() => {
                 />
               )}
             </div>
-            <ViewSettings
-              type={TableViewType.Opportunities}
-              tableId={
-                showFinder
-                  ? TableIdType.OpportunitiesRecords
-                  : TableIdType.Opportunities
-              }
-            />
+            <div className='flex items-center self-end gap-2'>
+              <ButtonGroup className='flex items-center w-[252px]'>
+                <Button
+                  size='xs'
+                  colorScheme='grayModern'
+                  dataTest='prospects-board-button'
+                  onClick={() => navigate('/prospects')}
+                  className={cn('px-4 w-full flex-1', {
+                    selected: !showFinder,
+                  })}
+                  leftIcon={
+                    <Icon
+                      name='columns-03'
+                      className={cn(!showFinder && 'text-primary-700', {
+                        selected: !showFinder,
+                      })}
+                    />
+                  }
+                >
+                  Board
+                </Button>
+                <Button
+                  size='xs'
+                  dataTest={'prospects-list-button'}
+                  className={cn('px-4 w-full flex-1', {
+                    selected: showFinder,
+                  })}
+                  onClick={() =>
+                    navigate(`?show=finder&preset=${opportunitiesView?.id}`)
+                  }
+                  leftIcon={
+                    <Icon
+                      name='menu-01'
+                      className={cn(showFinder && 'text-primary-700', {
+                        selected: showFinder,
+                      })}
+                    />
+                  }
+                >
+                  List
+                </Button>
+              </ButtonGroup>
+              <ViewSettings
+                type={TableViewType.Opportunities}
+                tableId={
+                  showFinder
+                    ? TableIdType.OpportunitiesRecords
+                    : TableIdType.Opportunities
+                }
+              />
+            </div>
           </div>
           {showFinder && <FinderTable />}
           {!showFinder && <ProspectsBoard />}
