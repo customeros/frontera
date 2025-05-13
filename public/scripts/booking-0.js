@@ -4,7 +4,7 @@ window.bookingForm = (target, calendarId) => {
   const container = document.getElementById(TARGET);
 
   if (!container) {
-    console.error('Missing container for Booking Form');
+    console.error('Missing container for booking form');
 
     return;
   }
