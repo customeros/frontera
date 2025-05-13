@@ -35,7 +35,6 @@ export const NavigationSections = observer(
     const showCustomerMap = useFeatureIsOn('show-customer-map');
     const billingFlag = useFeatureIsOn('billing');
     const [searchParams] = useSearchParams();
-
     const store = useStore();
     const orgPreset = store.tableViewDefs.organizationsPreset;
     const contactsPreset = store.tableViewDefs.contactsPreset;
