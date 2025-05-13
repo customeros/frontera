@@ -176,7 +176,6 @@ export const Search = observer(() => {
             <UserPresence
               channelName={`finder:${store.session.value.tenant}`}
             />
-
             {showAddButton && (
               <Tooltip {...addButtonTooltipProps}>
                 <Button
@@ -213,7 +212,7 @@ export const Search = observer(() => {
       {tableViewDef?.value.tableId === TableIdType.FlowActions && (
         <CreateSequenceButton />
       )}
-      <span ref={measureRef} className={`z-[-1] absolute h-0 invisible flex`}>
+      <span ref={measureRef} className='z-[-1] absolute h-0 invisible flex'>
         <div className='ml-2'>{/* <SearchBarFilterData /> */}</div>
         {inputRef?.current?.value ?? ''}
       </span>
