@@ -95,7 +95,9 @@ export const FinderTable = observer(() => {
     tableViewDef?.setSorting(next[0]?.id, next[0]?.desc);
   };
 
-  const view = viewRegistry.get(tableViewDef!.value);
+  if (!tableViewDef) return null;
+
+  const view = viewRegistry.get(tableViewDef.value);
   const data = match(tableType)
     .with(TableViewType.Organizations, () => view?.data ?? [])
     .otherwise(() =>
@@ -388,6 +390,9 @@ export const FinderTable = observer(() => {
       .with(TableViewType.Flow, () => store.flows?.totalElements === 0)
       .with(TableViewType.Tasks, () =>
         preset ? store.tasks?.totalElements === 0 : true,
+      )
+      .with(TableViewType.Opportunities, () =>
+        preset ? store.opportunities?.totalElements === 0 : true,
       )
       .otherwise(() => false);
   };

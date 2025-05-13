@@ -30,6 +30,10 @@ export const SearchBarFilterData = observer(
         TableViewType.Contacts,
         () => store.contacts.availableCounts.get(preset ?? '') ?? 0,
       )
+      .with(
+        TableViewType.Tasks,
+        () => store.tasks.availableCounts.get(preset ?? '') ?? 0,
+      )
       .otherwise(() => 0);
 
     const tableName =
@@ -41,7 +45,7 @@ export const SearchBarFilterData = observer(
       tableView?.value?.tableType === TableViewType.Tasks;
 
     return (
-      <div className='flex flex-row items-center gap-1'>
+      <div className='flex flex-row items-center gap-1 ml-2'>
         <div
           data-test={dataTest ? dataTest : ''}
           className={'font-medium flex items-center gap-1 break-keep w-max '}

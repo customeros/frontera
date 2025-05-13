@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
-import { TableIdType } from '@graphql/types';
 import { useStore } from '@shared/hooks/useStore';
 import { Preferences } from '@shared/components/RootSidenav/hooks';
 import { RootSidenavItem } from '@shared/components/RootSidenav/components/RootSidenavItem';
@@ -30,14 +29,6 @@ export const GeneralViewsSection = observer(
   }: GeneralViewsSectionProps) => {
     const store = useStore();
 
-    const tableViewDefsList = store.tableViewDefs.toArray();
-    const allOrganizationsView = tableViewDefsList.filter(
-      (c) => c.value.tableId === TableIdType.Organizations && c.value.isPreset,
-    );
-
-    const allContactsView = store.tableViewDefs.getById(
-      store.tableViewDefs.contactsPreset ?? '',
-    );
     const contractsView = store.tableViewDefs.getById(
       store.tableViewDefs.contractsPreset ?? '',
     );
@@ -50,15 +41,6 @@ export const GeneralViewsSection = observer(
     ].filter((e): e is TableViewDef => e !== undefined);
 
     const upcomingInvoices = invoicesViews[0];
-    const allOrganizationsActivePreset = [allOrganizationsView?.[0]?.value?.id];
-    // const showInvoices = store.settings.tenant.value?.billingEnabled;
-
-    const tasksView = store.tableViewDefs.getById(
-      store.tableViewDefs.tasksPreset ?? '',
-    );
-    const flowsView = store.tableViewDefs.getById(
-      store.tableViewDefs.flowsPreset ?? '',
-    );
 
     return (
       <CollapsibleSection
@@ -68,28 +50,7 @@ export const GeneralViewsSection = observer(
       >
         {preferences.isViewsOpen && (
           <>
-            <RootSidenavItem
-              label='Companies'
-              dataTest={`side-nav-item-all-orgs`}
-              isActive={checkIsActive(['finder'], {
-                preset: allOrganizationsActivePreset,
-              })}
-              onClick={() =>
-                handleItemClick(
-                  `finder?preset=${allOrganizationsView?.[0]?.value?.id}`,
-                )
-              }
-              icon={(isActive) => (
-                <Icon
-                  name='building-07'
-                  className={cn(
-                    'text-grayModern-500',
-                    isActive && 'text-grayModern-700',
-                  )}
-                />
-              )}
-            />
-            <RootSidenavItem
+            {/* <RootSidenavItem
               label='Contacts'
               dataTest={`side-nav-item-all-contacts`}
               onClick={() =>
@@ -107,41 +68,8 @@ export const GeneralViewsSection = observer(
                   )}
                 />
               )}
-            />
-            <RootSidenavItem
-              label='Opportunities'
-              isActive={checkIsActive(['prospects'])}
-              dataTest={`side-nav-item-opportunities`}
-              onClick={() => handleItemClick(`prospects`)}
-              icon={(isActive) => (
-                <Icon
-                  name='coins-stacked-01'
-                  className={cn(
-                    'text-grayModern-500',
-                    isActive && 'text-grayModern-700',
-                  )}
-                />
-              )}
-            />
-            <RootSidenavItem
-              label='Tasks'
-              dataTest={`side-nav-item-all-tasks`}
-              onClick={() =>
-                handleItemClick(`finder?preset=${tasksView?.value?.id}`)
-              }
-              isActive={checkIsActive(['finder'], {
-                preset: tasksView?.value?.id ?? '',
-              })}
-              icon={(isActive) => (
-                <Icon
-                  name='clipboard-check'
-                  className={cn(
-                    'text-grayModern-500',
-                    isActive && 'text-grayModern-700',
-                  )}
-                />
-              )}
-            />
+            /> */}
+
             <RootSidenavItem
               label='Contracts'
               dataTest={`side-nav-item-all-contracts`}
@@ -184,7 +112,7 @@ export const GeneralViewsSection = observer(
                 )}
               />
             )}
-            <RootSidenavItem
+            {/* <RootSidenavItem
               label='Flows'
               dataTest={`side-nav-item-all-flows`}
               onClick={() =>
@@ -202,7 +130,7 @@ export const GeneralViewsSection = observer(
                   )}
                 />
               )}
-            />
+            /> */}
           </>
         )}
       </CollapsibleSection>

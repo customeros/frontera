@@ -21,7 +21,7 @@ export const WorkspaceSection = ({
       </div>
       <div className='ml-[31px] pr-2'>
         <SidenavItem
-          label='General'
+          label='Company profile'
           isActive={checkIsActive('general')}
           onClick={handleItemClick('general')}
         />

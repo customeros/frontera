@@ -48,10 +48,10 @@ export const EmptyState = observer(() => {
         };
       case TableIdType.Customers:
         return {
-          title: 'Who will be first?',
+          title: 'No customers yet',
           description:
-            'No customers here yet. You can change prospects into customers by changing their relationship status in the About section.',
-          buttonLabel: 'Go to Companies',
+            'Change a lead’s stage to Customer for them to show up here',
+          buttonLabel: 'Go to Leads',
           dataTest: 'customers-go-to-all-orgs',
           onClick: () => {
             navigate(`/finder?preset=${allOrgsView}`);
@@ -125,6 +125,18 @@ export const EmptyState = observer(() => {
           dataTest: 'tasks-create-task',
           onClick: () => {
             store.tasks.createTask();
+          },
+        };
+      case TableIdType.OpportunitiesRecords:
+        return {
+          title: 'Opportunity knocks...',
+          description:
+            "It's quiet now, but big things are coming. Add opportunities and brace yourself for a flurry of sales activity!",
+          buttonLabel: 'Create opportunity',
+          dataTest: 'opportunities-create-opportunity',
+          onClick: () => {
+            store.ui.commandMenu.setType('ChooseOpportunityStage');
+            store.ui.commandMenu.setOpen(true);
           },
         };
       default:

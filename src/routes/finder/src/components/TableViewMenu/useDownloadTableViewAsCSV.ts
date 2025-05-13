@@ -8,6 +8,7 @@ import { OpportunityStore } from '@store/Opportunities/Opportunity.store.ts';
 import { csvDataMapper as contactCsvDataMapper } from '@finder/components/Columns/contacts';
 import { csvDataMapper as orgCsvDataMapper } from '@finder/components/Columns/organizations';
 import { csvDataMapper as contractsCsvDataMapper } from '@finder/components/Columns/contracts';
+import { csvDataMapper as tasksCsvDataMapper } from '@finder/components/Columns/tasks/csvDataMapper';
 import { csvDataMapper as opportunitiesCsvDataMapper } from '@finder/components/Columns/opportunities';
 
 import { useStore } from '@shared/hooks/useStore';
@@ -36,6 +37,8 @@ const getTableName = (tableViewName: string | undefined) => {
       return 'churned';
     case 'All orgs':
       return 'organizations';
+    case 'Tasks':
+      return 'tasks';
     default:
       return 'organizations';
   }
@@ -69,6 +72,7 @@ export const useDownloadCsv = () => {
       .with(TableViewType.Organizations, () => orgCsvDataMapper)
       .with(TableViewType.Contracts, () => contractsCsvDataMapper)
       .with(TableViewType.Opportunities, () => opportunitiesCsvDataMapper)
+      .with(TableViewType.Tasks, () => tasksCsvDataMapper)
       .otherwise(() => {});
 
     const visibleColumns = tableViewDef?.value.columns?.filter(
