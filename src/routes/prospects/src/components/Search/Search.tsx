@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
 
+import { Icon } from '@ui/media/Icon';
 import { Input } from '@ui/form/Input/Input';
 import { useStore } from '@shared/hooks/useStore';
 import { InputGroup, LeftElement } from '@ui/form/InputGroup/InputGroup';
@@ -56,13 +57,16 @@ export const Search = observer(() => {
     >
       <InputGroup className='relative w-full bg-transparent hover:border-transparent focus-within:border-transparent focus-within:hover:border-transparent gap-1'>
         <LeftElement className='ml-2 flex items-center gap-1'>
-          <span
-            data-test='opps-finder-count'
-            className='text-nowrap font-medium'
-          >
-            {store.ui.searchCount}{' '}
-            {store.ui.searchCount === 1 ? 'opportunity' : 'opportunities'}:
-          </span>
+          <div className='flex items-center gap-4'>
+            <span
+              data-test='opps-finder-count'
+              className='text-nowrap font-medium'
+            >
+              {store.ui.searchCount}{' '}
+              {store.ui.searchCount === 1 ? 'opportunity' : 'opportunities'}
+            </span>
+            <Icon name='search-sm' className='text-grayModern-500 mt-[1px]' />
+          </div>
         </LeftElement>
         <Input
           size='md'
@@ -71,6 +75,7 @@ export const Search = observer(() => {
           spellCheck={false}
           variant='unstyled'
           onChange={handleChange}
+          className='placeholder:text-sm'
           defaultValue={searchParams.get('search') ?? ''}
           onBlur={() => {
             store.ui.setIsSearching(null);

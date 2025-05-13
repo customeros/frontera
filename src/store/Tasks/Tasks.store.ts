@@ -118,6 +118,7 @@ export class Tasks extends Store<TaskDatum, Task> {
       const { task_Save } = await this.repository.saveTask({
         input: {
           subject: 'Unnamed task: In need of a name',
+          assignees: [this.root.session.value.profile.id],
         },
       });
 
