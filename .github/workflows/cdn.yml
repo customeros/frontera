@@ -29,7 +29,7 @@ jobs:
             http_code=$(echo "$response" | tail -n1)
             body=$(echo "$response" | sed '$d')
             
-            if [ "$http_code" -eq 200 ]; then
+            if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
               echo "Successfully uploaded $(basename "$file")"
             else
               echo "Failed to upload $(basename "$file")"
