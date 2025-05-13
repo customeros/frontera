@@ -28,14 +28,6 @@ export const AvatarCell = observer(
     return (
       <div className='items-center ml-[1px]'>
         <div
-          onClick={() => {
-            if (store.ui.showPreviewCard && store.ui.focusRow === id) {
-              store.ui.setShowPreviewCard(false);
-            } else {
-              store.ui.setFocusRow(id);
-              store.ui.setShowPreviewCard(true);
-            }
-          }}
           className={cn(
             'w-6 h-6 flex items-center justify-center  border border-grayModern-200 cursor-pointer focus:outline-none rounded-full',
             {
@@ -43,6 +35,15 @@ export const AvatarCell = observer(
               'cursor-default': !canNavigate,
             },
           )}
+          onClick={() => {
+            if (store.ui.showPreviewCard && store.ui.focusRow === id) {
+              store.ui.setShowPreviewCard(false);
+            } else {
+              store.ui.setFocusRow(id);
+              store.ui.setShowPreviewCard(true);
+              store.ui.setShowLeadSources(false);
+            }
+          }}
         >
           {src && status !== 'error' && (
             <>

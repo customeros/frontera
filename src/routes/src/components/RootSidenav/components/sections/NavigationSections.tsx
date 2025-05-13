@@ -7,7 +7,6 @@ import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
 import { Preferences } from '@shared/components/RootSidenav/hooks';
-import { TableIdType } from '@shared/types/__generated__/graphql.types';
 import { SidenavItem } from '@shared/components/RootSidenav/components/SidenavItem';
 import { TeamViewsSectionSection } from '@shared/components/RootSidenav/components/sections/TeamViewsSection';
 
@@ -38,18 +37,11 @@ export const NavigationSections = observer(
     const [searchParams] = useSearchParams();
 
     const store = useStore();
-    const tableViewDefsList = store.tableViewDefs.toArray();
+    const orgPreset = store.tableViewDefs.organizationsPreset;
+    const contactsPreset = store.tableViewDefs.contactsPreset;
+    const customersPreset = store.tableViewDefs.customersPreset;
 
-    const allOrganizationsView = tableViewDefsList.filter(
-      (c) => c.value.tableId === TableIdType.Organizations && c.value.isPreset,
-    );
-    const allContactsView = store.tableViewDefs.getById(
-      store.tableViewDefs.contactsPreset ?? '',
-    );
-    const allOrganizationsActivePreset = [allOrganizationsView?.[0]?.value?.id];
-    const customersView = store.tableViewDefs.getById(
-      store.tableViewDefs.customersPreset ?? '',
-    );
+    const customersView = store.tableViewDefs.getById(customersPreset ?? '');
 
     const opportunitiesView = store.tableViewDefs.getById(
       store.tableViewDefs.opportunitiesTablePreset ?? '',
@@ -105,14 +97,9 @@ export const NavigationSections = observer(
           <RootSidenavItem
             label='Leads'
             dataTest={`side-nav-item-all-orgs`}
-            onClick={() =>
-              handleItemClick(
-                `finder?preset=${allOrganizationsView?.[0]?.value?.id}`,
-              )
-            }
+            onClick={() => handleItemClick(`finder?preset=${orgPreset}`)}
             isActive={checkIsActive(['finder'], {
-              preset:
-                allOrganizationsActivePreset || allContactsView?.value?.id,
+              preset: preset === orgPreset ? orgPreset : contactsPreset || '',
             })}
             icon={(isActive) => (
               <Icon
@@ -151,10 +138,12 @@ export const NavigationSections = observer(
           <RootSidenavItem
             label='Customers'
             dataTest={`side-nav-item-customers`}
-            isActive={checkIsActive(['customers'])}
             onClick={() =>
               handleItemClick(`finder?preset=${customersView?.value?.id}`)
             }
+            isActive={checkIsActive(['finder'], {
+              preset: customersView?.value?.id ?? '',
+            })}
             icon={(isActive) => (
               <Icon
                 name='check-heart'

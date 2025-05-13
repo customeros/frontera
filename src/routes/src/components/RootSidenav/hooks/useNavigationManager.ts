@@ -62,5 +62,5 @@ export const useNavigationManager = () => {
     }
   };
 
-  return { handleItemClick, checkIsActive };
+  return { handleItemClick, checkIsActive, lastActivePosition };
 };

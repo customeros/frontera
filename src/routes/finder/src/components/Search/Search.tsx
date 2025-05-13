@@ -9,6 +9,7 @@ import { CreateSequenceButton } from '@finder/components/Search/CreateSequenceBu
 import { TableViewsToggleNavigation } from '@finder/components/TableViewsToggleNavigation';
 import { SearchBarFilterData } from '@finder/components/SearchBarFilterData/SearchBarFilterData';
 
+import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { useStore } from '@shared/hooks/useStore';
 import { Button } from '@ui/form/Button/Button.tsx';
@@ -190,6 +191,24 @@ export const Search = observer(() => {
           </div>
         </div>
       </div>
+      {(tableViewDef?.value.tableType === TableViewType.Contacts ||
+        tableViewDef?.value.tableType === TableViewType.Organizations) && (
+        <Button
+          size='xs'
+          variant='ghost'
+          leftIcon={<Icon name='upload-04' />}
+          className={cn(
+            'ml-2 mr-2',
+            store.ui.showLeadSources && 'bg-grayModern-100',
+          )}
+          onClick={() => {
+            store.ui.setShowLeadSources(true);
+            store.ui.setShowPreviewCard(false);
+          }}
+        >
+          Lead sources
+        </Button>
+      )}
 
       {tableViewDef?.value.tableId === TableIdType.FlowActions && (
         <CreateSequenceButton />

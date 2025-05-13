@@ -247,6 +247,10 @@ export class TableViewDefStore extends Store<TableViewDefDatum, TableViewDef> {
           : `Copy of ${
               favoritePreset?.tableType === TableViewType.Invoices
                 ? ` ${favoritePreset?.name} Invoices`
+                : favoritePreset?.tableType === TableViewType.Organizations
+                ? 'Leads'
+                : favoritePreset?.tableType === TableViewType.Contacts
+                ? 'Contacts'
                 : favoritePreset?.name
             }`,
         isPreset: false,
