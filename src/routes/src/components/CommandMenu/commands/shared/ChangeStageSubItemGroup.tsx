@@ -12,15 +12,8 @@ import { Check } from '@ui/media/icons/Check';
 import { useStore } from '@shared/hooks/useStore';
 import { Columns03 } from '@ui/media/icons/Columns03';
 import { CommandSubItem } from '@ui/overlay/CommandMenu';
-import {
-  InternalStage,
-  OrganizationStage,
-  OrganizationRelationship,
-} from '@graphql/types';
-import {
-  stageOptions,
-  getStageOptions,
-} from '@organization/components/Tabs/panels/AboutPanel/util';
+import { InternalStage, OrganizationStage } from '@graphql/types';
+import { stageOptions } from '@organization/components/Tabs/panels/AboutPanel/util';
 
 type OpportunityStage = InternalStage | string;
 
@@ -90,12 +83,8 @@ export const ChangeStageSubItemGroup = observer(() => {
     .otherwise(() => undefined);
 
   const applicableStageOptions = match(context.entity)
-    .with('Organization', () =>
-      getStageOptions((entity as Organization).relationship),
-    )
-    .with('Organizations', () =>
-      getStageOptions(OrganizationRelationship.Prospect),
-    )
+    .with('Organization', () => stageOptions)
+    .with('Organizations', () => stageOptions)
     .with('Opportunity', () => opportunityStages ?? [])
     .with('Opportunities', () => opportunityStages ?? [])
     .otherwise(() => []);

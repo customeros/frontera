@@ -53,7 +53,7 @@ export const OrganizationDetails = observer(
       <div className='flex h-full flex-1 bg-white pt-3 relative'>
         <div className='flex h-full flex-col overflow-visible w-full'>
           {isEnriching && (
-            <div className='flex items-center justify-start gap-2 border-[1px] text-sm border-grayModern-100 bg-grayModern-50 rounded-[4px] py-1 px-2 '>
+            <div className='flex items-center justify-start gap-2 border-[1px] text-sm border-grayModern-100 bg-grayModern-50 rounded-[4px] py-1 px-2'>
               <Spinner
                 label='enriching company'
                 className='text-grayModern-300 fill-grayModern-500 size-4'

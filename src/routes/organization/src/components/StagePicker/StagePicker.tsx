@@ -8,59 +8,40 @@ import { OrganizationService } from '@/domain/services/organization/organization
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { Tag, TagLabel } from '@ui/presentation/Tag/Tag';
 import { Menu, MenuItem, MenuList, MenuButton } from '@ui/overlay/Menu/Menu';
-import { OrganizationRelationship } from '@shared/types/__generated__/graphql.types';
 
-import {
-  stageOptions,
-  getStageOptions,
-  relationshipOptions,
-} from '../Tabs/panels/AboutPanel/util';
+import { stageOptions } from '../Tabs/panels/AboutPanel/util';
 
 export const StagePicker = observer(() => {
   const id = useParams()?.id as string;
   const organization = registry.get('organizations').get(id);
   const organizationService = useMemo(() => new OrganizationService(), []);
-  const applicableStageOptions = getStageOptions(organization?.relationship);
-
-  const selectedRelationshipOption = relationshipOptions.find(
-    (option) => option.value === organization?.relationship,
-  );
 
   const selectedStageOption = stageOptions.find(
     (option) => option.value === organization?.stage,
   );
 
   return (
-    <div>
-      {selectedRelationshipOption?.value ===
-        OrganizationRelationship.Prospect && (
-        <>
-          <span className='text-grayModern-300 mr-2'>/</span>
-
-          <Menu>
-            <Tooltip label='Stage' align='start'>
-              <MenuButton className='min-h-[20px] outline-none focus:outline-none'>
-                <Tag size='md' variant='subtle' colorScheme='grayModern'>
-                  <TagLabel>{selectedStageOption?.label || 'Stage'}</TagLabel>
-                </Tag>
-              </MenuButton>
-            </Tooltip>
-            <MenuList side='bottom' align='start'>
-              {applicableStageOptions.map((option) => (
-                <MenuItem
-                  key={option.value}
-                  onClick={() => {
-                    organization &&
-                      organizationService.setStage(organization, option.value);
-                  }}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-        </>
-      )}
-    </div>
+    <Menu>
+      <Tooltip label='Stage' align='start'>
+        <MenuButton className='min-h-[20px] outline-none focus:outline-none'>
+          <Tag size='md' variant='subtle' colorScheme='grayModern'>
+            <TagLabel>{selectedStageOption?.label || 'Stage'}</TagLabel>
+          </Tag>
+        </MenuButton>
+      </Tooltip>
+      <MenuList side='bottom' align='start'>
+        {stageOptions.map((option) => (
+          <MenuItem
+            key={option.value}
+            onClick={() => {
+              organization &&
+                organizationService.setStage(organization, option.value);
+            }}
+          >
+            {option.label}
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
   );
 });

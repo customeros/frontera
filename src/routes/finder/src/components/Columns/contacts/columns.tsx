@@ -211,8 +211,8 @@ const columns: Record<string, Column> = {
       skeleton: () => <Skeleton className='w-[75%] h-[14px]' />,
     },
   ),
-  [ColumnViewType.ContactsPersona]: columnHelper.accessor('value.tags', {
-    id: ColumnViewType.ContactsPersona,
+  [ColumnViewType.ContactsTags]: columnHelper.accessor('value.tags', {
+    id: ColumnViewType.ContactsTags,
     minSize: 92,
     maxSize: 650,
     enableResizing: true,

@@ -10,16 +10,9 @@ import { getStageFromColumn } from '@opportunities/components/ProspectsBoard/col
 
 import { Check } from '@ui/media/icons/Check';
 import { useStore } from '@shared/hooks/useStore';
+import { InternalStage, OrganizationStage } from '@graphql/types';
 import { Command, CommandItem, CommandInput } from '@ui/overlay/CommandMenu';
-import {
-  InternalStage,
-  OrganizationStage,
-  OrganizationRelationship,
-} from '@graphql/types';
-import {
-  stageOptions,
-  getStageOptions,
-} from '@organization/components/Tabs/panels/AboutPanel/util';
+import { stageOptions } from '@organization/components/Tabs/panels/AboutPanel/util';
 
 type OpportunityStage = InternalStage | string;
 
@@ -99,12 +92,8 @@ export const ChangeStage = observer(() => {
     .otherwise(() => undefined);
 
   const applicableStageOptions = match(context.entity)
-    .with('Organization', () =>
-      getStageOptions((entity as Organization).relationship),
-    )
-    .with('Organizations', () =>
-      getStageOptions(OrganizationRelationship.Prospect),
-    )
+    .with('Organization', () => stageOptions)
+    .with('Organizations', () => stageOptions)
     .with('Opportunity', () => opportunityStages ?? [])
     .with('Opportunities', () => opportunityStages ?? [])
     .otherwise(() => []);

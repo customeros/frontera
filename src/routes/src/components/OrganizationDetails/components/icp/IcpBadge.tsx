@@ -128,7 +128,7 @@ export const IcpBadge = observer(({ id }: IcpBadgeProps) => {
                   <Spinner
                     size='xs'
                     label='icp profiling'
-                    className='text-grayModern-300grayModernl-grayModern-400'
+                    className='text-grayModern-300 fill-grayModern-400'
                   />
                 ) : (
                   <Icon

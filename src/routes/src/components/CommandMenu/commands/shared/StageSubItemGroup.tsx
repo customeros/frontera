@@ -32,42 +32,112 @@ export const StageSubItemGroup = observer(
     return (
       <>
         <CommandSubItem
-          rightLabel='Engaged'
+          rightLabel='Target'
           icon={<Columns03 />}
-          leftLabel='Change org stage'
-          keywords={organizationKeywords.change_org_stage_to_engaged}
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_target}
           rightAccessory={
-            isSelected() === OrganizationStage.Engaged ? <Check /> : null
+            isSelected() === OrganizationStage.Target ? <Check /> : null
           }
           onSelectAction={() => {
-            updateStage(selectedIds, OrganizationStage.Engaged);
+            updateStage(selectedIds, OrganizationStage.Target);
             closeMenu();
           }}
         />
         <CommandSubItem
-          rightLabel='Trial'
           icon={<Columns03 />}
-          leftLabel='Change org stage'
-          keywords={organizationKeywords.change_org_stage_to_trial}
+          rightLabel='Education'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_education}
           rightAccessory={
-            isSelected() === OrganizationStage.Trial ? <Check /> : null
+            isSelected() === OrganizationStage.Education ? <Check /> : null
           }
           onSelectAction={() => {
-            updateStage(selectedIds, OrganizationStage.Trial);
+            updateStage(selectedIds, OrganizationStage.Education);
             closeMenu();
           }}
         />
 
         <CommandSubItem
           icon={<Columns03 />}
-          rightLabel='Unqualified'
-          leftLabel='Change org stage'
-          keywords={organizationKeywords.change_org_stage_to_not_a_fit}
+          rightLabel='Solution'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_solution}
           rightAccessory={
-            isSelected() === OrganizationStage.Unqualified ? <Check /> : null
+            isSelected() === OrganizationStage.Solution ? <Check /> : null
           }
           onSelectAction={() => {
-            updateStage(selectedIds, OrganizationStage.Unqualified);
+            updateStage(selectedIds, OrganizationStage.Solution);
+            closeMenu();
+          }}
+        />
+
+        <CommandSubItem
+          icon={<Columns03 />}
+          rightLabel='Evaluation'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_evaluation}
+          rightAccessory={
+            isSelected() === OrganizationStage.Evaluation ? <Check /> : null
+          }
+          onSelectAction={() => {
+            updateStage(selectedIds, OrganizationStage.Evaluation);
+            closeMenu();
+          }}
+        />
+
+        <CommandSubItem
+          icon={<Columns03 />}
+          rightLabel='Ready to buy'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_readytobuy}
+          rightAccessory={
+            isSelected() === OrganizationStage.ReadyToBuy ? <Check /> : null
+          }
+          onSelectAction={() => {
+            updateStage(selectedIds, OrganizationStage.ReadyToBuy);
+            closeMenu();
+          }}
+        />
+
+        <CommandSubItem
+          icon={<Columns03 />}
+          rightLabel='Opportunity'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_opportunity}
+          rightAccessory={
+            isSelected() === OrganizationStage.Opportunity ? <Check /> : null
+          }
+          onSelectAction={() => {
+            updateStage(selectedIds, OrganizationStage.Opportunity);
+            closeMenu();
+          }}
+        />
+
+        <CommandSubItem
+          icon={<Columns03 />}
+          rightLabel='Customer'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_customer}
+          rightAccessory={
+            isSelected() === OrganizationStage.Customer ? <Check /> : null
+          }
+          onSelectAction={() => {
+            updateStage(selectedIds, OrganizationStage.Customer);
+            closeMenu();
+          }}
+        />
+
+        <CommandSubItem
+          icon={<Columns03 />}
+          rightLabel='Not a fit'
+          leftLabel='Change lead stage'
+          keywords={organizationKeywords.change_org_stage_to_not_a_fit}
+          rightAccessory={
+            isSelected() === OrganizationStage.NotAFit ? <Check /> : null
+          }
+          onSelectAction={() => {
+            updateStage(selectedIds, OrganizationStage.NotAFit);
             closeMenu();
           }}
         />
