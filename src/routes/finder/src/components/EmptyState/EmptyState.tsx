@@ -25,9 +25,9 @@ export const EmptyState = observer(() => {
     switch (currentPreset) {
       case TableIdType.Organizations:
         return {
-          title: "Let's get started",
+          title: 'Let the leads flow',
           description:
-            'Get started by manually adding a company or connecting an app in Settings',
+            'GIdentify website visitors, capture calendar bookings, or prospect faster with our LinkedIn extension.',
           buttonLabel: 'Add company',
           dataTest: 'all-orgs-add-org',
           onClick: () => {

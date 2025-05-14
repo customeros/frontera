@@ -26,10 +26,11 @@ import { Documents } from './components/documents';
 
 interface OrganizationDetailsProps {
   id: string;
+  isPanel?: boolean;
 }
 
 export const OrganizationDetails = observer(
-  ({ id }: OrganizationDetailsProps) => {
+  ({ id, isPanel }: OrganizationDetailsProps) => {
     const store = useStore();
     const organizationStore = registry.get('organizations');
     const organization = organizationStore.get(id);
@@ -172,26 +173,29 @@ export const OrganizationDetails = observer(
               dataTest='org-about-org-owner'
             />
           </div>
+          {!isPanel && (
+            <>
+              <Divider className='my-4' />
+              <Documents id={id} />
 
-          <Divider className='my-4' />
-          <Documents id={id} />
+              <div id='spacer' className='pb-20' />
 
-          <div id='spacer' className='pb-20' />
-
-          {organization?.customerOsId && (
-            <Tooltip label='Copy ID'>
-              <span
-                className='pt-3  text-grayModern-400 cursor-pointer text-sm absolute bottom-0 bg-white'
-                onClick={() =>
-                  copyToClipboard(
-                    organization.customerOsId ?? '',
-                    'CustomerOS ID copied',
-                  )
-                }
-              >
-                CustomerOS ID: {organization?.customerOsId}
-              </span>
-            </Tooltip>
+              {organization?.customerOsId && (
+                <Tooltip label='Copy ID'>
+                  <span
+                    className='pt-3  text-grayModern-400 cursor-pointer text-sm absolute bottom-0 bg-white'
+                    onClick={() =>
+                      copyToClipboard(
+                        organization.customerOsId ?? '',
+                        'CustomerOS ID copied',
+                      )
+                    }
+                  >
+                    CustomerOS ID: {organization?.customerOsId}
+                  </span>
+                </Tooltip>
+              )}
+            </>
           )}
         </div>
       </div>

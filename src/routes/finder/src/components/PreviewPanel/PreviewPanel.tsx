@@ -9,6 +9,7 @@ import { TaskDetails } from '@shared/components/TaskDetails/TaskDetails';
 import { OrganizationDetails } from '@shared/components/OrganizationDetails';
 import { LeadsSourcesPanel } from '@shared/components/LeadsSoures/LeadsSourcesPanel';
 import { InvoicePreviewModal } from '@organization/components/Timeline/PastZone/events/invoice/InvoicePreviewModal';
+
 export const PreviewPanel = observer(() => {
   const store = useStore();
   const { tableViewDef } = useCurrentViewDef();
@@ -34,7 +35,7 @@ export const PreviewPanel = observer(() => {
         !store.ui.showLeadSources &&
         store.ui.focusRow && (
           <div className='px-4'>
-            <OrganizationDetails id={store.ui.focusRow} />
+            <OrganizationDetails isPanel={true} id={store.ui.focusRow} />
           </div>
         )}
 

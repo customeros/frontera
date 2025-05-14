@@ -97,8 +97,9 @@ export const NavigationSections = observer(
             label='Leads'
             dataTest={`side-nav-item-all-orgs`}
             onClick={() => handleItemClick(`finder?preset=${orgPreset}`)}
-            isActive={checkIsActive(['finder'], {
-              preset: preset === orgPreset ? orgPreset : contactsPreset || '',
+            isActive={checkIsActive(['finder', 'organization'], {
+              //@ts-expect-error-ignore
+              preset: [orgPreset, contactsPreset],
             })}
             icon={(isActive) => (
               <Icon
