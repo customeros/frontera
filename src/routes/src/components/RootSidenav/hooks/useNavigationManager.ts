@@ -44,7 +44,7 @@ export const useNavigationManager = () => {
     const isCorrectPath = path.includes(`${lastActivePath}`);
 
     if (options?.preset) {
-      if (Array.isArray(options.preset)) {
+      if (Object.keys(options.preset).length > 0) {
         return (
           isCorrectPath &&
           (options.preset.includes(presetParam ?? '') ||
