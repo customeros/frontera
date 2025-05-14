@@ -201,7 +201,7 @@ export const getFilterTypes = (store?: RootStore) => {
     [ColumnViewType.ContactsTags]: {
       filterType: 'list',
       filterName: 'Tags',
-      filterAccesor: ColumnViewType.ContactsPersona,
+      filterAccesor: ColumnViewType.ContactsTags,
       filterOperators: [
         ComparisonOperator.In,
         ComparisonOperator.NotIn,
