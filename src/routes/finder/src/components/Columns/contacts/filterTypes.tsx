@@ -198,10 +198,10 @@ export const getFilterTypes = (store?: RootStore) => {
         <LinkedinOutline className='group-hover:text-grayModern-700grayModernt-grayModern-500 mb-0.5' />
       ),
     },
-    [ColumnViewType.ContactsPersona]: {
+    [ColumnViewType.ContactsTags]: {
       filterType: 'list',
       filterName: 'Tags',
-      filterAccesor: ColumnViewType.ContactsPersona,
+      filterAccesor: ColumnViewType.ContactsTags,
       filterOperators: [
         ComparisonOperator.In,
         ComparisonOperator.NotIn,

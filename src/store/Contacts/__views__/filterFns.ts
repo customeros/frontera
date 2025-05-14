@@ -145,7 +145,7 @@ const getFilterFn = (
       )
 
       .with(
-        { property: ColumnViewType.ContactsPersona },
+        { property: ColumnViewType.ContactsTags },
         (filter) => (row: Contact) => {
           if (!filter.active) return true;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
