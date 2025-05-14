@@ -13,7 +13,6 @@ import { useKeyBindings } from 'rooks';
 import { observer } from 'mobx-react-lite';
 import { ColumnSort } from '@tanstack/table-core';
 import { InvoiceStore } from '@store/Invoices/Invoice.store';
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { useColumnSizing } from '@finder/hooks/useColumnSizing';
 import { useTableActions } from '@invoices/hooks/useTableActions';
 import { useCurrentViewDef } from '@finder/hooks/useCurrentViewDef';
@@ -48,7 +47,6 @@ export const FinderTable = observer(() => {
   const location = useLocation();
   const { tableViewDef, preset } = useCurrentViewDef();
 
-  const enableFeature = useFeatureIsOn('gp-dedicated-1');
   const tableRef = useRef<TableInstance<object> | null>(null);
   const contactsPreset = store.tableViewDefs.contactsPreset;
   const opportunitiesPreset = store.tableViewDefs.opportunitiesTablePreset;
@@ -400,7 +398,7 @@ export const FinderTable = observer(() => {
   };
 
   const enableRowSelection = match(tableType)
-    .with(TableViewType.Organizations, () => enableFeature || true)
+    .with(TableViewType.Organizations, () => true)
     .with(TableViewType.Contacts, () => true)
     .with(TableViewType.Invoices, () => false)
     .with(TableViewType.Opportunities, () => true)
@@ -431,6 +429,7 @@ export const FinderTable = observer(() => {
         rowHeight={rowHeight}
         id={tableViewDef?.id}
         totalItems={totalItems}
+        enableTableActions={true}
         canFetchMore={canFetchMore}
         enableColumnResizing={true}
         onSortingChange={handleSortChange}
@@ -451,13 +450,6 @@ export const FinderTable = observer(() => {
           // store.organizations.loadNext(preset!);
           store.contacts.loadNext(preset!);
         }}
-        enableTableActions={
-          tableType && [TableViewType.Contracts].includes(tableType)
-            ? false
-            : enableFeature !== null
-            ? enableFeature
-            : true
-        }
         renderTableActions={(table, focusRow, selectedIds) => {
           if (tableType === TableViewType.Organizations) {
             return (
