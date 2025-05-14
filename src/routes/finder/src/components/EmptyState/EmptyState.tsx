@@ -27,7 +27,7 @@ export const EmptyState = observer(() => {
         return {
           title: 'Let the leads flow',
           description:
-            'GIdentify website visitors, capture calendar bookings, or prospect faster with our LinkedIn extension.',
+            'Identify website visitors, capture calendar bookings, or prospect faster with our LinkedIn extension.',
           buttonLabel: 'Add company',
           dataTest: 'all-orgs-add-org',
           onClick: () => {
