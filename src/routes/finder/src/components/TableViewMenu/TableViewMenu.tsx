@@ -18,12 +18,9 @@ export const TableViewMenu = observer(() => {
   const tableViewDef = store.tableViewDefs.getById(preset);
   const tableType = tableViewDef?.value?.tableType;
 
-  const isPreset = tableViewDef?.value?.isPreset;
-
   if (
-    !isPreset ||
-    (tableType &&
-      [TableViewType.Invoices, TableViewType.Flow].includes(tableType))
+    tableType &&
+    [TableViewType.Invoices, TableViewType.Flow].includes(tableType)
   ) {
     return <div className='ml-2'></div>;
   }
