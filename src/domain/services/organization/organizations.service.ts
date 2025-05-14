@@ -468,6 +468,9 @@ export class OrganizationService {
     }
 
     this.organizationStore.sync(organization);
+    OrganizationViews.revalidate(organization, { forceAll: true });
+
+    this.utilService.toastSuccess('Stage changed');
 
     return [res, err];
   }
@@ -557,16 +560,17 @@ export class OrganizationService {
     return [res, err];
   }
 
-  public async setStageBulk(
+  setStageBulk = async (
     organizationIds: string[],
     stage: OrganizationStage,
-  ) {
+  ) => {
     organizationIds.forEach((id) => {
       const organization = this.organizationStore.get(id);
 
       if (!organization) return;
 
       organization.setStage(stage);
+      OrganizationViews.revalidate(organization, { forceAll: true });
     });
 
     const promises = organizationIds.map((id) => {
@@ -581,7 +585,9 @@ export class OrganizationService {
     });
 
     await Promise.all(promises);
-  }
+
+    this.utilService.toastSuccess('Stage changed');
+  };
 
   public async clearTagsBulk(organizationIds: string[]) {
     const promises: Promise<UnwrapResult<unknown>>[] = [];

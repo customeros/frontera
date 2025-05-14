@@ -235,9 +235,17 @@ export class OrganizationViews {
     viewRegistry.cache.forEach(fn);
   }
 
-  static async revalidate(organization: Organization) {
+  static async revalidate(
+    organization: Organization,
+    opts?: { forceAll?: boolean },
+  ) {
     for (const [_, viewDef] of this.instance.viewDefStore.value) {
       if (viewDef.value.tableType !== TableViewType.Organizations) continue;
+
+      if (opts?.forceAll) {
+        await this.instance.setup(viewDef);
+        continue;
+      }
 
       if (this.instance.shouldRevalidate(viewDef, organization)) {
         await this.instance.setup(viewDef);

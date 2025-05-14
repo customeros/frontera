@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
 import { registry } from '@/domain/stores/registry';
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
@@ -12,6 +13,7 @@ export const TopNav = observer(() => {
   const store = useStore();
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const showOldPanels = useFeatureIsOn('billing');
 
   const organization = registry.get('organizations').get(params?.id as string);
 
@@ -75,22 +77,26 @@ export const TopNav = observer(() => {
       >
         People
       </Button>
-      <Button
-        size='xs'
-        onClick={handleItemClick('account')}
-        className='transition-colors duration-7000 border'
-        variant={checkIsActive('account') ? 'outline' : 'ghost'}
-      >
-        Account
-      </Button>
-      <Button
-        size='xs'
-        onClick={handleItemClick('invoices')}
-        className='transition-colors duration-7000 border'
-        variant={checkIsActive('invoices') ? 'outline' : 'ghost'}
-      >
-        Invoices
-      </Button>
+      {showOldPanels && (
+        <>
+          <Button
+            size='xs'
+            onClick={handleItemClick('account')}
+            className='transition-colors duration-7000 border'
+            variant={checkIsActive('account') ? 'outline' : 'ghost'}
+          >
+            Account
+          </Button>
+          <Button
+            size='xs'
+            onClick={handleItemClick('invoices')}
+            className='transition-colors duration-7000 border'
+            variant={checkIsActive('invoices') ? 'outline' : 'ghost'}
+          >
+            Invoices
+          </Button>
+        </>
+      )}
     </div>
   );
 });
