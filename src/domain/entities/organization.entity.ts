@@ -7,10 +7,12 @@ import { OrganizationDatum } from '@/infra/repositories/core/organization';
 import {
   IcpFit,
   Market,
+  QualifiedBy,
   FundingRound,
   OnboardingStatus,
   OrganizationStage,
   LastTouchpointType,
+  QualificationStatus,
   OrganizationSaveInput,
   OrganizationRelationship,
   OpportunityRenewalLikelihood,
@@ -81,6 +83,9 @@ export class Organization implements OrganizationDatum {
   industryCode: OrganizationDatum['industryCode'] = '';
   industryName: OrganizationDatum['industryName'] = '';
   icpFitUpdatedAt: OrganizationDatum['icpFitUpdatedAt'] = null;
+  qualifiedBy: OrganizationDatum['qualifiedBy'] = QualifiedBy.None;
+  qualificationStatus: OrganizationDatum['qualificationStatus'] =
+    QualificationStatus.Pending;
 
   constructor(data?: Partial<OrganizationDatum>) {
     if (data) {

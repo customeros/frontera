@@ -4030,6 +4030,8 @@ export type Organization = MetadataInterface & {
   parentCompanies: Array<LinkedOrganization>;
   phoneNumbers: Array<PhoneNumber>;
   public?: Maybe<Scalars['Boolean']['output']>;
+  qualificationStatus?: Maybe<QualificationStatus>;
+  qualifiedBy?: Maybe<QualifiedBy>;
   referenceId?: Maybe<Scalars['String']['output']>;
   /** @deprecated No longer supported */
   relationship?: Maybe<OrganizationRelationship>;
@@ -4203,21 +4205,12 @@ export type OrganizationSearchResult = {
 export enum OrganizationStage {
   Customer = 'CUSTOMER',
   Education = 'EDUCATION',
-  Engaged = 'ENGAGED',
   Evaluation = 'EVALUATION',
-  InitialValue = 'INITIAL_VALUE',
-  Lead = 'LEAD',
-  MaxValue = 'MAX_VALUE',
   NotAFit = 'NOT_A_FIT',
-  Onboarding = 'ONBOARDING',
   Opportunity = 'OPPORTUNITY',
-  PendingChurn = 'PENDING_CHURN',
   ReadyToBuy = 'READY_TO_BUY',
-  RecurringValue = 'RECURRING_VALUE',
   Solution = 'SOLUTION',
   Target = 'TARGET',
-  Trial = 'TRIAL',
-  Unqualified = 'UNQUALIFIED',
 }
 
 export type OrganizationTagInput = {
@@ -4268,7 +4261,10 @@ export type OrganizationUiDetails = {
   parentId?: Maybe<Scalars['ID']['output']>;
   parentName?: Maybe<Scalars['String']['output']>;
   public?: Maybe<Scalars['Boolean']['output']>;
+  qualificationStatus?: Maybe<QualificationStatus>;
+  qualifiedBy?: Maybe<QualifiedBy>;
   referenceId: Scalars['String']['output'];
+  /** @deprecated No longer supported */
   relationship?: Maybe<OrganizationRelationship>;
   renewalSummaryArrForecast?: Maybe<Scalars['Float']['output']>;
   renewalSummaryMaxArrForecast?: Maybe<Scalars['Float']['output']>;
@@ -4464,6 +4460,19 @@ export type PhoneNumberUpdateInput = {
   id: Scalars['ID']['input'];
   phoneNumber: Scalars['String']['input'];
 };
+
+export enum QualificationStatus {
+  NotQualified = 'NOT_QUALIFIED',
+  Pending = 'PENDING',
+  Qualified = 'QUALIFIED',
+  Qualifying = 'QUALIFYING',
+}
+
+export enum QualifiedBy {
+  None = 'NONE',
+  System = 'SYSTEM',
+  User = 'USER',
+}
 
 export type Query = {
   __typename?: 'Query';
