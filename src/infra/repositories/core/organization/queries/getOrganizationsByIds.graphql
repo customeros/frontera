@@ -19,6 +19,8 @@ query getOrganizationsByIds($ids: [ID!]) {
     employees
     yearFounded
     enrichedAt
+    qualificationStatus
+    qualifiedBy
     enrichedFailedAt
     enrichedRequestedAt
     ltv

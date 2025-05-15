@@ -90,18 +90,12 @@ export const OrganizationTableActions = observer(
       if (!selectCount && !focusedId) return;
 
       if (!selectCount && focusedId) {
-        organizationService.setStageBulk(
-          [focusedId],
-          OrganizationStage.Unqualified,
-        );
+        organizationService.setStageBulk([focusedId], OrganizationStage.Target);
 
         return;
       }
 
-      organizationService.setStageBulk(
-        selection,
-        OrganizationStage.Unqualified,
-      );
+      organizationService.setStageBulk(selection, OrganizationStage.Target);
       clearSelection();
     };
 
@@ -123,12 +117,15 @@ export const OrganizationTableActions = observer(
       if (!selectCount && focusedId) {
         organizationService.setStageBulk(
           [focusedId],
-          OrganizationStage.Engaged,
+          OrganizationStage.Opportunity,
         );
 
         return;
       }
-      organizationService.setStageBulk(selection, OrganizationStage.Engaged);
+      organizationService.setStageBulk(
+        selection,
+        OrganizationStage.Opportunity,
+      );
       clearSelection();
     };
 

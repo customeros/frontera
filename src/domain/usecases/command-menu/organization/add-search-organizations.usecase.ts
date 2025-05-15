@@ -277,8 +277,7 @@ export class AddSearchOrganizationsUsecase {
           ],
         },
         () => ({
-          relationship: OrganizationRelationship.Customer,
-          stage: OrganizationStage.Onboarding,
+          stage: OrganizationStage.Target,
         }),
       )
       .with(

@@ -147,7 +147,7 @@ export const OrganizationBulkCommands = observer(() => {
           onSelect={() => {
             organizationService.setStageBulk(
               selectedIds,
-              OrganizationStage.Engaged,
+              OrganizationStage.Opportunity,
             );
             store.ui.commandMenu.setOpen(false);
           }}
