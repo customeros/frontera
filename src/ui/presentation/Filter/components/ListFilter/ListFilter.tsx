@@ -146,7 +146,7 @@ export const ListFilter = ({
               />
             )}
             <span
-              className='flex-1'
+              className='flex-1 max-w-[450px] truncate'
               style={{
                 marginLeft: filterName === 'Primary email status' ? '8px' : '0',
               }}
@@ -201,8 +201,8 @@ export const ListFilter = ({
     filterName === 'Country' ? CountryOption : Option;
 
   const formatGroupLabel = (groupOption: GroupedOption) => (
-    <div className='flex justify-between items-center'>
-      <span className='font-medium text-grayModern-700'>
+    <div className='flex justify-between items-center '>
+      <span className='font-medium text-grayModern-700 '>
         {groupOption.label}
       </span>
     </div>
@@ -229,7 +229,7 @@ export const ListFilter = ({
       <PopoverContent
         side='bottom'
         align='start'
-        className='pt-0 min-w-[254px]'
+        className='pt-0 min-w-[254px] max-w-[450px] truncate'
       >
         <Combobox
           escapeClearsValue

@@ -70,7 +70,7 @@ export const OrganizationBulkCommands = observer(() => {
             store.ui.commandMenu.setType('ChangeStage');
           }}
         >
-          Change org stage...
+          Change lead stage...
         </CommandItem>
 
         <StageSubItemGroup

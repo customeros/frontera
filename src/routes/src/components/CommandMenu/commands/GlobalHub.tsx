@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
 import { useStore } from '@shared/hooks/useStore';
 import { ArrowNarrowRight } from '@ui/media/icons/ArrowNarrowRight';
@@ -44,12 +43,8 @@ export const GlobalSharedCommands = observer(
   ({ dataTest }: GlobalSharedCommandsProps) => {
     const store = useStore();
     const navigate = useNavigate();
-    const showCustomerMap = useFeatureIsOn('show-customer-map');
     const organizationsPreset = store.tableViewDefs.organizationsPreset;
     const contactsPreset = store.tableViewDefs.contactsPreset;
-    const upcomingInvoicesPreset = store.tableViewDefs.upcomingInvoicesPreset;
-    const contractsPreset = store.tableViewDefs.contractsPreset;
-    const flowsPreset = store.tableViewDefs.flowsPreset;
 
     const handleResync = () => {
       store.ui.purgeLocalData();
@@ -111,33 +106,6 @@ export const GlobalSharedCommands = observer(
         </CommandItem>
 
         <CommandItem
-          dataTest={`${dataTest}-gi`}
-          leftAccessory={<ArrowNarrowRight />}
-          rightAccessory={<KeyboardShortcut shortcut='I' />}
-          keywords={navigationKeywords.go_to_scheduled_invoices}
-          onSelect={() => handleGoTo('/finder', upcomingInvoicesPreset)}
-        >
-          Go to Invoices
-        </CommandItem>
-        <CommandItem
-          dataTest={`${dataTest}-gr`}
-          leftAccessory={<ArrowNarrowRight />}
-          keywords={navigationKeywords.go_to_contracts}
-          rightAccessory={<KeyboardShortcut shortcut='R' />}
-          onSelect={() => handleGoTo('/finder', contractsPreset)}
-        >
-          Go to Contracts
-        </CommandItem>
-        <CommandItem
-          dataTest={`${dataTest}-gf`}
-          leftAccessory={<ArrowNarrowRight />}
-          keywords={navigationKeywords.go_to_flows}
-          rightAccessory={<KeyboardShortcut shortcut='F' />}
-          onSelect={() => handleGoTo('/finder', flowsPreset)}
-        >
-          Go to Flows
-        </CommandItem>
-        <CommandItem
           dataTest={`${dataTest}-gs`}
           leftAccessory={<ArrowNarrowRight />}
           onSelect={() => handleGoTo('/settings')}
@@ -146,17 +114,7 @@ export const GlobalSharedCommands = observer(
         >
           Go to Settings
         </CommandItem>
-        {showCustomerMap && (
-          <CommandItem
-            dataTest={`${dataTest}-gd`}
-            leftAccessory={<ArrowNarrowRight />}
-            onSelect={() => handleGoTo('/customer-map')}
-            keywords={navigationKeywords.go_to_customer_map}
-            rightAccessory={<KeyboardShortcut shortcut='D' />}
-          >
-            Go to Customer map
-          </CommandItem>
-        )}
+
         <CommandItem
           onSelect={handleResync}
           keywords={resyncKeywords}
@@ -180,12 +138,9 @@ const KeyboardShortcut = ({ shortcut }: { shortcut: string }) => {
 };
 
 const navigationKeywords = {
-  go_to_contracts: ['go to', 'contracts', 'navigate'],
   go_to_contacts: ['go to', 'contacts', 'navigate', 'people'],
-  go_to_targets: ['go to', 'targets', 'navigate'],
   go_to_customers: ['go to', 'customers', 'navigate'],
   go_to_address_book: ['go to', 'organizations', 'navigate'],
-  go_to_flows: ['go to', 'flows', 'navigate', 'campaign'],
   go_to_opportunities: [
     'go to',
     'opportunities',
@@ -211,7 +166,6 @@ const navigationKeywords = {
     'billing',
     'data',
   ],
-  go_to_customer_map: ['go to', 'customer', 'map', 'navigate', 'dashboard'],
 };
 
 const resyncKeywords = ['re-sync', 're sync', 'sync', 'reset'];
