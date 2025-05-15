@@ -159,24 +159,36 @@ export const getDefaultFieldTypes = (store?: RootStore) => {
       icon: <RadioButton />,
       options: [
         {
-          label: 'Lead',
-          id: OrganizationStage.Lead,
-        },
-        {
           label: 'Target',
           id: OrganizationStage.Target,
         },
         {
-          label: 'Engaged',
-          id: OrganizationStage.Engaged,
+          label: 'Education',
+          id: OrganizationStage.Education,
         },
         {
-          label: 'Trial',
-          id: OrganizationStage.Trial,
+          label: 'Solution',
+          id: OrganizationStage.Solution,
         },
         {
-          label: 'Unqualified',
-          id: OrganizationStage.Unqualified,
+          label: 'Evaluation',
+          id: OrganizationStage.Evaluation,
+        },
+        {
+          label: 'Ready to buy',
+          id: OrganizationStage.ReadyToBuy,
+        },
+        {
+          label: 'Opportunity',
+          id: OrganizationStage.Opportunity,
+        },
+        {
+          label: 'Customer',
+          id: OrganizationStage.Customer,
+        },
+        {
+          label: 'Not a fit',
+          id: OrganizationStage.NotAFit,
         },
       ],
     },

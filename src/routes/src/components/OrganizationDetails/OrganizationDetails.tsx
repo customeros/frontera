@@ -98,7 +98,7 @@ export const OrganizationDetails = observer(
 
               <IcpBadge
                 qualifiedBy={organization.qualifiedBy!}
-                qualificationStatus={QualificationStatus.Qualifying}
+                qualificationStatus={organization.qualificationStatus!}
               />
               {store.ui.showPreviewCard && (
                 <IconButton
