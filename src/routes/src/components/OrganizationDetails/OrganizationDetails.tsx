@@ -14,15 +14,12 @@ import { Tag, TagLabel } from '@ui/presentation/Tag';
 import { Tooltip } from '@ui/overlay/Tooltip/Tooltip';
 import { SocialMediaList } from '@organization/components/Tabs';
 import { useCopyToClipboard } from '@shared/hooks/useCopyToClipboard';
+import { FlagWrongFields } from '@shared/types/__generated__/graphql.types';
 import { TruncatedText } from '@ui/presentation/TruncatedText/TruncatedText';
 import { IcpBadge } from '@shared/components/OrganizationDetails/components/icp';
 import { Domains } from '@shared/components/OrganizationDetails/components/domains';
 import { OwnerInput } from '@shared/components/OrganizationDetails/components/owner';
 import { AboutTabField } from '@shared/components/OrganizationDetails/components/AboutTabField';
-import {
-  FlagWrongFields,
-  QualificationStatus,
-} from '@shared/types/__generated__/graphql.types';
 
 import { Tags } from '../Tags';
 import { Documents } from './components/documents';
