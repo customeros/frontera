@@ -135,43 +135,8 @@ export const Search = observer(() => {
             </Tooltip>
           )}
         </div>
-        {tableViewDef?.value.tableType !== TableViewType.Contacts &&
-          tableViewDef?.value.tableType !== TableViewType.Tasks && (
-            <div className='w-[1px] h-[20px]  bg-grayModern-200' />
-          )}
+
         <div className='flex items-center justify-between w-full'>
-          {tableViewDef?.value.tableType !== TableViewType.Contacts &&
-            tableViewDef?.value.tableType !== TableViewType.Tasks && (
-              <Tooltip
-                label={
-                  <span className='flex items-center gap-3'>
-                    Search
-                    <div className='bg-grayModern-600 text-xs min-h-4 min-w-4 rounded flex justify-center items-center'>
-                      /
-                    </div>
-                  </span>
-                }
-              >
-                <Button
-                  size='xs'
-                  variant='ghost'
-                  colorScheme='grayModern'
-                  leftIcon={<Icon name='search-sm' />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    store.ui.commandMenu.toggle('AddNewOrganization');
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === '/') {
-                      e.stopPropagation();
-                      store.ui.commandMenu.toggle('AddNewOrganization');
-                    }
-                  }}
-                >
-                  Search
-                </Button>
-              </Tooltip>
-            )}
           <div className='flex items-center gap-4 w-full justify-end'>
             <UserPresence
               channelName={`finder:${store.session.value.tenant}`}
@@ -180,7 +145,7 @@ export const Search = observer(() => {
               <Tooltip {...addButtonTooltipProps}>
                 <Button
                   size='xs'
-                  className='mr-4'
+                  className='mr-3'
                   variant='outline'
                   colorScheme='primary'
                   {...addButtonProps}
@@ -198,12 +163,16 @@ export const Search = observer(() => {
           variant='ghost'
           leftIcon={<Icon name='upload-04' />}
           className={cn(
-            'ml-2 mr-2',
+            'mr-2',
             store.ui.showLeadSources && 'bg-grayModern-100',
           )}
           onClick={() => {
-            store.ui.setShowLeadSources(true);
-            store.ui.setShowPreviewCard(false);
+            if (store.ui.showLeadSources) {
+              store.ui.setShowLeadSources(false);
+            } else {
+              store.ui.setShowLeadSources(true);
+              store.ui.setShowPreviewCard(false);
+            }
           }}
         >
           Lead sources

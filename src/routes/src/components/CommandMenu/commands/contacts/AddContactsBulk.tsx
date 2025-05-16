@@ -6,13 +6,13 @@ import { AddContactsBulkUsecase } from '@domain/usecases/command-menu/add-contac
 
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
+import { Tabs } from '@ui/form/Tabs/Tabs';
 import { validateEmail } from '@utils/email';
 import { Spinner } from '@ui/feedback/Spinner';
 import { ColumnViewType } from '@graphql/types';
 import { Mail01 } from '@ui/media/icons/Mail01';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
-import { ButtonGroup } from '@ui/form/ButtonGroup';
 import { LinkedinOutline } from '@ui/media/icons/LinkedinOutline';
 import { validLinkedInProfileUrl } from '@utils/linkedinValidation';
 import { Command, CommandCancelIconButton } from '@ui/overlay/CommandMenu';
@@ -120,28 +120,26 @@ export const AddContactsBulk = observer(() => {
         </div>
 
         <div className='text-sm flex flex-col gap-4'>
-          <ButtonGroup className='flex items-center w-full'>
+          <Tabs variant='enclosed'>
             <Button
               size='xs'
+              className='w-full'
               onClick={() => setType('linkedin')}
               leftIcon={<LinkedinOutline className='text-inherit' />}
-              className={cn('w-full', {
-                selected: type === 'linkedin',
-              })}
+              data-state={type === 'linkedin' ? 'active' : 'inactive'}
             >
               LinkedIn
             </Button>
             <Button
               size='xs'
+              className='w-full'
               onClick={() => setType('email')}
               leftIcon={<Mail01 className='text-inherit' />}
-              className={cn('px-4 w-full', {
-                selected: type === 'email',
-              })}
+              data-state={type === 'email' ? 'active' : 'inactive'}
             >
               Email
             </Button>
-          </ButtonGroup>
+          </Tabs>
         </div>
         <div
           className={cn(

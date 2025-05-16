@@ -7,11 +7,11 @@ import { CreateContactUsecase } from '@domain/usecases/contact-details/create-co
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { Input } from '@ui/form/Input';
+import { Tabs } from '@ui/form/Tabs/Tabs';
 import { Spinner } from '@ui/feedback/Spinner';
 import { Button } from '@ui/form/Button/Button';
 import { Mail01 } from '@ui/media/icons/Mail01';
 import { useStore } from '@shared/hooks/useStore';
-import { ButtonGroup } from '@ui/form/ButtonGroup';
 import { useModKey } from '@shared/hooks/useModKey';
 import { Signature } from '@ui/media/icons/Signature';
 import { LinkedinOutline } from '@ui/media/icons/LinkedinOutline';
@@ -99,26 +99,23 @@ export const AddSingleContact = observer(() => {
         </div>
 
         <div className='text-sm flex flex-col gap-4'>
-          <ButtonGroup className='flex items-center w-full'>
+          <Tabs variant='enclosed'>
             {INPUT_CONFIGS.map((config) => (
               <Button
                 size='xs'
                 key={config.type}
+                className='w-full'
                 leftIcon={config.icon}
                 onClick={() => usecase.setType(config.type)}
                 data-inactive={usecase.type !== config.type}
-                className={cn('w-full', {
-                  selected: usecase.type === config.type,
-                })}
-                dataTest={
-                  config.type === 'name' ? 'org-people-add-by-name' : undefined
+                data-state={
+                  usecase.type === config.type ? 'active' : 'inactive'
                 }
               >
                 {config.label}
               </Button>
             ))}
-          </ButtonGroup>
-
+          </Tabs>
           <Input
             autoFocus
             ref={inputRef}

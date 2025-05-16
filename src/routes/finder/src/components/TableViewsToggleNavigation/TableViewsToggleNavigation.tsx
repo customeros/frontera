@@ -1,11 +1,11 @@
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { cn } from '@ui/utils/cn.ts';
+import { Tabs } from '@ui/form/Tabs/Tabs';
 import { useStore } from '@shared/hooks/useStore';
-import { ButtonGroup } from '@ui/form/ButtonGroup';
 import { Button } from '@ui/form/Button/Button.tsx';
 import { TableIdType, TableViewType } from '@graphql/types';
 
@@ -22,13 +22,16 @@ export const TableViewsToggleNavigation = observer(() => {
   const tableViewId = tableViewDef?.tableId;
   const tableViewType = tableViewDef?.tableType;
 
-  const findPresetTable = (tableIdTypes: TableIdType[]): string | null => {
-    const presetTable = tableViewDefs.find((def) =>
-      tableIdTypes.includes(def.value.tableId),
-    );
+  const findPresetTable = useCallback(
+    (tableIdTypes: TableIdType[]): string | null => {
+      const presetTable = tableViewDefs.find(
+        (def) => tableIdTypes.includes(def.value.tableId) && def.value.isPreset,
+      );
 
-    return presetTable ? presetTable.value.id : null;
-  };
+      return presetTable ? presetTable.value.id : null;
+    },
+    [tableViewDefs],
+  );
 
   const getTablePair = (): [string | null, string | null] => {
     switch (tableViewId) {
@@ -98,26 +101,22 @@ export const TableViewsToggleNavigation = observer(() => {
   return (
     <>
       {showToggle && firstTableDef && secondTableDef && (
-        <ButtonGroup className='flex items-center w-auto'>
+        <Tabs variant='enclosed'>
           <Button
             size='xs'
+            data-state={preset === firstTableDef ? 'active' : 'inactive'}
             onClick={() => firstTableDef && handleNavigate(firstTableDef)}
-            className={cn('px-4', {
-              selected: preset === firstTableDef,
-            })}
           >
             {firstButtonLabel}
           </Button>
           <Button
             size='xs'
+            data-state={preset === secondTableDef ? 'active' : 'inactive'}
             onClick={() => secondTableDef && handleNavigate(secondTableDef)}
-            className={cn('px-4', {
-              selected: preset === secondTableDef,
-            })}
           >
             {secondButtonLabel}
           </Button>
-        </ButtonGroup>
+        </Tabs>
       )}
     </>
   );

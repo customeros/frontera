@@ -39,7 +39,8 @@ export const useNavigationManager = () => {
 
     const lastActivePath = lastActivePosition.root.split('?')?.[0];
 
-    const lastActivePreset = lastActivePosition.root.split('=')?.[1];
+    const lastActivePreset =
+      lastActivePosition.root.split('=')?.[1] ?? presetParam;
 
     const isCorrectPath = path.includes(`${lastActivePath}`);
 
@@ -47,14 +48,15 @@ export const useNavigationManager = () => {
       if (Object.keys(options.preset).length > 0) {
         return (
           isCorrectPath &&
-          (options.preset.includes(presetParam ?? '') ||
-            options.preset.includes(lastActivePreset ?? ''))
+          (options.preset.includes(presetParam ?? '')
+            ? options.preset.includes(presetParam ?? '')
+            : options.preset.includes(lastActivePreset ?? ''))
         );
       } else {
         return (
           isCorrectPath &&
-          (presetParam === options.preset ||
-            lastActivePreset === options.preset)
+          (presetParam === options.preset?.[0] ||
+            lastActivePreset === options.preset?.[0])
         );
       }
     } else {

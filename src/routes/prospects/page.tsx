@@ -7,9 +7,9 @@ import { FinderFilters } from '@finder/components/FinderFilters/FinderFilters';
 
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
+import { Tabs } from '@ui/form/Tabs/Tabs';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
-import { ButtonGroup } from '@ui/form/ButtonGroup';
 import { TableIdType, TableViewType } from '@graphql/types';
 import { PreviewCard } from '@shared/components/PreviewCard';
 import { ViewSettings } from '@shared/components/ViewSettings';
@@ -73,15 +73,11 @@ export const ProspectsBoardPage = observer(() => {
               )}
             </div>
             <div className='flex items-center self-end gap-2'>
-              <ButtonGroup className='flex items-center w-[252px]'>
+              <Tabs variant='enclosed'>
                 <Button
                   size='xs'
-                  colorScheme='grayModern'
-                  dataTest='prospects-board-button'
                   onClick={() => navigate('/prospects')}
-                  className={cn('px-4 w-full flex-1', {
-                    selected: !showFinder,
-                  })}
+                  data-state={!showFinder ? 'active' : 'inactive'}
                   leftIcon={
                     <Icon
                       name='columns-03'
@@ -95,10 +91,7 @@ export const ProspectsBoardPage = observer(() => {
                 </Button>
                 <Button
                   size='xs'
-                  dataTest={'prospects-list-button'}
-                  className={cn('px-4 w-full flex-1', {
-                    selected: showFinder,
-                  })}
+                  data-state={showFinder ? 'active' : 'inactive'}
                   onClick={() =>
                     navigate(`?show=finder&preset=${opportunitiesView?.id}`)
                   }
@@ -113,7 +106,7 @@ export const ProspectsBoardPage = observer(() => {
                 >
                   List
                 </Button>
-              </ButtonGroup>
+              </Tabs>
               <ViewSettings
                 type={TableViewType.Opportunities}
                 tableId={
