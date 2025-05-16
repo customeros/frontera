@@ -103,7 +103,12 @@ export const Search = observer(() => {
   return (
     <div
       ref={wrapperRef}
-      className='flex items-center justify-between pr-1 py-[5px] mb-[1px] w-full gap-2 bg-white border-b'
+      className={cn(
+        'flex items-center justify-between pr-1 py-[5px] mb-[1px] w-full gap-2 bg-white border-b',
+        (tableViewDef?.value.tableId === TableIdType.Customers ||
+          !tableViewDef?.value.isPreset) &&
+          'py-[7px]',
+      )}
     >
       <div className='flex items-center gap-3 w-full'>
         <div className='flex items-center gap-4'>

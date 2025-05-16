@@ -142,7 +142,7 @@ export const EmptyState = observer(() => {
   })();
 
   return (
-    <div className='flex justify-center h-full bg-white w-full'>
+    <div className='flex justify-center bg-white w-full'>
       <div className='flex flex-col h-[500px] w-[500px]'>
         <div className='flex relative'>
           <EmptyTable className='w-[152px] h-[120px] absolute top-[25%] right-[35%]' />
