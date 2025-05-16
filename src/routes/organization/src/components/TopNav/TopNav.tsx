@@ -5,6 +5,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import { registry } from '@/domain/stores/registry';
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
+import { Tabs } from '@ui/form/Tabs/Tabs';
 import { Button } from '@ui/form/Button/Button';
 import { useStore } from '@shared/hooks/useStore';
 import { useKeyboardNavigation } from '@shared/components/RootSidenav/hooks/useKeyboardNavigation';
@@ -60,43 +61,41 @@ export const TopNav = observer(() => {
   if (!organization) return null;
 
   return (
-    <div className='w-full flex gap-2 justify-start items-center border-b border-grayModern-200 px-2 py-2'>
-      <Button
-        size='xs'
-        onClick={handleItemClick('about')}
-        className='transition-colors duration-7000 border'
-        variant={checkIsActive('about') ? 'outline' : 'ghost'}
-      >
-        About
-      </Button>
-      <Button
-        size='xs'
-        onClick={handleItemClick('people')}
-        className='transition-colors duration-7000 border'
-        variant={checkIsActive('people') ? 'outline' : 'ghost'}
-      >
-        People
-      </Button>
-      {showOldPanels && (
-        <>
-          <Button
-            size='xs'
-            onClick={handleItemClick('account')}
-            className='transition-colors duration-7000 border'
-            variant={checkIsActive('account') ? 'outline' : 'ghost'}
-          >
-            Account
-          </Button>
-          <Button
-            size='xs'
-            onClick={handleItemClick('invoices')}
-            className='transition-colors duration-7000 border'
-            variant={checkIsActive('invoices') ? 'outline' : 'ghost'}
-          >
-            Invoices
-          </Button>
-        </>
-      )}
+    <div className='w-full flex justify-start items-center border-b border-grayModern-200 px-2 py-2'>
+      <Tabs variant='subtle'>
+        <Button
+          size='xs'
+          onClick={handleItemClick('about')}
+          data-state={checkIsActive('about') ? 'active' : 'inactive'}
+        >
+          About
+        </Button>
+        <Button
+          size='xs'
+          onClick={handleItemClick('people')}
+          data-state={checkIsActive('people') ? 'active' : 'inactive'}
+        >
+          People
+        </Button>
+        {showOldPanels && (
+          <>
+            <Button
+              size='xs'
+              onClick={handleItemClick('account')}
+              data-state={checkIsActive('account') ? 'active' : 'inactive'}
+            >
+              Account
+            </Button>
+            <Button
+              size='xs'
+              onClick={handleItemClick('invoices')}
+              data-state={checkIsActive('invoices') ? 'active' : 'inactive'}
+            >
+              Invoices
+            </Button>
+          </>
+        )}
+      </Tabs>
     </div>
   );
 });

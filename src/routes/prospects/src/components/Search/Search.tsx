@@ -53,17 +53,16 @@ export const Search = observer(() => {
   return (
     <div
       ref={wrapperRef}
-      className='flex items-center justify-between pr-1 w-full  gap-2 bg-white'
+      className='flex items-center justify-between pr-1 w-full gap-2 bg-white'
     >
       <InputGroup className='relative w-full bg-transparent hover:border-transparent focus-within:border-transparent focus-within:hover:border-transparent gap-1'>
-        <LeftElement className='ml-2 flex items-center gap-1'>
-          <div className='flex items-center gap-4'>
+        <LeftElement className='flex items-center gap-1'>
+          <div className='flex items-center gap-4 ml-5'>
             <span
               data-test='opps-finder-count'
               className='text-nowrap font-medium'
             >
-              {store.ui.searchCount}{' '}
-              {store.ui.searchCount === 1 ? 'opportunity' : 'opportunities'}
+              {'Opportunities'}
             </span>
             <Icon name='search-sm' className='text-grayModern-500 mt-[1px]' />
           </div>

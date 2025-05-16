@@ -7,41 +7,18 @@ import { TableIdType } from '@shared/types/__generated__/graphql.types';
 export const useTablePlaceholder = (tableIdType?: TableIdType) => {
   return useMemo(() => {
     return match(tableIdType)
-      .returnType<{
-        multi: string;
-        single: string;
-      }>()
-      .with(TableIdType.Organizations, () => ({
-        multi: 'companies',
-        single: 'company',
-      }))
-      .with(TableIdType.Customers, () => ({
-        multi: 'customers',
-        single: 'customer',
-      }))
-      .with(TableIdType.Contacts, () => ({
-        multi: 'contacts',
-        single: 'contacts',
-      }))
-      .with(TableIdType.Contracts, () => ({
-        multi: 'contracts',
-        single: 'contract',
-      }))
-      .with(TableIdType.Opportunities, () => ({
-        multi: 'opportunities',
-        single: 'opportunity',
-      }))
-      .with(TableIdType.PastInvoices, TableIdType.UpcomingInvoices, () => ({
-        multi: 'invoices',
-        single: 'invoice',
-      }))
-      .with(TableIdType.Tasks, () => ({
-        multi: 'tasks',
-        single: 'task',
-      }))
-      .otherwise(() => ({
-        multi: 'results',
-        single: 'result',
-      }));
+      .returnType<string>()
+      .with(TableIdType.Organizations, () => 'Leads')
+      .with(TableIdType.Customers, () => 'Customers')
+      .with(TableIdType.Contacts, () => 'Leads')
+      .with(TableIdType.Contracts, () => 'Contracts')
+      .with(TableIdType.Opportunities, () => 'Opportunities')
+      .with(
+        TableIdType.PastInvoices,
+        TableIdType.UpcomingInvoices,
+        () => 'Invoices',
+      )
+      .with(TableIdType.Tasks, () => 'Tasks')
+      .otherwise(() => 'results');
   }, [tableIdType]);
 };
