@@ -202,8 +202,12 @@ export const Search = observer(() => {
             store.ui.showLeadSources && 'bg-grayModern-100',
           )}
           onClick={() => {
-            store.ui.setShowLeadSources(true);
-            store.ui.setShowPreviewCard(false);
+            if (store.ui.showLeadSources) {
+              store.ui.setShowLeadSources(false);
+            } else {
+              store.ui.setShowLeadSources(true);
+              store.ui.setShowPreviewCard(false);
+            }
           }}
         >
           Lead sources

@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { Popover } from '@radix-ui/react-popover';
 
+import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { Spinner } from '@ui/feedback/Spinner';
 import { Button } from '@ui/form/Button/Button';
@@ -18,18 +19,14 @@ const complications: Record<
   [
     label: string,
     colorScheme: TagProps['colorScheme'],
-    leftElement: React.ReactElement,
+    leftElement?: React.ReactElement,
     rightElement?: React.ReactElement,
     popoverContent?: React.ReactElement,
   ]
 > = {
-  [QualificationStatus.Pending]: [
-    'Pending qualification',
-    'grayModern',
-    <Icon name='clock' />,
-  ],
+  [QualificationStatus.Pending]: ['Not qualified yet', 'grayModern'],
   [QualificationStatus.Qualified]: [
-    'ICP match',
+    'ICP fit',
     'success',
     <Icon name='check-verified-02' />,
     <Icon name='chevron-right' />,
@@ -66,14 +63,14 @@ export const IcpBadge = observer(({ qualificationStatus }: IcpBadgeProps) => {
 
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger className={cn(!popoverContent && 'cursor-default')}>
         <Tag colorScheme={colorScheme}>
           <TagLabel className='flex items-center gap-1'>
             {leftElement} {label} {rightElement}
           </TagLabel>
         </Tag>
       </PopoverTrigger>
-      <PopoverContent>{popoverContent}</PopoverContent>
+      {popoverContent && <PopoverContent>{popoverContent}</PopoverContent>}
     </Popover>
   );
 });
