@@ -356,6 +356,19 @@ async function createServer() {
     followRedirects: true,
   });
 
+  const filesApiProxyForUser = createProxyMiddleware({
+    pathFilter: '/user-logo',
+    pathRewrite: { '^/user-logo': '' },
+    target: process.env.CUSTOMER_OS_API_PATH + '/files/v1/user-profile-photo',
+    changeOrigin: true,
+    headers: {
+      'X-Openline-API-KEY': process.env.INTERNAL_API_KEY,
+    },
+    logger: console,
+    preserveHeaderKeyCase: true,
+    followRedirects: true,
+  });
+
   app.use(mailstackApiGqlProxy);
   app.use(customerOsApiGqlProxy);
   app.use(customerOsApiRestProxy);
@@ -363,6 +376,7 @@ async function createServer() {
   app.use(internalApiProxy);
   app.use(filesApiProxy);
   app.use(filesApiProxyForTenant);
+  app.use(filesApiProxyForUser);
   app.use(basConfigProxy);
   app.use(realtimeApiProxy);
   app.use(invoiceProxy);
