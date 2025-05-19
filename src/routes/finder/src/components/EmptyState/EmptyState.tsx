@@ -37,8 +37,9 @@ export const EmptyState = observer(() => {
         };
       case TableIdType.Contacts:
         return {
-          title: 'No contacts created yet',
-          description: 'Currently, there are no contacts created yet.',
+          title: 'Let the leads flow',
+          description:
+            'Identify website visitors, capture calendar bookings, or prospect faster with our LinkedIn extension.',
           buttonLabel: 'Add contacts',
           dataTest: 'contacts-go-to-orgs',
           onClick: () => {
