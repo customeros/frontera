@@ -7,21 +7,13 @@ import { UsersService } from '@domain/services/users/users.service';
 export class SettingsProfileUseCase {
   private usersService = new UsersService();
   private root = RootStore.getInstance();
-  @observable private accessor userId: string = '';
+  @observable public accessor userId: string = '';
 
-  constructor() {
+  constructor(userId: string) {
     this.updateUserName = this.updateUserName.bind(this);
     this.updateUser = this.updateUser.bind(this);
-    this.init = this.init.bind(this);
     this.updateUserProfilePhotoUrl = this.updateUserProfilePhotoUrl.bind(this);
-  }
-
-  async init() {
-    const user = await this.usersService.getCurrentUser();
-
-    if (!user) return;
-
-    this.userId = user.user_Current.id;
+    this.userId = userId;
   }
 
   @computed
@@ -31,7 +23,7 @@ export class SettingsProfileUseCase {
 
   @computed
   get userProfilePhotoUrl() {
-    return this.root.users.getById(this.userId)?.value.profilePhotoUrl;
+    return this.root.users.getById(this.userId)?.value.profilePhotoUrlV2;
   }
 
   @action

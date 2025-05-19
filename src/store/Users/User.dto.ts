@@ -42,7 +42,7 @@ export class User extends Entity<UserDatum> {
   @action
   updateProfilePhotoUrl(url: string) {
     this.draft();
-    this.value.profilePhotoUrl = url;
+    this.value.profilePhotoUrlV2 = url;
     this.commit({ syncOnly: true });
   }
 

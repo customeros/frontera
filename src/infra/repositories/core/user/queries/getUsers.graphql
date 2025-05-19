@@ -6,6 +6,7 @@ query getUsers($pagination: Pagination!, $where: Filter) {
       lastName
       name
       profilePhotoUrl
+      profilePhotoUrlV2
       mailboxes
       bot
       internal

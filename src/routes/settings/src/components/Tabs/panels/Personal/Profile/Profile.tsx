@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 
 import { observer } from 'mobx-react-lite';
 import { SettingsProfileUseCase } from '@domain/usecases/settings/profile/settings-profile.usecase';
@@ -6,7 +6,6 @@ import { SettingsProfileUseCase } from '@domain/usecases/settings/profile/settin
 import { cn } from '@ui/utils/cn';
 import { Icon } from '@ui/media/Icon';
 import { Input } from '@ui/form/Input';
-import { Image } from '@ui/media/Image/Image';
 import { IconButton } from '@ui/form/IconButton';
 import { useStore } from '@shared/hooks/useStore';
 import { toastError } from '@ui/presentation/Toast';
@@ -34,22 +33,19 @@ export const Profile = observer(() => {
   const [isDragging, setIsDragging] = useState(false);
   const [_triggerRender, setTriggerRender] = useState(false);
 
-  const usecase = useMemo(() => new SettingsProfileUseCase(), []);
-
-  useEffect(() => {
-    if (store.session.isAuthenticated) {
-      usecase.init();
-    }
-  }, [store.session.isAuthenticated]);
+  const usecase = useMemo(
+    () => new SettingsProfileUseCase(store.session.value.profile.id),
+    [],
+  );
 
   const handleError = (_refId: number, error: string) => {
     toastError(error, 'upload-file');
   };
 
   const handleTenantLogoUpdate = (_refId: number, res: unknown) => {
-    const { id } = res as UploadResponse;
+    const { cdnUrl } = res as UploadResponse;
 
-    usecase.updateUserProfilePhotoUrl(id);
+    usecase.updateUserProfilePhotoUrl(cdnUrl);
     usecase.updateUser();
   };
 
@@ -58,10 +54,6 @@ export const Profile = observer(() => {
     usecase.updateUser();
     setTriggerRender((prev) => !prev);
   };
-
-  const imageSrc =
-    (file ? `${URL.createObjectURL(file)}` : undefined) ??
-    usecase.userProfilePhotoUrl;
 
   return (
     <div className='px-6 pb-4 pt-2 max-w-[500px] border-r border-grayModern-200 h-full'>
@@ -76,8 +68,8 @@ export const Profile = observer(() => {
 
           <FileDropUploader
             onChange={setFile}
-            apiBaseUrl='/files'
             onError={handleError}
+            apiBaseUrl='/user-logo'
             onDragOverChange={setIsDragging}
             onSuccess={handleTenantLogoUpdate}
             onLoadEnd={() => setHasLoaded(true)}
@@ -103,8 +95,8 @@ export const Profile = observer(() => {
                   >
                     <FileUploadTrigger
                       onChange={setFile}
-                      apiBaseUrl='/files'
                       onError={handleError}
+                      apiBaseUrl='/user-logo'
                       name='company-logo-uploader'
                       onSuccess={handleTenantLogoUpdate}
                       onLoadEnd={() => setHasLoaded(true)}
@@ -123,10 +115,14 @@ export const Profile = observer(() => {
                   </Tooltip>
                 )}
 
-                {imageSrc && (
+                {store.users.getById(usecase.userId)?.value
+                  .profilePhotoUrlV2 && (
                   <div className='relative max-h-16 w-fit group'>
-                    <Image
-                      src={imageSrc}
+                    <img
+                      src={
+                        store.users.getById(usecase.userId)?.value
+                          .profilePhotoUrlV2 ?? ''
+                      }
                       className={cn(
                         'size-12 rounded-full aspect-square object-cover',
                         (file || !usecase.userProfilePhotoUrl) &&
