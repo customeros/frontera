@@ -58,6 +58,7 @@ const complications: Record<
 };
 
 export const IcpBadge = observer(({ qualificationStatus }: IcpBadgeProps) => {
+  if (!qualificationStatus) return null;
   const [label, colorScheme, leftElement, rightElement, popoverContent] =
     complications[qualificationStatus];
 
